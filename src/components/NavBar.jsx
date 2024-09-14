@@ -1,5 +1,6 @@
 import Image from "next/image"
 import BtnPrimary from "@/components/BtnPrimary"
+import BtnSecondary from "@/components/BtnSecondary"
 
 const NavBar = () => {
   return (
@@ -15,9 +16,9 @@ const NavBar = () => {
       <div>
         <BtnPrimary href="/about">Regístrate</BtnPrimary>
       </div>
-      <div>
+      <div className="flex gap-2">
+        <BtnSecondary href="/about">Iniciar Sesión</BtnSecondary>
         <BtnPrimary href="/about">Regístrate</BtnPrimary>
-        <BtnPrimary href="/about">Iniciar Sesión</BtnPrimary>
       </div>
     </nav>
   )

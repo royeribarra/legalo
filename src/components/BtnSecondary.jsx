@@ -1,12 +1,11 @@
-// src/components/Button.js
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 
-const BtnPrimary = ({ children, href, className }) => {
+const BtnSecondary = ({ children, href, className }) => {
   return (
     <Link href={href} passHref>
       <button
-        className={`px-4 py-2 rounded-[10px] text-base bg-black  hover:bg-slate-800 text-white focus:outline-none ${className}`}
+        className={`px-4 py-2 rounded-[10px] text-black bg-white  hover:bg-gray-100 text-white focus:outline-none ${className}`}
       >
         {children}
       </button>
@@ -14,14 +13,14 @@ const BtnPrimary = ({ children, href, className }) => {
   );
 };
 
-BtnPrimary.propTypes = {
+BtnSecondary.propTypes = {
   children: PropTypes.node.isRequired,
   href: PropTypes.string.isRequired,
   className: PropTypes.string,
 };
 
-BtnPrimary.defaultProps = {
+BtnSecondary.defaultProps = {
   className: '',
 };
 
-export default BtnPrimary;
+export default BtnSecondary;
