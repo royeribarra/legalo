@@ -10,7 +10,7 @@ const HomeBanner = () => {
         <input type="text" placeholder="Ejemplo Abogado, Minería, etc."/>
         <button>Buscar</button>
       </div>
-      <div className="flex ">
+      <div className="flex">
         <CardAbogCategory  
           icon="" 
           title="Abogado Civil"
