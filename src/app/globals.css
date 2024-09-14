@@ -8,3 +8,8 @@
   --primary: #1D4ED8;
   --secondary: #3B82F6;
 }
+
+.bg-banner {
+  background: url("../../public/assets/bg-banner3.jpg");
+  height: 800px;
+}

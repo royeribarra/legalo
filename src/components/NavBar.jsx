@@ -14,7 +14,7 @@ const NavBar = () => {
         />
       </div>
       <div>
-        <BtnPrimary href="/about">Regístrate</BtnPrimary>
+        <BtnPrimary href="/about">¿Quieres contratar?</BtnPrimary>
       </div>
       <div className="flex gap-2">
         <BtnSecondary href="/about">Iniciar Sesión</BtnSecondary>

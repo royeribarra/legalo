@@ -1,5 +1,3 @@
-// src/components/Button.js
-import PropTypes from 'prop-types';
 import Link from 'next/link';
 
 const BtnPrimary = ({ children, href, className }) => {
@@ -12,16 +10,6 @@ const BtnPrimary = ({ children, href, className }) => {
       </button>
     </Link>
   );
-};
-
-BtnPrimary.propTypes = {
-  children: PropTypes.node.isRequired,
-  href: PropTypes.string.isRequired,
-  className: PropTypes.string,
-};
-
-BtnPrimary.defaultProps = {
-  className: '',
 };
 
 export default BtnPrimary;

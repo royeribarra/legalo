@@ -5,7 +5,7 @@ export const metadata = {
 
 import "@/app/globals.css"
 import NavBar from "@/components/NavBar"
-
+import Footer from "@/components/Footer"
 
 export default function RootLayout({
   children,
@@ -17,6 +17,7 @@ export default function RootLayout({
       <body>
         <NavBar />
         {children}
+        <Footer />
       </body>
     </html>
   )

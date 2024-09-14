@@ -1,6 +1,12 @@
+import HomeBanner from "@/components/HomeBanner"
+import HomeMain from "@/components/HomeMain"
+
 const HomePage = () => {
   return (
-    <div>Home page</div>
+    <div>
+      <HomeBanner />
+      <HomeMain />
+    </div>
   )
 }
 
