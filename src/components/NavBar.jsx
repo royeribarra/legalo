@@ -1,6 +1,5 @@
 import Image from "next/image"
-import BtnPrimary from "@/components/BtnPrimary"
-import BtnSecondary from "@/components/BtnSecondary"
+import { Button } from "@/components/ui/button"
 
 const NavBar = () => {
   return (
@@ -13,12 +12,13 @@ const NavBar = () => {
           height={30}
         />
       </div>
-      <div>
-        <BtnPrimary href="/about">¿Quieres contratar?</BtnPrimary>
+      <div className="flex gap-2">
+        <Button>¿Quieres contratar?</Button>
+        <Button variant="outline">¿Quieres trabajar?</Button>
       </div>
       <div className="flex gap-2">
-        <BtnSecondary href="/about">Iniciar Sesión</BtnSecondary>
-        <BtnPrimary href="/about">Regístrate</BtnPrimary>
+        <Button variant="outline">Iniciar Sesión</Button>
+        <Button>Regístrate</Button>
       </div>
     </nav>
   )
