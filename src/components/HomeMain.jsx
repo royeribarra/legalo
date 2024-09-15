@@ -112,11 +112,64 @@ const HomeMain = () => {
         </div>
       </div>
 
-      <div className="h-[584px] flex">
-        <div className="w-1/2 bg-[#1E1E1E]">
-          1
+      <div className="h-[584px] grid grid-cols-1 md:grid-cols-2">
+        <div className="bg-[#1E1E1E] flex flex-col justify-center gap-4">
+          
+          <div className="flex items-start  p-4 gap-4  mx-auto md:max-w-[560px]">
+            <Image 
+              src="/icos/award.svg" 
+              alt="ico" 
+              width={36} 
+              height={36} 
+              className="rounded-lg"
+            />
+            <div className="text-white">
+              <h3 className="text-xl">Profesionalismo y Experiencia</h3>
+              <p className="font-">Todos nuestros abogados están certificados y cuentan con años de experiencia en sus respectivas áreas.</p>
+            </div>
+          </div>
+          <div className="flex items-start  p-4 gap-4  mx-auto md:max-w-[560px]">
+            <Image 
+              src="/icos/award.svg" 
+              alt="ico" 
+              width={36} 
+              height={36} 
+              className="rounded-lg"
+            />
+            <div className="text-white">
+              <h3 className="text-xl">Profesionalismo y Experiencia</h3>
+              <p className="font-">Todos nuestros abogados están certificados y cuentan con años de experiencia en sus respectivas áreas.</p>
+            </div>
+          </div>
+          <div className="flex items-start  p-4 gap-4  mx-auto md:max-w-[560px]">
+            <Image 
+              src="/icos/award.svg" 
+              alt="ico" 
+              width={36} 
+              height={36} 
+              className="rounded-lg"
+            />
+            <div className="text-white">
+              <h3 className="text-xl">Profesionalismo y Experiencia</h3>
+              <p className="font-">Todos nuestros abogados están certificados y cuentan con años de experiencia en sus respectivas áreas.</p>
+            </div>
+          </div>
+          <div className="flex items-start  p-4 gap-4  mx-auto md:max-w-[560px]">
+            <Image 
+              src="/icos/award.svg" 
+              alt="ico" 
+              width={36} 
+              height={36} 
+              className="rounded-lg"
+            />
+            <div className="text-white">
+              <h3 className="text-xl">Profesionalismo y Experiencia</h3>
+              <p className="font-">Todos nuestros abogados están certificados y cuentan con años de experiencia en sus respectivas áreas.</p>
+            </div>
+          </div>
+
         </div>
-        <div className="w-1/2 bg-lg_yellow">
+        <div className="bg-lg_yellow">
           2
         </div>
       </div>
