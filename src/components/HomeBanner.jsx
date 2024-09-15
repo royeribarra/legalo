@@ -1,5 +1,4 @@
 import React from 'react'
-import CardAbogCategory from './CardAbogCategory'
 import Link from 'next/link'
 import { Input } from "@/components/ui/input"
 
@@ -50,7 +49,7 @@ const HomeBanner = () => {
 
                 {Array.from({ length: 15 }).map((_, index) => (
                 <CarouselItem key={index} className="max-w-[220px]" >
-                  <div className="p-1">
+                  <div>
                     <Card>
                       <CardHeader>
                         <div className="rounded-full bg-slate-300 h-12 w-12 flex items-center justify-center">
