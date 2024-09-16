@@ -31,6 +31,13 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+
 const HomeMain = () => {
   return (
     <>
@@ -232,7 +239,7 @@ const HomeMain = () => {
         </div>
       </div>
       {/* Reviews */}
-      <div className="bg-lg_yellow ">
+      <div className="bg-lg_yellow md:h-[640px] flex items-center">
         <div className="container mx-auto p-4 md:p-8">
           <div className="mb-8 flex">
             <ToggleGroup type="single" variant="chips" className="gap-2">
@@ -291,6 +298,63 @@ const HomeMain = () => {
             </Carousel>
         </div>
       </div>
+
+      <div className=" bg-[url('/assets/img-legalo4.webp')] h-[242px]">
+        <div className="container p-4 md:p-8 mx-auto flex items-center justify-between h-full">
+          <div className="text-white">
+            <h3 className="text-5xl mb-8">
+              Descubre oportunidades legales a tu medida.
+            </h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+            </p>
+          </div>
+          <Button>Regístrate gratis</Button>
+        </div>
+      </div>
+
+      <div className="container p-4 md:p-8 mx-auto grid grid-cols-1 md:grid-cols-[5fr_6fr] gap-4 md:h-[540px] items-center">
+        <div className="flex flex-col gap-4">
+          <h2 className="text-5xl max-w-[500px]">Respondemos a tus <span className="italic">preguntas</span></h2>
+          <p className="text-[18px]">¿Tienes más preguntas?</p>
+          <Button variant="outline" className="w-fit">Contáctanos</Button>
+        </div>
+        <div>
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger>¿Cómo puedo asegurarme de que el abogado que estoy contratando sea confiable y competente?</AccordionTrigger>
+            <AccordionContent>
+              Yes. It adheres to the WAI-ARIA design pattern.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-2">
+            <AccordionTrigger>¿Cómo funciona el proceso de publicación de un proyecto en la plataforma?</AccordionTrigger>
+            <AccordionContent>
+              Yes. It adheres to the WAI-ARIA design pattern.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-3">
+            <AccordionTrigger>¿Cómo se maneja la seguridad de los pagos en la plataforma?</AccordionTrigger>
+            <AccordionContent>
+              Yes. It adheres to the WAI-ARIA design pattern.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-4">
+            <AccordionTrigger>¿Qué debo hacer si no estoy satisfecho con el trabajo del abogado?</AccordionTrigger>
+            <AccordionContent>
+              Yes. It adheres to the WAI-ARIA design pattern.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-5">
+            <AccordionTrigger>¿Puedo contratar abogados para proyectos a largo plazo o solo para tareas específicas?</AccordionTrigger>
+            <AccordionContent>
+              Yes. It adheres to the WAI-ARIA design pattern.
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+        </div>
+      </div>
+
     </>
   )
 }
