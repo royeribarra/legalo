@@ -71,9 +71,3 @@
 .bg-lg_yellow {
   background-color: #EEF79C;
 }
-
-.bg-banner {
-  background: url("../../public/assets/bg-banner3.jpg");
-  height: 800px;
-  background-size: cover;
-}

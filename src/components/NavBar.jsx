@@ -12,7 +12,7 @@ const NavBar = () => {
           height={30}
         />
       </div>
-      <div className="flex gap-2">
+      <div className="md:flex gap-2 hidden ">
         <Button>¿Quieres contratar?</Button>
         <Button variant="outline">¿Quieres trabajar?</Button>
       </div>
