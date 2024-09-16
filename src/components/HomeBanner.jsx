@@ -40,14 +40,14 @@ const HomeBanner = () => {
           </div>
         </div>
         <Carousel
-            opts={{
-              align: "start",
-            }}
-            className="w-full px-4 md:px-8 mb-8"
-          >
+          opts={{
+            align: "start",
+          }}
+          className="w-full px-4 md:px-8 mb-8"
+        >
             <CarouselContent>
 
-                {Array.from({ length: 15 }).map((_, index) => (
+              {Array.from({ length: 15 }).map((_, index) => (
                 <CarouselItem key={index} className="max-w-[220px]" >
                   <div>
                     <Card>
@@ -67,7 +67,7 @@ const HomeBanner = () => {
                     </Card>
                   </div>
                 </CarouselItem>
-                ))}
+              ))}
 
             </CarouselContent>
             <CarouselPrevious />
