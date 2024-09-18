@@ -40,13 +40,15 @@ import {
 
 const HomeMain = () => {
   return (
-    <>
-      <div className="container p-4 md:p-8 mx-auto flex justify-center flex-col items-center md:h-[860px]">
-        <div className="flex gap-2 mb-20">
-          <Button>Necesito un abogado</Button>
-          <Button variant="outline">Buscar oportunidades</Button>
+    <div className="overflow-hidden">
+      <div className="container p-4 lg:p-8 mx-auto flex justify-center flex-col items-center lg:h-[860px] mb-5 ">
+        <div className="flex gap-2 my-5 lg:mb-20">
+          <Button size="sm">Necesito un abogado</Button>
+          <Button size="sm" variant="outline">
+            Buscar oportunidades
+          </Button>
         </div>
-        <div className="flex max-w-[1200px] gap-[70px] overflow-hidden flex-wrap justify-center">
+        <div className="flex max-w-[1200px] gap-[20px] lg:gap-[70px] overflow-hidden flex-wrap justify-center">
           <Card className="max-w-[310px] border-none">
             <CardHeader className="relative">
               <div className="rounded-full bg-lg_yellow h-8 w-8 flex items-center justify-center absolute top-4 left-4">
@@ -71,7 +73,7 @@ const HomeMain = () => {
           <Card className="max-w-[310px] border-none">
             <CardHeader className="relative">
               <div className="rounded-full bg-lg_yellow h-8 w-8 flex items-center justify-center absolute top-4 left-4">
-                1
+                2
               </div>
               <div className="w-full h-auto flex justify-center">
                 <Image
@@ -92,7 +94,7 @@ const HomeMain = () => {
           <Card className="max-w-[310px] border-none">
             <CardHeader className="relative">
               <div className="rounded-full bg-lg_yellow h-8 w-8 flex items-center justify-center absolute top-4 left-4">
-                1
+                3
               </div>
               <div className="w-full h-auto flex justify-center">
                 <Image
@@ -113,7 +115,7 @@ const HomeMain = () => {
           <Card className="max-w-[310px] border-none">
             <CardHeader className="relative">
               <div className="rounded-full bg-lg_yellow h-8 w-8 flex items-center justify-center absolute top-4 left-4">
-                1
+                4
               </div>
               <div className="w-full h-auto flex justify-center">
                 <Image
@@ -134,7 +136,7 @@ const HomeMain = () => {
           <Card className="max-w-[310px] border-none">
             <CardHeader className="relative">
               <div className="rounded-full bg-lg_yellow h-8 w-8 flex items-center justify-center absolute top-4 left-4">
-                1
+                5
               </div>
               <div className="w-full h-auto flex justify-center">
                 <Image
@@ -155,75 +157,83 @@ const HomeMain = () => {
         </div>
       </div>
 
-      <div className="md:h-[584px] grid grid-cols-1 md:grid-cols-2">
-        <div className="bg-[#1E1E1E] flex flex-col justify-center gap-4">
-          <div className="flex items-start  p-4 gap-4  mx-auto md:max-w-[560px]">
+      <div className="lg:h-[584px] grid grid-cols-1 lg:grid-cols-2">
+        <div className="bg-[#1E1E1E] flex flex-col justify-center gap-4 py-8">
+          <div className="flex items-start  p-4 gap-4  mx-auto lg:max-w-[560px]">
             <Image
               src="/icos/award.svg"
               alt="ico"
               width={36}
               height={36}
-              className="rounded-lg"
+              className="rounded-lg max-w-[24px] md:max-w-none"
             />
             <div className="text-white">
-              <h3 className="text-xl">Profesionalismo y Experiencia:</h3>
-              <p className="font-">
+              <h3 className="text-lg lg:text-xl">
+                Profesionalismo y Experiencia:
+              </h3>
+              <p className="text-sm">
                 Todos nuestros abogados están certificados y cuentan con años de
                 experiencia en sus respectivas áreas.
               </p>
             </div>
           </div>
-          <div className="flex items-start  p-4 gap-4  mx-auto md:max-w-[560px]">
+          <div className="flex items-start  p-4 gap-4  mx-auto lg:max-w-[560px]">
             <Image
               src="/icos/award.svg"
               alt="ico"
               width={36}
               height={36}
-              className="rounded-lg"
+              className="rounded-lg max-w-[24px] md:max-w-none"
             />
             <div className="text-white">
-              <h3 className="text-xl">Profesionalismo y Experiencia:</h3>
-              <p className="font-">
+              <h3 className="text-lg lg:text-xl">
+                Profesionalismo y Experiencia:
+              </h3>
+              <p className="text-sm">
                 Todos nuestros abogados están certificados y cuentan con años de
                 experiencia en sus respectivas áreas.
               </p>
             </div>
           </div>
-          <div className="flex items-start  p-4 gap-4  mx-auto md:max-w-[560px]">
+          <div className="flex items-start  p-4 gap-4  mx-auto lg:max-w-[560px]">
             <Image
               src="/icos/award.svg"
               alt="ico"
               width={36}
               height={36}
-              className="rounded-lg"
+              className="rounded-lg max-w-[24px] md:max-w-none"
             />
             <div className="text-white">
-              <h3 className="text-xl">Profesionalismo y Experiencia:</h3>
-              <p className="font-">
+              <h3 className="text-lg lg:text-xl">
+                Profesionalismo y Experiencia:
+              </h3>
+              <p className="text-sm">
                 Todos nuestros abogados están certificados y cuentan con años de
                 experiencia en sus respectivas áreas.
               </p>
             </div>
           </div>
-          <div className="flex items-start  p-4 gap-4  mx-auto md:max-w-[560px]">
+          <div className="flex items-start  p-4 gap-4  mx-auto lg:max-w-[560px]">
             <Image
               src="/icos/award.svg"
               alt="ico"
               width={36}
               height={36}
-              className="rounded-lg"
+              className="rounded-lg max-w-[24px] md:max-w-none"
             />
             <div className="text-white">
-              <h3 className="text-xl">Profesionalismo y Experiencia:</h3>
-              <p className="font-">
+              <h3 className="text-lg lg:text-xl">
+                Profesionalismo y Experiencia:
+              </h3>
+              <p className="text-sm">
                 Todos nuestros abogados están certificados y cuentan con años de
                 experiencia en sus respectivas áreas.
               </p>
             </div>
           </div>
         </div>
-        <div className="bg-lg_yellow flex flex-col items-center justify-center gap-8">
-          <h3 className="text-4xl">
+        <div className=" bg-lg_yellow flex flex-col items-center justify-center gap-8 p-8">
+          <h3 className="text-4xl text-center">
             Con Legalo <span className="italic">ahorra</span> hasta
           </h3>
           <h2 className="text-6xl italic">S/ 2160</h2>
@@ -251,18 +261,17 @@ const HomeMain = () => {
         </div>
       </div>
 
-      <div className="md:h-[620px] grid grid-cols-1 md:grid-cols-2">
+      <div className="lg:h-[620px] grid grid-cols-1 lg:grid-cols-2 p-8">
         <div className="flex justify-center items-center p-10">
           <Image
             src="/assets/img-legalo3.webp"
             alt="img"
             width={616}
             height={400}
-            layout="responsive"
             className="max-w-[616px]"
           />
         </div>
-        <div className="flex justify-center items-star flex-col gap-8 md:max-w-[620px]">
+        <div className="flex justify-center items-star flex-col gap-8 lg:max-w-[620px]">
           <h2 className="text-4xl">
             Publica <span>hoy</span>, encuentra tu abogado mañana.
           </h2>
@@ -276,9 +285,9 @@ const HomeMain = () => {
         </div>
       </div>
       {/* Reviews */}
-      <div className="bg-lg_yellow md:h-[640px] flex items-center">
-        <div className="container mx-auto p-4 md:p-8">
-          <div className="mb-8 flex">
+      <div className="bg-lg_yellow lg:h-[640px] flex items-center py-8">
+        <div className="container mx-auto p-4 lg:p-8 pr-0">
+          <div className="mb-8 flex overflow-x-auto">
             <ToggleGroup type="single" variant="chips" className="gap-2">
               <ToggleGroupItem value="a">Todos</ToggleGroupItem>
               <ToggleGroupItem value="b">Ambiental</ToggleGroupItem>
@@ -291,7 +300,7 @@ const HomeMain = () => {
             opts={{
               align: "start",
             }}
-            className="w-full px-4 md:px-8 mb-8"
+            className="w-full px-4 lg:px-8 mb-8"
           >
             <CarouselContent>
               {Array.from({ length: 3 }).map((_, index) => (
@@ -341,10 +350,10 @@ const HomeMain = () => {
         </div>
       </div>
 
-      <div className=" bg-[url('/assets/img-legalo4.webp')] h-[242px]">
-        <div className="container p-4 md:p-8 mx-auto flex items-center justify-between h-full">
-          <div className="text-white">
-            <h3 className="text-5xl mb-8">
+      <div className="bg-[url('/assets/img-legalo4.webp')] bg-cover lg:h-[242px] py-8">
+        <div className="container p-4 lg:p-8 mx-auto flex md:items-center items-start lg:justify-between h-full flex-col lg:flex-row">
+          <div className="text-white mb-8">
+            <h3 className="text-3xl lg:text-5xl mb-8">
               Descubre oportunidades legales a tu medida.
             </h3>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -353,9 +362,9 @@ const HomeMain = () => {
         </div>
       </div>
 
-      <div className="container p-4 md:p-8 mx-auto grid grid-cols-1 md:grid-cols-[5fr_6fr] gap-4 md:h-[540px] items-center ">
-        <div className="flex flex-col gap-4">
-          <h2 className="text-5xl max-w-[500px]">
+      <div className="container p-4 lg:p-8 mx-auto grid grid-cols-1 lg:grid-cols-[5fr_6fr] gap-4 lg:h-[540px] items-center py-8">
+        <div className="flex flex-col gap-4 items-center lg:items-start">
+          <h2 className="text-3xl lg:text-5xl max-w-[400px] text-center lg:text-left">
             Respondemos a tus <span className="italic">preguntas</span>
           </h2>
           <p className="text-[18px]">¿Tienes más preguntas?</p>
@@ -364,7 +373,7 @@ const HomeMain = () => {
           </Button>
         </div>
         <div>
-          <Accordion type="single" collapsible>
+          <Accordion type="single" collapsible className="text-left">
             <AccordionItem value="item-1">
               <AccordionTrigger>
                 ¿Cómo puedo asegurarme de que el abogado que estoy contratando
@@ -412,7 +421,7 @@ const HomeMain = () => {
           </Accordion>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

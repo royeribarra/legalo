@@ -1,5 +1,5 @@
-import HomeBanner from "@/components/HomeBanner"
-import HomeMain from "@/components/HomeMain"
+import HomeBanner from "@/components/HomeBanner";
+import HomeMain from "@/components/HomeMain";
 
 const HomePage = () => {
   return (
@@ -7,7 +7,7 @@ const HomePage = () => {
       <HomeBanner />
       <HomeMain />
     </div>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;
