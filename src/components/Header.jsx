@@ -1,9 +1,10 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
-const NavBar = () => {
+const Header = () => {
   return (
-    <nav className="container mx-auto px-4 lg:px-8 flex justify-between items-center align h-[72px] bg-background">
+    <header className="container mx-auto px-4 lg:px-8 flex justify-between items-center align h-[72px] bg-background">
       <div>
         <Image
           src="/assets/legalo-logo.png"
@@ -21,10 +22,12 @@ const NavBar = () => {
         <Button variant="outline" size="sm">
           Iniciar Sesión
         </Button>
-        <Button size="sm">Regístrate</Button>
+        <Link href="/registro">
+          <Button size="sm">Regístrate</Button>
+        </Link>
       </div>
-    </nav>
+    </header>
   );
 };
 
-export default NavBar;
+export default Header;

@@ -373,7 +373,7 @@ const HomeMain = () => {
           </Button>
         </div>
         <div>
-          <Accordion type="single" collapsible className="text-left">
+          <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
               <AccordionTrigger>
                 ¿Cómo puedo asegurarme de que el abogado que estoy contratando
