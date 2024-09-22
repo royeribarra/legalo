@@ -6,12 +6,23 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Briefcase } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const RegisterPage = () => {
+  const router = useRouter();
+
   const [cardSelected, setCardSelected] = useState(null);
 
   const handleCardClick = (tipe) => {
-    setCardSelected(tipe); // Cambia el estado al hacer clic
+    setCardSelected(tipe);
+  };
+
+  const handleButtonClick = () => {
+    if (cardSelected === "lawyer") {
+      router.push("/registro/abogados");
+    } else if (cardSelected === "client") {
+      router.push("/registro/clientes");
+    }
   };
 
   return (
@@ -54,7 +65,10 @@ const RegisterPage = () => {
         </div>
       </div>
 
-      <Button>Crear cuenta</Button>
+      <Button disabled={!cardSelected} onClick={handleButtonClick}>
+        Crear cuenta
+      </Button>
+
       <p className="text-center">
         ¿Ya tienes una cuenta?{" "}
         <Link href="/login" className="underline">
