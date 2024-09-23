@@ -49,5 +49,5 @@ export class ClienteModel extends BaseEntity implements ICliente
     oferta: OfertaModel;
 
     @OneToMany(() => TrabajoModel, trabajo => trabajo.cliente)
-    trabajos: TrabajoModel[]; 
+    trabajos: TrabajoModel[];
 }

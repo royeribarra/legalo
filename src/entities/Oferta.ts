@@ -4,7 +4,7 @@ import { TrabajoModel } from './Trabajo'; // Importa la entidad Trabajo
 import { IOferta } from '@/interfaces/Oferta.interface';
 import { ClienteModel } from './Cliente';
 
-@Entity()
+@Entity({name:'ofertas'})
 export class OfertaModel extends BaseEntity implements IOferta {
   @PrimaryGeneratedColumn()
   id: number;
