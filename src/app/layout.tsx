@@ -4,6 +4,9 @@ export const metadata = {
 };
 
 import "@/app/globals.css";
+import 'antd/dist/antd.css';
+import "../../public/assets/styles/main.css";
+import "../../public/assets/styles/responsive.css";
 
 export default function RootLayout({
   children,
