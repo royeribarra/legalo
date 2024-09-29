@@ -29,9 +29,9 @@ const HomeBanner = () => {
     <div className="bg-[url('/assets/bg-banner3.jpg')] bg-cover bg-center w-full h-full lg:h-[800px] overflow-hidden">
       <div className="container mx-auto h-full flex flex-col justify-center">
         <div className="flex items-start justify-center flex-col px-4 lg:px-8 max-w-[784px] mb-10 lg:mb-20">
-          <h1 className="text-white text-3xl lg:text-6xl mb-10 my-16">
+          <h1 className="text-white text-3xl lg:text-6xl mb-10 my-16 font-tiempos">
             Encuentra a los mejores abogados{" "}
-            <span className="italic">especializados</span>
+            <span className="italic font-light">especializados</span>
           </h1>
           <div className="w-full max-w-[500px] flex gap-4">
             <Input placeholder="Ejemplo Abogado, Minería, etc." />

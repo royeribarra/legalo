@@ -26,7 +26,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="container p-4 lg:p-8 mx-auto flex flex-col gap-8 lg:gap-10 mt-8">
+    <div className="container p-4 lg:p-8 mx-auto flex flex-col gap-8 lg:gap-10 mt-8 max-w-[860px]">
       <div>
         <Progress value={50} className="max-w-[480px] mx-auto mb-4" />
         <p className="text-center">Paso 1/2</p>
