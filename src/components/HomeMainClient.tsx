@@ -38,16 +38,42 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-const HomeMain = () => {
+type HomeMainProps = {
+  serviceTipe: string;
+  updateServiceTipe: (newType: string) => void;
+};
+
+const HomeMain: React.FC<HomeMainProps> = ({
+  serviceTipe,
+  updateServiceTipe,
+}) => {
   return (
     <div className="overflow-hidden">
-      <div className="container p-4 lg:p-8 mx-auto flex justify-center flex-col items-center lg:h-[860px] mb-5 ">
-        <div className="flex gap-2 my-5 lg:mb-20">
-          <Button size="sm">Necesito un abogado</Button>
-          <Button size="sm" variant="outline">
-            Buscar oportunidades
-          </Button>
+      <div className="container p-4 lg:p-8 mx-auto flex justify-center flex-col items-center  mb-5 ">
+        <div>
+          <div className="lg:flex gap-2 hidden border border-black rounded-full p-[2px] w-auto">
+            <Button
+              variant="switch"
+              onClick={() => updateServiceTipe("client")}
+            >
+              ¿Quieres contratar?
+            </Button>
+            <Button
+              variant="switchOutline"
+              onClick={() => updateServiceTipe("lawyer")}
+            >
+              ¿Quieres trabajar?
+            </Button>
+          </div>
         </div>
+
+        <div className="max-w-[640px] mx-auto my-8">
+          <h1 className="text-black text-3xl lg:text-6xl  font-tiempos text-center">
+            Accede a una amplia red de{" "}
+            <span className="italic font-light">abogados</span>
+          </h1>
+        </div>
+
         <div className="flex max-w-[1200px] gap-[20px] lg:gap-[70px] overflow-hidden flex-wrap justify-center">
           <Card className="max-w-[310px] border-none">
             <CardHeader className="relative">
