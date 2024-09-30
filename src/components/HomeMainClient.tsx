@@ -51,7 +51,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
     <div className="overflow-hidden">
       <div className="container p-4 lg:p-8 mx-auto flex justify-center flex-col items-center  mb-5 ">
         <div>
-          <div className="lg:flex gap-2 hidden border border-black rounded-full p-[2px] w-auto">
+          <div className="lg:flex gap-2  border border-black rounded-full p-[2px] w-auto">
             <Button
               variant="switch"
               onClick={() => updateServiceTipe("client")}
