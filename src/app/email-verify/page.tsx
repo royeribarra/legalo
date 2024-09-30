@@ -11,7 +11,7 @@ const EmailVerify = () => {
   return (
     <div className="h-screen flex flex-col p-4">
       <header className="container mx-auto px-4 lg:px-8 flex justify-between items-center align h-[72px] bg-background min-h-[60px]">
-        <div>
+        <Link href="/">
           <Image
             src="/assets/legalo-logo.png"
             alt="logo"
@@ -19,7 +19,7 @@ const EmailVerify = () => {
             height={30}
             className="max-w-[100px] md:max-w-none"
           />
-        </div>
+        </Link>
       </header>
       {showStep ? (
         <div className="flex justify-center flex-col items-center gap-4 flex-auto pb-20">

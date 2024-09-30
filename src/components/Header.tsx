@@ -6,13 +6,15 @@ const Header = () => {
   return (
     <header className="container mx-auto px-4 lg:px-8 flex justify-between items-center align h-[72px] bg-background">
       <div>
-        <Image
-          src="/assets/legalo-logo.png"
-          alt="logo"
-          width={160}
-          height={30}
-          className="max-w-[100px] md:max-w-none"
-        />
+        <Link href="/">
+          <Image
+            src="/assets/legalo-logo.png"
+            alt="logo"
+            width={160}
+            height={30}
+            className="max-w-[100px] md:max-w-none"
+          />
+        </Link>
       </div>
       <div className="lg:flex gap-2 hidden ">
         <Button>¿Quieres contratar?</Button>

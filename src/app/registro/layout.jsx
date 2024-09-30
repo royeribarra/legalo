@@ -12,7 +12,7 @@ export default function AboutLayout({ children }) {
     <div className="h-screen grid grid-cols-4 gap-4">
       <div className="col-span-4 lg:col-span-3">
         <header className="container mx-auto px-4 lg:px-8 flex justify-between items-center align h-[72px] bg-background">
-          <div>
+          <Link href="/">
             <Image
               src="/assets/legalo-logo.png"
               alt="logo"
@@ -20,7 +20,8 @@ export default function AboutLayout({ children }) {
               height={30}
               className="max-w-[100px] md:max-w-none"
             />
-          </div>
+          </Link>
+
           <div className="flex gap-2 p-2 flex-col md:flex-row">
             <p className="text-sm">¿Buscas Trabajo?</p>
             <Link href="/registro" className="underline text-sm">

@@ -57,8 +57,8 @@ const RegisterClient = () => {
   return (
     <div className="container p-4 lg:p-8 mx-auto flex flex-col gap-8 lg:gap-10 mt-8 max-w-[860px]">
       <div>
-        <Progress value={50} className="mx-auto mb-4" />
-        <p className="text-center">Paso 1/2</p>
+        <Progress value={100} className="mx-auto mb-4" />
+        <p className="text-center">Paso 2/2</p>
       </div>
       <h2 className="font-bold text-3xl lg:text-5xl">Bienvenido a Legalo 👋</h2>
       <h3 className="lg:text-lg ">DATOS PERSONALES</h3>
@@ -200,7 +200,9 @@ const RegisterClient = () => {
             )}
           />
 
-          <Button type="submit">SIGUIENTE</Button>
+          <Button type="submit" className="w-full">
+            SIGUIENTE
+          </Button>
         </form>
       </Form>
     </div>

@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -9,9 +9,9 @@ import { Briefcase } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const RegisterPage = () => {
-  const router = useRouter();
-
   const [cardSelected, setCardSelected] = useState(null);
+
+  const router = useRouter();
 
   const handleCardClick = (tipe) => {
     setCardSelected(tipe);
@@ -27,10 +27,18 @@ const RegisterPage = () => {
 
   return (
     <div className="container p-4 lg:p-8 mx-auto flex flex-col gap-8 lg:gap-10 mt-8 max-w-[860px]">
-      <div>
-        <Progress value={50} className="max-w-[480px] mx-auto mb-4" />
-        <p className="text-center">Paso 1/2</p>
-      </div>
+      {cardSelected === "client" ? (
+        <div>
+          <Progress value={33} className="mx-auto mb-4" />
+          <p className="text-center">Paso 1/3</p>
+        </div>
+      ) : (
+        <div>
+          <Progress value={50} className="mx-auto mb-4" />
+          <p className="text-center">Paso 1/2</p>
+        </div>
+      )}
+
       <h2 className="font-bold text-3xl lg:text-5xl text-center">
         Únete como cliente o abogado
       </h2>
@@ -39,10 +47,10 @@ const RegisterPage = () => {
         fácilmente, o como abogado con oportunidades profesionales.
       </p>
 
-      <div className="grid grid-cols-2 gap-5">
+      <div className="grid grid-cols-2 gap-5 ">
         <div
           onClick={() => handleCardClick("client")}
-          className={`p-8 border border-solid border-black rounded-xl ${
+          className={`p-8 border border-solid border-black rounded-xl cursor-pointer ${
             cardSelected == "client"
               ? "bg-black text-white"
               : "bg-white text-black"
@@ -54,7 +62,7 @@ const RegisterPage = () => {
 
         <div
           onClick={() => handleCardClick("lawyer")}
-          className={`p-8 border border-solid border-black rounded-xl ${
+          className={`p-8 border border-solid border-black rounded-xl cursor-pointer ${
             cardSelected == "lawyer"
               ? "bg-black text-white"
               : "bg-white text-black"
