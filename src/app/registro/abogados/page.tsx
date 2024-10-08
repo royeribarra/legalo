@@ -45,14 +45,14 @@ const RegisterLawyer = () => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
-    router.push("/email-verify");
+    router.push("/auth/abogado/completar-perfil");
   }
 
   return (
     <div className="container p-4 lg:p-8 mx-auto flex flex-col gap-8 lg:gap-10 mt-8 max-w-[860px]">
       <div>
-        <Progress value={100} className="mx-auto mb-4" />
-        <p className="text-center">Paso 2/2</p>
+        <Progress value={33} className="mx-auto mb-4" />
+        <p className="text-center">Paso 1/3</p>
       </div>
       <h2 className="font-bold text-3xl lg:text-5xl">Bienvenido a Legalo 👋</h2>
       <h3 className="lg:text-lg ">DATOS PERSONALES</h3>
@@ -141,7 +141,7 @@ const RegisterLawyer = () => {
           />
 
           <div className="flex items-center space-x-2">
-            <Checkbox id="terms2" disabled />
+            <Checkbox id="terms2" />
             <label
               htmlFor="terms2"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
