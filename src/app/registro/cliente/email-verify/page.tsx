@@ -9,8 +9,10 @@ const EmailVerify = () => {
   const [showStep, setshowStep] = useState(true);
 
   return (
-    <div className="h-screen flex flex-col p-4">
-      <header className="container mx-auto px-4 lg:px-8 flex justify-between items-center align h-[72px] bg-background min-h-[60px]">
+    <div
+      className={` h-screen flex flex-col p-4 ${showStep !== true ? "bg-lg_yellow " : ""}`}
+    >
+      <header className="container mx-auto px-4 lg:px-8 flex justify-between items-center align h-[72px] min-h-[60px]">
         <Link href="/">
           <Image
             src="/assets/legalo-logo.png"
@@ -24,7 +26,7 @@ const EmailVerify = () => {
       {showStep ? (
         <div className="flex justify-center flex-col items-center gap-4 flex-auto pb-20">
           <Image
-            src="/assets/images/image-wireframe.webp"
+            src="/assets/images/img-client-verify.jpg"
             alt="img-wireframe"
             width={460}
             height={460}
@@ -39,7 +41,7 @@ const EmailVerify = () => {
       ) : (
         <div className="flex justify-center flex-col items-center gap-4 flex-auto pb-20">
           <Image
-            src="/assets/images/image-wireframe.webp"
+            src="/assets/images/img-client-verify2.jpg"
             alt="img-wireframe"
             width={460}
             height={460}
@@ -47,7 +49,7 @@ const EmailVerify = () => {
           />
           <h2 className="text-4xl text-center">¡Bienvenido a Legalo!</h2>
           <p className="text-center">Tu cuenta ha sido creada con éxito.</p>
-          <Link href="/">
+          <Link href="/registro/cliente/bienvenida">
             <Button>Continuar</Button>
           </Link>
         </div>

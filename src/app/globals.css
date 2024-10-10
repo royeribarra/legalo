@@ -120,3 +120,7 @@ body {
 .degrade-blue {
   background: linear-gradient(180deg, #d5f1f0 0%, #ffffff 100%);
 }
+
+.degrade-yellow {
+  background: linear-gradient(180deg, #eef79c 0%, rgba(255, 255, 255, 0) 100%);
+}
