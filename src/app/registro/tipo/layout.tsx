@@ -31,15 +31,7 @@ export default function AboutLayout({ children }) {
         </header>
         <main>{children}</main>
       </div>
-      <div className="lg:col-span-1 overflow-hidden hidden lg:block">
-        <Image
-          src="/assets/images/image-wireframe.webp"
-          alt="img-wireframe"
-          width={1000}
-          height={1000}
-          className="h-full w-full object-cover"
-        />
-      </div>
+      <div className="lg:col-span-1 overflow-hidden hidden lg:block degrade-blue"></div>
     </div>
   );
 }

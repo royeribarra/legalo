@@ -6,6 +6,9 @@ import Link from "next/link";
 import React from "react";
 import { useState } from "react";
 
+import { ArrowLeft } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+
 const CompleteProfileLawyerPage = () => {
   const [selected, setSelected] = useState(null);
 
@@ -13,17 +16,17 @@ const CompleteProfileLawyerPage = () => {
     {
       id: 1,
       label: "Generar ingresos adicionales",
-      icon: "/path/to/icon1.png",
+      icon: "/icos/ico-ingresos-adicionales.png",
     },
     {
       id: 2,
       label: "Ganar experiencia para un trabajo a tiempo completo",
-      icon: "/path/to/icon2.png",
+      icon: "/icos/ico-gana-experiencia.png",
     },
     {
       id: 3,
       label: "Todavía no tengo un objetivo en mente",
-      icon: "/path/to/icon3.png",
+      icon: "/icos/ico-objetivo-mente.png",
     },
   ];
 
@@ -66,10 +69,21 @@ const CompleteProfileLawyerPage = () => {
           </div>
         ))}
       </div>
-      <div className="mt-20">
-        <Link href="/">
-          <Button className="w-full">SIGUIENTE</Button>
-        </Link>
+      <div className="grid grid-cols-4 fixed left-0 bottom-0 w-screen h-[115px] bg-[#D5F1F0] ">
+        <div className="col-span-4 lg:col-span-3 flex justify-center lg:justify-between items-center container mx-auto lg:px-8 max-w-[800px]">
+          <Link href="/registro/abogado">
+            <Button size="lg" variant="link">
+              <ArrowLeft className="mr-2 h-4 w-4" /> Atras
+            </Button>
+          </Link>
+
+          <Link href="/registro/abogado/completar-perfil">
+            <Button size="lg" className="">
+              Sigue completando tu perfil{" "}
+              <ArrowRight className="mr-2 h-4 w-4" />
+            </Button>
+          </Link>
+        </div>
       </div>
     </div>
   );
