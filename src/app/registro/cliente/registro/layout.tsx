@@ -1,13 +1,13 @@
+export const metadata = {
+  title: "Legalo",
+  description: "Abogados especializados",
+};
+
+import "@/app/globals.css";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
-import { ReactNode } from "react";
 
-interface LayoutProps {
-  children: ReactNode;
-}
-
-const CompleteProfileLawyerLayout = ({ children }: LayoutProps) => {
+export default function AboutLayout({ children }) {
   return (
     <div className="h-screen grid grid-cols-4 gap-4">
       <div className="col-span-4 lg:col-span-3">
@@ -31,17 +31,7 @@ const CompleteProfileLawyerLayout = ({ children }: LayoutProps) => {
         </header>
         <main>{children}</main>
       </div>
-      <div className="lg:col-span-1 overflow-hidden hidden lg:block">
-        <Image
-          src="/assets/images/image-wireframe.webp"
-          alt="img-wireframe"
-          width={1000}
-          height={1000}
-          className="h-full w-full object-cover"
-        />
-      </div>
+      <div className="lg:col-span-1 overflow-hidden hidden lg:block degrade-blue"></div>
     </div>
   );
-};
-
-export default CompleteProfileLawyerLayout;
+}

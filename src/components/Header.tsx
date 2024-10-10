@@ -46,7 +46,7 @@ const Header: React.FC<HeaderProps> = ({ serviceTipe, updateServiceTipe }) => {
             <Button variant="outline" size="sm">
               Iniciar Sesión
             </Button>
-            <Link href="/registro">
+            <Link href="/registro/tipo">
               <Button size="sm">Regístrate</Button>
             </Link>
           </div>
@@ -87,7 +87,7 @@ const Header: React.FC<HeaderProps> = ({ serviceTipe, updateServiceTipe }) => {
               <Button size="sm" className="bg-black">
                 Iniciar Sesión
               </Button>
-              <Link href="/registro">
+              <Link href="/registro/tipo">
                 <Button variant="outline" size="sm">
                   Regístrate
                 </Button>
