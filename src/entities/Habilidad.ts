@@ -10,6 +10,9 @@ export class HabilidadModel extends BaseEntity {
   @Column()
   nombre: string;
 
+  @Column({ nullable: true })
+  descripcion: string
+
   @ManyToMany(() => AbogadoModel, abogado => abogado.habilidades)
   abogados: AbogadoModel[];
 }

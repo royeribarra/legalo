@@ -5,6 +5,7 @@ import { IAbogado } from '@/interfaces/Abogado.interface';
 import { UserModel } from './User';
 import { HabilidadModel } from './Habilidad';
 import { TrabajoModel } from './Trabajo';
+import { AplicacionModel } from './Aplicacion';
 
 @Entity({name:'abogados'})
 export class AbogadoModel extends BaseEntity implements IAbogado
@@ -33,10 +34,10 @@ export class AbogadoModel extends BaseEntity implements IAbogado
 
     @Column()
     universidad: string;
-    
+
     @Column()
     grade_academico: string;
-    
+
     @Column()
     acerca_de: string;
 
@@ -45,7 +46,7 @@ export class AbogadoModel extends BaseEntity implements IAbogado
 
     @Column()
     direccion: string;
-    
+
     @Column()
     especializacion: string;
 
@@ -54,7 +55,7 @@ export class AbogadoModel extends BaseEntity implements IAbogado
 
     @Column()
     experiencia: string;
-    
+
     @Column()
     experiencia_anos: string;
 
@@ -66,5 +67,8 @@ export class AbogadoModel extends BaseEntity implements IAbogado
     habilidades: HabilidadModel[];
 
     @OneToMany(() => TrabajoModel, trabajo => trabajo.cliente)
-    trabajos: TrabajoModel[]; 
+    trabajos: TrabajoModel[];
+
+    @OneToMany(() => AplicacionModel, aplicacion => aplicacion.abogado)
+    aplicaciones: AplicacionModel[]
 }

@@ -44,9 +44,8 @@ export class ClienteModel extends BaseEntity implements ICliente
     @JoinColumn()
     user: UserModel;
 
-    @OneToOne(() => OfertaModel, oferta => oferta.cliente)
-    @JoinColumn()
-    oferta: OfertaModel;
+    @OneToMany(() => OfertaModel, oferta => oferta.cliente)
+    ofertas: OfertaModel[]
 
     @OneToMany(() => TrabajoModel, trabajo => trabajo.cliente)
     trabajos: TrabajoModel[];
