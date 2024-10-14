@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext } from 'react';
+import React, { createContext } from "react";
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react";
@@ -8,6 +8,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
@@ -252,6 +253,90 @@ const CarouselNext = React.forwardRef<
 });
 CarouselNext.displayName = "CarouselNext";
 
+// banner btns
+
+const CarouselPreviousBanner = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<typeof Button>
+>(({ className, variant = "outline", size = "icon", ...props }, ref) => {
+  const { orientation, scrollPrev, canScrollPrev } = useCarousel();
+
+  return (
+    <button ref={ref} onClick={scrollPrev} {...props}>
+      <Image
+        src="/icos/ico-carrusel-btn-left.png"
+        alt="arrow"
+        width={46}
+        height={46}
+      />
+    </button>
+  );
+});
+CarouselPreviousBanner.displayName = "CarouselPreviousBanner";
+
+const CarouselNextBanner = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<typeof Button>
+>(({ className, ...props }, ref) => {
+  const { orientation, scrollNext, canScrollNext } = useCarousel();
+
+  return (
+    <button ref={ref} onClick={scrollNext} {...props}>
+      <Image
+        src="/icos/ico-carrusel-btn-right.png"
+        alt="arrow"
+        width={46}
+        height={46}
+      />
+    </button>
+  );
+});
+CarouselNextBanner.displayName = "CarouselNextBanner";
+
+// fin banner btns
+
+// banner reviews
+
+const CarouselPreviousReviews = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<typeof Button>
+>(({ className, variant = "outline", size = "icon", ...props }, ref) => {
+  const { orientation, scrollPrev, canScrollPrev } = useCarousel();
+
+  return (
+    <button ref={ref} onClick={scrollPrev} {...props}>
+      <Image
+        src="/icos/ico-review-btn-left.png"
+        alt="arrow"
+        width={46}
+        height={46}
+      />
+    </button>
+  );
+});
+CarouselPreviousReviews.displayName = "CarouselPreviousReviews";
+
+const CarouselNextReviews = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<typeof Button>
+>(({ className, ...props }, ref) => {
+  const { orientation, scrollNext, canScrollNext } = useCarousel();
+
+  return (
+    <button ref={ref} onClick={scrollNext} {...props}>
+      <Image
+        src="/icos/ico-review-btn-right.png"
+        alt="arrow"
+        width={46}
+        height={46}
+      />
+    </button>
+  );
+});
+CarouselNextReviews.displayName = "CarouselNextReviews";
+
+// fin banner reviews
+
 export {
   type CarouselApi,
   Carousel,
@@ -259,4 +344,8 @@ export {
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
+  CarouselPreviousBanner,
+  CarouselNextBanner,
+  CarouselPreviousReviews,
+  CarouselNextReviews,
 };

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#1E1E1E]  flex flex-col justify-center overflow-hidden ">
+    <footer className="bg-[#1E1E1E]  flex flex-col justify-center overflow-hidden lg:pb-10">
       <div className="container p-4 lg:p-8 flex flex-col lg:flex-row items-start lg:justify-between lg:items-center border-b border-white mx-auto lg:h-[180px] gap-4">
         <Image
           src="/assets/legalo-logo-white.webp"
