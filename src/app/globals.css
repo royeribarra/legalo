@@ -124,3 +124,7 @@ body {
 .degrade-yellow {
   background: linear-gradient(180deg, #eef79c 0%, rgba(255, 255, 255, 0) 100%);
 }
+
+.overflow-child-visible > div {
+  overflow: visible;
+}

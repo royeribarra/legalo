@@ -12,7 +12,7 @@ const Header: React.FC<HeaderProps> = ({ serviceTipe, updateServiceTipe }) => {
   return (
     <>
       {serviceTipe === "client" ? (
-        <header className="container mx-auto px-4 lg:px-8 h-[80px] lg:h-[160px] bg-background flex justify-between items-center">
+        <header className="mx-auto px-4 lg:px-8 h-[80px] lg:h-[160px] bg-background flex justify-between items-center">
           <div>
             <Link href="/">
               <Image
@@ -43,7 +43,7 @@ const Header: React.FC<HeaderProps> = ({ serviceTipe, updateServiceTipe }) => {
           </div>
 
           <div className="flex gap-2">
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" className="border-none">
               Iniciar Sesión
             </Button>
             <Link href="/registro/tipo">
@@ -53,7 +53,7 @@ const Header: React.FC<HeaderProps> = ({ serviceTipe, updateServiceTipe }) => {
         </header>
       ) : (
         <div className="bg-black">
-          <header className="container mx-auto px-4 lg:px-8 h-[80px] lg:h-[160px] flex justify-between items-center">
+          <header className="mx-auto px-4 lg:px-8 h-[80px] lg:h-[160px] flex justify-between items-center">
             <div>
               <Link href="/">
                 <Image
@@ -84,7 +84,7 @@ const Header: React.FC<HeaderProps> = ({ serviceTipe, updateServiceTipe }) => {
               </div>
             </div>
             <div className="flex gap-2">
-              <Button size="sm" className="bg-black">
+              <Button size="sm" className="bg-black border-none">
                 Iniciar Sesión
               </Button>
               <Link href="/registro/tipo">
