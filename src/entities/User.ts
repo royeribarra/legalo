@@ -1,5 +1,5 @@
 import { IUser } from '@/interfaces/User.interface';
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from 'typeorm';
 import { BaseEntity } from './Base.entity';
 import { PerfilModel } from './Perfil';
 import { AbogadoModel } from './Abogado';

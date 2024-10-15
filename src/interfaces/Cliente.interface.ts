@@ -1,4 +1,3 @@
-import { IHabilidad } from "./Habilidad.interface";
 import { ITrabajo } from "./Trabajo.interface";
 import { IUser } from "./User.interface";
 

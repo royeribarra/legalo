@@ -1,7 +1,6 @@
 
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
 import { BaseEntity } from './Base.entity';
-import { IAbogado } from '@/interfaces/Abogado.interface';
 import { UserModel } from './User';
 import { ICliente } from '@/interfaces/Cliente.interface';
 import { TrabajoModel } from './Trabajo';

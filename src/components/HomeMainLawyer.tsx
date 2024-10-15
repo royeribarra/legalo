@@ -27,9 +27,9 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
+  // CarouselNext,
   CarouselNextReviews,
-  CarouselPrevious,
+  // CarouselPrevious,
   CarouselPreviousReviews,
 } from "@/components/ui/carousel";
 
@@ -46,7 +46,7 @@ type HomeMainProps = {
 };
 
 const HomeMain: React.FC<HomeMainProps> = ({
-  serviceTipe,
+  // serviceTipe,
   updateServiceTipe,
 }) => {
   const reviewsItems = [

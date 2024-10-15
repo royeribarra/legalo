@@ -1,5 +1,4 @@
-import { IUser } from '@/interfaces/User.interface';
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { BaseEntity } from './Base.entity';
 import { ITrabajo } from '@/interfaces/Trabajo.interface';
 import { OfertaModel } from './Oferta';

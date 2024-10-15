@@ -1,4 +1,4 @@
-import { DataSource, DataSourceOptions } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { UserModel } from './entities/User';
 import { PerfilModel } from './entities/Perfil';
 import { AbogadoModel } from './entities/Abogado';
@@ -7,8 +7,6 @@ import { OfertaModel } from './entities/Oferta';
 import { TrabajoModel } from './entities/Trabajo';
 import { HabilidadModel } from './entities/Habilidad';
 import { AplicacionModel } from './entities/Aplicacion';
-
-require('dotenv').config();
 
 export const AppDataSource = new DataSource({
   type: 'mysql',
