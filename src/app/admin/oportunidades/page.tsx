@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import { Table, Input, Button, Select, Space, Tag, DatePicker } from 'antd';
-import { SearchOutlined, FilterOutlined } from '@ant-design/icons';
+import { FilterOutlined } from '@ant-design/icons';
 import dayjs, { Dayjs } from 'dayjs';
 
 const { Option } = Select;
@@ -51,11 +51,11 @@ const estados: ('Activo' | 'Inactivo')[] = ['Activo', 'Inactivo'];
 const industrias: string[] = ['Tecnología', 'Recursos Humanos', 'Derecho Penal'];
 
 const AdminDashboard: React.FC = () => {
-  const [filteredData, setFilteredData] = useState<Opportunity[]>(data); // Datos filtrados por el usuario
-  const [searchTerm, setSearchTerm] = useState<string>(''); // Término de búsqueda
-  const [estadoFilter, setEstadoFilter] = useState<'Activo' | 'Inactivo' | null>(null); // Filtro por estado
-  const [industriaFilter, setIndustriaFilter] = useState<string | null>(null); // Filtro por industria
-  const [fechaFilter, setFechaFilter] = useState<[Dayjs, Dayjs] | null>(null); // Filtro por rango de fechas
+  const [filteredData, setFilteredData] = useState<Opportunity[]>(data);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [estadoFilter, setEstadoFilter] = useState<'Activo' | 'Inactivo' | null>(null);
+  const [industriaFilter, setIndustriaFilter] = useState<string | null>(null);
+  // const [fechaFilter, setFechaFilter] = useState<[Dayjs, Dayjs] | null>(null);
 
   // Filtros aplicados por el usuario
   const applyFilters = () => {

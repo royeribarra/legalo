@@ -1,33 +1,28 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Input, Dropdown, Avatar, Space, Select, Card, Row, Col } from 'antd';
+import { Layout, Menu, Input, Card, Row, Col } from 'antd';
 import {
-  UserOutlined,
-  SearchOutlined,
   EditOutlined,
   LogoutOutlined,
 } from '@ant-design/icons';
 import Link from 'next/link';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import HeaderAdmin from '@/components/admin/HeaderAdmin';
 import type { GetProps } from 'antd';
 
-const { Header, Content, Footer } = Layout;
-const { Search } = Input;
-const { Option } = Select;
+const { Content, Footer } = Layout;
 
 export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const router = useRouter();
   const pathname = usePathname();
   const [menuItems, setMenuItems] = useState<any[]>([]);
 
   useEffect(() => {
-    const userRole = localStorage.getItem('userRole');
+    // const userRole = localStorage.getItem('userRole');
     if (pathname?.includes('/admin/client') || pathname?.includes('/admin/lawyer') || pathname?.includes('/admin/oportunidades')) {
       setMenuItems([
         {
