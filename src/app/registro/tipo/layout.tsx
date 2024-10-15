@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 export const metadata = {
   title: "Legalo",
   description: "Abogados especializados",
@@ -7,7 +8,7 @@ import "@/app/globals.css";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function AboutLayout({ children }) {
+export default function AboutLayout({ children }: { children: ReactNode }) {
   return (
     <div className="h-screen grid grid-cols-4 gap-4">
       <div className="col-span-4 lg:col-span-3">
