@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 
-import { Progress } from "@/components/ui/progress";
+// import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Briefcase } from "lucide-react";

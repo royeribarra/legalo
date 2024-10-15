@@ -13,13 +13,18 @@ import type { GetProps } from 'antd';
 
 const { Content, Footer } = Layout;
 
+interface MenuItem {
+  key: string;
+  label: JSX.Element;
+}
+
 export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const [menuItems, setMenuItems] = useState<any[]>([]);
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
 
   useEffect(() => {
     // const userRole = localStorage.getItem('userRole');
@@ -64,16 +69,16 @@ export default function AdminLayout({
     }
   }, [pathname]);
 
-  const userMenu = (
-    <Menu>
-      <Menu.Item key="1" icon={<EditOutlined />}>
-        Edit Profile
-      </Menu.Item>
-      <Menu.Item key="2" icon={<LogoutOutlined />}>
-        Logout
-      </Menu.Item>
-    </Menu>
-  );
+  // const userMenu = (
+  //   <Menu>
+  //     <Menu.Item key="1" icon={<EditOutlined />}>
+  //       Edit Profile
+  //     </Menu.Item>
+  //     <Menu.Item key="2" icon={<LogoutOutlined />}>
+  //       Logout
+  //     </Menu.Item>
+  //   </Menu>
+  // );
   type SearchProps = GetProps<typeof Input.Search>;
 
   const { Search } = Input;

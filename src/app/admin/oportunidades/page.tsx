@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import { Table, Input, Button, Select, Space, Tag, DatePicker } from 'antd';
 import { FilterOutlined } from '@ant-design/icons';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
+import { Key } from 'antd/lib/table/interface';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -126,8 +127,8 @@ const AdminDashboard: React.FC = () => {
       dataIndex: 'estado',
       key: 'estado',
       filters: estados.map((estado) => ({ text: estado, value: estado })),
-      onFilter: (value: any, record: Opportunity) => {
-        return record.estado === (value as string);
+      onFilter: (value: boolean | Key, record: Opportunity) => {
+        return record.estado === value;
       },
       render: (estado: 'Activo' | 'Inactivo') => (
         <Tag color={estado === 'Activo' ? 'green' : 'red'}>{estado}</Tag>
@@ -138,7 +139,9 @@ const AdminDashboard: React.FC = () => {
       dataIndex: 'industria',
       key: 'industria',
       filters: industrias.map((industria) => ({ text: industria, value: industria })),
-      onFilter: (value: any, record: Opportunity) => record.industria.includes(value),
+      onFilter: (value: boolean | Key, record: Opportunity) => {
+        return record.industria === value;
+      },
       render: (industria: string) => (
         <span>{industria}</span>
       ),
