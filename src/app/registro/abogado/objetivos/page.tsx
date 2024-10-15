@@ -10,7 +10,7 @@ import { ArrowLeft } from "lucide-react";
 import { ArrowRight } from "lucide-react";
 
 const CompleteProfileLawyerPage = () => {
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState<number | null>(null);
 
   const options = [
     {
