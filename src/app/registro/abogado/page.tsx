@@ -24,7 +24,7 @@ import Image from "next/image";
 import { Check } from "lucide-react";
 
 const formSchema = z.object({
-  names: z.string().min(2).max(30),
+  names: z.string().min(2).max(30).regex(/^[A-Za-z\s]+$/, "Debe contener solo letras"),
   lastNames: z.string().min(2).max(30),
   email: z.string().min(2).max(30),
   location: z.string().min(2).max(30),

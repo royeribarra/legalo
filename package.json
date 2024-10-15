@@ -7,10 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test-connect": "ts-node scripts/testConnection.ts",
     "migrate": "typeorm migration:run",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --dataSource src/data-source.ts",
     "migration:run": "npm run typeorm migration:run",
-    "migration:generate": "npm run typeorm migration:generate ./src/migrations"
+    "migration:generate": "npm run typeorm migration:generate -d src/migrations"
   },
   "dependencies": {
     "@ant-design/cssinjs": "^1.21.1",
