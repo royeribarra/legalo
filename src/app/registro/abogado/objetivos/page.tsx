@@ -8,6 +8,7 @@ import { useState } from "react";
 
 import { ArrowLeft } from "lucide-react";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 
 const CompleteProfileLawyerPage = () => {
   const [selected, setSelected] = useState<number | null>(null);
@@ -52,7 +53,7 @@ const CompleteProfileLawyerPage = () => {
             }`}
           >
             <div className="flex items-center space-x-4">
-              <img src={option.icon} alt="" className="w-8 h-8" />
+              <Image src={option.icon} alt="" className="w-8 h-8" />
               <span className="text-sm font-medium">{option.label}</span>
             </div>
             <div

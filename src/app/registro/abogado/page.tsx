@@ -2,7 +2,7 @@
 
 import { Progress } from "@/components/ui/progress";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, FieldValues, FieldPath, UseFormRegister, Controller  } from "react-hook-form";
+import { useForm, FieldValues, FieldPath, Controller  } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -143,7 +143,6 @@ const PasswordField = <T extends FieldValues>({ field }: PasswordFieldProps<T>) 
 function RegisterLawyer(){
   const router = useRouter();
   // 1. Define your form.
-  const [showPassword, setShowPassword] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -156,12 +155,6 @@ function RegisterLawyer(){
     },
   });
   const password = form.watch("password");
-  const [validationsPassword, setPasswordValidations] = useState({
-    hasLowerCase: false,
-    hasUpperCase: false,
-    hasNumber: false,
-    hasMinLength: false,
-  });
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -170,30 +163,6 @@ function RegisterLawyer(){
     console.log(values);
     router.push("/registro/abogado/objetivos");
   }
-
-  useEffect(() => {
-    if (password?.length > 0) {
-      const lowerCaseRegex = /[a-z]/;
-      const upperCaseRegex = /[A-Z]/;
-      const numberRegex = /\d/;
-  
-      setPasswordValidations({
-        hasLowerCase: lowerCaseRegex.test(password),
-        hasUpperCase: upperCaseRegex.test(password),
-        hasNumber: numberRegex.test(password),
-        hasMinLength: password.length >= 8,
-      });
-    } else {
-      // Si no hay contraseña ingresada, restablecer las validaciones a falso
-      setPasswordValidations({
-        hasLowerCase: false,
-        hasUpperCase: false,
-        hasNumber: false,
-        hasMinLength: false,
-      });
-    }
-  }, [password]);
-  
 
   return (
     <div className="h-screen grid grid-cols-4 gap-4">
