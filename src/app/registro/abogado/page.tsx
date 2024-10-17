@@ -2,7 +2,7 @@
 
 import { Progress } from "@/components/ui/progress";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, FieldValues, FieldPath, UseFormRegister, Controller  } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -22,25 +22,145 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Check } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Eye, EyeOff } from "lucide-react"; 
+
+type PasswordFieldProps<T extends FieldValues> = {
+  field: {
+    name: FieldPath<T>;
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onBlur: () => void;
+    value: string;
+    ref: React.Ref<HTMLInputElement>;
+  };
+};
 
 const formSchema = z.object({
-  names: z.string().min(2).max(30).regex(/^[A-Za-z\s]+$/, "Debe contener solo letras"),
-  lastNames: z.string().min(2).max(30),
-  email: z.string().min(2).max(30),
-  location: z.string().min(2).max(30),
+  names: z
+  .string()
+  .min(2, { message: "El campo nombres debe tener al menos 2 caracteres" })
+  .max(30, { message: "El campo nombres no debe tener más de 30 caracteres" }),
+  lastNames: z
+  .string()
+  .min(2, { message: "El campo apellidos debe tener al menos 5 caracteres" })
+  .max(30, { message: "El campo apellidos no debe tener más de 30 caracteres" }),
+  email: z
+  .string()
+  .min(2, { message: "El campo email debe tener al menos 2 caracteres" })
+  .email({ message: "Debe ser un correo electrónico válido" }),
+  location: z
+  .string()
+  .min(2, { message: "El campo email debe tener al menos 2 caracteres" })
+  .max(30),
   password: z.string().min(1).max(15),
+  terms: z.boolean().refine((val) => val === true, {
+    message: "Debes aceptar los términos y condiciones",
+  }),
 });
 
-const RegisterLawyer = () => {
+const PasswordField = <T extends FieldValues>({ field }: PasswordFieldProps<T>) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [validations, setValidations] = useState({
+    hasLowerCase: false,
+    hasUpperCase: false,
+    hasNumber: false,
+    hasMinLength: false,
+  });
+
+  const password = field.value || ""; // Obtener la contraseña del field
+
+  useEffect(() => {
+    if (password.length > 0) {
+      
+      const lowerCaseRegex = /[a-z]/;
+      const upperCaseRegex = /[A-Z]/;
+      const numberRegex = /\d/;
+      console.log(lowerCaseRegex.test(password))
+      setValidations({
+        hasLowerCase: lowerCaseRegex.test(password),
+        hasUpperCase: upperCaseRegex.test(password),
+        hasNumber: numberRegex.test(password),
+        hasMinLength: password.length >= 8,
+      });
+    } else {
+      setValidations({
+        hasLowerCase: false,
+        hasUpperCase: false,
+        hasNumber: false,
+        hasMinLength: false,
+      });
+    }
+  }, [password]);
+
+  return (
+    <>
+      <div className="relative">
+        <Input
+          type={showPassword ? "text" : "password"}
+          placeholder="Contraseña"
+          {...field}
+          onChange={(event) => field.onChange(event)}
+        />
+        <button
+          type="button"
+          className="absolute right-2 top-2"
+          onClick={() => setShowPassword((prev) => !prev)}
+        >
+          {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+        </button>
+      </div>
+      <div className="grid grid-cols-2 gap-2 mt-2">
+        <div className="flex gap-2 items-center">
+          <Check
+            size={20}
+            color={validations.hasLowerCase ? "green" : "gray"}
+          />
+          <p>Letras minúsculas</p>
+        </div>
+        <div className="flex gap-2 items-center">
+          <Check
+            size={20}
+            color={validations.hasUpperCase ? "green" : "gray"}
+          />
+          <p>Letras mayúsculas</p>
+        </div>
+        <div className="flex gap-2 items-center">
+          <Check size={20} color={validations.hasNumber ? "green" : "gray"} />
+          <p>Números</p>
+        </div>
+        <div className="flex gap-2 items-center">
+          <Check
+            size={20}
+            color={validations.hasMinLength ? "green" : "gray"}
+          />
+          <p>8 caracteres mínimo</p>
+        </div>
+      </div>
+    </>
+  );
+};
+
+function RegisterLawyer(){
   const router = useRouter();
   // 1. Define your form.
+  const [showPassword, setShowPassword] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       names: "",
       lastNames: "",
       email: "",
+      location: "",
+      password: "",
+      terms: false
     },
+  });
+  const password = form.watch("password");
+  const [validationsPassword, setPasswordValidations] = useState({
+    hasLowerCase: false,
+    hasUpperCase: false,
+    hasNumber: false,
+    hasMinLength: false,
   });
 
   // 2. Define a submit handler.
@@ -50,6 +170,30 @@ const RegisterLawyer = () => {
     console.log(values);
     router.push("/registro/abogado/objetivos");
   }
+
+  useEffect(() => {
+    if (password?.length > 0) {
+      const lowerCaseRegex = /[a-z]/;
+      const upperCaseRegex = /[A-Z]/;
+      const numberRegex = /\d/;
+  
+      setPasswordValidations({
+        hasLowerCase: lowerCaseRegex.test(password),
+        hasUpperCase: upperCaseRegex.test(password),
+        hasNumber: numberRegex.test(password),
+        hasMinLength: password.length >= 8,
+      });
+    } else {
+      // Si no hay contraseña ingresada, restablecer las validaciones a falso
+      setPasswordValidations({
+        hasLowerCase: false,
+        hasUpperCase: false,
+        hasNumber: false,
+        hasMinLength: false,
+      });
+    }
+  }, [password]);
+  
 
   return (
     <div className="h-screen grid grid-cols-4 gap-4">
@@ -92,11 +236,26 @@ const RegisterLawyer = () => {
                   <FormField
                     control={form.control}
                     name="names"
+                    rules={{
+                      required: "Este campo es obligatorio",
+                      pattern: {
+                        value: /^[A-Za-z\s]+$/,
+                        message: "Solo se permiten letras y espacios",
+                      },
+                    }}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Nombres</FormLabel>
+                        <FormLabel>Nombress</FormLabel>
                         <FormControl>
-                          <Input placeholder="Nombres" {...field} />
+                          <Input 
+                            placeholder="Nombres" 
+                            {...field} 
+                            onKeyDown={(e) => {
+                              if (!/^[a-zA-Z\s]*$/.test(e.key)) {
+                                e.preventDefault();
+                              }
+                            }}
+                          />
                         </FormControl>
                         <FormDescription></FormDescription>
                         <FormMessage />
@@ -161,40 +320,40 @@ const RegisterLawyer = () => {
                     <FormItem>
                       <FormLabel>Contraseña</FormLabel>
                       <FormControl>
-                        <Input
-                          type="password"
-                          placeholder="Contraseña"
-                          {...field}
-                        />
+                        <PasswordField field={field} />
                       </FormControl>
                       <FormDescription></FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="flex gap-2 items-center">
-                    <Check size={20} color="gray" /> <p>Letras minúsculas</p>
-                  </div>
-                  <div className="flex gap-2 items-center">
-                    <Check size={20} color="gray" /> <p>Letras mayúsculas</p>
-                  </div>
-                  <div className="flex gap-2 items-center">
-                    <Check size={20} color="gray" /> <p>Números</p>
-                  </div>
-                  <div className="flex gap-2 items-center">
-                    <Check size={20} color="gray" /> <p>8 caracteres mínimo</p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-2 justify-center py-4">
-                  <Checkbox id="terms2" />
-                  <label
-                    htmlFor="terms2"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Acepto los Términos y condiciones
-                  </label>
-                </div>
+                 <FormField
+                    control={form.control}
+                    name="terms"
+                    render={({ field }) => (
+                      <div className="flex items-center space-x-2 justify-center py-4">
+                        <Controller
+                          name="terms"
+                          control={form.control}
+                          render={({ field: { onChange, value, ref } }) => (
+                            <Checkbox
+                              id="terms2"
+                              checked={value} // Utiliza `checked` en lugar de `value`
+                              onCheckedChange={onChange} // Cambia de `onChange` a `onCheckedChange`
+                              ref={ref} // Mantén la referencia
+                            />
+                          )}
+                        />
+                        <label
+                          htmlFor="terms2"
+                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                          Acepto los Términos y condiciones
+                        </label>
+                        <FormMessage />
+                      </div>
+                    )}
+                  />
 
                 <Button type="submit" className="w-full">
                   Crear mi cuenta
