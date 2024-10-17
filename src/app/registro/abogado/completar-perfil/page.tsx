@@ -2,14 +2,14 @@
 
 import { Progress } from "@/components/ui/progress";
 // import Link from "next/link";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // import { useState } from "react";
 import { Upload } from "lucide-react";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 // import { X } from "lucide-react";
-import { Check } from "lucide-react";
+// import { Check } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -158,6 +158,10 @@ const VideoUpload = () => {
     }
   };
 
+  useEffect(()=> {
+    console.log(videoFile)
+  }, [videoFile])
+
   return (
     <div className="w-full lg:w-1/5 flex flex-col flex-center justify-center items-center">
       <Image
@@ -240,8 +244,8 @@ const IndustrySelect = () => {
     { value: "juicios", label: "Juicios" },
   ];
 
-  const handleRemoveAll = (event: React.MouseEvent) => {
-    setSelectedServices([]); // Limpia todas las selecciones
+  const handleRemoveAll = () => {
+    setSelectedServices([]);
   };
 
   return (

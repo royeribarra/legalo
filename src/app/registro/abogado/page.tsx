@@ -154,7 +154,6 @@ function RegisterLawyer(){
       terms: false
     },
   });
-  const password = form.watch("password");
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -299,7 +298,7 @@ function RegisterLawyer(){
                  <FormField
                     control={form.control}
                     name="terms"
-                    render={({ field }) => (
+                    render={() => (
                       <div className="flex items-center space-x-2 justify-center py-4">
                         <Controller
                           name="terms"
