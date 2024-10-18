@@ -1,15 +1,15 @@
 "use client";
 
 import { Progress } from "@/components/ui/progress";
-import Link from "next/link";
-import React from "react";
-import { useState } from "react";
+// import Link from "next/link";
+import React, { useEffect, useRef, useState } from "react";
+// import { useState } from "react";
 import { Upload } from "lucide-react";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { X } from "lucide-react";
-import { Check } from "lucide-react";
+// import { X } from "lucide-react";
+// import { Check } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -25,7 +25,431 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import Image from "next/image";
 import { Textarea } from "@/components/ui/textarea";
 
+// form
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+
+const UploadCV = () => {
+  const [file, setFile] = useState<File | null>(null);
+  const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null); // Crea una referencia para el input de archivo
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0];
+
+    if (selectedFile) {
+      const validTypes = [
+        "application/pdf",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "application/msword",
+      ];
+
+      if (!validTypes.includes(selectedFile.type)) {
+        alert("Por favor, sube un archivo PDF o DOC/DOCX.");
+        return;
+      }
+
+      setFile(selectedFile);
+      setUploadSuccess(true); // Muestra el mensaje de éxito al subir el archivo
+    }
+  };
+
+  const handleCloseMessage = () => {
+    setUploadSuccess(false);
+  };
+
+  const handleButtonClick = () => {
+    fileInputRef.current?.click(); // Simula el clic en el input de archivo
+  };
+
+  const handleRemoveFile = () => {
+    setFile(null); // Elimina el archivo
+    setUploadSuccess(false); // Cierra el mensaje de éxito
+  };
+
+  return (
+    <div className="border border-black p-5 border-dashed">
+      <div className="flex flex-col lg:flex-row">
+        <div className="w-full lg:w-4/5">
+          <p>
+            Ahorra tiempo importando tu CV, CUL o perfil de LinkedIn en formato
+            PDF, Doc, Dox.
+          </p>
+        </div>
+        <div className="w-full flex items-center justify-end lg:w-1/5">
+          <input
+            type="file"
+            accept=".pdf, .doc, .docx"
+            onChange={handleFileChange}
+            style={{ display: "none" }} // Oculta el input de archivo
+            ref={fileInputRef} // Asocia la referencia al input
+          />
+          <Button onClick={handleButtonClick}>
+            {" "}
+            {/* Asocia el clic del botón al input */}
+            Importa tu CV <Upload size={18} color="white" className="ml-2" />
+          </Button>
+        </div>
+      </div>
+      {uploadSuccess && ( // Muestra el mensaje de éxito
+        <div className="flex flex-col bg-[#D9D9D9] rounded-lg p-2 gap-2 mt-2">
+          <div className="flex justify-between">
+            <div>
+              <p className="font-bold">Autocompletado con éxito</p>
+              <p>
+                Revisa la información que ha sido completada automáticamente
+              </p>
+            </div>
+            <Button variant="link" onClick={handleCloseMessage}>
+              <Image
+                src="/icos/close-x-circle.png"
+                alt="Cerrar mensaje"
+                width={24}
+                height={24}
+              />
+            </Button>
+          </div>
+        </div>
+      )}
+      {file && ( // Muestra el nombre del archivo y el botón de eliminar
+        <div className="flex justify-between items-center">
+          <p className="text-sm text-gray-700">Archivo: {file.name}</p>
+          <Button variant="link" onClick={handleRemoveFile}>
+            <Image
+              src="/icos/close-x-circle.png"
+              alt="Eliminar archivo"
+              width={24}
+              height={24}
+            />
+          </Button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const VideoUpload = () => {
+  const [videoFile, setVideoFile] = useState<File | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleVideoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if (file) {
+      // Verificar duración y tamaño del video
+      const videoUrl = URL.createObjectURL(file);
+      const video = document.createElement("video");
+
+      video.src = videoUrl;
+      video.onloadedmetadata = () => {
+        const duration = video.duration; // Duración en segundos
+        const sizeInMB = file.size / (1024 * 1024); // Tamaño en MB
+
+        if (duration > 60) {
+          setError("El video debe ser de máximo 1 minuto de duración.");
+          setVideoFile(null);
+        } else if (sizeInMB > 10) {
+          // Puedes ajustar el límite de tamaño aquí (10 MB en este caso)
+          setError("El tamaño del video debe ser menor a 10 MB.");
+          setVideoFile(null);
+        } else {
+          setError(null);
+          setVideoFile(file); // Guardar el archivo si pasa las validaciones
+        }
+      };
+    }
+  };
+
+  const handleButtonClick = () => {
+    const input = document.getElementById("video-upload") as HTMLInputElement;
+    if (input) {
+      input.click(); // Activa el input de archivo al hacer clic en el botón
+    }
+  };
+
+  useEffect(() => {
+    console.log(videoFile);
+  }, [videoFile]);
+
+  return (
+    <div className="w-full lg:w-1/5 flex flex-col flex-center justify-center items-center">
+      <Image
+        src="/assets/images/ico-camera.png"
+        alt="ico-camera"
+        width={64}
+        height={64}
+        className="block"
+      />
+      <input
+        type="file"
+        accept="video/*"
+        onChange={handleVideoChange}
+        style={{ display: "none" }} // Oculta el input de archivo
+        id="video-upload" // ID para el label
+      />
+      <Button variant="link" onClick={handleButtonClick}>
+        Sube un video tuyo
+      </Button>
+      {error && <p className="text-red-500 text-sm">{error}</p>}{" "}
+      {/* Mostrar errores */}
+    </div>
+  );
+};
+
+const ImageUpload = () => {
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]; // Obtén el archivo subido
+    if (file) {
+      setSelectedImage(file); // Guarda el archivo en el estado
+    }
+  };
+
+  const handleButtonClick = () => {
+    const input = document.getElementById("image-upload") as HTMLInputElement;
+    input.click(); // Simula un clic en el input file
+  };
+
+  return (
+    <div className="w-full lg:w-1/5 flex flex-col items-center gap-2">
+      <Image
+        src={
+          selectedImage
+            ? URL.createObjectURL(selectedImage)
+            : "/assets/images/ico-photo-perfil.png"
+        } // Usa la URL del objeto para mostrar la imagen
+        alt="Imagen subida"
+        width={96}
+        height={96}
+        className="rounded-full" // Puedes añadir estilos aquí
+      />
+      <input
+        type="file"
+        id="image-upload"
+        accept="image/*"
+        onChange={handleImageChange}
+        style={{ display: "none" }} // Oculta el input
+      />
+      <Button
+        size="sm"
+        variant="outline"
+        className="rounded-full"
+        onClick={handleButtonClick}
+      >
+        Sube una imagen*
+      </Button>
+    </div>
+  );
+};
+
+const IndustrySelect = () => {
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
+
+  const handleSelect = (value: string) => {
+    // Verifica si el servicio ya está seleccionado
+    if (!selectedServices.includes(value)) {
+      setSelectedServices([...selectedServices, value]);
+    }
+  };
+
+  const handleRemove = (value: string) => {
+    setSelectedServices(
+      selectedServices.filter((service) => service !== value)
+    );
+  };
+
+  const services = [
+    { value: "banca", label: "Banca" },
+    { value: "academico", label: "Académico" },
+    { value: "juicios", label: "Juicios" },
+  ];
+
+  const handleRemoveAll = () => {
+    setSelectedServices([]);
+  };
+
+  return (
+    <div className="w-full lg:w-1/2">
+      <p className="text-sm my-2">Industria</p>
+      <Select onValueChange={handleSelect}>
+        <SelectTrigger className="flex flex-wrap items-center">
+          <SelectValue placeholder="Seleccionar" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Servicios</SelectLabel>
+            {services
+              .filter((service) => !selectedServices.includes(service.value)) // Filtra los servicios seleccionados
+              .map((service) => (
+                <SelectItem key={service.value} value={service.value}>
+                  {service.label}
+                </SelectItem>
+              ))}
+            {/* Opción "Quitar todos" solo si todos están seleccionados */}
+            {selectedServices.length === services.length && (
+              <SelectItem value="remove-all" onClick={handleRemoveAll}>
+                Quitar todos
+              </SelectItem>
+            )}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+      <div className="flex flex-wrap mt-2">
+        {selectedServices.map((service) => (
+          <span
+            key={service}
+            className="bg-blue-500 text-white text-sm rounded-full px-3 py-1 mr-2 mb-2 flex items-center"
+          >
+            {services.find((s) => s.value === service)?.label}
+            <button
+              onClick={() => handleRemove(service)}
+              className="ml-2 text-white focus:outline-none"
+            >
+              &times; {/* Icono de cierre */}
+            </button>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const ServiceSelect = () => {
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
+
+  const handleSelect = (value: string) => {
+    // Verifica si el servicio ya está seleccionado
+    if (!selectedServices.includes(value)) {
+      setSelectedServices([...selectedServices, value]);
+    }
+  };
+
+  const handleRemove = (value: string) => {
+    setSelectedServices(
+      selectedServices.filter((service) => service !== value)
+    );
+  };
+
+  const services = ["asesoria", "escritos", "juicios"];
+
+  return (
+    <div className="w-full lg:w-1/2">
+      <p className="text-sm my-2">¿Cuáles son los servicios que ofreces?*</p>
+      <Select onValueChange={handleSelect}>
+        <SelectTrigger className="flex flex-wrap items-center">
+          <SelectValue placeholder="Seleccionar" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Servicios</SelectLabel>
+            {services
+              .filter((service) => !selectedServices.includes(service)) // Filtra los servicios seleccionados
+              .map((service) => (
+                <SelectItem key={service} value={service}>
+                  {service === "asesoria" && "Consultoría"}
+                  {service === "escritos" && "Investigación"}
+                  {service === "juicios" && "Litigios"}
+                </SelectItem>
+              ))}
+            {selectedServices.length === services.length && (
+              <div className="p-2 text-green-500 text-sm">
+                Todos fueron seleccionados
+              </div>
+            )}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+      <div className="flex flex-wrap mt-2">
+        {selectedServices.map((service) => (
+          <span
+            key={service}
+            className="bg-blue-500 text-white text-sm rounded-full px-3 py-1 mr-2 mb-2 flex items-center"
+          >
+            {service === "asesoria" && "Consultoría"}
+            {service === "escritos" && "Investigación"}
+            {service === "juicios" && "Litigios"}
+            <button
+              onClick={() => handleRemove(service)}
+              className="ml-2 text-white focus:outline-none"
+            >
+              &times; {/* Icono de cierre */}
+            </button>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+//form config
+const formSchema = z.object({
+  username: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+  desde: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+  desde_mes: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+  desde_ano: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+  hasta_ano: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+  hasta_mes: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+  titulo: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+  institucion: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+  ubicacion: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+  descripcion: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+});
+
 const CompleteProfileLawyerPage = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  // 1. Define your form.
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+    },
+  });
+
+  // 2. Define a submit handler.
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    console.log(values);
+  }
+
+  const togglePopup = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <div className="container mx-auto p-4 lg:p-8 max-w-[1000px]">
       <div className="max-w-[680px] mb-4 mx-auto">
@@ -36,7 +460,7 @@ const CompleteProfileLawyerPage = () => {
         <p>Campos obligatorios(*)</p>
       </div>
       <div className="border border-black p-5 my-4 rounded-xl flex flex-col md:flex-row gap-4">
-        <div className="w-full lg:w-1/5 flex flex-col items-center gap-2">
+        {/* <div className="w-full lg:w-1/5 flex flex-col items-center gap-2">
           <Image
             src="/assets/images/ico-photo-perfil.png"
             alt="ico-photo-perfil"
@@ -47,63 +471,23 @@ const CompleteProfileLawyerPage = () => {
           <Button size="sm" variant="outline" className="rounded-full">
             Sube una imagen*
           </Button>
-        </div>
+        </div> */}
+        <ImageUpload></ImageUpload>
+
         <div className="w-full lg:w-3/5 flex flex-col justify-center">
           <p className="font-bold">JUAN A.</p>
           <div className="flex flex-col md:flex-row gap-4">
-            <div className="w-full lg:w-1/2">
-              <Select>
-                <p className="text-sm my-2">
-                  ¿Cuales son los servicios que ofreces?*
-                </p>
-                <SelectTrigger className="">
-                  <SelectValue placeholder="Seleccionar" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Servicios</SelectLabel>
-                    <SelectItem value="asesoria">Asesoria</SelectItem>
-                    <SelectItem value="escritos">Escritos</SelectItem>
-                    <SelectItem value="juicios">Juicios</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
+            <ServiceSelect></ServiceSelect>
 
-            <div className="w-full lg:w-1/2">
-              <Select>
-                <p className="text-sm my-2">Industria</p>
-                <SelectTrigger className="">
-                  <SelectValue placeholder="Seleccionar" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Servicios</SelectLabel>
-                    <SelectItem value="asesoria">Asesoria</SelectItem>
-                    <SelectItem value="escritos">Escritos</SelectItem>
-                    <SelectItem value="juicios">Juicios</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
+            <IndustrySelect></IndustrySelect>
           </div>
         </div>
-        <div className="w-full lg:w-1/5 flex flex-col flex-center justify-center items-center">
-          <Image
-            src="/assets/images/ico-camera.png"
-            alt="ico-camera"
-            width={64}
-            height={64}
-            className="block"
-          />
-          <Button variant="link">Sube un video tuyo</Button>
-        </div>
+        <VideoUpload></VideoUpload>
       </div>
 
-      <div className="border border-black p-5 border-dashed ">
+      {/* <div className="border border-black p-5 border-dashed ">
         <div className="flex flex-col lg:flex-row">
           <div className="w-full lg:w-4/5">
-            <p className="font-bold">Autocompletar información</p>
             <p>
               Ahorra tiempo importando tu CV, CUL o perfil de LinkedIn en
               formato PDF, Doc, Dox.
@@ -138,7 +522,9 @@ const CompleteProfileLawyerPage = () => {
             </Button>
           </div>
         </div>
-      </div>
+      </div> */}
+
+      <UploadCV></UploadCV>
 
       <div className="my-4">
         <Tabs defaultValue="tab1" className="flex gap-4">
@@ -201,11 +587,17 @@ const CompleteProfileLawyerPage = () => {
             <TabsContent value="tab2">
               <div className="flex justify-between border-b border-gray-600 py-2">
                 <p className="font-bold text-base">Educación*</p>
-                <Button variant="outline" size="sm" className="rounded-full">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="rounded-full"
+                  onClick={togglePopup}
+                >
                   <Plus size={20} color="black" className="mr-4" /> Agregar
                   estudio
                 </Button>
               </div>
+
               <div>
                 <div className="flex gap-4 p-4">
                   <div className="w-1/4 flex gap-1">
@@ -406,6 +798,166 @@ const CompleteProfileLawyerPage = () => {
       <div className="pb-32">
         <p>Campos Obligatorios*</p>
       </div>
+      {isOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-20 ">
+          <div className="bg-white p-5 rounded-lg shadow-lg lg:min-w-[900px]">
+            <h2 className="text-2xl font-bold mb-4">Agregar educación</h2>
+            <div>
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-8"
+                >
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <FormLabel>Desde*</FormLabel>
+                      <div className="grid grid-cols-2 gap-2">
+                        <FormField
+                          control={form.control}
+                          name="desde_mes"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel></FormLabel>
+                              <FormControl>
+                                <Input placeholder="Enero" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="desde_año"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel></FormLabel>
+                              <FormControl>
+                                <Input placeholder="Enero" {...field} />
+                              </FormControl>
+
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <FormLabel>Hasta*</FormLabel>
+                      <div className="grid grid-cols-2 gap-2">
+                        <FormField
+                          control={form.control}
+                          name="hasta_mes"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel></FormLabel>
+                              <FormControl>
+                                <Input placeholder="Enero" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="hasta_año"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel></FormLabel>
+                              <FormControl>
+                                <Input placeholder="Enero" {...field} />
+                              </FormControl>
+                              <FormDescription>
+                                <div className="flex items-center space-x-2">
+                                  <Checkbox id="terms" />
+                                  <label
+                                    htmlFor="terms"
+                                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                  >
+                                    Actualmente trabajo aquí
+                                  </label>
+                                </div>
+                              </FormDescription>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <FormField
+                    control={form.control}
+                    name="titulo"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Titulo*</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Certificado Porfesional en Legal Tech en la Era Digital"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <div className="grid grid-cols-2 gap-4">
+                    <FormField
+                      control={form.control}
+                      name="institucion"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Institución o escuela*</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Massachusetts Institute of tecnology"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="ubicacion"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Ubicacion*</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Lima,Peru" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <FormField
+                    control={form.control}
+                    name="descripcion"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Descripción*</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            placeholder="Pequeña descripción..."
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button type="submit" variant="outline" onClick={togglePopup}>
+                    Cancelar
+                  </Button>
+                  <Button type="submit">Guardar</Button>
+                </form>
+              </Form>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

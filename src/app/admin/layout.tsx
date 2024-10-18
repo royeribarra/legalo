@@ -1,44 +1,33 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import {
-  Layout,
-  Menu,
-  Input,
-  Dropdown,
-  Avatar,
-  Space,
-  Select,
-  Card,
-  Row,
-  Col,
-} from "antd";
-import {
-  UserOutlined,
-  SearchOutlined,
-  EditOutlined,
-  LogoutOutlined,
-} from "@ant-design/icons";
+import { Layout, Menu, Input, Card, Row, Col } from "antd";
+// import {
+//   EditOutlined,
+//   LogoutOutlined,
+// } from '@ant-design/icons';
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import HeaderAdmin from "@/components/admin/HeaderAdmin";
 import type { GetProps } from "antd";
 
-const { Header, Content, Footer } = Layout;
-const { Search } = Input;
-const { Option } = Select;
+const { Content, Footer } = Layout;
+
+interface MenuItem {
+  key: string;
+  label: JSX.Element;
+}
 
 export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const router = useRouter();
   const pathname = usePathname();
-  const [menuItems, setMenuItems] = useState<any[]>([]);
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
 
   useEffect(() => {
-    const userRole = localStorage.getItem("userRole");
+    // const userRole = localStorage.getItem('userRole');
     if (
       pathname?.includes("/admin/client") ||
       pathname?.includes("/admin/lawyer") ||
@@ -84,16 +73,16 @@ export default function AdminLayout({
     }
   }, [pathname]);
 
-  const userMenu = (
-    <Menu>
-      <Menu.Item key="1" icon={<EditOutlined />}>
-        Edit Profile
-      </Menu.Item>
-      <Menu.Item key="2" icon={<LogoutOutlined />}>
-        Logout
-      </Menu.Item>
-    </Menu>
-  );
+  // const userMenu = (
+  //   <Menu>
+  //     <Menu.Item key="1" icon={<EditOutlined />}>
+  //       Edit Profile
+  //     </Menu.Item>
+  //     <Menu.Item key="2" icon={<LogoutOutlined />}>
+  //       Logout
+  //     </Menu.Item>
+  //   </Menu>
+  // );
   type SearchProps = GetProps<typeof Input.Search>;
 
   const { Search } = Input;

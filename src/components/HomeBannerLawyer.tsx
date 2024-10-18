@@ -5,24 +5,24 @@ import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
-import { Briefcase } from "lucide-react";
-import { ChevronRight } from "lucide-react";
+// import { Briefcase } from "lucide-react";
+// import { ChevronRight } from "lucide-react";
 
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
+  // CarouselNext,
+  // CarouselPrevious,
   CarouselPreviousBanner,
   CarouselNextBanner,
 } from "@/components/ui/carousel";
 
 import {
   Card,
-  CardContent,
+  // CardContent,
   CardDescription,
-  CardFooter,
+  // CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";

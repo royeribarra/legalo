@@ -1,5 +1,4 @@
 import React from 'react';
-import AdminLayout from './layout';
 
 function AdminPage() {
   return (

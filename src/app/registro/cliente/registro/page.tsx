@@ -9,11 +9,11 @@ import { Briefcase } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const RegisterPage = () => {
-  const [cardSelected, setCardSelected] = useState(null);
+  const [cardSelected, setCardSelected] = useState<string>('');
 
   const router = useRouter();
 
-  const handleCardClick = (tipe) => {
+  const handleCardClick = (tipe: string) => {
     setCardSelected(tipe);
   };
 

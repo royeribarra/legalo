@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import { Star } from "lucide-react";
+// import { Star } from "lucide-react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 import {
@@ -27,9 +27,9 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
+  // CarouselNext,
   CarouselNextReviews,
-  CarouselPrevious,
+  // CarouselPrevious,
   CarouselPreviousReviews,
 } from "@/components/ui/carousel";
 
@@ -46,7 +46,7 @@ type HomeMainProps = {
 };
 
 const HomeMain: React.FC<HomeMainProps> = ({
-  serviceTipe,
+  // serviceTipe,
   updateServiceTipe,
 }) => {
   const reviewsItems = [

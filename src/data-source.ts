@@ -1,4 +1,4 @@
-import { DataSource, DataSourceOptions } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { UserModel } from './entities/User';
 import { PerfilModel } from './entities/Perfil';
 import { AbogadoModel } from './entities/Abogado';
@@ -6,20 +6,19 @@ import { ClienteModel } from './entities/Cliente';
 import { OfertaModel } from './entities/Oferta';
 import { TrabajoModel } from './entities/Trabajo';
 import { HabilidadModel } from './entities/Habilidad';
-
-require('dotenv').config();
+import { AplicacionModel } from './entities/Aplicacion';
 
 export const AppDataSource = new DataSource({
   type: 'mysql',
-  host: process.env.DB_HOST || 'localhost',
+  host: process.env.DB_HOST || '127.0.0.1',
   port: parseInt(process.env.DB_PORT ?? '3306', 10),
   username: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'Legalo',
+  database: process.env.DB_NAME || 'legalo',
   entities: [
-    UserModel, PerfilModel, AbogadoModel, ClienteModel, OfertaModel, TrabajoModel, HabilidadModel
+    UserModel, PerfilModel, AbogadoModel, ClienteModel, OfertaModel, TrabajoModel, HabilidadModel, AplicacionModel
   ],
-  migrations: ['src/migration/**/*.ts'],
+  migrations: ['src/migrations/**/*.ts'],
   synchronize: false,
   migrationsRun: false,
   logging: false,

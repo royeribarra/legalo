@@ -2,18 +2,18 @@
 
 import React, { useState } from "react";
 
-import { Progress } from "@/components/ui/progress";
+// import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Briefcase } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const RegisterPage = () => {
-  const [cardSelected, setCardSelected] = useState(null);
+  const [cardSelected, setCardSelected] = useState<string>('');
 
   const router = useRouter();
 
-  const handleCardClick = (tipe) => {
+  const handleCardClick = (tipe: string) => {
     setCardSelected(tipe);
   };
 

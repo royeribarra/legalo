@@ -1,5 +1,5 @@
 
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from './Base.entity';
 import { IAbogado } from '@/interfaces/Abogado.interface';
 import { UserModel } from './User';
