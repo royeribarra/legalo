@@ -10,6 +10,9 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 // import { X } from "lucide-react";
 // import { Check } from "lucide-react";
+
+import specialtiesItems from "@/data/specialtiesItems";
+
 import {
   Select,
   SelectContent,
@@ -429,7 +432,15 @@ const formSchema = z.object({
 });
 
 const CompleteProfileLawyerPage = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [openAddServices, setOpenAddServices] = useState(false);
+  const [openAddStudy, setOpenAddStudy] = useState(false);
+
+  const toggleAddStudy = () => {
+    setOpenAddStudy(!openAddStudy);
+  };
+  const toggleAddServices = () => {
+    setOpenAddServices(!openAddServices);
+  };
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -445,10 +456,6 @@ const CompleteProfileLawyerPage = () => {
     // ✅ This will be type-safe and validated.
     console.log(values);
   }
-
-  const togglePopup = () => {
-    setIsOpen(!isOpen);
-  };
 
   return (
     <div className="container mx-auto p-4 lg:p-8 max-w-[1000px]">
@@ -475,7 +482,9 @@ const CompleteProfileLawyerPage = () => {
         <ImageUpload></ImageUpload>
 
         <div className="w-full lg:w-3/5 flex flex-col justify-center">
-          <p className="font-bold">JUAN A.</p>
+          <p className="font-bold" onClick={toggleAddServices}>
+            JUAN A.
+          </p>
           <div className="flex flex-col md:flex-row gap-4">
             <ServiceSelect></ServiceSelect>
 
@@ -525,7 +534,7 @@ const CompleteProfileLawyerPage = () => {
       </div> */}
 
       <UploadCV></UploadCV>
-
+      {/* lateral menu  */}
       <div className="my-4">
         <Tabs defaultValue="tab1" className="flex gap-4">
           <TabsList className="flex flex-col lg:w-1/4 h-full p-4 gap-2">
@@ -591,7 +600,7 @@ const CompleteProfileLawyerPage = () => {
                   variant="outline"
                   size="sm"
                   className="rounded-full"
-                  onClick={togglePopup}
+                  onClick={toggleAddStudy}
                 >
                   <Plus size={20} color="black" className="mr-4" /> Agregar
                   estudio
@@ -798,7 +807,8 @@ const CompleteProfileLawyerPage = () => {
       <div className="pb-32">
         <p>Campos Obligatorios*</p>
       </div>
-      {isOpen && (
+      {/* modal agregar educación */}
+      {openAddStudy && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-20 ">
           <div className="bg-white p-5 rounded-lg shadow-lg lg:min-w-[900px]">
             <h2 className="text-2xl font-bold mb-4">Agregar educación</h2>
@@ -827,7 +837,7 @@ const CompleteProfileLawyerPage = () => {
                         />
                         <FormField
                           control={form.control}
-                          name="desde_año"
+                          name="desde_ano"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel></FormLabel>
@@ -860,7 +870,7 @@ const CompleteProfileLawyerPage = () => {
                         />
                         <FormField
                           control={form.control}
-                          name="hasta_año"
+                          name="hasta_ano"
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel></FormLabel>
@@ -948,12 +958,55 @@ const CompleteProfileLawyerPage = () => {
                       </FormItem>
                     )}
                   />
-                  <Button type="submit" variant="outline" onClick={togglePopup}>
+                  <Button
+                    type="submit"
+                    variant="outline"
+                    onClick={toggleAddStudy}
+                  >
                     Cancelar
                   </Button>
                   <Button type="submit">Guardar</Button>
                 </form>
               </Form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* modal agregar servicios */}
+      {openAddServices && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-20 ">
+          <div className="bg-white rounded-lg shadow-lg lg:min-w-[900px] p-14 relative">
+            <h2 className="text-5xl mb-4 font-tiempos">
+              ¿Cuál es tu especialidad?
+            </h2>
+            <p className="text-lg">
+              Puedes escoger como mínimo de 1 y como máximo 5. Esto se mostrará
+              en tu perfil público*
+            </p>
+            <div>
+              <div className="grid grid-cols-3">
+                {specialtiesItems.map((item) => (
+                  <div
+                    key={item.CardTitle}
+                    className="relative p-5 bg-white border border-black"
+                  >
+                    <div className="w-12 h-12 bg-[#D9D9D9] flex justify-center items-center rounded-full">
+                      <Image
+                        src={item.ImageSrc}
+                        alt={item.CardTitle}
+                        width={25}
+                        height={25}
+                      />
+                    </div>
+                    <p>{item.CardTitle}</p>
+                    <Checkbox className="absolute top-5 right-5" />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="flex justify-end">
+              <Button onClick={toggleAddServices}>Cancelar</Button>
             </div>
           </div>
         </div>
