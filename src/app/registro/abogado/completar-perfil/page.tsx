@@ -8,8 +8,9 @@ import { Upload } from "lucide-react";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-// import { X } from "lucide-react";
-// import { Check } from "lucide-react";
+import { X as IconX } from "lucide-react";
+import { Check as CheckIcon } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 import specialtiesItems from "@/data/specialtiesItems";
 
@@ -187,7 +188,7 @@ const VideoUpload = () => {
   }, [videoFile]);
 
   return (
-    <div className="w-full lg:w-1/5 flex flex-col flex-center justify-center items-center">
+    <div className="w-full lg:w-1/6 flex flex-col flex-center justify-center items-center">
       <Image
         src="/assets/images/ico-camera.png"
         alt="ico-camera"
@@ -227,7 +228,7 @@ const ImageUpload = () => {
   };
 
   return (
-    <div className="w-full lg:w-1/5 flex flex-col items-center gap-2">
+    <div className="w-full lg:w-1/6 flex flex-col items-center gap-2">
       <Image
         src={
           selectedImage
@@ -431,8 +432,14 @@ const formSchema = z.object({
   }),
 });
 
-const CompleteProfileLawyerPage = () => {
+const CompleteProfileLawyerPage: React.FC = () => {
   const [openAddServices, setOpenAddServices] = useState(false);
+  const [selectServices, setSelectServices] = useState<string[]>([]);
+  const [selectIndustria, setSelectIndustria] = useState<string[]>([
+    "Banca",
+    "Académico",
+    "Corporativo",
+  ]);
   const [openAddStudy, setOpenAddStudy] = useState(false);
 
   const toggleAddStudy = () => {
@@ -458,10 +465,10 @@ const CompleteProfileLawyerPage = () => {
   }
 
   return (
-    <div className="container mx-auto p-4 lg:p-8 max-w-[1000px]">
+    <div className="container mx-auto p-4 lg:py-8 lg:px-0 w-full lg:max-w-[960px]">
       <div className="max-w-[680px] mb-4 mx-auto">
-        <Progress value={100} className="mb-2" />
-        <p className="text-center">Paso 3/3</p>
+        <Progress value={100} className="mb-2 h-2" />
+        <p className="text-left">Paso 3/3</p>
       </div>
       <div>
         <p>Campos obligatorios(*)</p>
@@ -481,14 +488,76 @@ const CompleteProfileLawyerPage = () => {
         </div> */}
         <ImageUpload></ImageUpload>
 
-        <div className="w-full lg:w-3/5 flex flex-col justify-center">
-          <p className="font-bold" onClick={toggleAddServices}>
-            JUAN A.
-          </p>
-          <div className="flex flex-col md:flex-row gap-4">
-            <ServiceSelect></ServiceSelect>
+        <div className="w-full lg:w-4/6 flex flex-col justify-center">
+          <p className="font-bold">JUAN A.</p>
+          <div className="w-full flex flex-col md:flex-row gap-4">
+            {/* <ServiceSelect></ServiceSelect> */}
 
-            <IndustrySelect></IndustrySelect>
+            <div>
+              <p className="text-base mb-2">
+                ¿Cuales son los servicios que ofreces?*
+              </p>
+              <div className="relative border border-black rounded-[10px] h-12  px-3 lg:w-[310px] overflow-hidden flex items-center ">
+                <div className="flex items-center gap-2 overflow-x-auto hidde-scrollbar scroll-smooth pr-12">
+                  {selectServices.map((service, index) => (
+                    <div className="bg-[#D5F1F0] h-8 flex items-center rounded-full px-3 gap-1 text-xs relative">
+                      <p className="whitespace-nowrap">{service}</p>
+                      <span
+                        className="w-6 h-6 cursor-pointer"
+                        onClick={() => {
+                          setSelectServices(
+                            selectServices.filter(
+                              (services) => services !== service
+                            )
+                          );
+                        }}
+                      >
+                        <IconX />
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                <div
+                  className="absolute right-0 bg-white h-full w-[48px] flex justify-center items-center cursor-pointer"
+                  onClick={toggleAddServices}
+                >
+                  <ChevronDown />
+                </div>
+              </div>
+            </div>
+
+            {/* <IndustrySelect></IndustrySelect> */}
+
+            <div>
+              <p className="text-base mb-2">Industria</p>
+              <div className="relative border border-black rounded-[10px] h-12  px-3 lg:w-[310px] overflow-hidden flex items-center ">
+                <div className="flex items-center gap-2 overflow-x-auto hidde-scrollbar scroll-smooth pr-12">
+                  {selectIndustria.map((service, index) => (
+                    <div className="bg-[#D9D9D9] h-8 flex items-center rounded-full px-3 gap-1 text-xs relative">
+                      <p className="whitespace-nowrap">{service}</p>
+                      <span
+                        className="w-6 h-6 cursor-pointer"
+                        onClick={() => {
+                          setSelectIndustria(
+                            selectIndustria.filter(
+                              (services) => services !== service
+                            )
+                          );
+                        }}
+                      >
+                        <IconX />
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                <div
+                  className="absolute right-0 bg-white h-full w-[48px] flex justify-center items-center cursor-pointer"
+                  onClick={toggleAddServices}
+                >
+                  <ChevronDown />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <VideoUpload></VideoUpload>
@@ -535,29 +604,45 @@ const CompleteProfileLawyerPage = () => {
 
       <UploadCV></UploadCV>
       {/* lateral menu  */}
-      <div className="my-4">
+      <div className="my-4 pb-32">
         <Tabs defaultValue="tab1" className="flex gap-4">
-          <TabsList className="flex flex-col lg:w-1/4 h-full p-4 gap-2">
-            <TabsTrigger value="tab1" className="w-full justify-start py-4">
+          <TabsList className="flex flex-col lg:w-1/4 h-full p-4 gap-2 bg-white pl-0 items-start">
+            <TabsTrigger
+              value="tab1"
+              className="text-[#D1D1D6] w-full justify-start py-4 text-lg font-bold data-[state=active]:bg-[#D9D9D9] data-[state=active]:text-black rounded-[10px]"
+            >
               Experiencia laboral
             </TabsTrigger>
-            <TabsTrigger value="tab2" className="w-full justify-start py-4">
+            <TabsTrigger
+              value="tab2"
+              className="text-[#D1D1D6] w-full justify-start py-4 text-lg font-bold data-[state=active]:bg-[#D9D9D9] data-[state=active]:text-black rounded-[10px]"
+            >
               Educación
             </TabsTrigger>
-            <TabsTrigger value="tab3" className="w-full justify-start py-4">
+            <TabsTrigger
+              value="tab3"
+              className=" text-[#D1D1D6] w-full justify-start py-4 text-lg font-bold data-[state=active]:bg-[#D9D9D9] data-[state=active]:text-black rounded-[10px]"
+            >
               Sobre tí
             </TabsTrigger>
-            <TabsTrigger value="tab4" className="w-full justify-start py-4">
+            <TabsTrigger
+              value="tab4"
+              className=" text-[#D1D1D6] w-full justify-start py-4 text-lg font-bold data-[state=active]:bg-[#D9D9D9] data-[state=active]:text-black rounded-[10px]"
+            >
               Skills
             </TabsTrigger>
-            <TabsTrigger value="tab5" className="w-full justify-start py-4">
+            <TabsTrigger
+              value="tab5"
+              className=" text-[#D1D1D6] w-full justify-start py-4 text-lg font-bold data-[state=active]:bg-[#D9D9D9] data-[state=active]:text-black rounded-[10px]"
+            >
               Documentación extra
             </TabsTrigger>
+            <p className="my-8 text-black text-base">Campos obligatorios(*)</p>
           </TabsList>
           <div className="lg:w-3/4">
             <TabsContent value="tab1">
               <div>
-                <p className="font-bold text-base">Experiencia*</p>
+                <p className="font-bold text-lg">Experiencia*</p>
                 <div className="border border-black border-dashed p-4 flex justify-center my-2">
                   <Button variant="link">
                     <Plus
@@ -579,7 +664,7 @@ const CompleteProfileLawyerPage = () => {
                 </div>
 
                 <div>
-                  <p className="font-bold text-xl">CV*</p>
+                  <p className="font-bold text-lg">CV*</p>
                   <div className="border border-black border-dashed p-2 flex flex-col items-center">
                     <Image
                       src="/assets/images/ico-upload.png"
@@ -595,7 +680,7 @@ const CompleteProfileLawyerPage = () => {
             </TabsContent>
             <TabsContent value="tab2">
               <div className="flex justify-between border-b border-gray-600 py-2">
-                <p className="font-bold text-base">Educación*</p>
+                <p className="font-bold text-lg">Educación*</p>
                 <Button
                   variant="outline"
                   size="sm"
@@ -804,19 +889,19 @@ const CompleteProfileLawyerPage = () => {
           </div>
         </Tabs>
       </div>
-      <div className="pb-32">
-        <p>Campos Obligatorios*</p>
-      </div>
+
       {/* modal agregar educación */}
       {openAddStudy && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-20 ">
-          <div className="bg-white p-5 rounded-lg shadow-lg lg:min-w-[900px]">
-            <h2 className="text-2xl font-bold mb-4">Agregar educación</h2>
+          <div className="bg-white p-16 rounded-lg shadow-lg lg:min-w-[970px] relative">
+            <h2 className="text-2xl font-bold mb-4 border-b-[1px] border-[#AFB1B6] pb-2">
+              Agregar educación
+            </h2>
             <div>
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
-                  className="space-y-8"
+                  className="space-y-4"
                 >
                   <div className="grid grid-cols-2 gap-4">
                     <div>
@@ -829,7 +914,11 @@ const CompleteProfileLawyerPage = () => {
                             <FormItem>
                               <FormLabel></FormLabel>
                               <FormControl>
-                                <Input placeholder="Enero" {...field} />
+                                <Input
+                                  className="border border-black rounded-[10px] h-12"
+                                  placeholder="Enero"
+                                  {...field}
+                                />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -842,7 +931,11 @@ const CompleteProfileLawyerPage = () => {
                             <FormItem>
                               <FormLabel></FormLabel>
                               <FormControl>
-                                <Input placeholder="Enero" {...field} />
+                                <Input
+                                  className="border border-black rounded-[10px] h-12"
+                                  placeholder="2024"
+                                  {...field}
+                                />
                               </FormControl>
 
                               <FormMessage />
@@ -862,7 +955,11 @@ const CompleteProfileLawyerPage = () => {
                             <FormItem>
                               <FormLabel></FormLabel>
                               <FormControl>
-                                <Input placeholder="Enero" {...field} />
+                                <Input
+                                  className="border border-black rounded-[10px] h-12"
+                                  placeholder="Set. 2024"
+                                  {...field}
+                                />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -875,7 +972,11 @@ const CompleteProfileLawyerPage = () => {
                             <FormItem>
                               <FormLabel></FormLabel>
                               <FormControl>
-                                <Input placeholder="Enero" {...field} />
+                                <Input
+                                  className="border border-black rounded-[10px] h-12"
+                                  placeholder="Enero"
+                                  {...field}
+                                />
                               </FormControl>
                               <FormDescription>
                                 <div className="flex items-center space-x-2">
@@ -903,6 +1004,7 @@ const CompleteProfileLawyerPage = () => {
                         <FormLabel>Titulo*</FormLabel>
                         <FormControl>
                           <Input
+                            className="border border-black rounded-[10px] h-12"
                             placeholder="Certificado Porfesional en Legal Tech en la Era Digital"
                             {...field}
                           />
@@ -920,6 +1022,7 @@ const CompleteProfileLawyerPage = () => {
                           <FormLabel>Institución o escuela*</FormLabel>
                           <FormControl>
                             <Input
+                              className="border border-black rounded-[10px] h-12"
                               placeholder="Massachusetts Institute of tecnology"
                               {...field}
                             />
@@ -935,7 +1038,11 @@ const CompleteProfileLawyerPage = () => {
                         <FormItem>
                           <FormLabel>Ubicacion*</FormLabel>
                           <FormControl>
-                            <Input placeholder="Lima,Peru" {...field} />
+                            <Input
+                              className="border border-black rounded-[10px] h-12"
+                              placeholder="Lima,Peru"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -947,9 +1054,10 @@ const CompleteProfileLawyerPage = () => {
                     name="descripcion"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Descripción*</FormLabel>
+                        <FormLabel>Descripción</FormLabel>
                         <FormControl>
                           <Textarea
+                            className="border border-black rounded-[10px]"
                             placeholder="Pequeña descripción..."
                             {...field}
                           />
@@ -958,16 +1066,30 @@ const CompleteProfileLawyerPage = () => {
                       </FormItem>
                     )}
                   />
-                  <Button
-                    type="submit"
-                    variant="outline"
-                    onClick={toggleAddStudy}
-                  >
-                    Cancelar
-                  </Button>
-                  <Button type="submit">Guardar</Button>
+                  <div className="flex justify-end gap-6 border-t-[1px] border-black pt-4">
+                    <Button
+                      type="submit"
+                      variant="outline"
+                      className="w-[190px] h-12 rounded-[10px]"
+                      onClick={toggleAddStudy}
+                    >
+                      Cancelar
+                    </Button>
+                    <Button
+                      className="w-[190px] h-12 rounded-[10px]"
+                      type="submit"
+                    >
+                      Guardar
+                    </Button>
+                  </div>
                 </form>
               </Form>
+            </div>
+            <div
+              className="absolute top-8 right-8 w-5 h-5 bg-black flex  justify-center items-center rounded-full cursor-pointer"
+              onClick={toggleAddStudy}
+            >
+              <IconX className="text-white w-4 h-4" />
             </div>
           </div>
         </div>
@@ -980,18 +1102,17 @@ const CompleteProfileLawyerPage = () => {
             <h2 className="text-5xl mb-4 font-tiempos">
               ¿Cuál es tu especialidad?
             </h2>
-            <p className="text-lg">
+            <p className="text-lg my-4">
               Puedes escoger como mínimo de 1 y como máximo 5. Esto se mostrará
               en tu perfil público*
             </p>
             <div>
-              <div className="grid grid-cols-3">
+              <div className="grid grid-cols-3 bg-black gap-[1px]">
                 {specialtiesItems.map((item) => (
-                  <div
-                    key={item.CardTitle}
-                    className="relative p-5 bg-white border border-black"
-                  >
-                    <div className="w-12 h-12 bg-[#D9D9D9] flex justify-center items-center rounded-full">
+                  <div key={item.CardTitle} className="relative p-5 bg-white">
+                    <div
+                      className={`w-12 h-12  flex justify-center items-center rounded-full ${selectServices.includes(item.CardTitle) ? "bg-[#D5F1F0]" : "bg-[#D9D9D9]"}`}
+                    >
                       <Image
                         src={item.ImageSrc}
                         alt={item.CardTitle}
@@ -1000,13 +1121,39 @@ const CompleteProfileLawyerPage = () => {
                       />
                     </div>
                     <p>{item.CardTitle}</p>
-                    <Checkbox className="absolute top-5 right-5" />
+                    <div
+                      className={`absolute top-5 right-5 w-5 h-5  flex  justify-center items-center rounded-sm cursor-pointer ${selectServices.includes(item.CardTitle) ? "bg-[#007AFF]" : "border border-black"}`}
+                      onClick={() => {
+                        if (selectServices.includes(item.CardTitle)) {
+                          setSelectServices(
+                            selectServices.filter(
+                              (service) => service !== item.CardTitle
+                            )
+                          );
+                        } else {
+                          setSelectServices([
+                            ...selectServices,
+                            item.CardTitle,
+                          ]);
+                        }
+                      }}
+                    >
+                      <CheckIcon className="text-white w-4 h-4" />
+                    </div>
                   </div>
                 ))}
+                <div className="relative p-5 bg-white"></div>
+                <div className="relative p-5 bg-white"></div>
               </div>
             </div>
-            <div className="flex justify-end">
-              <Button onClick={toggleAddServices}>Cancelar</Button>
+            <div className="flex justify-end gap-6  pt-4 mt-4">
+              <Button
+                className="w-[190px] h-12 rounded-[10px]"
+                type="submit"
+                onClick={toggleAddServices}
+              >
+                Aceptar
+              </Button>
             </div>
           </div>
         </div>

@@ -128,3 +128,13 @@ body {
 .overflow-child-visible > div {
   overflow: visible;
 }
+
+.invert-100 {
+  filter: invert(100%);
+}
+
+.hidde-scrollbar::-webkit-scrollbar {
+  display: none;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}

@@ -6,7 +6,7 @@ import Link from "next/link";
 import React from "react";
 import { useState } from "react";
 
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Check } from "lucide-react";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 
@@ -32,13 +32,13 @@ const CompleteProfileLawyerPage = () => {
   ];
 
   return (
-    <div className="container mx-auto p-4 m-8 max-w-[720px]">
-      <div className="max-w-[480px] mx-auto">
-        <Progress value={66} className="mx-auto mb-4" />
-        <p className="text-center">Paso 2/3</p>
+    <div className="container mx-auto p-4 lg:p-8 m-8 lg:w-[740px]">
+      <div className="w-full max-w-[480px] mx-auto mb-8">
+        <Progress value={66} className="mx-auto mb-4 h-2" />
+        <p className="text-left">Paso 2/3</p>
       </div>
       <div>
-        <h1 className="text-4xl my-4">¿Cuál es tu objetivo?</h1>
+        <h1 className="text-4xl my-4 font-tiempos">¿Cuál es tu objetivo?</h1>
         <p>Como Legalo puede ayudarte:</p>
       </div>
       <div className="space-y-4 mt-4">
@@ -47,31 +47,23 @@ const CompleteProfileLawyerPage = () => {
             key={option.id}
             onClick={() => setSelected(option.id)}
             className={`flex items-center justify-between w-full p-4 border rounded-lg cursor-pointer ${
-              selected === option.id
-                ? "border-black bg-gray-100"
-                : "border-gray-200"
+              selected === option.id ? " bg-[#D9D9D9]" : "border-black"
             }`}
           >
             <div className="flex items-center space-x-4">
               <Image
                 src={option.icon}
                 alt=""
-                className="w-8 h-8"
-                width={32}
-                height={32}
+                className="w-12 h-12"
+                width={54}
+                height={54}
               />
-              <span className="text-sm font-medium">{option.label}</span>
+              <span className="text-sm lg:text-2xl">{option.label}</span>
             </div>
             <div
-              className={`w-5 h-5 border-2 rounded-full flex items-center justify-center ${
-                selected === option.id
-                  ? "bg-black border-black"
-                  : "border-gray-300"
-              }`}
+              className={`rounded-full w-[20px] h-[20px] flex justify-center items-center ${selected === option.id ? "bg-[#007AFF]" : "border border-black"}`}
             >
-              {selected === option.id && (
-                <div className="w-3 h-3 bg-white rounded-full"></div>
-              )}
+              <Check className="text-white w-[24px] h-[16px]" />
             </div>
           </div>
         ))}

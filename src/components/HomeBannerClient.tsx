@@ -105,7 +105,7 @@ const HomeBannerClient = () => {
       <div className="lg:grid grid-cols-[5fr_6fr] w-full lg:min-h-[616px] items-center border-t border-t-black">
         <div className="bg-lg_yellow p-8 h-full w-full flex  pt-[6%] pl-[10%]">
           <div className="max-w-[444px] flex flex-col gap-8">
-            <h1 className="text-black text-3xl lg:text-[64px] font-tiempos leading-[1.2]">
+            <h1 className="text-black text-3xl lg:text-[48px] xl:text-[64px] font-tiempos leading-[1.2]">
               Soluciona tus asuntos legales con un{" "}
               <span className="italic font-light">abogado de confianza.</span>
             </h1>
@@ -128,7 +128,7 @@ const HomeBannerClient = () => {
           </div>
         </div>
         <div className="bg-[url('/assets/images/img-landing-clients.jpg')] bg-top bg-cover bg-no-repeat w-full h-full hidden lg:block border-l border-l-black"></div>
-        <div className="hidden lg:block absolute xl:left-[38vw] 2xl:left-[32vw] bottom-[20vh] transform rotate-[14deg]">
+        <div className="hidden lg:block absolute lg:left-[30vw] xl:left-[38vw] 2xl:left-[32vw] bottom-[20vh] transform rotate-[14deg]">
           <Image
             src="/assets/images/img-arrow-banner.png"
             alt="arrow"
