@@ -44,6 +44,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import ModalAgregarEducacion from "@/components/abogado/modalAgregarEducacion";
 
 const UploadCV = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -347,7 +348,11 @@ const ServiceSelect = () => {
     );
   };
 
-  const services = ["asesoria", "escritos", "juicios"];
+  const services = [
+    { value: "consultoria", label: "Consultoría" },
+    { value: "investigacion", label: "Investigación" },
+    { value: "litigios", label: "Litigios" },
+  ];
 
   return (
     <div className="w-full lg:w-1/2">
@@ -360,12 +365,10 @@ const ServiceSelect = () => {
           <SelectGroup>
             <SelectLabel>Servicios</SelectLabel>
             {services
-              .filter((service) => !selectedServices.includes(service)) // Filtra los servicios seleccionados
+              .filter((service) => !selectedServices.includes(service.value)) // Filtra los servicios seleccionados
               .map((service) => (
-                <SelectItem key={service} value={service}>
-                  {service === "asesoria" && "Consultoría"}
-                  {service === "escritos" && "Investigación"}
-                  {service === "juicios" && "Litigios"}
+                <SelectItem key={service.value} value={service.value}>
+                  {service.label}
                 </SelectItem>
               ))}
             {selectedServices.length === services.length && (
@@ -382,9 +385,7 @@ const ServiceSelect = () => {
             key={service}
             className="bg-blue-500 text-white text-sm rounded-full px-3 py-1 mr-2 mb-2 flex items-center"
           >
-            {service === "asesoria" && "Consultoría"}
-            {service === "escritos" && "Investigación"}
-            {service === "juicios" && "Litigios"}
+            {services.find((s) => s.value === service)?.label}
             <button
               onClick={() => handleRemove(service)}
               className="ml-2 text-white focus:outline-none"
@@ -440,10 +441,10 @@ const CompleteProfileLawyerPage: React.FC = () => {
     "Académico",
     "Corporativo",
   ]);
-  const [openAddStudy, setOpenAddStudy] = useState(false);
+  const [showModalAddEducacion, setShowModalAddEducacion] = useState(false);
 
   const toggleAddStudy = () => {
-    setOpenAddStudy(!openAddStudy);
+    setShowModalAddEducacion(!showModalAddEducacion);
   };
   const toggleAddServices = () => {
     setOpenAddServices(!openAddServices);
@@ -491,9 +492,9 @@ const CompleteProfileLawyerPage: React.FC = () => {
         <div className="w-full lg:w-4/6 flex flex-col justify-center">
           <p className="font-bold">JUAN A.</p>
           <div className="w-full flex flex-col md:flex-row gap-4">
-            {/* <ServiceSelect></ServiceSelect> */}
+            <ServiceSelect></ServiceSelect>
 
-            <div>
+            {/* <div>
               <p className="text-base mb-2">
                 ¿Cuales son los servicios que ofreces?*
               </p>
@@ -524,11 +525,11 @@ const CompleteProfileLawyerPage: React.FC = () => {
                   <ChevronDown />
                 </div>
               </div>
-            </div>
+            </div> */}
 
-            {/* <IndustrySelect></IndustrySelect> */}
+            <IndustrySelect></IndustrySelect>
 
-            <div>
+            {/* <div>
               <p className="text-base mb-2">Industria</p>
               <div className="relative border border-black rounded-[10px] h-12  px-3 lg:w-[310px] overflow-hidden flex items-center ">
                 <div className="flex items-center gap-2 overflow-x-auto hidde-scrollbar scroll-smooth pr-12">
@@ -557,7 +558,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
                   <ChevronDown />
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <VideoUpload></VideoUpload>
@@ -891,208 +892,11 @@ const CompleteProfileLawyerPage: React.FC = () => {
       </div>
 
       {/* modal agregar educación */}
-      {openAddStudy && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-20 ">
-          <div className="bg-white p-16 rounded-lg shadow-lg lg:min-w-[970px] relative">
-            <h2 className="text-2xl font-bold mb-4 border-b-[1px] border-[#AFB1B6] pb-2">
-              Agregar educación
-            </h2>
-            <div>
-              <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                  className="space-y-4"
-                >
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <FormLabel>Desde*</FormLabel>
-                      <div className="grid grid-cols-2 gap-2">
-                        <FormField
-                          control={form.control}
-                          name="desde_mes"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel></FormLabel>
-                              <FormControl>
-                                <Input
-                                  className="border border-black rounded-[10px] h-12"
-                                  placeholder="Enero"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name="desde_ano"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel></FormLabel>
-                              <FormControl>
-                                <Input
-                                  className="border border-black rounded-[10px] h-12"
-                                  placeholder="2024"
-                                  {...field}
-                                />
-                              </FormControl>
-
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <FormLabel>Hasta*</FormLabel>
-                      <div className="grid grid-cols-2 gap-2">
-                        <FormField
-                          control={form.control}
-                          name="hasta_mes"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel></FormLabel>
-                              <FormControl>
-                                <Input
-                                  className="border border-black rounded-[10px] h-12"
-                                  placeholder="Set. 2024"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
-                          name="hasta_ano"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel></FormLabel>
-                              <FormControl>
-                                <Input
-                                  className="border border-black rounded-[10px] h-12"
-                                  placeholder="Enero"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormDescription>
-                                <div className="flex items-center space-x-2">
-                                  <Checkbox id="terms" />
-                                  <label
-                                    htmlFor="terms"
-                                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                  >
-                                    Actualmente trabajo aquí
-                                  </label>
-                                </div>
-                              </FormDescription>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <FormField
-                    control={form.control}
-                    name="titulo"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Titulo*</FormLabel>
-                        <FormControl>
-                          <Input
-                            className="border border-black rounded-[10px] h-12"
-                            placeholder="Certificado Porfesional en Legal Tech en la Era Digital"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <div className="grid grid-cols-2 gap-4">
-                    <FormField
-                      control={form.control}
-                      name="institucion"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Institución o escuela*</FormLabel>
-                          <FormControl>
-                            <Input
-                              className="border border-black rounded-[10px] h-12"
-                              placeholder="Massachusetts Institute of tecnology"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="ubicacion"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Ubicacion*</FormLabel>
-                          <FormControl>
-                            <Input
-                              className="border border-black rounded-[10px] h-12"
-                              placeholder="Lima,Peru"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                  <FormField
-                    control={form.control}
-                    name="descripcion"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Descripción</FormLabel>
-                        <FormControl>
-                          <Textarea
-                            className="border border-black rounded-[10px]"
-                            placeholder="Pequeña descripción..."
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <div className="flex justify-end gap-6 border-t-[1px] border-black pt-4">
-                    <Button
-                      type="submit"
-                      variant="outline"
-                      className="w-[190px] h-12 rounded-[10px]"
-                      onClick={toggleAddStudy}
-                    >
-                      Cancelar
-                    </Button>
-                    <Button
-                      className="w-[190px] h-12 rounded-[10px]"
-                      type="submit"
-                    >
-                      Guardar
-                    </Button>
-                  </div>
-                </form>
-              </Form>
-            </div>
-            <div
-              className="absolute top-8 right-8 w-5 h-5 bg-black flex  justify-center items-center rounded-full cursor-pointer"
-              onClick={toggleAddStudy}
-            >
-              <IconX className="text-white w-4 h-4" />
-            </div>
-          </div>
-        </div>
+      {showModalAddEducacion && (
+        <ModalAgregarEducacion 
+          showModal={showModalAddEducacion}
+          setShowModal={setShowModalAddEducacion}
+        />
       )}
 
       {/* modal agregar servicios */}
