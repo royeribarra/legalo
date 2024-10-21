@@ -44,7 +44,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import ModalAgregarEducacion from "@/components/abogado/modalAgregarEducacion";
+import ModalAgregarEducacion from "@/components/abogado/ModalAgregarEducacion";
+import ServiceSelectAbogado from "@/components/abogado/ServiceSelectAbogado";
+import IndustrySelectAbogado from "@/components/abogado/IndustrySelectAbogado";
+import ModalagregarEspecialidad from "@/components/abogado/ModalAgregarEspecialidad";
+import ModalAgregarExperiencia from "@/components/abogado/ModalAgregarExperiencia";
 
 const UploadCV = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -260,145 +264,6 @@ const ImageUpload = () => {
   );
 };
 
-const IndustrySelect = () => {
-  const [selectedServices, setSelectedServices] = useState<string[]>([]);
-
-  const handleSelect = (value: string) => {
-    // Verifica si el servicio ya está seleccionado
-    if (!selectedServices.includes(value)) {
-      setSelectedServices([...selectedServices, value]);
-    }
-  };
-
-  const handleRemove = (value: string) => {
-    setSelectedServices(
-      selectedServices.filter((service) => service !== value)
-    );
-  };
-
-  const services = [
-    { value: "banca", label: "Banca" },
-    { value: "academico", label: "Académico" },
-    { value: "juicios", label: "Juicios" },
-  ];
-
-  const handleRemoveAll = () => {
-    setSelectedServices([]);
-  };
-
-  return (
-    <div className="w-full lg:w-1/2">
-      <p className="text-sm my-2">Industria</p>
-      <Select onValueChange={handleSelect}>
-        <SelectTrigger className="flex flex-wrap items-center">
-          <SelectValue placeholder="Seleccionar" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectLabel>Servicios</SelectLabel>
-            {services
-              .filter((service) => !selectedServices.includes(service.value)) // Filtra los servicios seleccionados
-              .map((service) => (
-                <SelectItem key={service.value} value={service.value}>
-                  {service.label}
-                </SelectItem>
-              ))}
-            {/* Opción "Quitar todos" solo si todos están seleccionados */}
-            {selectedServices.length === services.length && (
-              <SelectItem value="remove-all" onClick={handleRemoveAll}>
-                Quitar todos
-              </SelectItem>
-            )}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-      <div className="flex flex-wrap mt-2">
-        {selectedServices.map((service) => (
-          <span
-            key={service}
-            className="bg-blue-500 text-white text-sm rounded-full px-3 py-1 mr-2 mb-2 flex items-center"
-          >
-            {services.find((s) => s.value === service)?.label}
-            <button
-              onClick={() => handleRemove(service)}
-              className="ml-2 text-white focus:outline-none"
-            >
-              &times; {/* Icono de cierre */}
-            </button>
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const ServiceSelect = () => {
-  const [selectedServices, setSelectedServices] = useState<string[]>([]);
-
-  const handleSelect = (value: string) => {
-    // Verifica si el servicio ya está seleccionado
-    if (!selectedServices.includes(value)) {
-      setSelectedServices([...selectedServices, value]);
-    }
-  };
-
-  const handleRemove = (value: string) => {
-    setSelectedServices(
-      selectedServices.filter((service) => service !== value)
-    );
-  };
-
-  const services = [
-    { value: "consultoria", label: "Consultoría" },
-    { value: "investigacion", label: "Investigación" },
-    { value: "litigios", label: "Litigios" },
-  ];
-
-  return (
-    <div className="w-full lg:w-1/2">
-      <p className="text-sm my-2">¿Cuáles son los servicios que ofreces?*</p>
-      <Select onValueChange={handleSelect}>
-        <SelectTrigger className="flex flex-wrap items-center">
-          <SelectValue placeholder="Seleccionar" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectLabel>Servicios</SelectLabel>
-            {services
-              .filter((service) => !selectedServices.includes(service.value)) // Filtra los servicios seleccionados
-              .map((service) => (
-                <SelectItem key={service.value} value={service.value}>
-                  {service.label}
-                </SelectItem>
-              ))}
-            {selectedServices.length === services.length && (
-              <div className="p-2 text-green-500 text-sm">
-                Todos fueron seleccionados
-              </div>
-            )}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-      <div className="flex flex-wrap mt-2">
-        {selectedServices.map((service) => (
-          <span
-            key={service}
-            className="bg-blue-500 text-white text-sm rounded-full px-3 py-1 mr-2 mb-2 flex items-center"
-          >
-            {services.find((s) => s.value === service)?.label}
-            <button
-              onClick={() => handleRemove(service)}
-              className="ml-2 text-white focus:outline-none"
-            >
-              &times; {/* Icono de cierre */}
-            </button>
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-};
-
 //form config
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -436,12 +301,17 @@ const formSchema = z.object({
 const CompleteProfileLawyerPage: React.FC = () => {
   const [openAddServices, setOpenAddServices] = useState(false);
   const [selectServices, setSelectServices] = useState<string[]>([]);
+  const [listEducacion, setListEducacion] = useState([]);
+  const [listExperiencia, setListExperiencia] = useState([]);
   const [selectIndustria, setSelectIndustria] = useState<string[]>([
     "Banca",
     "Académico",
     "Corporativo",
   ]);
   const [showModalAddEducacion, setShowModalAddEducacion] = useState(false);
+  const [showModalAddEspecialidad, setShowModalAddEspecialidad] = useState(false);
+  const [showModalAddExperiencia, setShowModalAddExperiencia] = useState(false);
+  const [experienciaSelected, setExperienciaSelected] = useState(0);
 
   const toggleAddStudy = () => {
     setShowModalAddEducacion(!showModalAddEducacion);
@@ -450,7 +320,6 @@ const CompleteProfileLawyerPage: React.FC = () => {
     setOpenAddServices(!openAddServices);
   };
 
-  // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -458,12 +327,38 @@ const CompleteProfileLawyerPage: React.FC = () => {
     },
   });
 
-  // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     console.log(values);
   }
+
+  const editarExperiencia = (experiencia: number) => {
+    setExperienciaSelected(experiencia);
+    setShowModalAddExperiencia(true);
+  };
+
+  useEffect(()=> {
+    const estudiosString = localStorage.getItem("listaEstudios");
+    let estudios;
+    if (estudiosString) {
+      estudios = JSON.parse(estudiosString);
+      setListEducacion(estudios);
+    } else {
+      estudios = {};
+    }
+    console.log(estudios);  
+  }, [showModalAddEducacion]);
+
+  useEffect(()=> {
+    const experienciaString = localStorage.getItem("listaExperiencia");
+    let experiencia;
+    if (experienciaString) {
+      experiencia = JSON.parse(experienciaString);
+      setListExperiencia(experiencia);
+    } else {
+      experiencia = {};
+    }
+    console.log(experiencia);  
+  }, [showModalAddExperiencia]);
 
   return (
     <div className="container mx-auto p-4 lg:py-8 lg:px-0 w-full lg:max-w-[960px]">
@@ -475,133 +370,17 @@ const CompleteProfileLawyerPage: React.FC = () => {
         <p>Campos obligatorios(*)</p>
       </div>
       <div className="border border-black p-5 my-4 rounded-xl flex flex-col md:flex-row gap-4">
-        {/* <div className="w-full lg:w-1/5 flex flex-col items-center gap-2">
-          <Image
-            src="/assets/images/ico-photo-perfil.png"
-            alt="ico-photo-perfil"
-            width={96}
-            height={96}
-            className=""
-          />
-          <Button size="sm" variant="outline" className="rounded-full">
-            Sube una imagen*
-          </Button>
-        </div> */}
         <ImageUpload></ImageUpload>
 
         <div className="w-full lg:w-4/6 flex flex-col justify-center">
           <p className="font-bold">JUAN A.</p>
           <div className="w-full flex flex-col md:flex-row gap-4">
-            <ServiceSelect></ServiceSelect>
-
-            {/* <div>
-              <p className="text-base mb-2">
-                ¿Cuales son los servicios que ofreces?*
-              </p>
-              <div className="relative border border-black rounded-[10px] h-12  px-3 lg:w-[310px] overflow-hidden flex items-center ">
-                <div className="flex items-center gap-2 overflow-x-auto hidde-scrollbar scroll-smooth pr-12">
-                  {selectServices.map((service, index) => (
-                    <div className="bg-[#D5F1F0] h-8 flex items-center rounded-full px-3 gap-1 text-xs relative">
-                      <p className="whitespace-nowrap">{service}</p>
-                      <span
-                        className="w-6 h-6 cursor-pointer"
-                        onClick={() => {
-                          setSelectServices(
-                            selectServices.filter(
-                              (services) => services !== service
-                            )
-                          );
-                        }}
-                      >
-                        <IconX />
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                <div
-                  className="absolute right-0 bg-white h-full w-[48px] flex justify-center items-center cursor-pointer"
-                  onClick={toggleAddServices}
-                >
-                  <ChevronDown />
-                </div>
-              </div>
-            </div> */}
-
-            <IndustrySelect></IndustrySelect>
-
-            {/* <div>
-              <p className="text-base mb-2">Industria</p>
-              <div className="relative border border-black rounded-[10px] h-12  px-3 lg:w-[310px] overflow-hidden flex items-center ">
-                <div className="flex items-center gap-2 overflow-x-auto hidde-scrollbar scroll-smooth pr-12">
-                  {selectIndustria.map((service, index) => (
-                    <div className="bg-[#D9D9D9] h-8 flex items-center rounded-full px-3 gap-1 text-xs relative">
-                      <p className="whitespace-nowrap">{service}</p>
-                      <span
-                        className="w-6 h-6 cursor-pointer"
-                        onClick={() => {
-                          setSelectIndustria(
-                            selectIndustria.filter(
-                              (services) => services !== service
-                            )
-                          );
-                        }}
-                      >
-                        <IconX />
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                <div
-                  className="absolute right-0 bg-white h-full w-[48px] flex justify-center items-center cursor-pointer"
-                  onClick={toggleAddServices}
-                >
-                  <ChevronDown />
-                </div>
-              </div>
-            </div> */}
+            <ServiceSelectAbogado />
+            <IndustrySelectAbogado />
           </div>
         </div>
         <VideoUpload></VideoUpload>
       </div>
-
-      {/* <div className="border border-black p-5 border-dashed ">
-        <div className="flex flex-col lg:flex-row">
-          <div className="w-full lg:w-4/5">
-            <p>
-              Ahorra tiempo importando tu CV, CUL o perfil de LinkedIn en
-              formato PDF, Doc, Dox.
-            </p>
-          </div>
-          <div className="w-full flex items-center justify-end lg:w-1/5">
-            <Button>
-              Importa tu CV <Upload size={18} color="white" className="ml-2" />
-            </Button>
-          </div>
-        </div>
-        <div className="flex justify-between bg-[#D9D9D9] rounded-lg p-2 gap-2 mt-2">
-          <div className="w-[60px] flex justify-center items-center">
-            <Check
-              size={40}
-              color="black"
-              className="border rounded-full bg-lg_yellow p-2"
-            />
-          </div>
-          <div className="w-full">
-            <p className="font-bold">Autocompletado con éxito</p>
-            <p>Revisa la información que ha sido completada automáticamente</p>
-          </div>
-          <div className="w-[60px] flex justify-center items-center">
-            <Button variant="link">
-              <Image
-                src="/icos/close-x-circle.png"
-                alt="ico-cv"
-                width={24}
-                height={24}
-              ></Image>
-            </Button>
-          </div>
-        </div>
-      </div> */}
 
       <UploadCV></UploadCV>
       {/* lateral menu  */}
@@ -643,17 +422,50 @@ const CompleteProfileLawyerPage: React.FC = () => {
           <div className="lg:w-3/4">
             <TabsContent value="tab1">
               <div>
-                <p className="font-bold text-lg">Experiencia*</p>
-                <div className="border border-black border-dashed p-4 flex justify-center my-2">
-                  <Button variant="link">
-                    <Plus
-                      size={20}
-                      color="black"
-                      className="mr-4  border border-black rounded-full"
-                    />{" "}
-                    Sumar experiencia
+                <div className="flex justify-between border-b border-gray-600 py-2">
+                  <p className="font-bold text-lg">Experiencia*</p>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="rounded-full"
+                    onClick={()=>setShowModalAddExperiencia(true)}
+                  >
+                    <Plus size={20} color="black" className="mr-4" /> Sumar experiencia
                   </Button>
                 </div>
+                {
+                  listExperiencia.map((experiencia: any, index)=>
+                    <div className="flex gap-4 p-4">
+                      <div className="w-1/4 flex gap-1">
+                        <p>{experiencia.desde_mes + "-" + experiencia.desde_ano}</p>
+                        <span>-</span>
+                        <p>{experiencia.hasta_mes + "-" + experiencia.hasta_ano}</p>
+                      </div>
+                      <div className="w-3/4">
+                        <p>{experiencia.titulo}</p>
+                        <p>{experiencia.empresa}</p>
+                        <div className="flex gap-2 border-b border-black py-4">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="w-[120px] rounded-2xl border-black"
+                            id="editar-experiencia"
+                            onClick={()=>editarExperiencia(index)}
+                          >
+                            Editar
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="w-[120px] rounded-2xl border-black"
+                          >
+                            Eliminar
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                }
                 <div className="flex items-center space-x-2 my-4">
                   <Checkbox id="terms" />
                   <label
@@ -688,13 +500,43 @@ const CompleteProfileLawyerPage: React.FC = () => {
                   className="rounded-full"
                   onClick={toggleAddStudy}
                 >
-                  <Plus size={20} color="black" className="mr-4" /> Agregar
-                  estudio
+                  <Plus size={20} color="black" className="mr-4" /> Agregar estudio
                 </Button>
               </div>
-
               <div>
-                <div className="flex gap-4 p-4">
+                {
+                  listEducacion.map((educacion: any)=>
+                    <div className="flex gap-4 p-4">
+                      <div className="w-1/4 flex gap-1">
+                        <p>{educacion.desde_mes + "-" + educacion.desde_ano}</p>
+                        <span>-</span>
+                        <p>{educacion.hasta_mes + "-" + educacion.hasta_ano}</p>
+                      </div>
+                      <div className="w-3/4">
+                        <p>{educacion.titulo}</p>
+                        <p>{educacion.institucion}</p>
+                        <p>{educacion.ubicacion}</p>
+                        <div className="flex gap-2 border-b border-black py-4">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="w-[120px] rounded-2xl border-black"
+                          >
+                            Editar
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="w-[120px] rounded-2xl border-black"
+                          >
+                            Eliminar
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                }
+                {/* <div className="flex gap-4 p-4">
                   <div className="w-1/4 flex gap-1">
                     <p>Oct 2022</p>
                     <span>-</span>
@@ -753,7 +595,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
                       </Button>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </TabsContent>
             <TabsContent value="tab3">
@@ -775,7 +617,9 @@ const CompleteProfileLawyerPage: React.FC = () => {
                   </Select>
                 </div>
                 <div>
-                  <Select>
+                  <p className="text-sm my-2">Especialidad*</p>
+                  <Button onClick={()=>setShowModalAddEspecialidad(true) }>Especialidad</Button>
+                  {/* <Select>
                     <p className="text-sm my-2">Especialidad*</p>
                     <SelectTrigger className="">
                       <SelectValue placeholder="Seleccionar" />
@@ -788,7 +632,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
                         <SelectItem value="Maestro">Maestro</SelectItem>
                       </SelectGroup>
                     </SelectContent>
-                  </Select>
+                  </Select> */}
                 </div>
                 <div>
                   <p className="text-sm my-2">Sobre ti*</p>
@@ -900,67 +744,18 @@ const CompleteProfileLawyerPage: React.FC = () => {
       )}
 
       {/* modal agregar servicios */}
-      {openAddServices && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-20 ">
-          <div className="bg-white rounded-lg shadow-lg lg:min-w-[900px] p-14 relative">
-            <h2 className="text-5xl mb-4 font-tiempos">
-              ¿Cuál es tu especialidad?
-            </h2>
-            <p className="text-lg my-4">
-              Puedes escoger como mínimo de 1 y como máximo 5. Esto se mostrará
-              en tu perfil público*
-            </p>
-            <div>
-              <div className="grid grid-cols-3 bg-black gap-[1px]">
-                {specialtiesItems.map((item) => (
-                  <div key={item.CardTitle} className="relative p-5 bg-white">
-                    <div
-                      className={`w-12 h-12  flex justify-center items-center rounded-full ${selectServices.includes(item.CardTitle) ? "bg-[#D5F1F0]" : "bg-[#D9D9D9]"}`}
-                    >
-                      <Image
-                        src={item.ImageSrc}
-                        alt={item.CardTitle}
-                        width={25}
-                        height={25}
-                      />
-                    </div>
-                    <p>{item.CardTitle}</p>
-                    <div
-                      className={`absolute top-5 right-5 w-5 h-5  flex  justify-center items-center rounded-sm cursor-pointer ${selectServices.includes(item.CardTitle) ? "bg-[#007AFF]" : "border border-black"}`}
-                      onClick={() => {
-                        if (selectServices.includes(item.CardTitle)) {
-                          setSelectServices(
-                            selectServices.filter(
-                              (service) => service !== item.CardTitle
-                            )
-                          );
-                        } else {
-                          setSelectServices([
-                            ...selectServices,
-                            item.CardTitle,
-                          ]);
-                        }
-                      }}
-                    >
-                      <CheckIcon className="text-white w-4 h-4" />
-                    </div>
-                  </div>
-                ))}
-                <div className="relative p-5 bg-white"></div>
-                <div className="relative p-5 bg-white"></div>
-              </div>
-            </div>
-            <div className="flex justify-end gap-6  pt-4 mt-4">
-              <Button
-                className="w-[190px] h-12 rounded-[10px]"
-                type="submit"
-                onClick={toggleAddServices}
-              >
-                Aceptar
-              </Button>
-            </div>
-          </div>
-        </div>
+      {showModalAddEspecialidad && (
+        <ModalagregarEspecialidad
+          showModal={showModalAddEspecialidad}
+          setShowModal={setShowModalAddEspecialidad}
+        />
+      )}
+      {showModalAddExperiencia && (
+        <ModalAgregarExperiencia
+          showModal={showModalAddExperiencia}
+          setShowModal={setShowModalAddExperiencia}
+          experienciaSelected={experienciaSelected + 1}
+        />
       )}
     </div>
   );

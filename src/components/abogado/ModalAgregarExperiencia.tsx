@@ -34,11 +34,8 @@ const formSchema = z.object({
     titulo: z.string().min(2, {
       message: "Debe completar el título",
     }),
-    institucion: z.string().min(2, {
+    empresa: z.string().min(2, {
       message: "Debe completar la institución",
-    }),
-    ubicacion: z.string().min(2, {
-      message: "Complete una ubicación",
     }),
     descripcion: z.string(),
 });
@@ -47,9 +44,11 @@ type ModalAgregarEducacionProps = {
     showModal: boolean;
     // setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
     setShowModal: any;
+    experienciaSelected: number;
 };
 
-function ModalAgregarEducacion({showModal, setShowModal}:ModalAgregarEducacionProps){
+function ModalAgregarExperiencia({showModal, setShowModal, experienciaSelected}:ModalAgregarEducacionProps){
+    console.log(experienciaSelected)
     const [trabajoActualmente, setTrabajoActualmente] = useState(false);
     const currentDate = new Date();
     const currentMonth = currentDate.toLocaleString('es-ES', { month: 'long' });
@@ -62,13 +61,12 @@ function ModalAgregarEducacion({showModal, setShowModal}:ModalAgregarEducacionPr
             hasta_mes: "",
             hasta_ano: "",
             titulo: "",
-            institucion: "",
-            ubicacion: "",
+            empresa: "",
             descripcion: ""
         },
     });
 
-    // Efecto para setear el mes y año actual si el checkbox está marcado
+    // Efecto para setear el mes y año actual si el checkbox está marca
     useEffect(() => {
         if (trabajoActualmente) {
             form.setValue("hasta_mes", currentMonth);
@@ -80,44 +78,57 @@ function ModalAgregarEducacion({showModal, setShowModal}:ModalAgregarEducacionPr
     }, [trabajoActualmente, form, currentMonth, currentYear]);
 
     function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values);
-        
         const nuevoEstudio  = {
             desde_mes: values.desde_mes,
             desde_ano: values.desde_ano,
             hasta_mes: values.hasta_mes,
             hasta_ano: values.hasta_ano,
             titulo: values.titulo,
-            institucion: values.institucion,
-            ubicacion: values.ubicacion,
+            empresa: values.empresa,
             descripcion: values.descripcion,
         };
-        const estudiosString = localStorage.getItem("listaEstudios");
+        const estudiosString = localStorage.getItem("listaExperiencia");
         let estudios = [];
 
         if (estudiosString) {
-            // Si 'estudios' ya existe, lo parseamos para obtener el array
             estudios = JSON.parse(estudiosString);
         }
-        estudios.push(nuevoEstudio);
-
-        // Guardamos el array actualizado en localStorage
-        localStorage.setItem("listaEstudios", JSON.stringify(estudios));
-
-        // Muestra los valores en consola (opcional)
-        console.log("Estudios actualizados en localStorage", estudios);
+        if(experienciaSelected){
+            estudios[experienciaSelected - 1]=nuevoEstudio;
+        }else{
+            estudios.push(nuevoEstudio);
+        }
+        localStorage.setItem("listaExperiencia", JSON.stringify(estudios));
         setShowModal(false);
+        form.reset();
     }
 
     function onError(errors: any) {
         console.log("Errores de validación", errors);
     }
 
+    useEffect(()=> {
+        const estudiosString = localStorage.getItem("listaExperiencia");
+        if(estudiosString){
+            const experiencia = JSON.parse(estudiosString);
+            const experienciaSeleccionada = experiencia[experienciaSelected - 1];
+            if (experienciaSeleccionada) {
+                form.setValue("desde_mes", experienciaSeleccionada.desde_mes);
+                form.setValue("desde_ano", experienciaSeleccionada.desde_ano);
+                form.setValue("hasta_mes", experienciaSeleccionada.hasta_mes);
+                form.setValue("hasta_ano", experienciaSeleccionada.hasta_ano);
+                form.setValue("titulo", experienciaSeleccionada.titulo);
+                form.setValue("empresa", experienciaSeleccionada.empresa);
+                form.setValue("descripcion", experienciaSeleccionada.descripcion);
+              }
+        }
+    }, [experienciaSelected]);
+
     return(
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-20 ">
           <div className="bg-white p-16 rounded-lg shadow-lg lg:min-w-[970px] relative">
             <h2 className="text-2xl font-bold mb-4 border-b-[1px] border-[#AFB1B6] pb-2">
-              Agregar educación
+              Agregar experiencia laboral
             </h2>
             <div>
               <Form {...form}>
@@ -244,31 +255,14 @@ function ModalAgregarEducacion({showModal, setShowModal}:ModalAgregarEducacionPr
                   <div className="grid grid-cols-2 gap-4">
                     <FormField
                       control={form.control}
-                      name="institucion"
+                      name="empresa"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Institución o escuela*</FormLabel>
+                          <FormLabel>Empresa*</FormLabel>
                           <FormControl>
                             <Input
                               className="border border-black rounded-[10px] h-12"
                               placeholder="Massachusetts Institute of tecnology"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="ubicacion"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Ubicacion*</FormLabel>
-                          <FormControl>
-                            <Input
-                              className="border border-black rounded-[10px] h-12"
-                              placeholder="Lima,Peru"
                               {...field}
                             />
                           </FormControl>
@@ -324,4 +318,4 @@ function ModalAgregarEducacion({showModal, setShowModal}:ModalAgregarEducacionPr
     )
 }
 
-export default ModalAgregarEducacion;
+export default ModalAgregarExperiencia;
