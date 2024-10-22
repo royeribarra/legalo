@@ -125,6 +125,7 @@ const VideoUpload = () => {
   const [error, setError] = useState<string | null>(null);
   const [videoName, setVideoName] = useState<string | null>(null);
 
+  console.log(videoFile)
   useEffect(() => {
     const storedVideo = localStorage.getItem("profileVideo");
     if (storedVideo) {
@@ -272,42 +273,7 @@ const ImageUpload = () => {
   );
 };
 
-//form config
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  desde: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  desde_mes: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  desde_ano: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  hasta_ano: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  hasta_mes: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  titulo: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  institucion: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  ubicacion: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  descripcion: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-});
-
 const CompleteProfileLawyerPage: React.FC = () => {
-  const [openAddServices, setOpenAddServices] = useState(false);
   const [listEducacion, setListEducacion] = useState([]);
   const [listExperiencia, setListExperiencia] = useState([]);
   const [showModalAddEducacion, setShowModalAddEducacion] = useState(false);
