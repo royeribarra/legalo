@@ -49,6 +49,7 @@ import ServiceSelectAbogado from "@/components/abogado/ServiceSelectAbogado";
 import IndustrySelectAbogado from "@/components/abogado/IndustrySelectAbogado";
 import ModalagregarEspecialidad from "@/components/abogado/ModalAgregarEspecialidad";
 import ModalAgregarExperiencia from "@/components/abogado/ModalAgregarExperiencia";
+import SkillSection from "@/components/abogado/registro/SkillSection";
 
 const UploadCV = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -342,6 +343,26 @@ const CompleteProfileLawyerPage: React.FC = () => {
     setShowModalAddEducacion(true);
   };
 
+  const onChangueGrado = (value: any) => {
+    console.log(value)
+    const especialidadstring = localStorage.getItem("especialidad");
+    if(especialidadstring){
+        const especialidad = JSON.parse(especialidadstring);
+        especialidad.grado = value;
+        localStorage.setItem("especialidad", JSON.stringify(especialidad));
+    }
+  };
+
+  const onChangueDescripcion = (e: any) => {
+    console.log(e.target.value)
+    const especialidadstring = localStorage.getItem("especialidad");
+    if(especialidadstring){
+        const especialidad = JSON.parse(especialidadstring);
+        especialidad.sobre_ti = e.target.value;
+        localStorage.setItem("especialidad", JSON.stringify(especialidad));
+    }
+  };
+
   useEffect(()=> {
     const estudiosString = localStorage.getItem("listaEstudios");
     let estudios;
@@ -365,6 +386,26 @@ const CompleteProfileLawyerPage: React.FC = () => {
     }
     console.log(experiencia);  
   }, [showModalAddExperiencia]);
+
+  useEffect(()=> {
+    const listaExperiencia = localStorage.getItem("listaExperiencia");
+    const listaEstudios = localStorage.getItem("listaEstudios");
+    const especialidad = localStorage.getItem("especialidad")
+
+    if(!listaExperiencia){
+      localStorage.setItem("listaExperiencia", JSON.stringify([]));
+    }
+    if(!listaEstudios){
+      localStorage.setItem("listaEstudios", JSON.stringify([]));
+    }
+    if(!especialidad){
+      localStorage.setItem("especialidad", JSON.stringify({
+        grado: '',
+        listaEspecialidades: [],
+        sobre_ti: ''
+      }));
+    }
+  }, []);
 
   return (
     <div className="container mx-auto p-4 lg:py-8 lg:px-0 w-full lg:max-w-[960px]">
@@ -608,7 +649,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
             <TabsContent value="tab3">
               <div className="flex flex-col gap-2">
                 <div>
-                  <Select>
+                  <Select onValueChange={onChangueGrado}>
                     <p className="text-sm my-2">Grado*</p>
                     <SelectTrigger className="">
                       <SelectValue placeholder="Seleccionar" />
@@ -643,83 +684,15 @@ const CompleteProfileLawyerPage: React.FC = () => {
                 </div>
                 <div>
                   <p className="text-sm my-2">Sobre ti*</p>
-                  <Textarea placeholder="Una pequeña descripción" />
+                  <Textarea 
+                    placeholder="Una pequeña descripción" 
+                    onChange={onChangueDescripcion}
+                  />
                 </div>
               </div>
             </TabsContent>
             <TabsContent value="tab4">
-              <div className="flex flex-col gap-2">
-                <div className="border-b border-black pb-1">
-                  <Select>
-                    <p className="text-sm my-2">
-                      Tus skills o habilidades duras:
-                    </p>
-                    <SelectTrigger className="border-black">
-                      <SelectValue placeholder="Escribe tus skills" />
-                    </SelectTrigger>
-                    <p className="text-xs text-right my-1">Máximo 5</p>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel>Skills</SelectLabel>
-                        <SelectItem value="licenciado">Ley privada</SelectItem>
-                        <SelectItem value="bachiller">
-                          Ley coorporativa
-                        </SelectItem>
-                        <SelectItem value="Maestro">Ley pública</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="border-b border-black pb-1">
-                  <Select>
-                    <p className="text-sm my-2">
-                      Tus skills o habilidades blandas:
-                    </p>
-                    <SelectTrigger className="border-black">
-                      <SelectValue placeholder="Escribe tus skills" />
-                    </SelectTrigger>
-                    <p className="text-xs text-right my-1">Máximo 5</p>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel>Skills</SelectLabel>
-                        <SelectItem value="licenciado">Ley privada</SelectItem>
-                        <SelectItem value="bachiller">
-                          Ley coorporativa
-                        </SelectItem>
-                        <SelectItem value="Maestro">Ley pública</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <p className="text-sm my-2">
-                    Sugerencias de habilidades blandas
-                  </p>
-                  <div className="flex flex-row gap-2">
-                    <Button
-                      variant="outline"
-                      className="rounded-full border-black"
-                    >
-                      Liderazgo y organización
-                      <Plus size={20} color="black" className="ml-2" />
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="rounded-full border-black"
-                    >
-                      Conocimientos contracturales
-                      <Plus size={20} color="black" className="ml-2" />
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="rounded-full border-black"
-                    >
-                      Contabilidad financiera
-                      <Plus size={20} color="black" className="ml-2" />
-                    </Button>
-                  </div>
-                </div>
-              </div>
+              <SkillSection></SkillSection>
             </TabsContent>
             <TabsContent value="tab5">
               <div>
