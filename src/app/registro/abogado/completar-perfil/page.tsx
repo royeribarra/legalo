@@ -19,12 +19,12 @@ import IndustrySelectAbogado from "@/components/abogado/IndustrySelectAbogado";
 import ModalAgregarExperiencia from "@/components/abogado/ModalAgregarExperiencia";
 import SkillSection from "@/components/abogado/registro/SkillSection";
 import AboutSection from "@/components/abogado/registro/AboutSection";
-import ModalAgregarEducacion from "@/components/abogado/ModalAgregarEducacion";
+import ModalAgregarEducacion from "@/components/abogado/MoodalAgregarEducacion";
 
 const UploadCV = () => {
   const [file, setFile] = useState<File | null>(null);
   const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);
-  const fileInputRef = useRef<HTMLInputElement | null>(null); // Crea una referencia para el input de archivo
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
