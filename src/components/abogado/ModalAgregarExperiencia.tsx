@@ -44,11 +44,13 @@ type ModalAgregarEducacionProps = {
     showModal: boolean;
     // setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
     setShowModal: any;
-    experienciaSelected: number;
+    experienciaSelected: any;
+    setExperienciaSelected: any;
 };
 
-function ModalAgregarExperiencia({showModal, setShowModal, experienciaSelected}:ModalAgregarEducacionProps){
-    console.log(experienciaSelected)
+function ModalAgregarExperiencia({
+    showModal, setShowModal, experienciaSelected, setExperienciaSelected
+}:ModalAgregarEducacionProps){
     const [trabajoActualmente, setTrabajoActualmente] = useState(false);
     const currentDate = new Date();
     const currentMonth = currentDate.toLocaleString('es-ES', { month: 'long' });
@@ -78,7 +80,13 @@ function ModalAgregarExperiencia({showModal, setShowModal, experienciaSelected}:
     }, [trabajoActualmente, form, currentMonth, currentYear]);
 
     function onSubmit(values: z.infer<typeof formSchema>) {
+        const estudiosString = localStorage.getItem("listaExperiencia");
+        let estudios = [];
+        if (estudiosString) {
+            estudios = JSON.parse(estudiosString);
+        }
         const nuevoEstudio  = {
+            id: (estudios.length === 0 ? 1 : experienciaSelected.id ),
             desde_mes: values.desde_mes,
             desde_ano: values.desde_ano,
             hasta_mes: values.hasta_mes,
@@ -87,19 +95,16 @@ function ModalAgregarExperiencia({showModal, setShowModal, experienciaSelected}:
             empresa: values.empresa,
             descripcion: values.descripcion,
         };
-        const estudiosString = localStorage.getItem("listaExperiencia");
-        let estudios = [];
-
-        if (estudiosString) {
-            estudios = JSON.parse(estudiosString);
-        }
         if(experienciaSelected){
-            estudios[experienciaSelected - 1]=nuevoEstudio;
+            const indexSelected = estudios.findIndex((estudio: any)=>estudio.id === experienciaSelected.id)
+            estudios[indexSelected] = nuevoEstudio;
         }else{
             estudios.push(nuevoEstudio);
         }
+
         localStorage.setItem("listaExperiencia", JSON.stringify(estudios));
         setShowModal(false);
+        setExperienciaSelected(null);
         form.reset();
     }
 
@@ -107,19 +112,25 @@ function ModalAgregarExperiencia({showModal, setShowModal, experienciaSelected}:
         console.log("Errores de validación", errors);
     }
 
+    const cancelar = () => {
+        setShowModal(false);
+        setExperienciaSelected(null);
+        form.reset();
+    };
+
     useEffect(()=> {
         const estudiosString = localStorage.getItem("listaExperiencia");
         if(estudiosString){
             const experiencia = JSON.parse(estudiosString);
             const experienciaSeleccionada = experiencia[experienciaSelected - 1];
-            if (experienciaSeleccionada) {
-                form.setValue("desde_mes", experienciaSeleccionada.desde_mes);
-                form.setValue("desde_ano", experienciaSeleccionada.desde_ano);
-                form.setValue("hasta_mes", experienciaSeleccionada.hasta_mes);
-                form.setValue("hasta_ano", experienciaSeleccionada.hasta_ano);
-                form.setValue("titulo", experienciaSeleccionada.titulo);
-                form.setValue("empresa", experienciaSeleccionada.empresa);
-                form.setValue("descripcion", experienciaSeleccionada.descripcion);
+            if (experienciaSelected) {
+                form.setValue("desde_mes", experienciaSelected.desde_mes);
+                form.setValue("desde_ano", experienciaSelected.desde_ano);
+                form.setValue("hasta_mes", experienciaSelected.hasta_mes);
+                form.setValue("hasta_ano", experienciaSelected.hasta_ano);
+                form.setValue("titulo", experienciaSelected.titulo);
+                form.setValue("empresa", experienciaSelected.empresa);
+                form.setValue("descripcion", experienciaSelected.descripcion);
               }
         }
     }, [experienciaSelected]);
@@ -293,7 +304,7 @@ function ModalAgregarExperiencia({showModal, setShowModal, experienciaSelected}:
                       type="submit"
                       variant="outline"
                       className="w-[190px] h-12 rounded-[10px]"
-                      onClick={()=>setShowModal(false)}
+                      onClick={cancelar}
                     >
                       Cancelar
                     </Button>
@@ -309,7 +320,7 @@ function ModalAgregarExperiencia({showModal, setShowModal, experienciaSelected}:
             </div>
             <div
               className="absolute top-8 right-8 w-5 h-5 bg-black flex  justify-center items-center rounded-full cursor-pointer"
-              onClick={()=>setShowModal(false)}
+              onClick={cancelar}
             >
               <IconX className="text-white w-4 h-4" />
             </div>

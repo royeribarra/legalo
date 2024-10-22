@@ -311,7 +311,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
   const [showModalAddEducacion, setShowModalAddEducacion] = useState(false);
   const [showModalAddEspecialidad, setShowModalAddEspecialidad] = useState(false);
   const [showModalAddExperiencia, setShowModalAddExperiencia] = useState(false);
-  const [experienciaSelected, setExperienciaSelected] = useState(0);
+  const [experienciaSelected, setExperienciaSelected] = useState();
 
   const toggleAddStudy = () => {
     setShowModalAddEducacion(!showModalAddEducacion);
@@ -331,7 +331,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
     console.log(values);
   }
 
-  const editarExperiencia = (experiencia: number) => {
+  const editarExperiencia = (experiencia: any) => {
     setExperienciaSelected(experiencia);
     setShowModalAddExperiencia(true);
   };
@@ -450,7 +450,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
                             size="sm"
                             className="w-[120px] rounded-2xl border-black"
                             id="editar-experiencia"
-                            onClick={()=>editarExperiencia(index)}
+                            onClick={()=>editarExperiencia(experiencia)}
                           >
                             Editar
                           </Button>
@@ -754,7 +754,8 @@ const CompleteProfileLawyerPage: React.FC = () => {
         <ModalAgregarExperiencia
           showModal={showModalAddExperiencia}
           setShowModal={setShowModalAddExperiencia}
-          experienciaSelected={experienciaSelected + 1}
+          setExperienciaSelected={setExperienciaSelected}
+          experienciaSelected={experienciaSelected}
         />
       )}
     </div>
