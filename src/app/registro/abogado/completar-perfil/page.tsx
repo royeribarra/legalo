@@ -27,7 +27,7 @@ import {
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 import Image from "next/image";
-import { Textarea } from "@/components/ui/textarea";
+
 
 // form
 import { z } from "zod";
@@ -47,9 +47,9 @@ import { Input } from "@/components/ui/input";
 import ModalAgregarEducacion from "@/components/abogado/ModalAgregarEducacion";
 import ServiceSelectAbogado from "@/components/abogado/ServiceSelectAbogado";
 import IndustrySelectAbogado from "@/components/abogado/IndustrySelectAbogado";
-import ModalagregarEspecialidad from "@/components/abogado/ModalAgregarEspecialidad";
 import ModalAgregarExperiencia from "@/components/abogado/ModalAgregarExperiencia";
 import SkillSection from "@/components/abogado/registro/SkillSection";
+import AboutSection from "@/components/abogado/registro/AboutSection";
 
 const UploadCV = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -153,6 +153,14 @@ const UploadCV = () => {
 const VideoUpload = () => {
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [videoName, setVideoName] = useState<string | null>(null);
+
+  useEffect(() => {
+    const storedVideo = localStorage.getItem("profileVideo");
+    if (storedVideo) {
+      setVideoName(storedVideo);
+    }
+  }, []);
 
   const handleVideoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -171,12 +179,13 @@ const VideoUpload = () => {
           setError("El video debe ser de máximo 1 minuto de duración.");
           setVideoFile(null);
         } else if (sizeInMB > 10) {
-          // Puedes ajustar el límite de tamaño aquí (10 MB en este caso)
           setError("El tamaño del video debe ser menor a 10 MB.");
           setVideoFile(null);
         } else {
           setError(null);
           setVideoFile(file); // Guardar el archivo si pasa las validaciones
+          setVideoName(file.name);
+          localStorage.setItem("profileVideo", file.name); // Guardar en localStorage
         }
       };
     }
@@ -185,13 +194,15 @@ const VideoUpload = () => {
   const handleButtonClick = () => {
     const input = document.getElementById("video-upload") as HTMLInputElement;
     if (input) {
-      input.click(); // Activa el input de archivo al hacer clic en el botón
+      input.click();
     }
   };
 
-  useEffect(() => {
-    console.log(videoFile);
-  }, [videoFile]);
+  const handleRemoveVideo = () => {
+    setVideoFile(null);
+    setVideoName(null);
+    localStorage.removeItem("profileVideo");
+  };
 
   return (
     <div className="w-full lg:w-1/6 flex flex-col flex-center justify-center items-center">
@@ -206,52 +217,77 @@ const VideoUpload = () => {
         type="file"
         accept="video/*"
         onChange={handleVideoChange}
-        style={{ display: "none" }} // Oculta el input de archivo
-        id="video-upload" // ID para el label
+        style={{ display: "none" }}
+        id="video-upload"
       />
       <Button variant="link" onClick={handleButtonClick}>
         Sube un video tuyo
       </Button>
-      {error && <p className="text-red-500 text-sm">{error}</p>}{" "}
-      {/* Mostrar errores */}
+      {error && <p className="text-red-500 text-sm">{error}</p>}
+      {videoName && (
+        <div className="flex flex-col items-center mt-2">
+          <p className="text-sm text-gray-700">Video subido: {videoName}</p>
+          <Button variant="outline" size="sm" onClick={handleRemoveVideo}>
+            Eliminar video
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
 
 const ImageUpload = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [imageBase64, setImageBase64] = useState<string | null>(null);
+
+  // Cargar la imagen guardada en localStorage cuando se monta el componente
+  useEffect(() => {
+    const storedImage = localStorage.getItem("profileImg");
+    if (storedImage) {
+      setImageBase64(storedImage);
+    }
+  }, []);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]; // Obtén el archivo subido
+    const file = event.target.files?.[0];
     if (file) {
-      setSelectedImage(file); // Guarda el archivo en el estado
+      setSelectedImage(file);
+
+      // Convertir la imagen a base64 para almacenarla en localStorage
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        setImageBase64(base64String);
+        localStorage.setItem("profileImg", base64String); // Guardar en localStorage
+      };
     }
   };
 
   const handleButtonClick = () => {
     const input = document.getElementById("image-upload") as HTMLInputElement;
-    input.click(); // Simula un clic en el input file
+    input.click();
   };
 
   return (
     <div className="w-full lg:w-1/6 flex flex-col items-center gap-2">
       <Image
         src={
-          selectedImage
-            ? URL.createObjectURL(selectedImage)
-            : "/assets/images/ico-photo-perfil.png"
-        } // Usa la URL del objeto para mostrar la imagen
+          imageBase64
+            ? imageBase64 // Mostrar la imagen desde localStorage si existe
+            : "/assets/images/ico-photo-perfil.png" // Imagen por defecto
+        }
         alt="Imagen subida"
         width={96}
         height={96}
-        className="rounded-full" // Puedes añadir estilos aquí
+        className="rounded-full"
       />
       <input
         type="file"
         id="image-upload"
         accept="image/*"
         onChange={handleImageChange}
-        style={{ display: "none" }} // Oculta el input
+        style={{ display: "none" }}
       />
       <Button
         size="sm"
@@ -310,7 +346,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
     "Corporativo",
   ]);
   const [showModalAddEducacion, setShowModalAddEducacion] = useState(false);
-  const [showModalAddEspecialidad, setShowModalAddEspecialidad] = useState(false);
+  
   const [showModalAddExperiencia, setShowModalAddExperiencia] = useState(false);
   const [experienciaSelected, setExperienciaSelected] = useState();
   const [educacionSelected, setEducacionSelected] = useState();
@@ -343,25 +379,9 @@ const CompleteProfileLawyerPage: React.FC = () => {
     setShowModalAddEducacion(true);
   };
 
-  const onChangueGrado = (value: any) => {
-    console.log(value)
-    const especialidadstring = localStorage.getItem("especialidad");
-    if(especialidadstring){
-        const especialidad = JSON.parse(especialidadstring);
-        especialidad.grado = value;
-        localStorage.setItem("especialidad", JSON.stringify(especialidad));
-    }
-  };
+  
 
-  const onChangueDescripcion = (e: any) => {
-    console.log(e.target.value)
-    const especialidadstring = localStorage.getItem("especialidad");
-    if(especialidadstring){
-        const especialidad = JSON.parse(especialidadstring);
-        especialidad.sobre_ti = e.target.value;
-        localStorage.setItem("especialidad", JSON.stringify(especialidad));
-    }
-  };
+  
 
   useEffect(()=> {
     const estudiosString = localStorage.getItem("listaEstudios");
@@ -391,12 +411,19 @@ const CompleteProfileLawyerPage: React.FC = () => {
     const listaExperiencia = localStorage.getItem("listaExperiencia");
     const listaEstudios = localStorage.getItem("listaEstudios");
     const especialidad = localStorage.getItem("especialidad")
+    const habilidad = localStorage.getItem("habilidades")
 
     if(!listaExperiencia){
       localStorage.setItem("listaExperiencia", JSON.stringify([]));
     }
     if(!listaEstudios){
       localStorage.setItem("listaEstudios", JSON.stringify([]));
+    }
+    if(!habilidad){
+      localStorage.setItem("habilidades", JSON.stringify({
+        habilidades_blandas: [],
+        habilidades_duras: []
+      }));
     }
     if(!especialidad){
       localStorage.setItem("especialidad", JSON.stringify({
@@ -584,112 +611,10 @@ const CompleteProfileLawyerPage: React.FC = () => {
                     </div>
                   )
                 }
-                {/* <div className="flex gap-4 p-4">
-                  <div className="w-1/4 flex gap-1">
-                    <p>Oct 2022</p>
-                    <span>-</span>
-                    <p>Actualidad</p>
-                  </div>
-                  <div className="w-3/4">
-                    <p>
-                      Massachusetts Institute of Technology Professional
-                      Education y ESADE
-                    </p>
-                    <p>Lima, Perú</p>
-                    <div className="flex gap-2 border-b border-black py-4">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="w-[120px] rounded-2xl border-black"
-                      >
-                        Editar
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="w-[120px] rounded-2xl border-black"
-                      >
-                        Eliminar
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex gap-4 p-4">
-                  <div className="w-1/4 flex gap-1 text-base">
-                    <p>Oct 2022</p>
-                    <span>-</span>
-                    <p>Actualidad</p>
-                  </div>
-                  <div className="w-3/4 text-base">
-                    <p>
-                      Massachusetts Institute of Technology Professional
-                      Education y ESADE
-                    </p>
-                    <p>Lima, Perú</p>
-                    <div className="flex gap-2 border-b border-black py-4">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="w-[120px] rounded-2xl border-black"
-                      >
-                        Editar
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="w-[120px] rounded-2xl border-black"
-                      >
-                        Eliminar
-                      </Button>
-                    </div>
-                  </div>
-                </div> */}
               </div>
             </TabsContent>
             <TabsContent value="tab3">
-              <div className="flex flex-col gap-2">
-                <div>
-                  <Select onValueChange={onChangueGrado}>
-                    <p className="text-sm my-2">Grado*</p>
-                    <SelectTrigger className="">
-                      <SelectValue placeholder="Seleccionar" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel>Grado académico</SelectLabel>
-                        <SelectItem value="licenciado">Licenciado</SelectItem>
-                        <SelectItem value="bachiller">Bachiller</SelectItem>
-                        <SelectItem value="Maestro">Maestro</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <p className="text-sm my-2">Especialidad*</p>
-                  <Button onClick={()=>setShowModalAddEspecialidad(true) }>Especialidad</Button>
-                  {/* <Select>
-                    <p className="text-sm my-2">Especialidad*</p>
-                    <SelectTrigger className="">
-                      <SelectValue placeholder="Seleccionar" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel>Grado académico</SelectLabel>
-                        <SelectItem value="licenciado">Licenciado</SelectItem>
-                        <SelectItem value="bachiller">Bachiller</SelectItem>
-                        <SelectItem value="Maestro">Maestro</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select> */}
-                </div>
-                <div>
-                  <p className="text-sm my-2">Sobre ti*</p>
-                  <Textarea 
-                    placeholder="Una pequeña descripción" 
-                    onChange={onChangueDescripcion}
-                  />
-                </div>
-              </div>
+              <AboutSection></AboutSection>
             </TabsContent>
             <TabsContent value="tab4">
               <SkillSection></SkillSection>
@@ -726,12 +651,6 @@ const CompleteProfileLawyerPage: React.FC = () => {
       )}
 
       {/* modal agregar servicios */}
-      {showModalAddEspecialidad && (
-        <ModalagregarEspecialidad
-          showModal={showModalAddEspecialidad}
-          setShowModal={setShowModalAddEspecialidad}
-        />
-      )}
       {showModalAddExperiencia && (
         <ModalAgregarExperiencia
           showModal={showModalAddExperiencia}

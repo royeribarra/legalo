@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus, X } from "lucide-react";
 
@@ -19,70 +19,93 @@ const SugerenciasBlandasIniciales = [
 ];
 
 function SkillSection() {
-  // Estado para habilidades duras
   const [habilidadDura, setHabilidadDura] = useState("");
-  const [habilidadesDuras, setHabilidadesDuras] = useState<string[]>([]);
+  const [habilidadesDuras, setHabilidadesDuras] = useState<string[]>(() => {
+    const savedData = localStorage.getItem("habilidades");
+    return savedData ? JSON.parse(savedData).habilidades_duras : [];
+  });
 
-  // Estado para habilidades blandas
   const [habilidadBlanda, setHabilidadBlanda] = useState("");
-  const [habilidadesBlandas, setHabilidadesBlandas] = useState<string[]>([]);
+  const [habilidadesBlandas, setHabilidadesBlandas] = useState<string[]>(() => {
+    const savedData = localStorage.getItem("habilidades");
+    return savedData ? JSON.parse(savedData).habilidades_blandas : [];
+  });
 
-  // Estado para sugerencias de habilidades blandas
   const [sugerenciasBlandas, setSugerenciasBlandas] = useState(
-    SugerenciasBlandasIniciales
+    SugerenciasBlandasIniciales.filter(
+      (sugerencia) =>
+        !habilidadesBlandas.includes(sugerencia.value) // No mostrar sugerencias ya seleccionadas
+    )
   );
 
-  // Función para agregar habilidad dura
+  const guardarEnLocalStorage = (habilidadesDuras: string[], habilidadesBlandas: string[]) => {
+    localStorage.setItem(
+      "habilidades",
+      JSON.stringify({
+        habilidades_duras: habilidadesDuras,
+        habilidades_blandas: habilidadesBlandas,
+      })
+    );
+  };
+
   const agregarHabilidadDura = () => {
+    if (habilidadesDuras.length >= 5) {
+      console.log("No se admite más de 5 habilidades duras");
+      return;
+    }
     if (habilidadDura && !habilidadesDuras.includes(habilidadDura)) {
-      setHabilidadesDuras([...habilidadesDuras, habilidadDura]);
-      setHabilidadDura(""); // Limpiar el input
+      const nuevasHabilidadesDuras = [...habilidadesDuras, habilidadDura];
+      setHabilidadesDuras(nuevasHabilidadesDuras);
+      guardarEnLocalStorage(nuevasHabilidadesDuras, habilidadesBlandas);
+      setHabilidadDura("");
     }
   };
 
-  // Función para agregar habilidad blanda
   const agregarHabilidadBlanda = () => {
+    if (habilidadesBlandas.length >= 5) {
+      console.log("No se admite más de 5 habilidades blandas");
+      return;
+    }
     if (habilidadBlanda && !habilidadesBlandas.includes(habilidadBlanda)) {
-      setHabilidadesBlandas([...habilidadesBlandas, habilidadBlanda]);
-      setHabilidadBlanda(""); // Limpiar el input
+      const nuevasHabilidadesBlandas = [...habilidadesBlandas, habilidadBlanda];
+      setHabilidadesBlandas(nuevasHabilidadesBlandas);
+      guardarEnLocalStorage(habilidadesDuras, nuevasHabilidadesBlandas);
+      setHabilidadBlanda("");
     }
   };
 
-  // Función para eliminar una habilidad dura
   const eliminarHabilidadDura = (habilidad: string) => {
-    setHabilidadesDuras(
-      habilidadesDuras.filter((item) => item !== habilidad)
-    );
+    const nuevasHabilidadesDuras = habilidadesDuras.filter((item) => item !== habilidad);
+    setHabilidadesDuras(nuevasHabilidadesDuras);
+    guardarEnLocalStorage(nuevasHabilidadesDuras, habilidadesBlandas);
   };
 
-  // Función para eliminar una habilidad blanda
   const eliminarHabilidadBlanda = (habilidad: string) => {
-    setHabilidadesBlandas(
-      habilidadesBlandas.filter((item) => item !== habilidad)
-    );
-    // Si la habilidad se elimina, se regresa a las sugerencias
-    const sugerenciaEliminada = SugerenciasBlandasIniciales.find(
-      (s) => s.value === habilidad
-    );
+    const nuevasHabilidadesBlandas = habilidadesBlandas.filter((item) => item !== habilidad);
+    setHabilidadesBlandas(nuevasHabilidadesBlandas);
+    guardarEnLocalStorage(habilidadesDuras, nuevasHabilidadesBlandas);
+
+    const sugerenciaEliminada = SugerenciasBlandasIniciales.find((s) => s.value === habilidad);
     if (sugerenciaEliminada) {
       setSugerenciasBlandas([...sugerenciasBlandas, sugerenciaEliminada]);
     }
   };
 
-  // Función para agregar una sugerencia blanda
   const agregarSugerenciaBlanda = (sugerencia: any) => {
+    if (habilidadesBlandas.length >= 5) {
+      console.log("No se admite más de 5 habilidades blandas");
+      return;
+    }
     if (!habilidadesBlandas.includes(sugerencia.value)) {
-      setHabilidadesBlandas([...habilidadesBlandas, sugerencia.value]);
-      // Eliminar la sugerencia de la lista de sugerencias
-      setSugerenciasBlandas(
-        sugerenciasBlandas.filter((s) => s.value !== sugerencia.value)
-      );
+      const nuevasHabilidadesBlandas = [...habilidadesBlandas, sugerencia.value];
+      setHabilidadesBlandas(nuevasHabilidadesBlandas);
+      guardarEnLocalStorage(habilidadesDuras, nuevasHabilidadesBlandas);
+      setSugerenciasBlandas(sugerenciasBlandas.filter((s) => s.value !== sugerencia.value));
     }
   };
 
   return (
     <div className="flex flex-col gap-4">
-      {/* Sección para habilidades duras */}
       <div className="border-b border-black pb-1">
         <p className="text-sm my-2">Tus skills o habilidades duras:</p>
         <div className="flex gap-2">
@@ -113,8 +136,6 @@ function SkillSection() {
           ))}
         </div>
       </div>
-
-      {/* Sección para habilidades blandas */}
       <div className="border-b border-black pb-1">
         <p className="text-sm my-2">Tus skills o habilidades blandas:</p>
         <div className="flex gap-2">
@@ -130,7 +151,6 @@ function SkillSection() {
           </Button>
         </div>
         <p className="text-xs text-right my-1">Máximo 5</p>
-
         <div className="flex flex-wrap gap-2 mt-2">
           {habilidadesBlandas.map((habilidad) => (
             <div
@@ -145,8 +165,6 @@ function SkillSection() {
           ))}
         </div>
       </div>
-
-      {/* Sugerencias de habilidades blandas */}
       <div>
         <p className="text-sm my-2">Sugerencias de habilidades blandas</p>
         <div className="flex flex-row gap-2">
