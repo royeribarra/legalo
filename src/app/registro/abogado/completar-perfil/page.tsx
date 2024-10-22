@@ -8,24 +8,7 @@ import { Upload } from "lucide-react";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { X as IconX } from "lucide-react";
-import { Check as CheckIcon } from "lucide-react";
-import { ChevronDown } from "lucide-react";
-
-import specialtiesItems from "@/data/specialtiesItems";
-
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-
 import Image from "next/image";
 
 
@@ -33,17 +16,6 @@ import Image from "next/image";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import ModalAgregarEducacion from "@/components/abogado/ModalAgregarEducacion";
 import ServiceSelectAbogado from "@/components/abogado/ServiceSelectAbogado";
 import IndustrySelectAbogado from "@/components/abogado/IndustrySelectAbogado";
@@ -241,6 +213,7 @@ const ImageUpload = () => {
   const [imageBase64, setImageBase64] = useState<string | null>(null);
 
   // Cargar la imagen guardada en localStorage cuando se monta el componente
+  console.log(selectedImage)
   useEffect(() => {
     const storedImage = localStorage.getItem("profileImg");
     if (storedImage) {
@@ -337,37 +310,13 @@ const formSchema = z.object({
 
 const CompleteProfileLawyerPage: React.FC = () => {
   const [openAddServices, setOpenAddServices] = useState(false);
-  const [selectServices, setSelectServices] = useState<string[]>([]);
   const [listEducacion, setListEducacion] = useState([]);
   const [listExperiencia, setListExperiencia] = useState([]);
-  const [selectIndustria, setSelectIndustria] = useState<string[]>([
-    "Banca",
-    "Académico",
-    "Corporativo",
-  ]);
   const [showModalAddEducacion, setShowModalAddEducacion] = useState(false);
   
   const [showModalAddExperiencia, setShowModalAddExperiencia] = useState(false);
   const [experienciaSelected, setExperienciaSelected] = useState();
   const [educacionSelected, setEducacionSelected] = useState();
-
-  const toggleAddStudy = () => {
-    setShowModalAddEducacion(!showModalAddEducacion);
-  };
-  const toggleAddServices = () => {
-    setOpenAddServices(!openAddServices);
-  };
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: "",
-    },
-  });
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
 
   const editarExperiencia = (experiencia: any) => {
     setExperienciaSelected(experiencia);
@@ -378,10 +327,6 @@ const CompleteProfileLawyerPage: React.FC = () => {
     setEducacionSelected(educacion);
     setShowModalAddEducacion(true);
   };
-
-  
-
-  
 
   useEffect(()=> {
     const estudiosString = localStorage.getItem("listaEstudios");
