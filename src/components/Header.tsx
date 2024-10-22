@@ -11,7 +11,7 @@ type HeaderProps = {
 const Header: React.FC<HeaderProps> = ({ serviceTipe, updateServiceTipe }) => {
   return (
     <>
-      {serviceTipe === "client" ? (
+      {serviceTipe === "lawyer" ? (
         <header className="mx-auto px-4 lg:px-8 h-[80px] lg:h-[160px] bg-background flex justify-between items-center">
           <div>
             <Link href="/">
@@ -28,14 +28,14 @@ const Header: React.FC<HeaderProps> = ({ serviceTipe, updateServiceTipe }) => {
           <div>
             <div className="lg:flex gap-2 hidden border border-black rounded-full p-[2px] w-auto">
               <Button
-                variant="switch"
-                onClick={() => updateServiceTipe("client")}
+                variant="switchOutline"
+                onClick={() => updateServiceTipe("lawyer")}
               >
                 ¿Quieres contratar?
               </Button>
               <Button
-                variant="switchOutline"
-                onClick={() => updateServiceTipe("lawyer")}
+                variant="switch"
+                onClick={() => updateServiceTipe("client")}
               >
                 ¿Quieres trabajar?
               </Button>
@@ -68,16 +68,16 @@ const Header: React.FC<HeaderProps> = ({ serviceTipe, updateServiceTipe }) => {
             <div>
               <div className="lg:flex gap-2 hidden border border-white rounded-full p-[2px] w-auto">
                 <Button
-                  variant="switch"
-                  onClick={() => updateServiceTipe("client")}
-                  className="text-white bg-black"
+                  variant="switchOutline"
+                  onClick={() => updateServiceTipe("lawyer")}
+                  className="bg-white"
                 >
                   ¿Quieres contratar?
                 </Button>
                 <Button
-                  variant="switchOutline"
-                  onClick={() => updateServiceTipe("lawyer")}
-                  className="bg-white"
+                  variant="switch"
+                  onClick={() => updateServiceTipe("client")}
+                  className="text-white bg-black"
                 >
                   ¿Quieres trabajar?
                 </Button>

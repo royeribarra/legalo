@@ -77,7 +77,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
   ];
   return (
     <div className="overflow-hidden">
-      <div className="container p-4 lg:p-8 mx-auto flex justify-center flex-col items-center  mb-5 ">
+      <div className="container p-4 lg:p-8 mx-auto flex justify-center flex-col items-center  mb-5 lg:mt-20">
         <div>
           <div className="lg:flex gap-2  border border-black rounded-full p-[2px] w-auto">
             <Button
@@ -95,24 +95,24 @@ const HomeMain: React.FC<HomeMainProps> = ({
           </div>
         </div>
 
-        <div className="max-w-[640px] mx-auto my-8">
-          <h1 className="text-black text-3xl lg:text-6xl  font-tiempos text-center">
-            Encuentra al abogado que{" "}
-            <span className="italic font-light">necesitas</span>
+        <div className="max-w-[680px] mx-auto my-8">
+          <h1 className="text-black text-3xl lg:text-[64px] font-tiempos text-center leading-[1.2]">
+            Conviértete en nuestro{" "}
+            <span className="italic font-light">abogado de confianza</span>
           </h1>
-          <p className="my-6">
+          <p className="my-6 text-center text-lg">
             Crea una cuenta en pocos pasos y accede a nuestra amplia red de
             abogados.
           </p>
         </div>
 
-        <div className="flex max-w-[1200px] gap-[20px] lg:gap-[70px] overflow-hidden flex-wrap justify-center">
-          <Card className="max-w-[310px] border-none">
+        <div className="flex max-w-[1200px] gap-[20px] overflow-hidden flex-wrap justify-center">
+          <Card className="max-w-[310px] border-none shadow-none">
             <CardHeader className="relative">
-              <div className="rounded-full bg-lg_blue_light h-8 w-8 flex items-center justify-center absolute top-4 left-4">
+              <div className="rounded-full bg-lg_blue-light h-8 w-8 flex items-center justify-center absolute top-4 left-4">
                 1
               </div>
-              <div className="w-full h-auto flex justify-center">
+              <div className="w-full h-auto flex justify-center ">
                 <Image
                   src="/assets/img-register.webp"
                   alt="Regístrate"
@@ -121,19 +121,21 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg"
                 />
               </div>
-              <CardTitle>Regístrate gratis</CardTitle>
-              <CardDescription className="line-clamp-3">
-                Crea una cuenta en pocos pasos y accede a nuestra amplia red de
-                abogados.
+              <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4">
+                Registrate <span className="italic">gratis</span>
+              </CardTitle>
+              <CardDescription className="line-clamp-4 text-lg text-black">
+                Regístrate y completa tu perfil profesional.
               </CardDescription>
             </CardHeader>
           </Card>
-          <Card className="max-w-[310px] border-none">
+
+          <Card className="max-w-[310px] border-none shadow-none">
             <CardHeader className="relative">
               <div className="rounded-full bg-lg_blue-light h-8 w-8 flex items-center justify-center absolute top-4 left-4">
                 2
               </div>
-              <div className="w-full h-auto flex justify-center">
+              <div className="w-full h-auto flex justify-center ">
                 <Image
                   src="/assets/img-create.webp"
                   alt="Regístrate"
@@ -142,19 +144,22 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg"
                 />
               </div>
-              <CardTitle>Regístrate gratis</CardTitle>
-              <CardDescription className="line-clamp-3">
-                Crea una cuenta en pocos pasos y accede a nuestra amplia red de
-                abogados.
+              <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4">
+                Busca <span className="italic">proyectos</span>
+              </CardTitle>
+              <CardDescription className="line-clamp-4 text-lg text-black">
+                Utiliza nuestros filtros para encontrar proyectos que se adapten
+                a tus necesidades.
               </CardDescription>
             </CardHeader>
           </Card>
-          <Card className="max-w-[310px] border-none">
+
+          <Card className="max-w-[310px] border-none shadow-none">
             <CardHeader className="relative">
               <div className="rounded-full bg-lg_blue-light h-8 w-8 flex items-center justify-center absolute top-4 left-4">
                 3
               </div>
-              <div className="w-full h-auto flex justify-center">
+              <div className="w-full h-auto flex justify-center ">
                 <Image
                   src="/assets/img-explore.webp"
                   alt="Regístrate"
@@ -163,19 +168,21 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg"
                 />
               </div>
-              <CardTitle>Regístrate gratis</CardTitle>
-              <CardDescription className="line-clamp-3">
-                Crea una cuenta en pocos pasos y accede a nuestra amplia red de
-                abogados.
+              <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4">
+                Explora <span className="italic">perfiles</span>
+              </CardTitle>
+              <CardDescription className="line-clamp-4 text-lg text-black">
+                Envía tu propuesta y elige tu forma de pago.
               </CardDescription>
             </CardHeader>
           </Card>
-          <Card className="max-w-[310px] border-none">
+
+          <Card className="max-w-[310px] border-none shadow-none">
             <CardHeader className="relative">
               <div className="rounded-full bg-lg_blue-light h-8 w-8 flex items-center justify-center absolute top-4 left-4">
                 4
               </div>
-              <div className="w-full h-auto flex justify-center">
+              <div className="w-full h-auto flex justify-center ">
                 <Image
                   src="/assets/img-contact.webp"
                   alt="Regístrate"
@@ -184,40 +191,45 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg"
                 />
               </div>
-              <CardTitle>Regístrate gratis</CardTitle>
-              <CardDescription className="line-clamp-3">
-                Crea una cuenta en pocos pasos y accede a nuestra amplia red de
-                abogados.
+              <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4">
+                Consigue <span className="italic">un contrato</span>
+              </CardTitle>
+              <CardDescription className="line-clamp-4 text-lg text-black">
+                Si eres seleccionado, recibe el contrato y comienza
               </CardDescription>
             </CardHeader>
           </Card>
-          <Card className="max-w-[310px] border-none">
+
+          <Card className="max-w-[310px] border-none shadow-none">
             <CardHeader className="relative">
               <div className="rounded-full bg-lg_blue-light h-8 w-8 flex items-center justify-center absolute top-4 left-4">
                 5
               </div>
-              <div className="w-full h-auto flex justify-center">
+              <div className="w-full h-auto flex justify-center ">
                 <Image
-                  src="/assets/img-resolv.webp"
+                  src="/assets/img-explore.webp"
                   alt="Regístrate"
                   width={107}
                   height={107}
                   className="rounded-lg"
                 />
               </div>
-              <CardTitle>Regístrate gratis</CardTitle>
-              <CardDescription className="line-clamp-3">
-                Crea una cuenta en pocos pasos y accede a nuestra amplia red de
-                abogados.
+              <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4">
+                Completa el <span className="italic">trabajo</span>
+              </CardTitle>
+              <CardDescription className="line-clamp-4 text-lg text-black">
+                Marca los pasos completados y comunícate con el cliente si
+                tienes dudas.
               </CardDescription>
             </CardHeader>
           </Card>
-          <Card className="max-w-[310px] border-none">
+
+          <Card className="max-w-[310px] border-none shadow-none">
             <CardHeader className="relative">
               <div className="rounded-full bg-lg_blue-light h-8 w-8 flex items-center justify-center absolute top-4 left-4">
                 6
               </div>
-              <div className="w-full h-auto flex justify-center">
+              <div className="w-full h-auto flex justify-center ">
                 <Image
                   src="/assets/img-resolv.webp"
                   alt="Regístrate"
@@ -226,19 +238,20 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg"
                 />
               </div>
-              <CardTitle>Regístrate gratis</CardTitle>
-              <CardDescription className="line-clamp-3">
-                Crea una cuenta en pocos pasos y accede a nuestra amplia red de
-                abogados.
+              <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4">
+                Recibe<span className="italic">tu pago</span>
+              </CardTitle>
+              <CardDescription className="line-clamp-4 text-lg text-black">
+                Obtén pagos parciales y finales tras la aprobación del cliente.
               </CardDescription>
             </CardHeader>
           </Card>
         </div>
       </div>
 
-      <div className="lg:h-[584px] grid grid-cols-1 lg:grid-cols-2">
+      <div className="lg:h-[584px] 3xl:h-[700px] grid grid-cols-1 lg:grid-cols-2">
         <div className="bg-[#1E1E1E] flex flex-col justify-center gap-4 py-8">
-          <div className="lg:max-w-[560px] flex mx-auto flex-col justify-center gap-8">
+          <div className="flex  flex-col justify-center gap-8 3xl:gap-16 p-4 lg:p-16">
             <div className="grid grid-cols-[40px_auto]  gap-4 ">
               <Image
                 src="/icos/ico-megaphone-w.png"
@@ -248,11 +261,11 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 className="mx-auto"
               />
               <div className="text-white">
-                <h3 className="text-lg lg:text-xl font-tiempos mb-2">
+                <h3 className="text-lg lg:text-2xl font-tiempos mb-2">
                   Oportunidades{" "}
                   <span className="italic font-light">Exclusivas</span>
                 </h3>
-                <p className="text-sm">
+                <p className="text-base">
                   Accede a proyectos y empleos específicos para abogados,
                   garantizando trabajos alineados con tu especialidad.
                 </p>
@@ -267,11 +280,11 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 className="mx-auto"
               />
               <div className="text-white">
-                <h3 className="text-lg lg:text-xl font-tiempos mb-2">
+                <h3 className="text-lg lg:text-2xl font-tiempos mb-2">
                   Confianza y{" "}
                   <span className="italic font-light">Seguridad</span>
                 </h3>
-                <p className="text-sm">
+                <p className="text-base">
                   Trabaja solo con clientes verificados para garantizar la
                   legitimidad de los proyectos y minimizar riesgos.
                 </p>
@@ -286,10 +299,10 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 className="mx-auto"
               />
               <div className="text-white">
-                <h3 className="text-lg lg:text-xl font-tiempos mb-2">
+                <h3 className="text-lg lg:text-2xl font-tiempos mb-2">
                   Pagos <span className="italic font-light">Seguros</span>
                 </h3>
-                <p className="text-sm">
+                <p className="text-base">
                   Confía en nuestro sistema para asegurar que recibas tus pagos
                   de manera confiable y puntual.
                 </p>
@@ -297,15 +310,15 @@ const HomeMain: React.FC<HomeMainProps> = ({
             </div>
           </div>
         </div>
-        <div className=" bg-lg_blue-light flex flex-col items-center justify-center gap-4 p-8">
-          <h3 className="text-[40px] text-center max-w-[416px] font-tiempos">
+        <div className=" bg-lg_blue-light flex flex-col items-center justify-center gap-4 3xl:gap-8 p-8">
+          <h3 className="text-[40px] text-center max-w-[416px] font-tiempos 3xl:max-w-[700px] 3xl:text-6xl">
             Calcula tus <span className="italic">ganancias,</span> podrías ganar
           </h3>
-          <h2 className="text-6xl italic font-tiempos">S/ 2160</h2>
-          <p className="text-base max-w-[264px] text-center">
+          <h2 className="text-6xl italic font-tiempos 3xl:text-7xl">S/ 2160</h2>
+          <p className="text-base max-w-[264px] text-center 3xl:max-w-[400px] 3xl:text-xl">
             En comparación a 6 horas al día a un precio estimado de S/12 por día
           </p>
-          <Link href="#" className="underline">
+          <Link href="#" className="underline 3xl:text-xl">
             ¿Cómo calculamos?
           </Link>
           <Select>

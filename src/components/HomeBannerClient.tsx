@@ -101,23 +101,24 @@ const HomeBannerClient = () => {
   ];
 
   return (
-    <div>
-      <div className="lg:grid grid-cols-[5fr_6fr] w-full lg:min-h-[616px] items-center border-t border-t-black">
-        <div className="bg-lg_yellow p-8 h-full w-full flex  pt-[6%] pl-[10%]">
-          <div className="max-w-[444px] flex flex-col gap-8">
-            <h1 className="text-black text-3xl lg:text-[48px] xl:text-[64px] font-tiempos leading-[1.2]">
-              Soluciona tus asuntos legales con un{" "}
-              <span className="italic font-light">abogado de confianza.</span>
+    <div className="lg:h-[calc(100vh-180px)] flex flex-col">
+      <div className="lg:flex w-full lg:min-h-[616px] items-center border-t border-t-black lg:flex-1">
+        <div className="bg-lg_yellow p-8 2xl:p-16 h-full flex lg:w-[45%] items-center">
+          <div className="flex flex-col gap-8">
+            <h1 className="text-black text-3xl lg:text-[48px] xl:text-[64px] 3xl:text-7xl font-tiempos leading-[1.2]">
+              Simplificamos la contratación de abogados,{" "}
+              <span className="italic font-light">donde y cuando</span>los
+              necesites
             </h1>
-            <div className="w-full max-w-[500px] flex gap-4 relative 2xl:min-w-[560px]">
+            <div className="w-full  flex gap-4 relative ">
               <Input
                 placeholder="Ejemplo Abogado, Minería, etc."
-                className="rounded-[30px] border border-black px-[30px] py-[12px] focus:outline-none"
+                className="rounded-[30px] border border-black px-[30px] py-[12px] focus:outline-none h-12"
               />
               <Button
                 variant="outline"
                 size="icon"
-                className="rounded-full bg-black hover:bg-slate-800 w-[48px] h-[42px]"
+                className="rounded-full bg-black hover:bg-slate-800 w-[53px] h-12"
               >
                 <Search className="h-4 w-4 text-white" />
               </Button>
@@ -127,7 +128,7 @@ const HomeBannerClient = () => {
             </div>
           </div>
         </div>
-        <div className="bg-[url('/assets/images/img-landing-clients.jpg')] bg-top bg-cover bg-no-repeat w-full h-full hidden lg:block border-l border-l-black"></div>
+        <div className="bg-[url('/assets/images/img-landing-clients.jpg')] bg-top bg-cover bg-no-repeat w-full h-full hidden lg:block border-l border-l-black lg:w-[55%]"></div>
         <div className="hidden lg:block absolute lg:left-[30vw] xl:left-[38vw] 2xl:left-[32vw] bottom-[20vh] transform rotate-[14deg]">
           <Image
             src="/assets/images/img-arrow-banner.png"

@@ -25,11 +25,23 @@ import Link from "next/link";
 import Image from "next/image";
 
 const formSchema = z.object({
-  names: z.string().min(2).max(30),
-  lastNames: z.string().min(2).max(30),
-  email: z.string().min(2).max(30),
-  company: z.string().min(2).max(30),
-  phone: z.string().min(1).max(15),
+  names: z
+    .string()
+    .min(2, { message: "El campo nombres debe ser rellenado" })
+    .max(30),
+  lastNames: z
+    .string()
+    .min(2, { message: "El campo apellidos debe ser rellenado" })
+    .max(30),
+  email: z
+    .string()
+    .min(2, { message: "El campo email debe ser rellenado" })
+    .max(30),
+  company: z
+    .string()
+    .min(2, { message: "El campo debe ser rellenado" })
+    .max(30),
+  phone: z.string().min(1, { message: "El campo debe ser rellenado" }).max(15),
   howDiscover: z.string().min(2).max(100).optional(),
   rsocial: z.enum(["natural", "juridica"], {
     required_error: "Necesitas seleccionar alguno",
@@ -80,13 +92,13 @@ const RegisterClient = () => {
         <main>
           <div className="container p-4 lg:p-8 mx-auto flex flex-col gap-4 lg:gap-4 mt-8 max-w-[860px]">
             <div>
-              <Progress value={50} className="mx-auto mb-4" />
-              <p className="text-center">Paso 1/2</p>
+              <Progress value={50} className="mx-auto mb-4 h-2" />
+              <p className="text-left">Paso 1/2</p>
             </div>
-            <h2 className="font-bold text-3xl lg:text-5xl">
-              Bienvenido a Legalo 👋
+            <h2 className="text-3xl lg:text-5xl font-tiempos mt-4">
+              Bienvenido a <span className="italic">Legalo</span> 👋
             </h2>
-            <h3 className="font-bold lg:text-lg ">Datos personales</h3>
+            <h3 className=" lg:text-2xl">Datos personales</h3>
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -101,7 +113,7 @@ const RegisterClient = () => {
                       <FormItem>
                         <FormLabel>Nombres</FormLabel>
                         <FormControl>
-                          <Input placeholder="shadcn" {...field} />
+                          <Input placeholder="Nombres" {...field} />
                         </FormControl>
                         <FormDescription></FormDescription>
                         <FormMessage />
@@ -116,7 +128,7 @@ const RegisterClient = () => {
                       <FormItem>
                         <FormLabel>Apellidos</FormLabel>
                         <FormControl>
-                          <Input placeholder="shadcn" {...field} />
+                          <Input placeholder="Apellidos" {...field} />
                         </FormControl>
                         <FormDescription></FormDescription>
                         <FormMessage />
