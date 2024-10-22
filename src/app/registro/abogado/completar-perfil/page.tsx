@@ -14,14 +14,12 @@ import Image from "next/image";
 
 // form
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import ModalAgregarEducacion from "@/components/abogado/ModalAgregarEducacion";
 import ServiceSelectAbogado from "@/components/abogado/ServiceSelectAbogado";
 import IndustrySelectAbogado from "@/components/abogado/IndustrySelectAbogado";
 import ModalAgregarExperiencia from "@/components/abogado/ModalAgregarExperiencia";
 import SkillSection from "@/components/abogado/registro/SkillSection";
 import AboutSection from "@/components/abogado/registro/AboutSection";
+import ModalAgregarEducacion from "@/components/abogado/ModalAgregarEducacion";
 
 const UploadCV = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -587,7 +585,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
 
       {/* modal agregar educación */}
       {showModalAddEducacion && (
-        <ModalAgregarEducacion 
+        <ModalAgregarEducacion
           showModal={showModalAddEducacion}
           setShowModal={setShowModalAddEducacion}
           setEducacionSelected={setEducacionSelected}
