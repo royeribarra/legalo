@@ -86,7 +86,7 @@ function ModalAgregarExperiencia({
             estudios = JSON.parse(estudiosString);
         }
         const nuevoEstudio  = {
-            id: (estudios.length === 0 ? 1 : experienciaSelected.id ),
+            id: (estudios.length === 0 ? 1 : (experienciaSelected ? experienciaSelected.id : estudios.length + 1) ),
             desde_mes: values.desde_mes,
             desde_ano: values.desde_ano,
             hasta_mes: values.hasta_mes,

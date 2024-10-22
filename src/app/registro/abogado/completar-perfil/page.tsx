@@ -312,6 +312,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
   const [showModalAddEspecialidad, setShowModalAddEspecialidad] = useState(false);
   const [showModalAddExperiencia, setShowModalAddExperiencia] = useState(false);
   const [experienciaSelected, setExperienciaSelected] = useState();
+  const [educacionSelected, setEducacionSelected] = useState();
 
   const toggleAddStudy = () => {
     setShowModalAddEducacion(!showModalAddEducacion);
@@ -334,6 +335,11 @@ const CompleteProfileLawyerPage: React.FC = () => {
   const editarExperiencia = (experiencia: any) => {
     setExperienciaSelected(experiencia);
     setShowModalAddExperiencia(true);
+  };
+
+  const editarEducacion = (educacion: any) => {
+    setEducacionSelected(educacion);
+    setShowModalAddEducacion(true);
   };
 
   useEffect(()=> {
@@ -498,7 +504,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
                   variant="outline"
                   size="sm"
                   className="rounded-full"
-                  onClick={toggleAddStudy}
+                  onClick={()=>setShowModalAddEducacion(true)}
                 >
                   <Plus size={20} color="black" className="mr-4" /> Agregar estudio
                 </Button>
@@ -521,6 +527,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
                             variant="outline"
                             size="sm"
                             className="w-[120px] rounded-2xl border-black"
+                            onClick={()=>editarEducacion(educacion)}
                           >
                             Editar
                           </Button>
@@ -740,6 +747,8 @@ const CompleteProfileLawyerPage: React.FC = () => {
         <ModalAgregarEducacion 
           showModal={showModalAddEducacion}
           setShowModal={setShowModalAddEducacion}
+          setEducacionSelected={setEducacionSelected}
+          educacionSelected={educacionSelected}
         />
       )}
 

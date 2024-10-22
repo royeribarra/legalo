@@ -47,9 +47,12 @@ type ModalAgregarEducacionProps = {
     showModal: boolean;
     // setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
     setShowModal: any;
+    educacionSelected: any;
+    setEducacionSelected?: any;
 };
 
-function ModalAgregarEducacion({showModal, setShowModal}:ModalAgregarEducacionProps){
+function ModalAgregarEducacion({showModal, setShowModal, setEducacionSelected, educacionSelected}:ModalAgregarEducacionProps){
+    console.log(educacionSelected)
     const [trabajoActualmente, setTrabajoActualmente] = useState(false);
     const currentDate = new Date();
     const currentMonth = currentDate.toLocaleString('es-ES', { month: 'long' });
@@ -80,9 +83,15 @@ function ModalAgregarEducacion({showModal, setShowModal}:ModalAgregarEducacionPr
     }, [trabajoActualmente, form, currentMonth, currentYear]);
 
     function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values);
-        
+        const estudiosString = localStorage.getItem("listaEstudios");
+        let estudios = [];
+        if (estudiosString) {
+            estudios = JSON.parse(estudiosString);
+        }
+        console.log(estudios)
+        console.log(estudiosString)
         const nuevoEstudio  = {
+            id: (estudios.length === 0 ? 1 : (educacionSelected ? educacionSelected.id : estudios.length + 1) ),
             desde_mes: values.desde_mes,
             desde_ano: values.desde_ano,
             hasta_mes: values.hasta_mes,
@@ -92,26 +101,45 @@ function ModalAgregarEducacion({showModal, setShowModal}:ModalAgregarEducacionPr
             ubicacion: values.ubicacion,
             descripcion: values.descripcion,
         };
-        const estudiosString = localStorage.getItem("listaEstudios");
-        let estudios = [];
-
-        if (estudiosString) {
-            // Si 'estudios' ya existe, lo parseamos para obtener el array
-            estudios = JSON.parse(estudiosString);
+        if(educacionSelected){
+            const indexSelected = estudios.findIndex((estudio: any)=>estudio.id === educacionSelected.id)
+            estudios[indexSelected] = nuevoEstudio;
+        }else{
+            estudios.push(nuevoEstudio);
         }
-        estudios.push(nuevoEstudio);
-
-        // Guardamos el array actualizado en localStorage
         localStorage.setItem("listaEstudios", JSON.stringify(estudios));
 
-        // Muestra los valores en consola (opcional)
-        console.log("Estudios actualizados en localStorage", estudios);
         setShowModal(false);
+        setEducacionSelected(null);
+        form.reset();
     }
 
     function onError(errors: any) {
         console.log("Errores de validación", errors);
     }
+
+    const cancelar = () => {
+        setShowModal(false);
+        setEducacionSelected(null);
+        form.reset();
+    };
+
+    useEffect(()=> {
+        const estudiosString = localStorage.getItem("listaEstudios");
+        if(estudiosString){
+            const experiencia = JSON.parse(estudiosString);
+            if (educacionSelected) {
+                form.setValue("desde_mes", educacionSelected.desde_mes);
+                form.setValue("desde_ano", educacionSelected.desde_ano);
+                form.setValue("hasta_mes", educacionSelected.hasta_mes);
+                form.setValue("hasta_ano", educacionSelected.hasta_ano);
+                form.setValue("titulo", educacionSelected.titulo);
+                form.setValue("institucion", educacionSelected.institucion);
+                form.setValue("ubicacion", educacionSelected.ubicacion);
+                form.setValue("descripcion", educacionSelected.descripcion);
+              }
+        }
+    }, [educacionSelected]);
 
     return(
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-20 ">
@@ -299,7 +327,7 @@ function ModalAgregarEducacion({showModal, setShowModal}:ModalAgregarEducacionPr
                       type="submit"
                       variant="outline"
                       className="w-[190px] h-12 rounded-[10px]"
-                      onClick={()=>setShowModal(false)}
+                      onClick={cancelar}
                     >
                       Cancelar
                     </Button>
@@ -315,7 +343,7 @@ function ModalAgregarEducacion({showModal, setShowModal}:ModalAgregarEducacionPr
             </div>
             <div
               className="absolute top-8 right-8 w-5 h-5 bg-black flex  justify-center items-center rounded-full cursor-pointer"
-              onClick={()=>setShowModal(false)}
+              onClick={cancelar}
             >
               <IconX className="text-white w-4 h-4" />
             </div>
