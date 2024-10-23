@@ -39,6 +39,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import HomeFaq from "./HomeFaq";
 
 type HomeMainProps = {
   serviceTipe: string;
@@ -82,13 +83,13 @@ const HomeMain: React.FC<HomeMainProps> = ({
           <div className="lg:flex gap-2  border border-black rounded-full p-[2px] w-auto">
             <Button
               variant="switchOutline"
-              onClick={() => updateServiceTipe("client")}
+              onClick={() => updateServiceTipe("lawyer")}
             >
               ¿Quieres contratar?
             </Button>
             <Button
               variant="switch"
-              onClick={() => updateServiceTipe("lawyer")}
+              onClick={() => updateServiceTipe("client")}
             >
               ¿Quieres trabajar?
             </Button>
@@ -354,7 +355,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
 
       {/* Reviews */}
       <div className="bg-lg_blue-light lg:h-[640px] flex items-center py-8">
-        <div className="container mx-auto p-4 lg:p-8 pr-0">
+        <div className="container p-4 lg:pl-16  pr-0">
           <div className="mb-8 flex overflow-x-auto">
             <ToggleGroup
               type="single"
@@ -373,7 +374,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
             opts={{
               align: "start",
             }}
-            className="w-full mb-8 overflow-child-visible"
+            className="w-full lg:w-[90vw] mb-8 overflow-child-visible"
           >
             <CarouselContent className="">
               {reviewsItems.map((item, index) => (
@@ -414,7 +415,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <div className="flex justify-end mt-12 gap-4">
+            <div className="flex justify-end mt-12 gap-4 mr-4 lg:mr-0">
               <CarouselPreviousReviews />
               <CarouselNextReviews />
             </div>
@@ -422,71 +423,70 @@ const HomeMain: React.FC<HomeMainProps> = ({
         </div>
       </div>
 
-      <div className="container p-4 lg:p-8 mx-auto grid grid-cols-1 lg:grid-cols-[5fr_6fr] gap-4 lg:h-[540px] items-center py-8">
-        <div className="flex flex-col gap-4 items-center lg:items-start">
-          <h2 className="text-3xl lg:text-5xl max-w-[400px] text-center lg:text-left font-tiempos">
-            Respondemos a tus <span className="italic">preguntas</span>
-          </h2>
-          <p className="text-[18px]">¿Tienes más preguntas?</p>
-          <Button
-            variant="outline"
-            className="w-fit border border-black rounded-full text-xl px-6 "
-          >
-            Contáctanos
-          </Button>
+      <div className="">
+        <div className="flex border-y border-black flex-col-reverse lg:flex-row">
+          <div className="w-full lg:w-[68%]  lg:pl-16 p-4 lg:py-20 py-10 3xl:py-28 lg:pr-20 3xl:pr-28 flex flex-col justify-center gap-4 lg:gap-8 border-r border-black">
+            <div className="">
+              <h2 className="font-tiempos text-3xl lg:text-5xl leading-[1.2]">
+                Tu abogado de confianza:{" "}
+              </h2>
+              <h2 className="font-tiempos text-3xl lg:text-5xl leading-[1.2]">
+                La historia de <span className="italic"> Legalo</span>
+              </h2>
+            </div>
+            <p className="block text-lg 3xl:text-2xl">
+              Publica tu caso hoy mismo y accede a una red de abogados
+              especializados listos para ayudarte. Encuentra al profesional
+              ideal para tus necesidades legales y resuelve tu situación con
+              confianza y rapidez. Publica tu caso hoy mismo y accede a una red
+              de abogados especializados listos para ayudarte.
+            </p>
+            <p className="block text-lg 3xl:text-2xl">
+              Publica tu caso hoy mismo y accede a una red de abogados
+              especializados listos para ayudarte. Encuentra al profesional
+              ideal para tus necesidades legales y resuelve tu situación con
+              confianza y rapidez. Publica tu caso hoy mismo y accede a una red
+              de abogados especializados listos para ayudarte.
+            </p>
+          </div>
+
+          <div className="w-full lg:w-[32%] ">
+            <Image
+              src="/assets/img-legalo-history.jpg"
+              alt="img"
+              width={459}
+              height={484}
+              className="w-full h-[200px] lg:h-full object-cover object-top"
+            />
+          </div>
         </div>
-        <div>
-          <Accordion type="single" collapsible>
-            <AccordionItem
-              value="item-1"
-              className="border-b-black border-t border-t-black "
-            >
-              <AccordionTrigger>
-                ¿Cómo puedo asegurarme de que el abogado que estoy contratando
-                sea confiable y competente?
-              </AccordionTrigger>
-              <AccordionContent>
-                Yes. It adheres to the WAI-ARIA design pattern.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-2" className="border-b-black">
-              <AccordionTrigger>
-                ¿Cómo funciona el proceso de publicación de un proyecto en la
-                plataforma?
-              </AccordionTrigger>
-              <AccordionContent>
-                Yes. It adheres to the WAI-ARIA design pattern.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-3" className="border-b-black">
-              <AccordionTrigger>
-                ¿Cómo se maneja la seguridad de los pagos en la plataforma?
-              </AccordionTrigger>
-              <AccordionContent>
-                Yes. It adheres to the WAI-ARIA design pattern.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-4" className="border-b-black">
-              <AccordionTrigger>
-                ¿Qué debo hacer si no estoy satisfecho con el trabajo del
-                abogado?
-              </AccordionTrigger>
-              <AccordionContent>
-                Yes. It adheres to the WAI-ARIA design pattern.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-5" className="border-b-black">
-              <AccordionTrigger>
-                ¿Puedo contratar abogados para proyectos a largo plazo o solo
-                para tareas específicas?
-              </AccordionTrigger>
-              <AccordionContent>
-                Yes. It adheres to the WAI-ARIA design pattern.
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+        <div className="flex border-b border-black bg-lg_blue-light">
+          <div className="w-[50%] lg:w-[68%]  border-r border-black py-8 p-4 lg:px-16 3xl:pr-28 flex flex-col justify-center">
+            {" "}
+            <h2 className="font-tiempos lg:text-4xl 3xl:text-5xl leading-[1.2] italic">
+              “Publica tu caso hoy mismo y accede a una red de abogados
+              especializados listos para ayudarte.”
+            </h2>
+          </div>
+          <div className="w-[50%]  lg:w-[32%] p-8 ">
+            <div>
+              <Image
+                src="/assets/images/firma-evelyn.png"
+                alt="img"
+                width={130}
+                height={60}
+                className=""
+              />
+            </div>
+            <div className="flex flex-col justify-center">
+              <p>Evelyn Castro, </p>
+              <p>Fundadora de Legalo</p>
+            </div>
+          </div>
         </div>
       </div>
+
+      <HomeFaq />
     </div>
   );
 };
