@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Search as IcoSearch } from "lucide-react";
-import { Info as IcoInfo } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import DashProyect from "@/components/dashboard/DashProyect";
+import ResumeProyect from "@/components/dashboard/ResumeProyect";
+import InfoNominations from "@/components/dashboard/InfoNominations";
 
 import { Checkbox } from "@/components/ui/checkbox";
 
@@ -54,27 +54,7 @@ const DashboardLawyerPage = () => {
             <input type="text" placeholder="Escribe..." className="" />
           </div>
         </div>
-        <div className="bg-[#FEF7FF] p-3 flex flex-wrap justify-center lg:justify-between max-w-[474px] border border-[#CAC4D0] rounded-xl gap-2">
-          <div className="flex-none flex items-center">
-            <IcoInfo size={24} />
-          </div>
-          <div className="flex gap-3 lg:flex-1">
-            <div className="flex gap-2  items-center w-[45%]">
-              <p className="text-sm">Postulaciones restantes:</p>
-              <span className="font-bold text-base">5</span>
-            </div>
-            <div className="w-[1px] my-2 lg:my-1 bg-black"></div>
-            <div className="flex gap-2 items-center w-[45%]">
-              <p className="text-sm">Tipo de membresia:</p>
-              <span className="font-bold text-base">Gratuita</span>
-            </div>
-          </div>
-          <div className="w-full flex justify-end">
-            <Link href="#" className="text-[#007AFF] font-bold">
-              Aumenta tus chances
-            </Link>
-          </div>
-        </div>
+        <InfoNominations />
       </div>
 
       {/* Dashboard */}
@@ -266,10 +246,10 @@ const DashboardLawyerPage = () => {
           )}
 
           <div className={"flex flex-col gap-8 flex-1"}>
-            <DashProyect />
-            <DashProyect />
-            <DashProyect />
-            <DashProyect />
+            <ResumeProyect />
+            <ResumeProyect />
+            <ResumeProyect />
+            <ResumeProyect />
           </div>
         </div>
       </div>

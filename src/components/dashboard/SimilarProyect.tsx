@@ -1,12 +1,13 @@
 import React from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
-const DashProyect = () => {
+const SimilarProyect = () => {
   return (
-    <div className="p-4 lg:p-8 border border-black rounded-[20px] flex flex-col gap-4">
+    <div className="p-4 lg:p-8 border border-black rounded-[20px] flex flex-col gap-4 flex-none w-[320px] lg:w-[430px]">
       <div className="flex justify-between flex-col-reverse lg:flex-row">
-        <h2 className="font-tiempos text-xl lg:text-2xl font-light">
+        <h2 className="font-tiempos text-base lg:text-lg font-light">
           Asesoría para Contrato de Trabajadores Temporales
         </h2>
 
@@ -15,16 +16,13 @@ const DashProyect = () => {
             variant="outline"
             className="text-sm lg:text-lg h-9 lg:h-[42px] rounded-full"
           >
-            Guardar
-          </Button>
-          <Button className="text-sm lg:text-lg h-9 lg:h-[42px] rounded-full">
             Ver proyecto
           </Button>
         </div>
       </div>
       <div className="text-sx lg:text-base">
         <p>Descripción de proyecto: </p>
-        <p>
+        <p className="line-clamp-3">
           Necesito asesoría legal para la elaboración de un modelo de contrato
           para trabajadores temporales que se ajuste a la normativa. En mi
           empresa voy a contratar empleados para proyectos de mediana duración,
@@ -90,4 +88,4 @@ const DashProyect = () => {
   );
 };
 
-export default DashProyect;
+export default SimilarProyect;
