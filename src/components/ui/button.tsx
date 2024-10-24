@@ -20,6 +20,8 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         switch: "bg-primary text-primary rounded-full h-9 text-white px-[20px]",
         switchOutline: "text-primary  rounded-full h-9 px-[20px]",
+        dashActive: "font-bold border-b-4 border-black rounded-none ",
+        dashInActive: "font-light  text-[#808080] rounded-none ",
       },
       size: {
         default: "h-10 px-4 py-2",

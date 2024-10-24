@@ -69,19 +69,22 @@ const CompleteProfileLawyerPage = () => {
         ))}
       </div>
       <div className="grid grid-cols-4 fixed left-0 bottom-0 w-screen h-[115px] bg-[#D5F1F0] ">
-        <div className="col-span-4 lg:col-span-3 flex justify-center lg:justify-between items-center container mx-auto lg:px-8 max-w-[800px]">
-          <Link href="/registro/abogado">
-            <Button size="lg" variant="link">
-              <ArrowLeft className="mr-2 h-4 w-4" /> Atras
-            </Button>
-          </Link>
-
-          <Link href="/registro/abogado/completar-perfil">
-            <Button size="lg" className="">
-              Sigue completando tu perfil{" "}
-              <ArrowRight className="mr-2 h-4 w-4" />
-            </Button>
-          </Link>
+        <div className="col-span-4 lg:col-span-3 flex justify-center lg:justify-between items-center container mx-auto px-4 lg:px-8 max-w-[800px]">
+          <div className="w-[30%] ">
+            <Link href="/registro/abogado" className="">
+              <Button size="lg" variant="link" className="mx-0 px-2">
+                <ArrowLeft className="mr-2 h-4 w-4" /> Atras
+              </Button>
+            </Link>
+          </div>
+          <div className="w-[70%] flex justify-end">
+            <Link href="/registro/abogado/completar-perfil">
+              <Button size="lg" className="p-4 lg:px-8">
+                <p className="">Sigue completando tu perfil</p>
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

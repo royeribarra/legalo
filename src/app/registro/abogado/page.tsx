@@ -190,15 +190,17 @@ function RegisterLawyer() {
           </div>
         </header>
         <main>
-          <div className="container p-4 lg:p-8 mx-auto flex flex-col gap-4 lg:gap-8 mt-8 max-w-[860px]">
+          <div className="container p-4 lg:p-8 mx-auto flex flex-col gap-4 lg:gap-4 mt-8 max-w-[860px]">
             <div className="w-full lg:max-w-[480px] m-auto">
               <Progress value={33} className="mx-auto mb-4 h-2" />
               <p className="text-left">Paso 1/3</p>
             </div>
             <h2 className="font-bold text-3xl lg:text-5xl font-tiempos">
-              Bienvenido a <span className="italic">Legalo</span> 👋
+              Bienvenido a <span className="italic">Legalo</span>
             </h2>
-            <h3 className="lg:text-lg ">Facilita tu búsqueda de proyectos</h3>
+            <h3 className="lg:text-lg lg:mb-8">
+              Facilita tu búsqueda de proyectos
+            </h3>
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -321,7 +323,10 @@ function RegisterLawyer() {
                         htmlFor="terms2"
                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                       >
-                        Acepto los Términos y condiciones
+                        Acepto los{" "}
+                        <Link href="#" className="underline">
+                          Términos y condiciones{" "}
+                        </Link>
                       </label>
                       <FormMessage />
                     </div>
