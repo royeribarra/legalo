@@ -20,12 +20,19 @@ import SimilarProyect from "@/components/dashboard/SimilarProyect";
 import StepsForProyects from "@/components/dashboard/StepsForProyects";
 import ModalPostularProyecto from "@/components/dashboard/ModalPostularProyecto";
 import HalloweenAnimation from "@/components/HalloweenAnimation";
+import ModalPostulacionOk from "@/components/dashboard/ModalPostulacionOk";
 
 const ProyectPage = () => {
   const [showModalPostular, setShowModalPostular] = useState(false);
+  const [showModalPostularOk, setShowModalPostularOk] = useState(false);
 
   const handleModalPostular = () => {
     setShowModalPostular(!showModalPostular);
+  };
+
+  const handleModalPostularOk = () => {
+    setShowModalPostular(false);
+    setShowModalPostularOk(!showModalPostularOk);
   };
 
   return (
@@ -258,7 +265,14 @@ const ProyectPage = () => {
       </div>
 
       {showModalPostular && (
-        <ModalPostularProyecto handleModalPostular={handleModalPostular} />
+        <ModalPostularProyecto
+          handleModalPostular={handleModalPostular}
+          handleModalPostularOk={handleModalPostularOk}
+        />
+      )}
+
+      {showModalPostularOk && (
+        <ModalPostulacionOk handleModalPostularOk={handleModalPostularOk} />
       )}
 
       {/* <HalloweenAnimation /> */}
