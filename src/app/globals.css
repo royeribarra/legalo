@@ -138,3 +138,8 @@ body {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE 10+ */
 }
+
+[data-state="active"].steps-btn > span {
+  background-color: black;
+  color: white;
+}

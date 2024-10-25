@@ -18,7 +18,7 @@ const ResumeProyect = () => {
           >
             Guardar
           </Button>
-          <Link href="/dashboard/abogado/proyectos">
+          <Link href="/dashboard/abogado/proyecto">
             <Button className="text-sm lg:text-lg h-9 lg:h-[42px] rounded-full">
               Ver proyecto
             </Button>

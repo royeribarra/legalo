@@ -1,6 +1,8 @@
+"use client";
+
 import { Info as IcoInfo } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { User } from "lucide-react";
@@ -16,8 +18,16 @@ import {
 import SimilarProyect from "@/components/dashboard/SimilarProyect";
 
 import StepsForProyects from "@/components/dashboard/StepsForProyects";
+import ModalPostularProyecto from "@/components/dashboard/ModalPostularProyecto";
+import HalloweenAnimation from "@/components/HalloweenAnimation";
 
 const ProyectPage = () => {
+  const [showModalPostular, setShowModalPostular] = useState(false);
+
+  const handleModalPostular = () => {
+    setShowModalPostular(!showModalPostular);
+  };
+
   return (
     <div>
       <div className="p-4 lg:px-16 lg:pt-12 flex gap-16 2xl:gap-32 flex-col lg:flex-row">
@@ -33,7 +43,9 @@ const ProyectPage = () => {
               <p className="text-slate-500">Publicado hace 10 días</p>
             </div>
             <div className="mt-4 lg:mt-auto">
-              <Button className="w-[300px] h-12">Enviar Postulación</Button>
+              <Button className="w-[300px] h-12" onClick={handleModalPostular}>
+                Enviar Postulación
+              </Button>
             </div>
           </div>
           <div className="flex gap-4 flex-wrap">
@@ -244,6 +256,12 @@ const ProyectPage = () => {
           />
         </div>
       </div>
+
+      {showModalPostular && (
+        <ModalPostularProyecto handleModalPostular={handleModalPostular} />
+      )}
+
+      {/* <HalloweenAnimation /> */}
     </div>
   );
 };
