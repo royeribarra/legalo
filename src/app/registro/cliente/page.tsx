@@ -98,7 +98,7 @@ const RegisterClient = () => {
             <h2 className="text-3xl lg:text-5xl font-tiempos mt-4">
               Bienvenido a <span className="italic">Legalo</span> 👋
             </h2>
-            <h3 className=" lg:text-2xl">Datos personales</h3>
+            <h3 className=" lg:text-[28px]">Datos personales</h3>
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -113,7 +113,11 @@ const RegisterClient = () => {
                       <FormItem>
                         <FormLabel>Nombres</FormLabel>
                         <FormControl>
-                          <Input placeholder="Nombres" {...field} />
+                          <Input
+                            placeholder="Nombres"
+                            {...field}
+                            className="border-black focus-visible:border-none rounded-[10px] h-12"
+                          />
                         </FormControl>
                         <FormDescription></FormDescription>
                         <FormMessage />
@@ -128,7 +132,11 @@ const RegisterClient = () => {
                       <FormItem>
                         <FormLabel>Apellidos</FormLabel>
                         <FormControl>
-                          <Input placeholder="Apellidos" {...field} />
+                          <Input
+                            placeholder="Apellidos"
+                            {...field}
+                            className="border-black focus-visible:border-none rounded-[10px] h-12"
+                          />
                         </FormControl>
                         <FormDescription></FormDescription>
                         <FormMessage />
@@ -148,6 +156,7 @@ const RegisterClient = () => {
                           type="email"
                           placeholder="example@domain.com"
                           {...field}
+                          className="border-black focus-visible:border-none rounded-[10px] h-12"
                         />
                       </FormControl>
                       <FormDescription></FormDescription>
@@ -203,6 +212,7 @@ const RegisterClient = () => {
                           <Input
                             placeholder="Nombre de la empresa"
                             {...field}
+                            className="border-black focus-visible:border-none rounded-[10px] h-12"
                           />
                         </FormControl>
                         <FormDescription></FormDescription>
@@ -222,6 +232,7 @@ const RegisterClient = () => {
                             type="number"
                             placeholder="987654321"
                             {...field}
+                            className="border-black focus-visible:border-none rounded-[10px] h-12"
                           />
                         </FormControl>
                         <FormDescription></FormDescription>
@@ -239,17 +250,25 @@ const RegisterClient = () => {
                     <FormItem>
                       <FormLabel>¿Cómo oíste de nosotros? (OPCIONAL)</FormLabel>
                       <FormControl>
-                        <Textarea placeholder="..." {...field} />
+                        <Textarea
+                          placeholder="..."
+                          {...field}
+                          className="border-black focus-visible:border-none rounded-[10px] h-12"
+                        />
                       </FormControl>
                       <FormDescription></FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-
-                <Button type="submit" className="w-full">
-                  SIGUIENTE
-                </Button>
+                <div className="flex justify-end">
+                  <Button
+                    type="submit"
+                    className="h-12 w-[110px] rounded-[10px]"
+                  >
+                    Siguiente
+                  </Button>
+                </div>
               </form>
             </Form>
           </div>
