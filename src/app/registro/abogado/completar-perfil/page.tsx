@@ -1,7 +1,6 @@
 "use client";
 
 import { Progress } from "@/components/ui/progress";
-import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 // import { useState } from "react";
 import { Upload } from "lucide-react";
@@ -12,7 +11,6 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import Image from "next/image";
 
 // form
-import { z } from "zod";
 import ServiceSelectAbogado from "@/components/abogado/ServiceSelectAbogado";
 import IndustrySelectAbogado from "@/components/abogado/IndustrySelectAbogado";
 import ModalAgregarExperiencia from "@/components/abogado/ModalAgregarExperiencia";
@@ -20,16 +18,28 @@ import SkillSection from "@/components/abogado/registro/SkillSection";
 import AboutSection from "@/components/abogado/registro/AboutSection";
 import ModalAgregarEducacion from "@/components/abogado/MoodalAgregarEducacion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useRouter } from "next/router";
 
 interface Educacion {
+  id: number,
   desde_mes: string;   // o puede ser un número, dependiendo de cómo manejes los meses
-  desde_ano: number;   // año como número
+  desde_ano: string;   // año como número
   hasta_mes: string;   // o puede ser un número
-  hasta_ano: number;   // año como número
+  hasta_ano: string;   // año como número
   titulo: string;      // título del curso o grado
   institucion: string; // nombre de la institución
-  ubicacion: string;   // ubicación de la institución
+  ubicacion: string;
+  descripcion: string;    // ubicación de la institución
+}
+
+interface Experiencia {
+  id: number;
+  desde_mes: string;   // o puede ser un número, dependiendo de cómo manejes los meses
+  desde_ano: string;   // año como número
+  hasta_mes: string;   // o puede ser un número
+  hasta_ano: string;   // año como número
+  descripcion: string;      // título del curso o grado
+  empresa: string; // nombre de la institución
+  titulo: string;   // ubicación de la institución
 }
 
 const UploadCV = () => {
@@ -291,12 +301,12 @@ const CompleteProfileLawyerPage: React.FC = () => {
   const [showModalAddEducacion, setShowModalAddEducacion] = useState(false);
 
   const [showModalAddExperiencia, setShowModalAddExperiencia] = useState(false);
-  const [experienciaSelected, setExperienciaSelected] = useState();
-  const [educacionSelected, setEducacionSelected] = useState<Educacion>();
+  const [experienciaSelected, setExperienciaSelected] = useState<Experiencia | null>(null);
+  const [educacionSelected, setEducacionSelected] = useState<Educacion | null>(null);
   const [stepNumber, setStepNumber] = useState(1);
   const [triger, setTriger] = useState("tab1");
 
-  const editarExperiencia = (experiencia: any) => {
+  const editarExperiencia = (experiencia: Experiencia) => {
     setExperienciaSelected(experiencia);
     setShowModalAddExperiencia(true);
   };
@@ -494,7 +504,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
                     experiencia
                   </Button>
                 </div>
-                {listExperiencia.map((experiencia: any, index) => (
+                {listExperiencia.map((experiencia: Experiencia, index) => (
                   <div className="flex gap-4 p-4">
                     <div className="w-1/4 flex gap-1">
                       <p>
@@ -568,8 +578,8 @@ const CompleteProfileLawyerPage: React.FC = () => {
                 </Button>
               </div>
               <div>
-                {listEducacion.map((educacion: any) => (
-                  <div className="flex gap-4 p-4">
+                {listEducacion.map((educacion: Educacion, index) => (
+                  <div className="flex gap-4 p-4" key={index}>
                     <div className="w-1/4 flex gap-1">
                       <p>{educacion.desde_mes + "-" + educacion.desde_ano}</p>
                       <span>-</span>

@@ -33,12 +33,6 @@ import {
   CarouselPreviousReviews,
 } from "@/components/ui/carousel";
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import HomeFaq from "./HomeFaq";
 
 type HomeMainProps = {

@@ -40,12 +40,22 @@ const formSchema = z.object({
   descripcion: z.string(),
 });
 
+interface Experiencia {
+  id: number;
+  desde_mes: string;   // o puede ser un número, dependiendo de cómo manejes los meses
+  desde_ano: string;   // año como número
+  hasta_mes: string;   // o puede ser un número
+  hasta_ano: string;   // año como número
+  descripcion: string;      // título del curso o grado
+  empresa: string; // nombre de la institución
+  titulo: string;   // ubicación de la institución
+}
+
 type ModalAgregarEducacionProps = {
   showModal: boolean;
-  // setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setShowModal: any;
-  experienciaSelected: any;
-  setExperienciaSelected: any;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  experienciaSelected: Experiencia | null;
+  setExperienciaSelected: React.Dispatch<React.SetStateAction<Experiencia | null>>;
 };
 
 function ModalAgregarExperiencia({
@@ -55,9 +65,10 @@ function ModalAgregarExperiencia({
   setExperienciaSelected,
 }: ModalAgregarEducacionProps) {
   const [trabajoActualmente, setTrabajoActualmente] = useState(false);
-  const currentDate = new Date();
-  const currentMonth = currentDate.toLocaleString("es-ES", { month: "long" });
-  const currentYear = currentDate.getFullYear().toString();
+  // const currentDate = new Date();
+  // const currentMonth = currentDate.toLocaleString("es-ES", { month: "long" });
+  // const currentYear = currentDate.getFullYear().toString();
+  console.log(showModal)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -132,7 +143,6 @@ function ModalAgregarExperiencia({
     const estudiosString = localStorage.getItem("listaExperiencia");
     if (estudiosString) {
       const experiencia = JSON.parse(estudiosString);
-      const experienciaSeleccionada = experiencia[experienciaSelected - 1];
       if (experienciaSelected) {
         form.setValue("desde_mes", experienciaSelected.desde_mes);
         form.setValue("desde_ano", experienciaSelected.desde_ano);

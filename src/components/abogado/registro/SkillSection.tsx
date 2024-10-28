@@ -2,6 +2,10 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus, X } from "lucide-react";
 
+interface SugerenciaBlanda{
+  label: string;
+  value: string;
+}
 // Sugerencias iniciales de habilidades blandas
 const SugerenciasBlandasIniciales = [
   {
@@ -91,7 +95,7 @@ function SkillSection() {
     }
   };
 
-  const agregarSugerenciaBlanda = (sugerencia: any) => {
+  const agregarSugerenciaBlanda = (sugerencia: SugerenciaBlanda) => {
     if (habilidadesBlandas.length >= 5) {
       console.log("No se admite más de 5 habilidades blandas");
       return;
@@ -168,7 +172,7 @@ function SkillSection() {
       <div>
         <p className="text-sm my-2">Sugerencias de habilidades blandas</p>
         <div className="flex flex-row gap-2">
-          {sugerenciasBlandas.map((sugerencia) => (
+          {sugerenciasBlandas.map((sugerencia: SugerenciaBlanda) => (
             <Button
               key={sugerencia.value}
               variant="outline"

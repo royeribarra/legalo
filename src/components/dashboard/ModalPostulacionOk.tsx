@@ -1,6 +1,6 @@
 import React from "react";
 
-import { X as IconX, User } from "lucide-react";
+import { X as IconX } from "lucide-react";
 import { Check as IconCheck } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";

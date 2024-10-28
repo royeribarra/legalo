@@ -4,7 +4,7 @@ import { Info as IcoInfo } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { User } from "lucide-react";
 import Image from "next/image";
 
@@ -19,7 +19,6 @@ import SimilarProyect from "@/components/dashboard/SimilarProyect";
 
 import StepsForProyects from "@/components/dashboard/StepsForProyects";
 import ModalPostularProyecto from "@/components/dashboard/ModalPostularProyecto";
-import HalloweenAnimation from "@/components/HalloweenAnimation";
 import ModalPostulacionOk from "@/components/dashboard/ModalPostulacionOk";
 
 const ProyectPage = () => {

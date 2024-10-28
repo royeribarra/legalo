@@ -9,13 +9,18 @@ import { useState } from "react";
 import { Check as CheckIcon } from "lucide-react";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
-
 import specialtiesItems from "@/data/specialtiesItems";
+
+interface Especialidad {
+  CardTitle: string,
+  CardDescription: string,
+  ImageSrc: string,
+}
 
 const PublicarPageThree = () => {
   const [selectServices, setSelectServices] = useState<string[]>([]);
 
-  const selectEspecialidad = (item: any) => {
+  const selectEspecialidad = (item: Especialidad) => {
     if (
       selectServices.length >= 1 &&
       !selectServices.includes(item.CardTitle)

@@ -43,12 +43,23 @@ const formSchema = z.object({
   descripcion: z.string(),
 });
 
+interface Educacion {
+  id: number,
+  desde_mes: string;   // o puede ser un número, dependiendo de cómo manejes los meses
+  desde_ano: string;   // año como número
+  hasta_mes: string;   // o puede ser un número
+  hasta_ano: string;   // año como número
+  titulo: string;      // título del curso o grado
+  institucion: string; // nombre de la institución
+  ubicacion: string;
+  descripcion: string;   // ubicación de la institución
+}
+
 type ModalAgregarEducacionProps = {
   showModal: boolean;
-  // setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setShowModal: any;
-  educacionSelected: any;
-  setEducacionSelected?: any;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  educacionSelected: Educacion | null;
+  setEducacionSelected: React.Dispatch<React.SetStateAction<Educacion | null>>;
 };
 
 function ModalAgregarEducacion({
@@ -57,7 +68,7 @@ function ModalAgregarEducacion({
   setEducacionSelected,
   educacionSelected,
 }: ModalAgregarEducacionProps) {
-  console.log(educacionSelected);
+  console.log(showModal);
   const [trabajoActualmente, setTrabajoActualmente] = useState(false);
   const currentDate = new Date();
   const currentMonth = currentDate.toLocaleString("es-ES", { month: "long" });

@@ -4,16 +4,22 @@ import { useEffect, useState } from "react";
 import { Check as CheckIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+interface Especialidad {
+    CardTitle: string,
+    CardDescription: string,
+    ImageSrc: string,
+}
+
 type ModalAgregarEspecialidadProps = {
     showModal: boolean;
-    setShowModal: any;
-    setEspecialidades: any;
+    setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+    setEspecialidades: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 function ModalagregarEspecialidad({ showModal, setShowModal, setEspecialidades }: ModalAgregarEspecialidadProps) {
     const [selectServices, setSelectServices] = useState<string[]>([]);
 
-    const selectEspecialidad = (item: any) => {
+    const selectEspecialidad = (item: Especialidad) => {
         if (selectServices.length >= 5 && !selectServices.includes(item.CardTitle)) {
             console.log("No se puede agregar más de 5 especialidades");
             return;

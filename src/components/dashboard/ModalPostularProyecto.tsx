@@ -3,7 +3,7 @@ import React from "react";
 import { X as IconX, User } from "lucide-react";
 import { ChevronRight } from "lucide-react";
 import { Pencil } from "lucide-react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Minus, Equal } from "lucide-react";
 import { Info as IcoInfo } from "lucide-react";
 

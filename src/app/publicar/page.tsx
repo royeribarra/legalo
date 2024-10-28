@@ -6,7 +6,7 @@ import Link from "next/link";
 import React from "react";
 import { useState } from "react";
 
-import { ArrowLeft, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 

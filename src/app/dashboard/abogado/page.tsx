@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Search as IcoSearch } from "lucide-react";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import ResumeProyect from "@/components/dashboard/ResumeProyect";
 import InfoNominations from "@/components/dashboard/InfoNominations";
@@ -13,7 +12,6 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 import { ChevronsLeft } from "lucide-react";
 import { ChevronsRight } from "lucide-react";
-import { ChevronDown } from "lucide-react";
 
 import {
   Select,
