@@ -1,3 +1,4 @@
+'use client';
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -33,26 +34,6 @@ const CompleteProfileLawyerLayout = ({ children }: LayoutProps) => {
           </div>
         </header>
         <main>{children}</main>
-      </div>
-
-      <div className="flex fixed left-0 bottom-0 w-screen h-[115px] bg-[#D5F1F0] ">
-        <div className="flex justify-center lg:justify-between items-center container mx-auto px-4 lg:px-8 max-w-[1000px]">
-          <div className="w-[30%] ">
-            <Link href="/registro/abogado" className="">
-              <Button size="lg" variant="link" className="mx-0 px-2">
-                <ArrowLeft className="mr-2 h-4 w-4" /> Atras
-              </Button>
-            </Link>
-          </div>
-          <div className="w-[70%] flex justify-end">
-            <Link href="/registro/abogado/bienvenida">
-              <Button size="lg" className="p-4 lg:px-8">
-                <p className="">Sigue completando tu perfil</p>
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
-        </div>
       </div>
     </div>
   );

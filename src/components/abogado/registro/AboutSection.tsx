@@ -10,12 +10,15 @@ import {
 import { useEffect, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import ModalagregarEspecialidad from "@/components/abogado/ModalAgregarEspecialidad";
+import { Input } from "@/components/ui/input";
 
 function AboutSection() {
     const [showModalAddEspecialidad, setShowModalAddEspecialidad] = useState(false);
     const [especialidades, setEspecialidades] = useState<string[]>([]);
     const [grado, setGrado] = useState<string | undefined>(undefined);
     const [sobreTi, setSobreTi] = useState<string>('');
+    const [cip, setCip] = useState<string>(''); // Estado para CIP
+    const [colegio, setColegio] = useState<string>(''); // Estado para colegio
 
     const onChangeGrado = (value: string) => {
         setGrado(value);
@@ -59,13 +62,32 @@ function AboutSection() {
                     <SelectContent>
                         <SelectGroup>
                             <SelectLabel>Grado académico</SelectLabel>
-                            <SelectItem value="licenciado">Licenciado</SelectItem>
-                            <SelectItem value="bachiller">Bachiller</SelectItem>
-                            <SelectItem value="Maestro">Maestro</SelectItem>
+                            <SelectItem value="estudiante">Estudiante</SelectItem>
+                            <SelectItem value="abogado">Abogado</SelectItem>
+                            <SelectItem value="abogado_colegiado">Abogado Colegiado</SelectItem>
                         </SelectGroup>
                     </SelectContent>
                 </Select>
             </div>
+
+            {grado === "abogado_colegiado" && (
+                <div>
+                    <p className="text-sm my-2">CIP*</p>
+                    <Input
+                        placeholder="Número de CIP"
+                        type="number"
+                        value={cip}
+                        onChange={(e) => setCip(e.target.value)}
+                    />
+                    <p className="text-sm my-2">Colegio*</p>
+                    <Input
+                        placeholder="Nombre del Colegio"
+                        value={colegio}
+                        onChange={(e) => setColegio(e.target.value)}
+                    />
+                </div>
+            )}
+
             <div>
                 <p className="text-sm my-2">Especialidad*</p>
                 <div

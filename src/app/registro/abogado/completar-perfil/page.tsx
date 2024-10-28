@@ -1,7 +1,7 @@
 "use client";
 
 import { Progress } from "@/components/ui/progress";
-// import Link from "next/link";
+import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 // import { useState } from "react";
 import { Upload } from "lucide-react";
@@ -19,6 +19,18 @@ import ModalAgregarExperiencia from "@/components/abogado/ModalAgregarExperienci
 import SkillSection from "@/components/abogado/registro/SkillSection";
 import AboutSection from "@/components/abogado/registro/AboutSection";
 import ModalAgregarEducacion from "@/components/abogado/MoodalAgregarEducacion";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useRouter } from "next/router";
+
+interface Educacion {
+  desde_mes: string;   // o puede ser un número, dependiendo de cómo manejes los meses
+  desde_ano: number;   // año como número
+  hasta_mes: string;   // o puede ser un número
+  hasta_ano: number;   // año como número
+  titulo: string;      // título del curso o grado
+  institucion: string; // nombre de la institución
+  ubicacion: string;   // ubicación de la institución
+}
 
 const UploadCV = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -273,22 +285,72 @@ const ImageUpload = () => {
 };
 
 const CompleteProfileLawyerPage: React.FC = () => {
+  
   const [listEducacion, setListEducacion] = useState([]);
   const [listExperiencia, setListExperiencia] = useState([]);
   const [showModalAddEducacion, setShowModalAddEducacion] = useState(false);
 
   const [showModalAddExperiencia, setShowModalAddExperiencia] = useState(false);
   const [experienciaSelected, setExperienciaSelected] = useState();
-  const [educacionSelected, setEducacionSelected] = useState();
+  const [educacionSelected, setEducacionSelected] = useState<Educacion>();
+  const [stepNumber, setStepNumber] = useState(1);
+  const [triger, setTriger] = useState("tab1");
 
   const editarExperiencia = (experiencia: any) => {
     setExperienciaSelected(experiencia);
     setShowModalAddExperiencia(true);
   };
 
-  const editarEducacion = (educacion: any) => {
+  const editarEducacion = (educacion: Educacion) => {
     setEducacionSelected(educacion);
     setShowModalAddEducacion(true);
+  };
+
+  const nextStep = () => {
+    setStepNumber(stepNumber + 1);
+    if(stepNumber === 5){
+      window.location.href = 'http://localhost:3000/registro/abogado/bienvenida';
+    }
+    switch (stepNumber) {
+      case 1:
+        setTriger("tab2");
+        break;
+      case 2:
+        setTriger("tab3");
+        break;
+      case 3:
+        setTriger("tab4");
+        break;
+      case 4:
+        setTriger("tab5");
+        break;
+      default:
+        break;
+    }
+  };
+
+  const prevStep = () => {
+    if(stepNumber === 1){
+      window.location.href = 'http://localhost:3000/registro/abogado/objetivos';
+    }
+
+    setStepNumber(stepNumber - 1);
+    switch (stepNumber) {
+      case 2:
+        setTriger("tab1");
+        break;
+      case 3:
+        setTriger("tab2");
+        break;
+      case 4:
+        setTriger("tab3");
+        break;
+      case 5:
+        setTriger("tab4");
+        break;
+      default:
+        break;
+    }
   };
 
   useEffect(() => {
@@ -373,35 +435,40 @@ const CompleteProfileLawyerPage: React.FC = () => {
       <UploadCV></UploadCV>
       {/* lateral menu  */}
       <div className="my-4 pb-32">
-        <Tabs defaultValue="tab1" className="flex gap-4 flex-col lg:flex-row">
+        <Tabs defaultValue="tab1" value={triger}  className="flex gap-4 flex-col lg:flex-row">
           <TabsList className="flex flex-row justify-start overflow-scroll lg:flex-col lg:w-1/4 h-full p-4 gap-2 bg-white pl-0 lg:items-start lg:overflow-hidden">
             <TabsTrigger
               value="tab1"
               className="text-[#D1D1D6] w-full justify-start py-4 lg:text-lg font-bold data-[state=active]:bg-[#D9D9D9] data-[state=active]:text-black rounded-[10px]"
+              disabled={stepNumber != 1 ? true : false}
             >
               Experiencia laboral
             </TabsTrigger>
             <TabsTrigger
               value="tab2"
               className="text-[#D1D1D6] w-full justify-start py-4 lg:text-lg font-bold data-[state=active]:bg-[#D9D9D9] data-[state=active]:text-black rounded-[10px]"
+              disabled={stepNumber != 2 ? true : false}
             >
               Educación
             </TabsTrigger>
             <TabsTrigger
               value="tab3"
               className=" text-[#D1D1D6] w-full justify-start py-4 lg:text-lg font-bold data-[state=active]:bg-[#D9D9D9] data-[state=active]:text-black rounded-[10px]"
+              disabled={stepNumber != 3 ? true : false}
             >
               Sobre tí
             </TabsTrigger>
             <TabsTrigger
               value="tab4"
               className=" text-[#D1D1D6] w-full justify-start py-4 lg:text-lg font-bold data-[state=active]:bg-[#D9D9D9] data-[state=active]:text-black rounded-[10px]"
+              disabled={stepNumber != 4 ? true : false}
             >
               Skills
             </TabsTrigger>
             <TabsTrigger
               value="tab5"
               className=" text-[#D1D1D6] w-full justify-start py-4 lg:text-lg font-bold data-[state=active]:bg-[#D9D9D9] data-[state=active]:text-black rounded-[10px]"
+              disabled={stepNumber != 5 ? true : false}
             >
               Documentación extra
             </TabsTrigger>
@@ -614,6 +681,21 @@ const CompleteProfileLawyerPage: React.FC = () => {
           experienciaSelected={experienciaSelected}
         />
       )}
+      <div className="flex fixed left-0 bottom-0 w-screen h-[115px] bg-[#D5F1F0] ">
+        <div className="flex justify-center lg:justify-between items-center container mx-auto px-4 lg:px-8 max-w-[1000px]">
+          <div className="w-[30%] ">
+            <Button size="lg" variant="link" className="mx-0 px-2" onClick={prevStep}>
+              <ArrowLeft className="mr-2 h-4 w-4" /> Atras
+            </Button>
+          </div>
+          <div className="w-[70%] flex justify-end">
+            <Button size="lg" className="p-4 lg:px-8" onClick={nextStep}>
+              <p className="">Sigue completando tu perfil</p>
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

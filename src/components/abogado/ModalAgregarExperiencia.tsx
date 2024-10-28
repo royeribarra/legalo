@@ -72,15 +72,15 @@ function ModalAgregarExperiencia({
   });
 
   // Efecto para setear el mes y año actual si el checkbox está marca
-  useEffect(() => {
-    if (trabajoActualmente) {
-      form.setValue("hasta_mes", currentMonth);
-      form.setValue("hasta_ano", currentYear);
-    } else {
-      form.setValue("hasta_mes", "");
-      form.setValue("hasta_ano", "");
-    }
-  }, [trabajoActualmente, form, currentMonth, currentYear]);
+  // useEffect(() => {
+  //   if (trabajoActualmente) {
+  //     form.setValue("hasta_mes", currentMonth);
+  //     form.setValue("hasta_ano", currentYear);
+  //   } else {
+  //     form.setValue("hasta_mes", "");
+  //     form.setValue("hasta_ano", "");
+  //   }
+  // }, [trabajoActualmente, form, currentMonth, currentYear]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const estudiosString = localStorage.getItem("listaExperiencia");
@@ -145,6 +145,14 @@ function ModalAgregarExperiencia({
     }
   }, [experienciaSelected]);
 
+  useEffect(() => {
+    if (trabajoActualmente) {
+      // Establece el valor del campo en el mes y año actuales
+      const currentMonthYear = new Date().toISOString().slice(0, 7); // Formato "YYYY-MM"
+      form.setValue("hasta_ano", currentMonthYear); // Ajusta 'hasta_ano' al valor actual
+    }
+  }, [trabajoActualmente, form]);
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-20 ">
       <div className="bg-white px-6 py-12 lg:p-16 lg:rounded-lg shadow-lg lg:min-w-[970px] relative w-full h-full lg:w-auto lg:h-auto overflow-y-auto">
@@ -169,8 +177,9 @@ function ModalAgregarExperiencia({
                           <FormLabel></FormLabel>
                           <FormControl>
                             <Input
+                              type="month"
                               className="border border-black rounded-[10px] h-12"
-                              placeholder="Enero"
+                              placeholder="Mes y Año"
                               {...field}
                             />
                           </FormControl>
@@ -178,7 +187,7 @@ function ModalAgregarExperiencia({
                         </FormItem>
                       )}
                     />
-                    <FormField
+                    {/* <FormField
                       control={form.control}
                       name="desde_ano"
                       render={({ field }) => (
@@ -195,14 +204,14 @@ function ModalAgregarExperiencia({
                           <FormMessage />
                         </FormItem>
                       )}
-                    />
+                    /> */}
                   </div>
                 </div>
 
                 <div>
                   <FormLabel>Hasta*</FormLabel>
                   <div className="grid lg:grid-cols-2 gap-2">
-                    <FormField
+                    {/* <FormField
                       control={form.control}
                       name="hasta_mes"
                       render={({ field }) => (
@@ -220,7 +229,25 @@ function ModalAgregarExperiencia({
                           <FormMessage />
                         </FormItem>
                       )}
-                    />
+                    /> */}
+                    {/* <FormField
+                      control={form.control}
+                      name="hasta_mes"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel></FormLabel>
+                          <FormControl>
+                            <Input
+                              type="month"
+                              className="border border-black rounded-[10px] h-12"
+                              placeholder="Mes y Año"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    /> */}
                     <FormField
                       control={form.control}
                       name="hasta_ano"
@@ -229,6 +256,7 @@ function ModalAgregarExperiencia({
                           <FormLabel></FormLabel>
                           <FormControl>
                             <Input
+                              type="month"
                               className="border border-black rounded-[10px] h-12"
                               placeholder="2024"
                               {...field}
