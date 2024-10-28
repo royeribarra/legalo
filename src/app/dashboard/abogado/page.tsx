@@ -13,6 +13,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 import { ChevronsLeft } from "lucide-react";
 import { ChevronsRight } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 import {
   Select,
@@ -27,7 +28,9 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
+  AccordionTriggerBig,
 } from "@/components/ui/accordion";
+import ProyectItem from "@/components/dashboard/ProyectItem";
 
 const DashboardLawyerPage = () => {
   const [openFilter, setOpenFilter] = useState<boolean>(true);
@@ -277,25 +280,49 @@ const DashboardLawyerPage = () => {
 
         {menuActive === "publicadas" && (
           <div className="flex flex-col gap-8 flex-1 mt-12">
-            <ResumeProyect />
+            <ProyectItem tipe="sinPostular" />
           </div>
         )}
         {menuActive === "invitaciones" && (
           <div className="flex flex-col gap-8 flex-1 mt-12">
-            <ResumeProyect />
-            <ResumeProyect />
+            <ProyectItem tipe="sinPostular" />
+            <ProyectItem tipe="sinPostular" />
           </div>
         )}
         {menuActive === "guardados" && (
           <div className="flex flex-col gap-8 flex-1 mt-12">
-            <ResumeProyect />
-            <ResumeProyect />
-            <ResumeProyect />
+            <ProyectItem tipe="sinPostular" />
+            <ProyectItem tipe="sinPostular" />
+            <ProyectItem tipe="sinPostular" />
           </div>
         )}
         {menuActive === "postulaciones" && (
           <div className="flex flex-col gap-8 flex-1 mt-12">
-            <ResumeProyect />
+            <Accordion type="single" collapsible defaultValue="item-1">
+              <AccordionItem value="item-1">
+                <AccordionTriggerBig className="text-2xl font-bold">
+                  Cotización aceptada (1)
+                </AccordionTriggerBig>
+                <AccordionContent className="flex flex-col gap-4">
+                  <ProyectItem tipe="cotizacionAceptada" />
+                  <ProyectItem tipe="cotizacionPorExpirar" />
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+            <Accordion type="single" collapsible defaultValue="item-1">
+              <AccordionItem value="item-1">
+                <AccordionTriggerBig className="text-2xl font-bold">
+                  Cotización enviada (5)
+                </AccordionTriggerBig>
+                <AccordionContent className="flex flex-col gap-4">
+                  <ProyectItem tipe="postulacionEnviada" />
+                  <ProyectItem tipe="postulacionEnviada" />
+                  <ProyectItem tipe="postulacionEnviada" />
+                  <ProyectItem tipe="postulacionEnviada" />
+                  <ProyectItem tipe="postulacionEnviada" />
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
         )}
       </div>
