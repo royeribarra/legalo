@@ -4,8 +4,6 @@ import Link from "next/link";
 import React from "react";
 import { ReactNode } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 
 interface LayoutProps {
   children: ReactNode;

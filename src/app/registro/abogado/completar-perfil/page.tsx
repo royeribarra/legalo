@@ -505,7 +505,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
                   </Button>
                 </div>
                 {listExperiencia.map((experiencia: Experiencia, index) => (
-                  <div className="flex gap-4 p-4">
+                  <div className="flex gap-4 p-4" key={index}>
                     <div className="w-1/4 flex gap-1">
                       <p>
                         {experiencia.desde_mes + "-" + experiencia.desde_ano}

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, FieldValues } from "react-hook-form";
 
 import {
   Form,
@@ -116,7 +116,7 @@ function ModalAgregarExperiencia({
     };
     if (experienciaSelected) {
       const indexSelected = estudios.findIndex(
-        (estudio: any) => estudio.id === experienciaSelected.id
+        (estudio: Experiencia) => estudio.id === experienciaSelected.id
       );
       estudios[indexSelected] = nuevoEstudio;
     } else {
@@ -129,7 +129,7 @@ function ModalAgregarExperiencia({
     form.reset();
   }
 
-  function onError(errors: any) {
+  function onError(errors: FieldValues) {
     console.log("Errores de validación", errors);
   }
 
@@ -142,7 +142,7 @@ function ModalAgregarExperiencia({
   useEffect(() => {
     const estudiosString = localStorage.getItem("listaExperiencia");
     if (estudiosString) {
-      const experiencia = JSON.parse(estudiosString);
+      // const experiencia = JSON.parse(estudiosString);
       if (experienciaSelected) {
         form.setValue("desde_mes", experienciaSelected.desde_mes);
         form.setValue("desde_ano", experienciaSelected.desde_ano);
