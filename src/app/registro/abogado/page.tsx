@@ -161,11 +161,8 @@ function RegisterLawyer() {
       terms: false,
     },
   });
-  const { register, setValue } = form;
-  // 2. Define a submit handler.
+  const { setValue } = form;
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     console.log(values);
     localStorage.setItem("abogado", JSON.stringify(values));
     router.push("/registro/abogado/objetivos");

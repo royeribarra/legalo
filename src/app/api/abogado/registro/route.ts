@@ -69,14 +69,14 @@ export async function POST(request: NextRequest) {
     }
 
     if (profileImg instanceof Blob) {
-      const imgArrayBuffer = await profileImg.arrayBuffer();
+    //   const imgArrayBuffer = await profileImg.arrayBuffer();
     }
   
     // if (profileVideo instanceof Blob) {
     //   const videoArrayBuffer = await profileVideo.arrayBuffer();
     // }
     await AppDataSource.initialize();
-    const userRepository = AppDataSource.getRepository(UserModel);
+    // const userRepository = AppDataSource.getRepository(UserModel);
     const user = new UserModel();
     user.password = password as string;
     user.email = email as string;
@@ -92,7 +92,7 @@ export async function POST(request: NextRequest) {
     abogado.email = email as string;
 
     try {
-        const savedAbogado = await abogadoRepository.save(abogado);
+        // const savedAbogado = await abogadoRepository.save(abogado);
     } catch (error) {
         console.error('Error al guardar el abogado:', error);
     }

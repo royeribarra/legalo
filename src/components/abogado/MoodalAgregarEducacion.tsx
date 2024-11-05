@@ -5,31 +5,23 @@ import { useForm, FieldValues } from "react-hook-form";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { X as IconX } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const formSchema = z.object({
-  desde_mes: z.string().min(2, {
+  desde_fecha: z.string().min(2, {
     message: "Complete el mes",
   }),
-  desde_ano: z.string().min(2, {
-    message: "Complet el año",
-  }),
-  hasta_ano: z.string().min(2, {
+  hasta_fecha: z.string().min(2, {
     message: "Complete el año",
-  }),
-  hasta_mes: z.string().min(2, {
-    message: "Complete el mes",
   }),
   titulo: z.string().min(2, {
     message: "Debe completar el título",
@@ -45,14 +37,12 @@ const formSchema = z.object({
 
 interface Educacion {
   id: number,
-  desde_mes: string;   // o puede ser un número, dependiendo de cómo manejes los meses
-  desde_ano: string;   // año como número
-  hasta_mes: string;   // o puede ser un número
-  hasta_ano: string;   // año como número
-  titulo: string;      // título del curso o grado
-  institucion: string; // nombre de la institución
+  desde_fecha: string;
+  hasta_fecha: string;
+  titulo: string;
+  institucion: string;
   ubicacion: string;
-  descripcion: string;   // ubicación de la institución
+  descripcion: string;
 }
 
 type ModalAgregarEducacionProps = {
@@ -69,17 +59,15 @@ function ModalAgregarEducacion({
   educacionSelected,
 }: ModalAgregarEducacionProps) {
   console.log(showModal);
-  const [trabajoActualmente, setTrabajoActualmente] = useState(false);
+  const [trabajoActualmente] = useState(false);
   const currentDate = new Date();
   const currentMonth = currentDate.toLocaleString("es-ES", { month: "long" });
   const currentYear = currentDate.getFullYear().toString();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      desde_mes: "",
-      desde_ano: "",
-      hasta_mes: "",
-      hasta_ano: "",
+      desde_fecha: "",
+      hasta_fecha: "",
       titulo: "",
       institucion: "",
       ubicacion: "",
@@ -90,11 +78,9 @@ function ModalAgregarEducacion({
   // Efecto para setear el mes y año actual si el checkbox está marcado
   useEffect(() => {
     if (trabajoActualmente) {
-      form.setValue("hasta_mes", currentMonth);
-      form.setValue("hasta_ano", currentYear);
+      form.setValue("hasta_fecha", currentMonth);
     } else {
-      form.setValue("hasta_mes", "");
-      form.setValue("hasta_ano", "");
+      form.setValue("hasta_fecha", "");
     }
   }, [trabajoActualmente, form, currentMonth, currentYear]);
 
@@ -113,10 +99,8 @@ function ModalAgregarEducacion({
           : educacionSelected
             ? educacionSelected.id
             : estudios.length + 1,
-      desde_mes: values.desde_mes,
-      desde_ano: values.desde_ano,
-      hasta_mes: values.hasta_mes,
-      hasta_ano: values.hasta_ano,
+      desde_mes: values.desde_fecha,
+      hasta_mes: values.hasta_fecha,
       titulo: values.titulo,
       institucion: values.institucion,
       ubicacion: values.ubicacion,
@@ -152,10 +136,8 @@ function ModalAgregarEducacion({
     if (estudiosString) {
       // const experiencia = JSON.parse(estudiosString);
       if (educacionSelected) {
-        form.setValue("desde_mes", educacionSelected.desde_mes);
-        form.setValue("desde_ano", educacionSelected.desde_ano);
-        form.setValue("hasta_mes", educacionSelected.hasta_mes);
-        form.setValue("hasta_ano", educacionSelected.hasta_ano);
+        form.setValue("desde_fecha", educacionSelected.desde_fecha);
+        form.setValue("hasta_fecha", educacionSelected.hasta_fecha);
         form.setValue("titulo", educacionSelected.titulo);
         form.setValue("institucion", educacionSelected.institucion);
         form.setValue("ubicacion", educacionSelected.ubicacion);
@@ -182,7 +164,7 @@ function ModalAgregarEducacion({
                   <div className="grid lg:grid-cols-2 gap-2">
                     <FormField
                       control={form.control}
-                      name="desde_mes"
+                      name="desde_fecha"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel></FormLabel>
@@ -197,24 +179,6 @@ function ModalAgregarEducacion({
                         </FormItem>
                       )}
                     />
-                    <FormField
-                      control={form.control}
-                      name="desde_ano"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel></FormLabel>
-                          <FormControl>
-                            <Input
-                              className="border border-black rounded-[10px] h-12"
-                              placeholder="2024"
-                              {...field}
-                            />
-                          </FormControl>
-
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
                   </div>
                 </div>
 
@@ -223,7 +187,7 @@ function ModalAgregarEducacion({
                   <div className="grid lg:grid-cols-2 gap-2">
                     <FormField
                       control={form.control}
-                      name="hasta_mes"
+                      name="hasta_fecha"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel></FormLabel>
@@ -235,41 +199,6 @@ function ModalAgregarEducacion({
                               disabled={trabajoActualmente ? true : false}
                             />
                           </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="hasta_ano"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel></FormLabel>
-                          <FormControl>
-                            <Input
-                              className="border border-black rounded-[10px] h-12"
-                              placeholder="2024"
-                              {...field}
-                              disabled={trabajoActualmente ? true : false}
-                            />
-                          </FormControl>
-                          <FormDescription>
-                            <div className="flex items-center space-x-2">
-                              <Checkbox
-                                id="terms"
-                                checked={trabajoActualmente}
-                                onCheckedChange={(checked) =>
-                                  setTrabajoActualmente(!!checked)
-                                }
-                              />
-                              <label
-                                htmlFor="terms"
-                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                Actualmente trabajo aquí
-                              </label>
-                            </div>
-                          </FormDescription>
                           <FormMessage />
                         </FormItem>
                       )}

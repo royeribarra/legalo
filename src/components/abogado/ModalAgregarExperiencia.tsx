@@ -19,17 +19,11 @@ import { X as IconX } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const formSchema = z.object({
-  desde_mes: z.string().min(2, {
+  desde_fecha: z.string().min(2, {
     message: "Complete el mes",
   }),
-  desde_ano: z.string().min(2, {
-    message: "Complet el año",
-  }),
-  hasta_ano: z.string().min(2, {
+  hasta_fecha: z.string().min(2, {
     message: "Complete el año",
-  }),
-  hasta_mes: z.string().min(2, {
-    message: "Complete el mes",
   }),
   titulo: z.string().min(2, {
     message: "Debe completar el título",
@@ -42,13 +36,11 @@ const formSchema = z.object({
 
 interface Experiencia {
   id: number;
-  desde_mes: string;   // o puede ser un número, dependiendo de cómo manejes los meses
-  desde_ano: string;   // año como número
-  hasta_mes: string;   // o puede ser un número
-  hasta_ano: string;   // año como número
-  descripcion: string;      // título del curso o grado
-  empresa: string; // nombre de la institución
-  titulo: string;   // ubicación de la institución
+  desde_fecha: string;
+  hasta_fecha: string;
+  descripcion: string;
+  empresa: string;
+  titulo: string;
 }
 
 type ModalAgregarEducacionProps = {
@@ -64,34 +56,18 @@ function ModalAgregarExperiencia({
   experienciaSelected,
   setExperienciaSelected,
 }: ModalAgregarEducacionProps) {
-  const [trabajoActualmente, setTrabajoActualmente] = useState(false);
-  // const currentDate = new Date();
-  // const currentMonth = currentDate.toLocaleString("es-ES", { month: "long" });
-  // const currentYear = currentDate.getFullYear().toString();
   console.log(showModal)
+  const [trabajoActualmente, setTrabajoActualmente] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      desde_mes: "",
-      desde_ano: "",
-      hasta_mes: "",
-      hasta_ano: "",
+      desde_fecha: "",
+      hasta_fecha: "",
       titulo: "",
       empresa: "",
       descripcion: "",
     },
   });
-
-  // Efecto para setear el mes y año actual si el checkbox está marca
-  // useEffect(() => {
-  //   if (trabajoActualmente) {
-  //     form.setValue("hasta_mes", currentMonth);
-  //     form.setValue("hasta_ano", currentYear);
-  //   } else {
-  //     form.setValue("hasta_mes", "");
-  //     form.setValue("hasta_ano", "");
-  //   }
-  // }, [trabajoActualmente, form, currentMonth, currentYear]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const estudiosString = localStorage.getItem("listaExperiencia");
@@ -106,10 +82,8 @@ function ModalAgregarExperiencia({
           : experienciaSelected
             ? experienciaSelected.id
             : estudios.length + 1,
-      desde_mes: values.desde_mes,
-      desde_ano: values.desde_ano,
-      hasta_mes: values.hasta_mes,
-      hasta_ano: values.hasta_ano,
+      desde_fecha: values.desde_fecha,
+      hasta_fecha: values.hasta_fecha,
       titulo: values.titulo,
       empresa: values.empresa,
       descripcion: values.descripcion,
@@ -142,12 +116,9 @@ function ModalAgregarExperiencia({
   useEffect(() => {
     const estudiosString = localStorage.getItem("listaExperiencia");
     if (estudiosString) {
-      // const experiencia = JSON.parse(estudiosString);
       if (experienciaSelected) {
-        form.setValue("desde_mes", experienciaSelected.desde_mes);
-        form.setValue("desde_ano", experienciaSelected.desde_ano);
-        form.setValue("hasta_mes", experienciaSelected.hasta_mes);
-        form.setValue("hasta_ano", experienciaSelected.hasta_ano);
+        form.setValue("desde_fecha", experienciaSelected.desde_fecha);
+        form.setValue("hasta_fecha", experienciaSelected.hasta_fecha);
         form.setValue("titulo", experienciaSelected.titulo);
         form.setValue("empresa", experienciaSelected.empresa);
         form.setValue("descripcion", experienciaSelected.descripcion);
@@ -157,9 +128,8 @@ function ModalAgregarExperiencia({
 
   useEffect(() => {
     if (trabajoActualmente) {
-      // Establece el valor del campo en el mes y año actuales
-      const currentMonthYear = new Date().toISOString().slice(0, 7); // Formato "YYYY-MM"
-      form.setValue("hasta_ano", currentMonthYear); // Ajusta 'hasta_ano' al valor actual
+      const currentMonthYear = new Date().toISOString().slice(0, 7);
+      form.setValue("hasta_fecha", currentMonthYear);
     }
   }, [trabajoActualmente, form]);
 
@@ -181,7 +151,7 @@ function ModalAgregarExperiencia({
                   <div className="grid lg:grid-cols-2 gap-2">
                     <FormField
                       control={form.control}
-                      name="desde_mes"
+                      name="desde_fecha"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel></FormLabel>
@@ -197,70 +167,15 @@ function ModalAgregarExperiencia({
                         </FormItem>
                       )}
                     />
-                    {/* <FormField
-                      control={form.control}
-                      name="desde_ano"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel></FormLabel>
-                          <FormControl>
-                            <Input
-                              className="border border-black rounded-[10px] h-12"
-                              placeholder="2024"
-                              {...field}
-                            />
-                          </FormControl>
-
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    /> */}
                   </div>
                 </div>
 
                 <div>
                   <FormLabel>Hasta*</FormLabel>
                   <div className="grid lg:grid-cols-2 gap-2">
-                    {/* <FormField
-                      control={form.control}
-                      name="hasta_mes"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel></FormLabel>
-                          <FormControl>
-                            <Input
-                              className="border border-black rounded-[10px] h-12"
-                              placeholder="Set. 2024"
-                              {...field}
-                              disabled={trabajoActualmente ? true : false}
-                            />
-                          </FormControl>
-
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    /> */}
-                    {/* <FormField
-                      control={form.control}
-                      name="hasta_mes"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel></FormLabel>
-                          <FormControl>
-                            <Input
-                              type="month"
-                              className="border border-black rounded-[10px] h-12"
-                              placeholder="Mes y Año"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    /> */}
                     <FormField
                       control={form.control}
-                      name="hasta_ano"
+                      name="hasta_fecha"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel></FormLabel>
