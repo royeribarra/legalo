@@ -5,13 +5,12 @@ import { IUser } from "./User.interface";
 export interface IAbogado {
     id: number;
     user: IUser;
-    nombre: string;
-    apellido_paterno: string;
-    apellido_materno: string;
+    nombres: string;
+    apellidos: string;
     dni: string;
     fecha_nacimiento: string;
     universidad: string;
-    grade_academico: string;
+    grado_academico: string;
     acerca_de: string;
     telefono: string;
     direccion: string;
