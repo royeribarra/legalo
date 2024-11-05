@@ -1,14 +1,12 @@
 "use client";
 
 import { Progress } from "@/components/ui/progress";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 // import { useState } from "react";
-import { Upload } from "lucide-react";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import Image from "next/image";
 
 // form
 import ServiceSelectAbogado from "@/components/abogado/ServiceSelectAbogado";

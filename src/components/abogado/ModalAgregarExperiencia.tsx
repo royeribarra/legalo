@@ -56,6 +56,7 @@ function ModalAgregarExperiencia({
   experienciaSelected,
   setExperienciaSelected,
 }: ModalAgregarEducacionProps) {
+  console.log(showModal)
   const [trabajoActualmente, setTrabajoActualmente] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

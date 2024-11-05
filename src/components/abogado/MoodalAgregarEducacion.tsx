@@ -5,14 +5,12 @@ import { useForm, FieldValues } from "react-hook-form";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { X as IconX } from "lucide-react";
@@ -61,7 +59,7 @@ function ModalAgregarEducacion({
   educacionSelected,
 }: ModalAgregarEducacionProps) {
   console.log(showModal);
-  const [trabajoActualmente, setTrabajoActualmente] = useState(false);
+  const [trabajoActualmente] = useState(false);
   const currentDate = new Date();
   const currentMonth = currentDate.toLocaleString("es-ES", { month: "long" });
   const currentYear = currentDate.getFullYear().toString();

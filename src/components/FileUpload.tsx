@@ -4,7 +4,6 @@ import { Upload, Eye, Trash, Check } from "lucide-react";
 
 function FileUpload() {
   const [file, setFile] = useState<File | null>(null);
-  const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -17,7 +16,6 @@ function FileUpload() {
       const blob = new Blob([atob(storedFile)], { type: "application/octet-stream" });
       const restoredFile = new File([blob], storedFileName);
       setFile(restoredFile);
-      setUploadSuccess(true);
     }
   }, []);
 
@@ -44,7 +42,6 @@ function FileUpload() {
       }
 
       setFile(selectedFile);
-      setUploadSuccess(true);
 
       // Convertir archivo a base64 y guardar en localStorage
       const reader = new FileReader();
@@ -65,7 +62,6 @@ function FileUpload() {
 
   const handleRemoveFile = () => {
     setFile(null);
-    setUploadSuccess(false);
     localStorage.removeItem("culFile");
     localStorage.removeItem("uploadedCulFileName");
   };

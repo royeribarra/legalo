@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "../../ui/button";
-import { Upload, Eye, Trash, Check } from "lucide-react";
+import { Eye, Trash, Check } from "lucide-react";
 import Image from "next/image";
 
 function CvUpload() {

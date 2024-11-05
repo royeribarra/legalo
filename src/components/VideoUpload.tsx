@@ -4,6 +4,7 @@ import { Button } from "./ui/button";
 
 function VideoUpload(){
     const [videoFile, setVideoFile] = useState<File | null>(null);
+    console.log(videoFile)
     const [error, setError] = useState<string | null>(null);
     const [videoName, setVideoName] = useState<string | null>(null);
   
