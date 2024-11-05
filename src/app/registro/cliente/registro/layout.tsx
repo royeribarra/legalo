@@ -32,7 +32,7 @@ export default function AboutLayout({ children }: { children: ReactNode }) {
         </header>
         <main>{children}</main>
       </div>
-      <div className="lg:col-span-1 overflow-hidden hidden lg:block degrade-blue"></div>
+      <div className="lg:col-span-1 overflow-hidden hidden lg:block degrade-lawyer"></div>
     </div>
   );
 }

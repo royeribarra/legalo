@@ -99,7 +99,7 @@ const HomeBannerClient = () => {
   return (
     <div className="lg:h-[calc(100vh-180px)] flex flex-col">
       <div className="flex w-full lg:min-h-[616px] items-center border-t border-t-black lg:flex-1 flex-col-reverse lg:flex-row">
-        <div className="bg-lg_blue-light p-4 2xl:p-16 h-full flex lg:w-[44vw] items-center w-full">
+        <div className="bg-lg-lawyer p-4 2xl:p-16 h-full flex lg:w-[44vw] items-center w-full">
           <div className="flex flex-col gap-8 py-4">
             <h1 className="text-black text-2xl lg:text-[48px] xl:text-[64px] 3xl:text-7xl font-tiempos leading-[1.2]">
               Únete a nuestra red de abogados y lleva tu carrera al{" "}
@@ -124,14 +124,14 @@ const HomeBannerClient = () => {
           </div>
         </div>
         <div className="bg-[url('/assets/images/img-landing-lawyers.jpg')] bg-top bg-cover bg-no-repeat w-full h-full lg:block border-l border-l-black lg:w-[56vw] min-h-[140px] "></div>
-        <div className="hidden lg:block absolute lg:left-[30vw] xl:left-[38vw] 2xl:left-[30vw] bottom-[24vh]">
+        {/* <div className="hidden lg:block absolute lg:left-[30vw] xl:left-[38vw] 2xl:left-[30vw] bottom-[24vh]">
           <Image
             src="/assets/images/img-arrow-banner.png"
             alt="arrow"
             width={400}
             height={272}
           />
-        </div>
+        </div> */}
       </div>
 
       <div className="w-[full] border-t border-b border-black overflow-hidden">

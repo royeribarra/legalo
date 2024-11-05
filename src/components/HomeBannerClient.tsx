@@ -103,17 +103,17 @@ const HomeBannerClient = () => {
   return (
     <div className="lg:h-[calc(100vh-180px)] flex flex-col">
       <div className="flex w-full lg:min-h-[616px] items-center border-t border-t-black lg:flex-1 flex-col-reverse lg:flex-row">
-        <div className="bg-lg_yellow p-4 2xl:p-16 h-full flex lg:w-[44vw] items-center w-full">
+        <div className="bg-lg-client p-4 2xl:p-16 h-full flex lg:w-[44vw] items-center w-full">
           <div className="flex flex-col gap-8 py-4">
             <h1 className="text-black text-2xl lg:text-[48px] xl:text-[64px] 3xl:text-7xl font-tiempos leading-[1.2]">
               Simplificamos la contratación de abogados,{" "}
-              <span className="italic font-light">donde y cuando</span>los
+              <span className="italic font-light">donde y cuando </span>los
               necesites
             </h1>
             <div className="w-full  flex gap-4 relative ">
               <Input
                 placeholder="Ejemplo Abogado, Minería, etc."
-                className="rounded-[30px] border border-black px-[30px] py-[12px] focus:outline-none h-12"
+                className="rounded-[30px] border border-black px-[30px] py-[12px] focus-visible:border-none h-12"
               />
               <Button
                 variant="outline"
@@ -129,14 +129,14 @@ const HomeBannerClient = () => {
           </div>
         </div>
         <div className="bg-[url('/assets/images/img-landing-clients.jpg')] bg-top bg-cover bg-no-repeat h-full lg:block border-l border-l-black lg:w-[56vw] w-full min-h-[140px]"></div>
-        <div className="hidden lg:block absolute lg:left-[30vw] xl:left-[38vw] 2xl:left-[32vw] bottom-[20vh] transform rotate-[14deg]">
+        {/* <div className="hidden lg:block absolute lg:left-[30vw] xl:left-[38vw] 2xl:left-[32vw] bottom-[20vh] transform rotate-[14deg]">
           <Image
             src="/assets/images/img-arrow-banner.png"
             alt="arrow"
             width={400}
             height={272}
           />
-        </div>
+        </div> */}
       </div>
 
       <div className="w-[full] border-t border-b border-black overflow-hidden">

@@ -10,7 +10,7 @@ const EmailVerify = () => {
 
   return (
     <div
-      className={` h-screen flex flex-col p-4 ${showStep !== true ? "bg-lg_yellow " : ""}`}
+      className={` h-screen flex flex-col p-4 ${showStep !== true ? "bg-lg-client " : ""}`}
     >
       <header className="container mx-auto px-4 lg:px-8 flex justify-between items-center align h-[72px] min-h-[60px]">
         <Link href="/">

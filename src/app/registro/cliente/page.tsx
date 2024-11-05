@@ -274,7 +274,7 @@ const RegisterClient = () => {
           </div>
         </main>
       </div>
-      <div className="lg:col-span-1 overflow-hidden hidden lg:block degrade-yellow"></div>
+      <div className="lg:col-span-1 overflow-hidden hidden lg:block degrade-client"></div>
     </div>
   );
 };

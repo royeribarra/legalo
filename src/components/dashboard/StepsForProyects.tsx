@@ -23,7 +23,7 @@ const StepsForProyects: React.FC<StepsForProyectsProps> = ({
   return (
     <Card className="min-w-[262px] max-w-[310px] border-none shadow-none">
       <CardHeader className="relative">
-        <div className="rounded-full bg-lg_blue-light h-8 w-8 flex items-center justify-center absolute top-4 left-4">
+        <div className="rounded-full bg-lg-lawyer h-8 w-8 flex items-center justify-center absolute top-4 left-4">
           {step}
         </div>
         <div className="w-full h-auto flex justify-center ">

@@ -5,7 +5,7 @@ import React from "react";
 
 const WelcomeLawerPage = () => {
   return (
-    <div className="bg-lg_blue-light h-[100vh]">
+    <div className="bg-lg-lawyer h-[100vh]">
       <header className="container mx-auto px-4 lg:px-8 flex justify-between items-center align h-[72px]  ">
         <Link href="/">
           <Image
