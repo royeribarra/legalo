@@ -14,7 +14,7 @@ const ModalPostulacionOk: React.FC<ModalPostulacionOkProps> = ({
 }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-20 ">
-      <div className="flex flex-col lg:flex-row bg-lg_blue-light lg:rounded-[24px] shadow-lg relative w-full h-full overflow-y-auto lg:w-[1220px] lg:max-w-[84vw] lg:h-[830px] lg:max-h-[90vh] hidde-scrollbar">
+      <div className="flex flex-col lg:flex-row bg-lg-lawyer lg:rounded-[24px] shadow-lg relative w-full h-full overflow-y-auto lg:w-[1220px] lg:max-w-[84vw] lg:h-[830px] lg:max-h-[90vh] hidde-scrollbar">
         <div className="w-full flex flex-col h-full">
           <div className="flex items-center justify-center h-[35%] lg:h-[55%]">
             <div className="w-36 h-36 lg:w-44 lg:h-44 border border-black rounded-full flex items-center justify-center">

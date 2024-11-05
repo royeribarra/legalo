@@ -391,7 +391,7 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
               </TabsContent>
             </Tabs>
           </div>
-          <div className="fixed lg:sticky  w-full bg-lg_blue-light h-20 flex justify-between items-center px-4 lg:px-10 bottom-0 flex-none border-t border-black">
+          <div className="fixed lg:sticky  w-full bg-lg-lawyer h-20 flex justify-between items-center px-4 lg:px-10 bottom-0 flex-none border-t border-black">
             <Button
               variant="outline"
               className="h-12 px-8 lg:px-16 bg-[#d5f1f0] border border-black rounded-[10px] hover:bg-[#d5f1f0]"

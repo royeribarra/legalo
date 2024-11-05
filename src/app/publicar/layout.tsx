@@ -32,7 +32,7 @@ const CompleteProfileLawyerLayout = ({ children }: LayoutProps) => {
         </header>
         <main>{children}</main>
       </div>
-      <div className="lg:col-span-1 overflow-hidden hidden lg:block degrade-yellow z-10"></div>
+      <div className="lg:col-span-1 overflow-hidden hidden lg:block degrade-client z-10"></div>
     </div>
   );
 };

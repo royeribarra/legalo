@@ -109,20 +109,20 @@ body {
 }
 /**/
 
-.bg-lg_yellow {
-  background-color: #eef79c;
-}
-
-.bg-lg_blue-light {
+.bg-lg-client {
   background-color: #d5f1f0;
 }
 
-.degrade-blue {
-  background: linear-gradient(180deg, #d5f1f0 0%, #ffffff 100%);
+.bg-lg-lawyer {
+  background-color: #eef79c;
 }
 
-.degrade-yellow {
+.degrade-lawyer {
   background: linear-gradient(180deg, #eef79c 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.degrade-client {
+  background: linear-gradient(180deg, #d5f1f0 0%, #ffffff 100%);
 }
 
 .overflow-child-visible > div {

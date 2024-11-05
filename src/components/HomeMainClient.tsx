@@ -103,7 +103,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
         <div className="flex max-w-[1200px] gap-[20px]  overflow-hidden flex-wrap justify-center">
           <Card className="max-w-[310px] border-none shadow-none">
             <CardHeader className="relative">
-              <div className="rounded-full bg-lg_yellow h-8 w-8 flex items-center justify-center absolute top-4 left-4">
+              <div className="rounded-full bg-lg-client h-8 w-8 flex items-center justify-center absolute top-4 left-4">
                 1
               </div>
               <div className="w-full h-auto flex justify-center ">
@@ -127,7 +127,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
 
           <Card className="max-w-[310px] border-none shadow-none">
             <CardHeader className="relative">
-              <div className="rounded-full bg-lg_yellow h-8 w-8 flex items-center justify-center absolute top-4 left-4">
+              <div className="rounded-full bg-lg-client h-8 w-8 flex items-center justify-center absolute top-4 left-4">
                 2
               </div>
               <div className="w-full h-auto flex justify-center ">
@@ -151,7 +151,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
 
           <Card className="max-w-[310px] border-none shadow-none">
             <CardHeader className="relative">
-              <div className="rounded-full bg-lg_yellow h-8 w-8 flex items-center justify-center absolute top-4 left-4">
+              <div className="rounded-full bg-lg-client h-8 w-8 flex items-center justify-center absolute top-4 left-4">
                 3
               </div>
               <div className="w-full h-auto flex justify-center ">
@@ -175,7 +175,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
 
           <Card className="max-w-[310px] border-none shadow-none">
             <CardHeader className="relative">
-              <div className="rounded-full bg-lg_yellow h-8 w-8 flex items-center justify-center absolute top-4 left-4">
+              <div className="rounded-full bg-lg-client h-8 w-8 flex items-center justify-center absolute top-4 left-4">
                 4
               </div>
               <div className="w-full h-auto flex justify-center ">
@@ -199,7 +199,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
 
           <Card className="max-w-[310px] border-none shadow-none">
             <CardHeader className="relative">
-              <div className="rounded-full bg-lg_yellow h-8 w-8 flex items-center justify-center absolute top-4 left-4">
+              <div className="rounded-full bg-lg-client h-8 w-8 flex items-center justify-center absolute top-4 left-4">
                 5
               </div>
               <div className="w-full h-auto flex justify-center ">
@@ -304,7 +304,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
             </div>
           </div>
         </div>
-        <div className=" bg-lg_yellow flex flex-col items-center justify-center gap-4 3xl:gap-8 p-8">
+        <div className=" bg-lg-client flex flex-col items-center justify-center gap-4 3xl:gap-8 p-8">
           <h3 className="text-[40px] text-center max-w-[416px] 3xl:max-w-[700px] font-tiempos 3xl:text-6xl">
             Con Legalo <span className="italic">ahorra</span> hasta
           </h3>
@@ -368,7 +368,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
       </div>
 
       {/* Reviews */}
-      <div className="bg-lg_yellow lg:min-h-[640px] flex items-center ">
+      <div className="bg-lg-client lg:min-h-[640px] flex items-center ">
         <div className="container p-4 lg:pl-16  pr-0">
           <div className="mb-5 lg:mb-14 lg:mt-20 flex overflow-x-auto">
             <ToggleGroup
@@ -394,7 +394,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
               {reviewsItems.map((item, index) => (
                 <CarouselItem key={index} className="max-w-[600px]">
                   <div>
-                    <Card className="border border-black border-solid bg-lg_yellow rounded-[32px] min-h-[320px] max-w-[600px]">
+                    <Card className="border border-black border-solid bg-lg-client rounded-[32px] min-h-[320px] max-w-[600px]">
                       <CardHeader>
                         <Image
                           src="/icos/ico-stars-solid.png"
@@ -487,7 +487,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
             />
           </div>
         </div>
-        <div className="flex border-b border-black bg-lg_yellow">
+        <div className="flex border-b border-black bg-lg-client">
           <div className="w-[50%] lg:w-[68%]  border-r border-black py-8 p-4 lg:px-16 3xl:pr-28 flex flex-col justify-center">
             {" "}
             <h2 className="font-tiempos lg:text-4xl 3xl:text-5xl leading-[1.2] italic">

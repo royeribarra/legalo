@@ -11,6 +11,7 @@ const config: Config = {
     extend: {
       screens: {
         "3xl": "1900px",
+        "4xl": "2000px",
       },
       colors: {
         background: "hsl(var(--background))",
