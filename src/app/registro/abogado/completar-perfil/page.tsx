@@ -21,13 +21,12 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import ImageUpload from "@/components/ImageUpload";
 import VideoUpload from "@/components/VideoUpload";
 import FileUpload from "@/components/FileUpload";
+import CvUpload from "@/components/abogado/registro/CvUpload";
 
 interface Educacion {
   id: number,
-  desde_mes: string;
-  desde_ano: string;
-  hasta_mes: string;
-  hasta_ano: string;
+  desde_fecha: string;
+  hasta_fecha: string;
   titulo: string;
   institucion: string;
   ubicacion: string;
@@ -36,10 +35,8 @@ interface Educacion {
 
 interface Experiencia {
   id: number;
-  desde_mes: string;
-  desde_ano: string;
-  hasta_mes: string;
-  hasta_ano: string;
+  desde_fecha: string;
+  hasta_fecha: string;
   descripcion: string;
   empresa: string;
   titulo: string;
@@ -68,10 +65,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
   };
 
   const nextStep = () => {
-    console.log(stepNumber)
-    // return;
     if(stepNumber === 4){
-      // window.location.href = 'http://localhost:3000/registro/abogado/bienvenida';
       const formData = new FormData();
       const especialidad = localStorage.getItem("especialidad");
       const estudios = localStorage.getItem("estudios");
@@ -115,9 +109,6 @@ const CompleteProfileLawyerPage: React.FC = () => {
       case 3:
         setTriger("tab4");
         break;
-      // case 4:
-      //   setTriger("tab5");
-      //   break;
       default:
         break;
     }
@@ -125,7 +116,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
   };
 
   function base64ToBlob(base64: string, mimeType: string) {
-    const byteCharacters = atob(base64.split(',')[1]); // Divide el base64 para eliminar el encabezado
+    const byteCharacters = atob(base64.split(',')[1]);
     const byteNumbers = new Array(byteCharacters.length);
     for (let i = 0; i < byteCharacters.length; i++) {
       byteNumbers[i] = byteCharacters.charCodeAt(i);
@@ -149,9 +140,6 @@ const CompleteProfileLawyerPage: React.FC = () => {
       case 4:
         setTriger("tab3");
         break;
-      // case 5:
-      //   setTriger("tab4");
-      //   break;
       default:
         break;
     }
@@ -303,11 +291,11 @@ const CompleteProfileLawyerPage: React.FC = () => {
                   <div className="flex gap-4 p-4" key={index}>
                     <div className="w-1/4 flex gap-1">
                       <p>
-                        {experiencia.desde_mes + "-" + experiencia.desde_ano}
+                        {experiencia.desde_fecha}
                       </p>
                       <span>-</span>
                       <p>
-                        {experiencia.hasta_mes + "-" + experiencia.hasta_ano}
+                        {experiencia.hasta_fecha}
                       </p>
                     </div>
                     <div className="w-3/4">
@@ -344,19 +332,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
                   </label>
                 </div>
 
-                <div>
-                  <p className="font-bold text-lg">CV*</p>
-                  <div className="border border-black border-dashed p-2 flex flex-col items-center">
-                    <Image
-                      src="/assets/images/ico-upload.png"
-                      alt="ico-cv"
-                      width={64}
-                      height={64}
-                    ></Image>
-                    <p>Sube tu Curriculum Vitae (CV)</p>
-                    <p className="text-xs text-gray-500">DOC,DOCX,PDF(2 MB)</p>
-                  </div>
-                </div>
+                <CvUpload></CvUpload>
               </div>
             </TabsContent>
             <TabsContent value="tab2">
@@ -376,9 +352,9 @@ const CompleteProfileLawyerPage: React.FC = () => {
                 {listEducacion.map((educacion: Educacion, index) => (
                   <div className="flex gap-4 p-4" key={index}>
                     <div className="w-1/4 flex gap-1">
-                      <p>{educacion.desde_mes + "-" + educacion.desde_ano}</p>
+                      <p>{educacion.desde_fecha}</p>
                       <span>-</span>
-                      <p>{educacion.hasta_mes + "-" + educacion.hasta_ano}</p>
+                      <p>{educacion.hasta_fecha}</p>
                     </div>
                     <div className="w-3/4">
                       <p>{educacion.titulo}</p>
