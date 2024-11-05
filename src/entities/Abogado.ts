@@ -18,13 +18,10 @@ export class AbogadoModel extends BaseEntity implements IAbogado
     user: UserModel;
 
     @Column()
-    nombre: string;
+    nombres: string;
 
     @Column()
-    apellido_paterno: string;
-
-    @Column()
-    apellido_materno: string;
+    apellidos: string;
 
     @Column()
     dni: string;
@@ -36,7 +33,7 @@ export class AbogadoModel extends BaseEntity implements IAbogado
     universidad: string;
 
     @Column()
-    grade_academico: string;
+    grado_academico: string;
 
     @Column()
     acerca_de: string;
@@ -61,6 +58,9 @@ export class AbogadoModel extends BaseEntity implements IAbogado
 
     @Column()
     pdf_cv: string;
+
+    @Column()
+    email: string;
 
     @ManyToMany(() => HabilidadModel, habilidad => habilidad.abogados)
     @JoinTable()

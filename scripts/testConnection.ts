@@ -1,16 +1,14 @@
-import { createConnection } from 'typeorm';
+import 'dotenv/config';
+import { AppDataSource } from '../src/data-source';
 
-async function testConnection() {
+const testConnection = async () => {
   try {
-    // Crea una conexión utilizando la configuración por defecto de TypeORM
-    const connection = await createConnection();
-    console.log('Conexión a MySQL establecida correctamente!');
-    
-    // Cierra la conexión después de la prueba
-    await connection.close();
+    await AppDataSource.initialize();
+    console.log('Conexión exitosa a la base de datos.');
+    await AppDataSource.destroy();
   } catch (error) {
-    console.error('Error al conectar a MySQL:', error);
+    console.error('Error en la conexión:', error);
   }
-}
+};
 
 testConnection();

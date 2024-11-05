@@ -1,3 +1,4 @@
+import path from 'path';
 import { DataSource } from 'typeorm';
 import { UserModel } from './entities/User';
 import { PerfilModel } from './entities/Perfil';
@@ -8,6 +9,8 @@ import { TrabajoModel } from './entities/Trabajo';
 import { HabilidadModel } from './entities/Habilidad';
 import { AplicacionModel } from './entities/Aplicacion';
 
+console.log("hola")
+console.log([path.join(__dirname, 'migrations', '**', '*.ts')])
 export const AppDataSource = new DataSource({
   type: 'mysql',
   host: process.env.DB_HOST || '127.0.0.1',
@@ -18,7 +21,7 @@ export const AppDataSource = new DataSource({
   entities: [
     UserModel, PerfilModel, AbogadoModel, ClienteModel, OfertaModel, TrabajoModel, HabilidadModel, AplicacionModel
   ],
-  migrations: ['src/migrations/**/*.ts'],
+  migrations: [path.join(__dirname, 'migrations', '**', '*.ts')],
   synchronize: false,
   migrationsRun: false,
   logging: false,

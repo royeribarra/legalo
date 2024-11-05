@@ -7,11 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test-connect": "ts-node scripts/testConnection.ts",
+    "connection": "ts-node scripts/testConnection.ts",
     "migrate": "typeorm migration:run",
-    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --dataSource src/data-source.ts",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --dataSource ./src/data-source.ts",
     "migration:run": "npm run typeorm migration:run",
-    "migration:generate": "npm run typeorm migration:generate -d src/migrations"
+    "migration:generate": "npm run typeorm migration:generate -d ./src/migrations/migration",
+    "seed": "ts-node src/seeds/seed.ts"
   },
   "dependencies": {
     "@ant-design/cssinjs": "^1.21.1",
@@ -37,7 +38,8 @@
     "embla-carousel-react": "^8.3.0",
     "lucide-react": "^0.441.0",
     "moment": "^2.30.1",
-    "mysql2": "^3.11.2",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.11.3",
     "next": "14.2.8",
     "react": "^18",
     "react-dom": "^18",

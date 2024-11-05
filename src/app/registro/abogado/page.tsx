@@ -145,6 +145,8 @@ const PasswordField = <T extends FieldValues>({
   );
 };
 
+type FormData = z.infer<typeof formSchema>;
+
 function RegisterLawyer() {
   const router = useRouter();
   // 1. Define your form.
@@ -159,14 +161,30 @@ function RegisterLawyer() {
       terms: false,
     },
   });
-
+  const { register, setValue } = form;
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
+    localStorage.setItem("abogado", JSON.stringify(values));
     router.push("/registro/abogado/objetivos");
   }
+
+  useEffect(() => {
+    const abogado = localStorage.getItem('abogado');
+
+    if (abogado) {
+      const abogadoData: Partial<FormData> = JSON.parse(abogado);
+
+      setValue('names', abogadoData.names || "");
+      setValue('lastNames', abogadoData.lastNames || "");
+      setValue('email', abogadoData.email || "");
+      setValue('location', abogadoData.location || "");
+      setValue('password', abogadoData.password || "");
+      setValue('terms', abogadoData.terms || false);
+    }
+  }, []);
 
   return (
     <div className="h-screen grid grid-cols-4 gap-4">
@@ -220,7 +238,7 @@ function RegisterLawyer() {
                     }}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Nombress</FormLabel>
+                        <FormLabel>Nombres</FormLabel>
                         <FormControl>
                           <Input
                             placeholder="Nombres"

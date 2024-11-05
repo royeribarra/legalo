@@ -18,281 +18,32 @@ import SkillSection from "@/components/abogado/registro/SkillSection";
 import AboutSection from "@/components/abogado/registro/AboutSection";
 import ModalAgregarEducacion from "@/components/abogado/MoodalAgregarEducacion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import ImageUpload from "@/components/ImageUpload";
+import VideoUpload from "@/components/VideoUpload";
+import FileUpload from "@/components/FileUpload";
 
 interface Educacion {
   id: number,
-  desde_mes: string;   // o puede ser un número, dependiendo de cómo manejes los meses
-  desde_ano: string;   // año como número
-  hasta_mes: string;   // o puede ser un número
-  hasta_ano: string;   // año como número
-  titulo: string;      // título del curso o grado
-  institucion: string; // nombre de la institución
+  desde_mes: string;
+  desde_ano: string;
+  hasta_mes: string;
+  hasta_ano: string;
+  titulo: string;
+  institucion: string;
   ubicacion: string;
-  descripcion: string;    // ubicación de la institución
+  descripcion: string;
 }
 
 interface Experiencia {
   id: number;
-  desde_mes: string;   // o puede ser un número, dependiendo de cómo manejes los meses
-  desde_ano: string;   // año como número
-  hasta_mes: string;   // o puede ser un número
-  hasta_ano: string;   // año como número
-  descripcion: string;      // título del curso o grado
-  empresa: string; // nombre de la institución
-  titulo: string;   // ubicación de la institución
+  desde_mes: string;
+  desde_ano: string;
+  hasta_mes: string;
+  hasta_ano: string;
+  descripcion: string;
+  empresa: string;
+  titulo: string;
 }
-
-const UploadCV = () => {
-  const [file, setFile] = useState<File | null>(null);
-  const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files?.[0];
-
-    if (selectedFile) {
-      const validTypes = [
-        "application/pdf",
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        "application/msword",
-      ];
-
-      if (!validTypes.includes(selectedFile.type)) {
-        alert("Por favor, sube un archivo PDF o DOC/DOCX.");
-        return;
-      }
-
-      setFile(selectedFile);
-      setUploadSuccess(true); // Muestra el mensaje de éxito al subir el archivo
-    }
-  };
-
-  const handleCloseMessage = () => {
-    setUploadSuccess(false);
-  };
-
-  const handleButtonClick = () => {
-    fileInputRef.current?.click(); // Simula el clic en el input de archivo
-  };
-
-  const handleRemoveFile = () => {
-    setFile(null); // Elimina el archivo
-    setUploadSuccess(false); // Cierra el mensaje de éxito
-  };
-
-  return (
-    <div className="border border-black p-5 border-dashed">
-      <div className="flex flex-col lg:flex-row">
-        <div className="w-full lg:w-4/5">
-          <p>
-            Ahorra tiempo importando tu CV, CUL o perfil de LinkedIn en formato
-            PDF, Doc, Dox.
-          </p>
-        </div>
-        <div className="w-full flex items-center justify-end lg:w-1/5">
-          <input
-            type="file"
-            accept=".pdf, .doc, .docx"
-            onChange={handleFileChange}
-            style={{ display: "none" }} // Oculta el input de archivo
-            ref={fileInputRef} // Asocia la referencia al input
-          />
-          <Button onClick={handleButtonClick}>
-            {" "}
-            {/* Asocia el clic del botón al input */}
-            Importa tu CV <Upload size={18} color="white" className="ml-2" />
-          </Button>
-        </div>
-      </div>
-      {uploadSuccess && ( // Muestra el mensaje de éxito
-        <div className="flex flex-col bg-[#D9D9D9] rounded-lg p-2 gap-2 mt-2">
-          <div className="flex justify-between">
-            <div>
-              <p className="font-bold">Autocompletado con éxito</p>
-              <p>
-                Revisa la información que ha sido completada automáticamente
-              </p>
-            </div>
-            <Button variant="link" onClick={handleCloseMessage}>
-              <Image
-                src="/icos/close-x-circle.png"
-                alt="Cerrar mensaje"
-                width={24}
-                height={24}
-              />
-            </Button>
-          </div>
-        </div>
-      )}
-      {file && ( // Muestra el nombre del archivo y el botón de eliminar
-        <div className="flex justify-between items-center">
-          <p className="text-sm text-gray-700">Archivo: {file.name}</p>
-          <Button variant="link" onClick={handleRemoveFile}>
-            <Image
-              src="/icos/close-x-circle.png"
-              alt="Eliminar archivo"
-              width={24}
-              height={24}
-            />
-          </Button>
-        </div>
-      )}
-    </div>
-  );
-};
-
-const VideoUpload = () => {
-  const [videoFile, setVideoFile] = useState<File | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [videoName, setVideoName] = useState<string | null>(null);
-
-  console.log(videoFile);
-  useEffect(() => {
-    const storedVideo = localStorage.getItem("profileVideo");
-    if (storedVideo) {
-      setVideoName(storedVideo);
-    }
-  }, []);
-
-  const handleVideoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-
-    if (file) {
-      // Verificar duración y tamaño del video
-      const videoUrl = URL.createObjectURL(file);
-      const video = document.createElement("video");
-
-      video.src = videoUrl;
-      video.onloadedmetadata = () => {
-        const duration = video.duration; // Duración en segundos
-        const sizeInMB = file.size / (1024 * 1024); // Tamaño en MB
-
-        if (duration > 60) {
-          setError("El video debe ser de máximo 1 minuto de duración.");
-          setVideoFile(null);
-        } else if (sizeInMB > 10) {
-          setError("El tamaño del video debe ser menor a 10 MB.");
-          setVideoFile(null);
-        } else {
-          setError(null);
-          setVideoFile(file); // Guardar el archivo si pasa las validaciones
-          setVideoName(file.name);
-          localStorage.setItem("profileVideo", file.name); // Guardar en localStorage
-        }
-      };
-    }
-  };
-
-  const handleButtonClick = () => {
-    const input = document.getElementById("video-upload") as HTMLInputElement;
-    if (input) {
-      input.click();
-    }
-  };
-
-  const handleRemoveVideo = () => {
-    setVideoFile(null);
-    setVideoName(null);
-    localStorage.removeItem("profileVideo");
-  };
-
-  return (
-    <div className="w-full lg:w-1/6 flex flex-col flex-center justify-center items-center">
-      <Image
-        src="/assets/images/ico-camera.png"
-        alt="ico-camera"
-        width={64}
-        height={64}
-        className="block"
-      />
-      <input
-        type="file"
-        accept="video/*"
-        onChange={handleVideoChange}
-        style={{ display: "none" }}
-        id="video-upload"
-      />
-      <Button variant="link" onClick={handleButtonClick}>
-        Sube un video tuyo
-      </Button>
-      {error && <p className="text-red-500 text-sm">{error}</p>}
-      {videoName && (
-        <div className="flex flex-col items-center mt-2">
-          <p className="text-sm text-gray-700">Video subido: {videoName}</p>
-          <Button variant="outline" size="sm" onClick={handleRemoveVideo}>
-            Eliminar video
-          </Button>
-        </div>
-      )}
-    </div>
-  );
-};
-
-const ImageUpload = () => {
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [imageBase64, setImageBase64] = useState<string | null>(null);
-
-  // Cargar la imagen guardada en localStorage cuando se monta el componente
-  console.log(selectedImage);
-  useEffect(() => {
-    const storedImage = localStorage.getItem("profileImg");
-    if (storedImage) {
-      setImageBase64(storedImage);
-    }
-  }, []);
-
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setSelectedImage(file);
-
-      // Convertir la imagen a base64 para almacenarla en localStorage
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        const base64String = reader.result as string;
-        setImageBase64(base64String);
-        localStorage.setItem("profileImg", base64String); // Guardar en localStorage
-      };
-    }
-  };
-
-  const handleButtonClick = () => {
-    const input = document.getElementById("image-upload") as HTMLInputElement;
-    input.click();
-  };
-
-  return (
-    <div className="w-full lg:w-1/6 flex flex-col items-center gap-2">
-      <Image
-        src={
-          imageBase64
-            ? imageBase64 // Mostrar la imagen desde localStorage si existe
-            : "/assets/images/ico-photo-perfil.png" // Imagen por defecto
-        }
-        alt="Imagen subida"
-        width={96}
-        height={96}
-        className="rounded-full"
-      />
-      <input
-        type="file"
-        id="image-upload"
-        accept="image/*"
-        onChange={handleImageChange}
-        style={{ display: "none" }}
-      />
-      <Button
-        size="sm"
-        variant="outline"
-        className="rounded-full"
-        onClick={handleButtonClick}
-      >
-        Sube una imagen*
-      </Button>
-    </div>
-  );
-};
 
 const CompleteProfileLawyerPage: React.FC = () => {
   
@@ -317,9 +68,42 @@ const CompleteProfileLawyerPage: React.FC = () => {
   };
 
   const nextStep = () => {
-    setStepNumber(stepNumber + 1);
-    if(stepNumber === 5){
-      window.location.href = 'http://localhost:3000/registro/abogado/bienvenida';
+    console.log(stepNumber)
+    // return;
+    if(stepNumber === 4){
+      // window.location.href = 'http://localhost:3000/registro/abogado/bienvenida';
+      const formData = new FormData();
+      const especialidad = localStorage.getItem("especialidad");
+      const estudios = localStorage.getItem("estudios");
+      const habilidades = localStorage.getItem("habilidades");
+      const listaEstudios = localStorage.getItem("listaEstudios");
+      const listaExperiencia = localStorage.getItem("listaExperiencia");
+      const profileImg = localStorage.getItem("profileImg");
+      const profileVideo = localStorage.getItem("profileVideo");
+
+      if (especialidad) formData.append("especialidad", especialidad);
+      if (estudios) formData.append("estudios", estudios);
+      if (habilidades) formData.append("habilidades", habilidades);
+      if (listaEstudios) formData.append("listaEstudios", listaEstudios);
+      if (listaExperiencia) formData.append("listaExperiencia", listaExperiencia);
+
+      if (profileImg) {
+        const imgBlob = base64ToBlob(profileImg, "image/jpeg");
+        formData.append("profileImg", imgBlob, "profileImg.jpg");
+      }
+
+      if (profileVideo) {
+        const videoBlob = base64ToBlob(profileVideo, "video/mp4");
+        formData.append("profileVideo", videoBlob, "profileVideo.mp4");
+      }
+
+      fetch('http://localhost:3000/api/abogado/registro', {
+        method: 'POST',
+        body: formData,
+      })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(err=>console.log(err)); 
     }
     switch (stepNumber) {
       case 1:
@@ -331,20 +115,30 @@ const CompleteProfileLawyerPage: React.FC = () => {
       case 3:
         setTriger("tab4");
         break;
-      case 4:
-        setTriger("tab5");
-        break;
+      // case 4:
+      //   setTriger("tab5");
+      //   break;
       default:
         break;
     }
+    setStepNumber(stepNumber + 1);
   };
+
+  function base64ToBlob(base64: string, mimeType: string) {
+    const byteCharacters = atob(base64.split(',')[1]); // Divide el base64 para eliminar el encabezado
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type: mimeType });
+  }
 
   const prevStep = () => {
     if(stepNumber === 1){
       window.location.href = 'http://localhost:3000/registro/abogado/objetivos';
     }
-
-    setStepNumber(stepNumber - 1);
+    
     switch (stepNumber) {
       case 2:
         setTriger("tab1");
@@ -355,12 +149,13 @@ const CompleteProfileLawyerPage: React.FC = () => {
       case 4:
         setTriger("tab3");
         break;
-      case 5:
-        setTriger("tab4");
-        break;
+      // case 5:
+      //   setTriger("tab4");
+      //   break;
       default:
         break;
     }
+    setStepNumber(stepNumber - 1);
   };
 
   useEffect(() => {
@@ -442,7 +237,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
         <VideoUpload></VideoUpload>
       </div>
 
-      <UploadCV></UploadCV>
+      <FileUpload></FileUpload>
       {/* lateral menu  */}
       <div className="my-4 pb-32">
         <Tabs defaultValue="tab1" value={triger}  className="flex gap-4 flex-col lg:flex-row">
@@ -475,13 +270,13 @@ const CompleteProfileLawyerPage: React.FC = () => {
             >
               Skills
             </TabsTrigger>
-            <TabsTrigger
+            {/* <TabsTrigger
               value="tab5"
               className=" text-[#D1D1D6] w-full justify-start py-4 lg:text-lg font-bold data-[state=active]:bg-[#D9D9D9] data-[state=active]:text-black rounded-[10px]"
               disabled={stepNumber != 5 ? true : false}
             >
               Documentación extra
-            </TabsTrigger>
+            </TabsTrigger> */}
             <p className="hidden lg:block lg:my-8 text-black text-sm">
               Campos obligatorios(*)
             </p>
@@ -616,57 +411,6 @@ const CompleteProfileLawyerPage: React.FC = () => {
             </TabsContent>
             <TabsContent value="tab4">
               <SkillSection></SkillSection>
-            </TabsContent>
-            <TabsContent value="tab5">
-              <div>
-                <p>Documentación*</p>
-                <div className="mt-2">
-                  <div className="border border-black border-dashed p-2 flex flex-col items-center">
-                    <Image
-                      src="/assets/images/ico-upload.png"
-                      alt="ico-cv"
-                      width={64}
-                      height={64}
-                    ></Image>
-                    <p>Sube tu Certificado Único Laboral(CUL)</p>
-                    <p className="text-xs text-gray-500">DOC,DOCX,PDF(2 MB)</p>
-                  </div>
-                </div>
-
-                <div className="mt-2">
-                  <div className="border border-black border-dashed p-4 flex justify-between gap-4 overflow-hidden flex-col lg:flex-row">
-                    <div className="flex gap-4">
-                      <div className="bg-[#CACACA] h-14 w-14 flex items-center justify-center rounded-full">
-                        <Image
-                          src="/icos/ico-cv-file.png"
-                          alt="ico-cv"
-                          width={23}
-                          height={30}
-                        />
-                      </div>
-                      <div className="lg:flex-1">
-                        <p>Certificado Único Laboral (CUL)</p>
-                        <p>[nombredeldocumento].pdf</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-end lg:justify-normal">
-                      <Button
-                        variant="outline"
-                        className="w-[140px] h-12 border-black text-base"
-                      >
-                        Eliminar{" "}
-                        <Image
-                          src="/icos/ico-trash-file.png"
-                          alt="ico-cv"
-                          width={18}
-                          height={20}
-                          className="ml-2"
-                        />
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </TabsContent>
           </div>
         </Tabs>

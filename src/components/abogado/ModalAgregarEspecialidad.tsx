@@ -1,8 +1,9 @@
-import specialtiesItems from "@/data/specialtiesItems";
+
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Check as CheckIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import specialtiesItems from "@/data/specialtiesItems";
 
 interface Especialidad {
     CardTitle: string,
