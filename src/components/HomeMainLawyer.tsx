@@ -243,99 +243,105 @@ const HomeMain: React.FC<HomeMainProps> = ({
           </Card>
         </div>
       </div>
-
-      <div className="lg:h-[584px] 3xl:h-[700px] grid grid-cols-1 lg:grid-cols-2">
-        <div className="bg-[#1E1E1E] flex flex-col justify-center gap-4 py-8">
-          <div className="flex  flex-col justify-center gap-8 3xl:gap-16 p-4 lg:p-16">
-            <div className="grid grid-cols-[40px_auto]  gap-4 ">
-              <Image
-                src="/icos/ico-megaphone-w.png"
-                alt="ico"
-                width={27}
-                height={24}
-                className="mx-auto"
-              />
-              <div className="text-white">
-                <h3 className="text-lg lg:text-2xl font-tiempos mb-2">
-                  Oportunidades{" "}
-                  <span className="italic font-light">Exclusivas</span>
-                </h3>
-                <p className="text-base">
-                  Accede a proyectos y empleos específicos para abogados,
-                  garantizando trabajos alineados con tu especialidad.
-                </p>
+      <div className="[background:linear-gradient(to_right,_#1E1E1E_50%,_#EEF79C_50%)]">
+        <div className="max-w-[1920px] mx-auto lg:h-[584px] 3xl:h-[700px] grid grid-cols-1 lg:grid-cols-2">
+          <div className="bg-[#1E1E1E] flex flex-col justify-center gap-4 py-8">
+            <div className="flex  flex-col justify-center gap-8 3xl:gap-16 p-4 lg:p-16">
+              <div className="grid grid-cols-[40px_auto]  gap-4 ">
+                <Image
+                  src="/icos/ico-megaphone-w.png"
+                  alt="ico"
+                  width={27}
+                  height={24}
+                  className="mx-auto"
+                />
+                <div className="text-white">
+                  <h3 className="text-lg lg:text-2xl font-tiempos mb-2">
+                    Oportunidades{" "}
+                    <span className="italic font-light">Exclusivas</span>
+                  </h3>
+                  <p className="text-base">
+                    Accede a proyectos y empleos específicos para abogados,
+                    garantizando trabajos alineados con tu especialidad.
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="grid grid-cols-[40px_auto]  gap-4 ">
-              <Image
-                src="/icos/ico-like-w.png"
-                alt="ico"
-                width={24}
-                height={30}
-                className="mx-auto"
-              />
-              <div className="text-white">
-                <h3 className="text-lg lg:text-2xl font-tiempos mb-2">
-                  Confianza y{" "}
-                  <span className="italic font-light">Seguridad</span>
-                </h3>
-                <p className="text-base">
-                  Trabaja solo con clientes verificados para garantizar la
-                  legitimidad de los proyectos y minimizar riesgos.
-                </p>
+              <div className="grid grid-cols-[40px_auto]  gap-4 ">
+                <Image
+                  src="/icos/ico-like-w.png"
+                  alt="ico"
+                  width={24}
+                  height={30}
+                  className="mx-auto"
+                />
+                <div className="text-white">
+                  <h3 className="text-lg lg:text-2xl font-tiempos mb-2">
+                    Confianza y{" "}
+                    <span className="italic font-light">Seguridad</span>
+                  </h3>
+                  <p className="text-base">
+                    Trabaja solo con clientes verificados para garantizar la
+                    legitimidad de los proyectos y minimizar riesgos.
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="grid grid-cols-[40px_auto] gap-4 ">
-              <Image
-                src="/icos/ico-credit-card-w.png"
-                alt="ico"
-                width={30}
-                height={23}
-                className="mx-auto"
-              />
-              <div className="text-white">
-                <h3 className="text-lg lg:text-2xl font-tiempos mb-2">
-                  Pagos <span className="italic font-light">Seguros</span>
-                </h3>
-                <p className="text-base">
-                  Confía en nuestro sistema para asegurar que recibas tus pagos
-                  de manera confiable y puntual.
-                </p>
+              <div className="grid grid-cols-[40px_auto] gap-4 ">
+                <Image
+                  src="/icos/ico-credit-card-w.png"
+                  alt="ico"
+                  width={30}
+                  height={23}
+                  className="mx-auto"
+                />
+                <div className="text-white">
+                  <h3 className="text-lg lg:text-2xl font-tiempos mb-2">
+                    Pagos <span className="italic font-light">Seguros</span>
+                  </h3>
+                  <p className="text-base">
+                    Confía en nuestro sistema para asegurar que recibas tus
+                    pagos de manera confiable y puntual.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className=" bg-lg-lawyer flex flex-col items-center justify-center gap-4 3xl:gap-8 p-8">
-          <h3 className="text-[40px] text-center max-w-[416px] font-tiempos 3xl:max-w-[700px] 3xl:text-6xl">
-            Calcula tus <span className="italic">ganancias,</span> podrías ganar
-          </h3>
-          <h2 className="text-6xl italic font-tiempos 3xl:text-7xl">S/ 2160</h2>
-          <p className="text-base max-w-[264px] text-center 3xl:max-w-[400px] 3xl:text-xl">
-            En comparación a 6 horas al día a un precio estimado de S/12 por día
-          </p>
-          <Link href="#" className="underline 3xl:text-xl">
-            ¿Cómo calculamos?
-          </Link>
-          <Select>
-            <SelectTrigger className="w-[320px] border border-black">
-              <SelectValue placeholder="Seleccionar especialidad" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Especialidades</SelectLabel>
-                <SelectItem value="penalista">Abogado Penalista</SelectItem>
-                <SelectItem value="laboral">Abogado Laboral</SelectItem>
-                <SelectItem value="familia">Abogado Familiar</SelectItem>
-                <SelectItem value="empresarial">Abogado Empresarial</SelectItem>
-                <SelectItem value="ambiental">Abogado Ambiental</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          <div className=" bg-lg-lawyer flex flex-col items-center justify-center gap-4 3xl:gap-8 p-8">
+            <h3 className="text-[40px] text-center max-w-[416px] font-tiempos 3xl:max-w-[700px] 3xl:text-6xl">
+              Calcula tus <span className="italic">ganancias,</span> podrías
+              ganar
+            </h3>
+            <h2 className="text-6xl italic font-tiempos 3xl:text-7xl">
+              S/ 2160
+            </h2>
+            <p className="text-base max-w-[264px] text-center 3xl:max-w-[400px] 3xl:text-xl">
+              En comparación a 6 horas al día a un precio estimado de S/12 por
+              día
+            </p>
+            <Link href="#" className="underline 3xl:text-xl">
+              ¿Cómo calculamos?
+            </Link>
+            <Select>
+              <SelectTrigger className="w-[320px] border border-black">
+                <SelectValue placeholder="Seleccionar especialidad" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Especialidades</SelectLabel>
+                  <SelectItem value="penalista">Abogado Penalista</SelectItem>
+                  <SelectItem value="laboral">Abogado Laboral</SelectItem>
+                  <SelectItem value="familia">Abogado Familiar</SelectItem>
+                  <SelectItem value="empresarial">
+                    Abogado Empresarial
+                  </SelectItem>
+                  <SelectItem value="ambiental">Abogado Ambiental</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </div>
-
-      <div className="bg-[url('/assets/img-legalo4.webp')] bg-cover lg:h-[242px] py-8">
-        <div className="container p-4 lg:p-8 mx-auto flex md:items-center items-start lg:justify-between h-full flex-col lg:flex-row">
+      <div className="bg-[url('/assets/img-legalo4.webp')] bg-cover lg:h-[242px] px-8 py-8 lg:px-16 ">
+        <div className="max-w-[1920px] mx-auto py-4 lg:pr-8 flex md:items-center items-start lg:justify-between h-full flex-col lg:flex-row">
           <div className="text-white mb-8">
             <h3 className="text-3xl lg:text-[40px] mb-8 font-tiempos">
               Descubre oportunidades legales{" "}
@@ -348,138 +354,76 @@ const HomeMain: React.FC<HomeMainProps> = ({
       </div>
 
       {/* Reviews */}
-      <div className="bg-lg-lawyer lg:h-[640px] flex items-center py-8">
-        <div className="container p-4 lg:pl-16  pr-0">
-          <div className="mb-8 flex overflow-x-auto">
-            <ToggleGroup
-              type="single"
-              variant="chips"
-              className="gap-2"
-              defaultValue="a"
+      <div className="bg-lg-lawyer">
+        <div className="max-w-[1920px] mx-auto lg:min-h-[640px] flex items-center ">
+          <div className="container p-4 lg:pl-16  4xl:pr-8 pr-0">
+            <div className="mb-5 lg:mb-14 lg:mt-20 flex overflow-x-auto">
+              <ToggleGroup
+                type="single"
+                variant="chips"
+                className="gap-2"
+                defaultValue="a"
+              >
+                <ToggleGroupItem value="a">Todos</ToggleGroupItem>
+                <ToggleGroupItem value="b">Ambiental</ToggleGroupItem>
+                <ToggleGroupItem value="c">Civil</ToggleGroupItem>
+                <ToggleGroupItem value="d">Corportaivo</ToggleGroupItem>
+                <ToggleGroupItem value="e">Internacional</ToggleGroupItem>
+              </ToggleGroup>
+            </div>
+            <Carousel
+              opts={{
+                align: "start",
+              }}
+              className="w-full lg:w-[90vw] 4xl:w-[100%] mb-8 overflow-child-visible"
             >
-              <ToggleGroupItem value="a">Todos</ToggleGroupItem>
-              <ToggleGroupItem value="b">Ambiental</ToggleGroupItem>
-              <ToggleGroupItem value="c">Civil</ToggleGroupItem>
-              <ToggleGroupItem value="d">Corportaivo</ToggleGroupItem>
-              <ToggleGroupItem value="e">Internacional</ToggleGroupItem>
-            </ToggleGroup>
-          </div>
-          <Carousel
-            opts={{
-              align: "start",
-            }}
-            className="w-full lg:w-[90vw] mb-8 overflow-child-visible"
-          >
-            <CarouselContent className="">
-              {reviewsItems.map((item, index) => (
-                <CarouselItem key={index} className="max-w-[600px]">
-                  <div>
-                    <Card className="border border-black border-solid bg-lg-lawyer rounded-[32px] min-h-[320px] max-w-[600px]">
-                      <CardHeader>
-                        <Image
-                          src="/icos/ico-stars-solid.png"
-                          alt="img"
-                          width={120}
-                          height={19}
-                          className=""
-                        />
-                      </CardHeader>
-                      <CardContent className="flex">
-                        <CardDescription className="line-clamp-5 text-black text-[18px]">
-                          {item.description}
-                        </CardDescription>
-                      </CardContent>
-                      <CardFooter className="flex gap-4">
-                        <Image
-                          src={item.ImageSrc}
-                          alt="img"
-                          width={56}
-                          height={56}
-                          className=""
-                        />
-                        <div>
-                          <p className="text-[20px]font-medium italic">
-                            {item.name}
-                          </p>
-                          <p className="text-base">Position, Company name</p>
-                        </div>
-                      </CardFooter>
-                    </Card>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <div className="flex justify-end mt-12 gap-4 mr-4 lg:mr-0">
-              <CarouselPreviousReviews />
-              <CarouselNextReviews />
-            </div>
-          </Carousel>
-        </div>
-      </div>
-
-      <div className="">
-        <div className="flex border-y border-black flex-col-reverse lg:flex-row">
-          <div className="w-full lg:w-[68%]  lg:pl-16 p-4 lg:py-20 py-10 3xl:py-28 lg:pr-20 3xl:pr-28 flex flex-col justify-center gap-4 lg:gap-8 border-r border-black">
-            <div className="">
-              <h2 className="font-tiempos text-3xl lg:text-5xl leading-[1.2]">
-                Tu abogado de confianza:{" "}
-              </h2>
-              <h2 className="font-tiempos text-3xl lg:text-5xl leading-[1.2]">
-                La historia de <span className="italic"> Legalo</span>
-              </h2>
-            </div>
-            <p className="block text-lg 3xl:text-2xl">
-              Publica tu caso hoy mismo y accede a una red de abogados
-              especializados listos para ayudarte. Encuentra al profesional
-              ideal para tus necesidades legales y resuelve tu situación con
-              confianza y rapidez. Publica tu caso hoy mismo y accede a una red
-              de abogados especializados listos para ayudarte.
-            </p>
-            <p className="block text-lg 3xl:text-2xl">
-              Publica tu caso hoy mismo y accede a una red de abogados
-              especializados listos para ayudarte. Encuentra al profesional
-              ideal para tus necesidades legales y resuelve tu situación con
-              confianza y rapidez. Publica tu caso hoy mismo y accede a una red
-              de abogados especializados listos para ayudarte.
-            </p>
-          </div>
-
-          <div className="w-full lg:w-[32%] ">
-            <Image
-              src="/assets/img-legalo-history.jpg"
-              alt="img"
-              width={459}
-              height={484}
-              className="w-full h-[200px] lg:h-full object-cover object-top"
-            />
-          </div>
-        </div>
-        <div className="flex border-b border-black bg-lg-lawyer">
-          <div className="w-[50%] lg:w-[68%]  border-r border-black py-8 p-4 lg:px-16 3xl:pr-28 flex flex-col justify-center">
-            {" "}
-            <h2 className="font-tiempos lg:text-4xl 3xl:text-5xl leading-[1.2] italic">
-              “Publica tu caso hoy mismo y accede a una red de abogados
-              especializados listos para ayudarte.”
-            </h2>
-          </div>
-          <div className="w-[50%]  lg:w-[32%] p-8 ">
-            <div>
-              <Image
-                src="/assets/images/firma-evelyn.png"
-                alt="img"
-                width={130}
-                height={60}
-                className=""
-              />
-            </div>
-            <div className="flex flex-col justify-center">
-              <p>Evelyn Castro, </p>
-              <p>Fundadora de Legalo</p>
-            </div>
+              <CarouselContent className="">
+                {reviewsItems.map((item, index) => (
+                  <CarouselItem key={index} className="max-w-[600px]">
+                    <div>
+                      <Card className="border border-black border-solid bg-lg-lawyer  rounded-[32px] min-h-[320px] max-w-[600px]">
+                        <CardHeader>
+                          <Image
+                            src="/icos/ico-stars-solid.png"
+                            alt="img"
+                            width={120}
+                            height={19}
+                            className=""
+                          />
+                        </CardHeader>
+                        <CardContent className="flex">
+                          <CardDescription className="line-clamp-5 text-black text-[18px]">
+                            {item.description}
+                          </CardDescription>
+                        </CardContent>
+                        <CardFooter className="flex gap-4">
+                          <Image
+                            src={item.ImageSrc}
+                            alt="img"
+                            width={56}
+                            height={56}
+                            className=""
+                          />
+                          <div>
+                            <p className="text-[20px]font-medium italic">
+                              {item.name}
+                            </p>
+                            <p className="text-base">Position, Company name</p>
+                          </div>
+                        </CardFooter>
+                      </Card>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <div className="flex justify-end mt-14 gap-4 mb-14 mr-4 lg:mr-0">
+                <CarouselPreviousReviews />
+                <CarouselNextReviews />
+              </div>
+            </Carousel>
           </div>
         </div>
       </div>
-
       <HomeFaq />
     </div>
   );

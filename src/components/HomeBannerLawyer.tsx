@@ -97,25 +97,25 @@ const HomeBannerClient = () => {
   ];
 
   return (
-    <div className="lg:h-[calc(100vh-180px)] flex flex-col">
-      <div className="flex w-full lg:min-h-[616px] items-center border-t border-t-black lg:flex-1 flex-col-reverse lg:flex-row">
-        <div className="bg-lg-lawyer p-4 2xl:p-16 h-full flex lg:w-[44vw] items-center w-full">
-          <div className="flex flex-col gap-8 py-4">
+    <div className="lg:h-[calc(100vh-180px)] 4xl:h-auto flex flex-col bg-lg-lawyer border-t border-t-black">
+      <div className="flex w-full lg:min-h-[616px] max-w-[1920px] mx-auto items-center  lg:flex-1 flex-col-reverse lg:flex-row">
+        <div className="bg-lg-lawyer lg:pl-16 p-4 2xl:p-16 h-full flex lg:w-[44%] items-center w-full">
+          <div className="flex flex-col gap-8 py-4 lg:pb-16">
             <h1 className="text-black text-2xl lg:text-[48px] xl:text-[64px] 3xl:text-7xl font-tiempos leading-[1.2]">
-              Únete a nuestra red de abogados y lleva tu carrera al{" "}
-              <span className="italic font-light">siguiente nivel.</span>
+              Expande tus oportunidades trabajando casos legales{" "}
+              <span className="italic font-light">a tu medida</span>
             </h1>
             <div className="w-full flex gap-4 relative">
               <Input
                 placeholder="Ejemplo Abogado, Minería, etc."
-                className="rounded-[30px] border border-black px-[30px] py-[12px] focus:outline-none h-12"
+                className="rounded-[30px] border border-black px-[30px] py-[12px] focus-visible:border-none h-12"
               />
               <Button
                 variant="outline"
                 size="icon"
                 className="rounded-full bg-black hover:bg-slate-800 w-[62px] lg:w-[53px] h-12"
               >
-                <Search className="h-4 w-4 text-white" />
+                <Search className="h-6 w-6 text-white" />
               </Button>
             </div>
             <div className="underline text-lg lg:text-2xl">
@@ -123,7 +123,7 @@ const HomeBannerClient = () => {
             </div>
           </div>
         </div>
-        <div className="bg-[url('/assets/images/img-landing-lawyers.jpg')] bg-top bg-cover bg-no-repeat w-full h-full lg:block border-l border-l-black lg:w-[56vw] min-h-[140px] "></div>
+        <div className="bg-[url('/assets/images/img-banner-lawyer.jpg')] bg-top bg-cover bg-no-repeat w-full h-full lg:block border-l border-l-black lg:w-[56%]  min-h-[140px] lg:min-h-[inherit]"></div>
         {/* <div className="hidden lg:block absolute lg:left-[30vw] xl:left-[38vw] 2xl:left-[30vw] bottom-[24vh]">
           <Image
             src="/assets/images/img-arrow-banner.png"
@@ -133,52 +133,53 @@ const HomeBannerClient = () => {
           />
         </div> */}
       </div>
-
-      <div className="w-[full] border-t border-b border-black overflow-hidden">
-        <Carousel
-          opts={{
-            align: "start",
-          }}
-          className="flex h-full min-h-[116px]"
-        >
-          <div className="w-[40vw] lg:w-[16vw] flex flex-col justify-center items-center gap-2 border-r border-black relative z-10 bg-white flex-none">
-            <p className="font-bold text-lg lg:text-xl">Especialidades</p>
-            <div className="flex gap-4 items-center justify-center">
-              <CarouselPreviousBanner className="static transform-none" />
-              <div className="w-[1px] bg-black h-[40px]"></div>
-              <CarouselNextBanner className="static transform-none" />
+      <div className="bg-white border-t border-b border-black">
+        <div className="max-w-[1920px] mx-auto w-[full]  overflow-hidden min-h-[118px]">
+          <Carousel
+            opts={{
+              align: "start",
+            }}
+            className="flex h-full"
+          >
+            <div className="w-[40vw] lg:w-[16%] flex flex-col justify-center items-center gap-2 border-r border-black relative z-10 bg-white flex-none">
+              <p className="font-bold text-lg lg:text-xl">Especialidades</p>
+              <div className="flex gap-4 items-center justify-center">
+                <CarouselPreviousBanner className="static transform-none" />
+                <div className="w-[1px] bg-black h-[40px]"></div>
+                <CarouselNextBanner className="static transform-none" />
+              </div>
             </div>
-          </div>
-          <div className="w-[60vw] lg:w-[84vw] flex flex-none lg:ml-[-5px]">
-            <CarouselContent className="flex flex-row m-0 w-[60vw] lg:w-auto">
-              {carouselItems.map((item, index) => (
-                <CarouselItem
-                  key={index}
-                  className=" lg:w-[28vw] lg:flex-none border-r border-black min-h-[116px] flex items-center m-0 p-0"
-                >
-                  <Card className="p-4 border-none flex gap-2 lg:gap-4  lg:items-center flex-col lg:flex-row">
-                    <div className="rounded-full bg-[#D9D9D9] h-12 w-12 flex items-center justify-center flex-none">
-                      <Image
-                        src={item.ImageSrc}
-                        alt="icon"
-                        width={25}
-                        height={25}
-                      />
-                    </div>
-                    <CardHeader className="p-0 space-y-0">
-                      <CardTitle className="text-base lg:text-lg mb-2">
-                        {item.CardTitle}
-                      </CardTitle>
-                      <CardDescription className="line-clamp-3 lg:text-sm text-xs">
-                        {item.CardDescription}
-                      </CardDescription>
-                    </CardHeader>
-                  </Card>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </div>
-        </Carousel>
+            <div className="w-[60vw] lg:w-[84%] flex flex-none lg:ml-[1px]">
+              <CarouselContent className="flex flex-row m-0 w-[60vw] lg:w-auto">
+                {carouselItems.map((item, index) => (
+                  <CarouselItem
+                    key={index}
+                    className=" lg:w-1/3 lg:flex-none border-r border-black min-h-[118px] flex items-center m-0 p-0"
+                  >
+                    <Card className="p-4 border-none flex gap-2 lg:gap-4  lg:items-center flex-col lg:flex-row">
+                      <div className="rounded-full bg-[#D9D9D9] h-12 w-12 flex items-center justify-center flex-none">
+                        <Image
+                          src={item.ImageSrc}
+                          alt="icon"
+                          width={25}
+                          height={25}
+                        />
+                      </div>
+                      <CardHeader className="p-0 space-y-0">
+                        <CardTitle className="text-base lg:text-lg font-tiempos">
+                          {item.CardTitle}
+                        </CardTitle>
+                        <CardDescription className="line-clamp-3 lg:text-sm text-xs">
+                          {item.CardDescription}
+                        </CardDescription>
+                      </CardHeader>
+                    </Card>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </div>
+          </Carousel>
+        </div>
       </div>
     </div>
   );
