@@ -20,7 +20,7 @@ const PublicarPageSeven = () => {
     <div className="container mx-auto p-4 lg:p-8 m-8 lg:w-[600px]">
       <div className="w-full max-w-[480px] mx-auto mb-8">
         <Progress value={100} className="mx-auto mb-4 h-2" />
-        <p className="text-left">Paso 6/6</p>
+        <p className="text-left">Paso 7/6</p>
       </div>
       <div>
         <h1 className="text-[36px] my-4 font-tiempos ">
@@ -34,7 +34,7 @@ const PublicarPageSeven = () => {
         <div className="mb-4">
           <RadioGroup value={selected} className="flex">
             <div
-              className={`flex flex-col justify-between w-1/2 h-[90px] border rounded-lg p-4 ${selected === "rango" ? "bg-[#F6F8F7] border-black" : "bg-white"}`}
+              className={`flex flex-col justify-between w-1/2 h-[90px] border rounded-lg p-4 cursor-pointer ${selected === "rango" ? "bg-[#F6F8F7] border-black" : "bg-white"}`}
               onClick={() => setSelected("rango")}
             >
               <div className="flex justify-end">
@@ -43,7 +43,7 @@ const PublicarPageSeven = () => {
               <Label htmlFor="r1">Rango</Label>
             </div>
             <div
-              className={`flex flex-col justify-between w-1/2 h-[90px] border rounded-lg p-4 ${selected === "monto-fijo" ? "bg-[#F6F8F7] border-black" : "white"}`}
+              className={`flex flex-col justify-between w-1/2 h-[90px] border rounded-lg p-4 cursor-pointer ${selected === "monto-fijo" ? "bg-[#F6F8F7] border-black" : "white"}`}
               onClick={() => setSelected("monto-fijo")}
             >
               <div className="flex justify-end">
@@ -53,29 +53,50 @@ const PublicarPageSeven = () => {
             </div>
           </RadioGroup>
         </div>
-        <div className="flex gap-2">
-          <div className="w-1/2">
-            <p className="mb-2 font-bold">Desde</p>
-            <Input type="text" className="border-black rounded-none h-10" />
+
+        {selected === "rango" && (
+          <div className="flex gap-2">
+            <div className="w-1/2">
+              <p className="mb-2 font-bold">Desde</p>
+              <Input
+                type="text"
+                className="border-black rounded-none h-10 focus-visible:border-none"
+              />
+            </div>
+            <div className="w-1/2">
+              <p className="mb-2 font-bold">Hasta</p>
+              <Input
+                type="text"
+                className="border-black rounded-none h-10 focus-visible:border-none"
+              />
+            </div>
           </div>
-          <div className="w-1/2">
-            <p className="mb-2 font-bold">Hasta</p>
-            <Input type="text" className="border-black rounded-none h-10" />
+        )}
+        {selected === "monto-fijo" && (
+          <div className="w-full">
+            <p className="mb-2 font-bold">Ingrese el monto fijo</p>
+            <Input
+              type="text"
+              className="border-black rounded-none h-10 focus-visible:border-none"
+            />
           </div>
-        </div>
+        )}
 
         <div className="flex items-center gap-2 my-4">
           <IcoInfo size={16} color="#61646B" />
           <p>Te mostraremos abogados acorde al rango ingresado.</p>
         </div>
-      </div>
 
-      <div className="flex justify-end mt-16">
-        <Link href="/publicar/7">
-          <Button className="h-12 px-10 px-text-base rounded-[10px]">
-            Siguiente <ArrowRight className="ml-2" />
-          </Button>
-        </Link>
+        <div className="flex justify-between items-center mt-16">
+          <Link href="#" className="font-bold underline">
+            No estoy listo para poner un presupuesto
+          </Link>
+          <Link href="/publicar/8">
+            <Button className="h-12 px-10 px-text-base rounded-[10px]">
+              Siguiente <ArrowRight className="ml-2" />
+            </Button>
+          </Link>
+        </div>
       </div>
     </div>
   );
