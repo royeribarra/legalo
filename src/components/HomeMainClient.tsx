@@ -75,14 +75,14 @@ const HomeMain: React.FC<HomeMainProps> = ({
         <div>
           <div className="lg:flex gap-2  border border-black rounded-full p-[2px] w-auto">
             <Button
-              variant="switch"
-              onClick={() => updateServiceTipe("lawyer")}
+              variant="switchOutline"
+              onClick={() => updateServiceTipe("client")}
             >
               ¿Quieres contratar?
             </Button>
             <Button
-              variant="switchOutline"
-              onClick={() => updateServiceTipe("client")}
+              variant="switch"
+              onClick={() => updateServiceTipe("lawyer")}
             >
               ¿Quieres trabajar?
             </Button>

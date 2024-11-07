@@ -97,8 +97,8 @@ const HomeBannerClient = () => {
   ];
 
   return (
-    <div className="lg:h-[calc(100vh-180px)] 4xl:h-auto flex flex-col bg-lg-lawyer border-t border-t-black">
-      <div className="flex w-full lg:min-h-[616px] max-w-[1920px] mx-auto items-center  lg:flex-1 flex-col-reverse lg:flex-row">
+    <div className=" 4xl:h-auto flex flex-col bg-lg-lawyer border-t border-t-black">
+      <div className="flex w-full lg:min-h-[616px] max-w-[1920px] mx-auto items-center  lg:h-[66vh] flex-col-reverse lg:flex-row">
         <div className="bg-lg-lawyer lg:pl-16 p-4 2xl:p-16 h-full flex lg:w-[44%] items-center w-full">
           <div className="flex flex-col gap-8 py-4 ">
             <h1 className="text-black text-2xl lg:text-[48px] xl:text-[64px] 3xl:text-7xl font-tiempos leading-[1.2]">
