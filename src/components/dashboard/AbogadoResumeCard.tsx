@@ -5,10 +5,16 @@ import Link from "next/link";
 import { Briefcase } from "lucide-react";
 import { MapPin, Clock } from "lucide-react";
 
-const AbogadoResumeCard = () => {
+interface inviteProyectProps {
+  inviteProyect: () => void;
+}
+
+const AbogadoResumeCard: React.FC<inviteProyectProps> = ({ inviteProyect }) => {
   return (
-    <div className={`p-4 lg:p-8 border border-black  flex flex-col gap-4 `}>
-      <div className="flex justify-between">
+    <div
+      className={` p-4 lg:px-8 border border-black  flex flex-col gap-4 flex-wrap`}
+    >
+      <div className="flex flex-col-reverse lg:flex-row lg:justify-between">
         <div className="flex gap-4 items-center">
           <Image
             src="/assets/images/face-6.jpeg"
@@ -23,10 +29,11 @@ const AbogadoResumeCard = () => {
             <p>Lima, Perú</p>
           </div>
         </div>
-        <div>
+        <div className="flex justify-end">
           <Button
             variant={"outline"}
-            className="border border-black rounded-full h-11 text-lg"
+            className="border border-black rounded-full h-11 text-sm lg:text-lg"
+            onClick={inviteProyect}
           >
             Invitar a proyecto
           </Button>
@@ -39,45 +46,47 @@ const AbogadoResumeCard = () => {
           className="border border-black rounded-full h-[40px]"
         >
           <MapPin size={28} />
-          <p className="ml-2 text-lg">Lima</p>
+          <p className="ml-2 text-sm lg:text-lg">Lima</p>
         </Button>
         <Button
           variant="outline"
           className="border border-black rounded-full h-[40px]"
         >
           <Clock size={28} />
-          <p className="ml-2 text-lg">30-40 horas por semana</p>
+          <p className="ml-2 text-sm lg:text-lg">30-40 horas por semana</p>
         </Button>
       </div>
 
       <div>
         <h3 className="mb-2">Especialidades:</h3>
-        <div className="flex gap-4 flex-wrap">
+        <div className="flex flex-wrap gap-4  lg:overflow-y-auto">
           <Button
             variant="outline"
             className="border border-black rounded-full h-[40px]"
           >
             <Briefcase size={28} />
-            <p className="ml-2 text-lg">Migracion laboral</p>
+            <p className="ml-2 text-sm lg:text-lg">Migracion laboral</p>
           </Button>
           <Button
             variant="outline"
             className="border border-black rounded-full h-[40px]"
           >
             <Briefcase size={28} />
-            <p className="ml-2 text-lg">Terminaciones de Empleo</p>
+            <p className="ml-2 text-sm lg:text-lg">Terminaciones de Empleo</p>
           </Button>
           <Button
             variant="outline"
             className="border border-black rounded-full h-[40px]"
           >
             <Briefcase size={28} />
-            <p className="ml-2 text-lg">Arbitraje y Mediación Laboral</p>
+            <p className="ml-2 text-sm lg:text-lg">
+              Arbitraje y Mediación Laboral
+            </p>
           </Button>
         </div>
       </div>
 
-      <p>
+      <p className="line-clamp-3">
         Experto en asesorar y representar en temas de despidos, discriminación,
         negociaciones colectivas y cumplimiento normativo. Comprometido con la
         protección de los derechos laborales y ambientes de trabajo justos.

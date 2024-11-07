@@ -28,10 +28,13 @@ import {
 } from "@/components/ui/accordion";
 import ProyectItem from "@/components/dashboard/ProyectItem";
 import AbogadoResumeCard from "@/components/dashboard/AbogadoResumeCard";
+import ModalInviteProyect from "@/components/dashboard/ModalInviteProyect";
 
 const DashboardClientPage = () => {
-  const [openFilter, setOpenFilter] = useState<boolean>(true);
+  const [openFilter, setOpenFilter] = useState(true);
   const [menuActive, setMenuActive] = useState("abogados");
+
+  const [inviteProyectModal, setInviteProyectModal] = useState(false);
 
   const menuItems = [
     { id: "abogados", texto: "Abogados" },
@@ -40,6 +43,10 @@ const DashboardClientPage = () => {
 
   const handleFilter = () => {
     setOpenFilter(!openFilter);
+  };
+
+  const inviteProyect = () => {
+    setInviteProyectModal(!inviteProyectModal);
   };
 
   useEffect(() => {
@@ -89,6 +96,7 @@ const DashboardClientPage = () => {
               <span>{openFilter ? "Ocultar Filtros" : "Ver Filtros"}</span>
             </Button>
           </div>
+
           <div className="mt-8 flex overflow-hidden">
             {/* filtros */}
             {openFilter && (
@@ -259,18 +267,25 @@ const DashboardClientPage = () => {
 
             {menuActive === "abogados" && (
               <div className="flex flex-col gap-8 flex-1 mt-12">
-                <AbogadoResumeCard />
+                <AbogadoResumeCard inviteProyect={inviteProyect} />
+                <AbogadoResumeCard inviteProyect={inviteProyect} />
+                <AbogadoResumeCard inviteProyect={inviteProyect} />
+                <AbogadoResumeCard inviteProyect={inviteProyect} />
               </div>
             )}
             {menuActive === "proyectos" && (
               <div className="flex flex-col gap-8 flex-1 mt-12">
-                <AbogadoResumeCard />
-                <AbogadoResumeCard />
+                <AbogadoResumeCard inviteProyect={inviteProyect} />
+                <AbogadoResumeCard inviteProyect={inviteProyect} />
               </div>
             )}
           </div>
         </div>
       </div>
+
+      {inviteProyectModal && (
+        <ModalInviteProyect inviteProyect={inviteProyect} />
+      )}
     </div>
   );
 };
