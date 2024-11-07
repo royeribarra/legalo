@@ -12,9 +12,9 @@ import Image from "next/image";
 import specialtiesItems from "@/data/specialtiesItems";
 
 interface Especialidad {
-  CardTitle: string,
-  CardDescription: string,
-  ImageSrc: string,
+  CardTitle: string;
+  CardDescription: string;
+  ImageSrc: string;
 }
 
 const PublicarPageThree = () => {
@@ -46,7 +46,7 @@ const PublicarPageThree = () => {
       </h1>
       <div className="flex justify-between mt-8">
         <p className="text-lg">Puedes escoger solo 1*</p>
-        <Link href="#" className="text-lg font-bold">
+        <Link href="#" className="text-lg font-bold underline">
           ¿No sabes que especialidad buscas?
         </Link>
       </div>

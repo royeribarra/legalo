@@ -56,7 +56,7 @@ const DashboardLawyerPage = () => {
   }, []);
 
   return (
-    <div className="px-4 py-4 lg:px-16 lg:py-8">
+    <div className="px-4 py-4 lg:px-16 lg:py-8 max-w-[1920px] mx-auto">
       <div className="flex justify-between flex-col-reverse lg:flex-row gap-4 ">
         <div>
           <p className="pb-2">Búsqueda por palabra clave</p>
