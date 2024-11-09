@@ -70,7 +70,7 @@ const DashboardLawyerPage = () => {
 
       {/* Dashboard */}
       <div className="mt-8">
-        <div className="border-b-2 border-[#808080] flex w-full overflow-scroll lg:overflow-auto">
+        <div className="border-b-2 border-[#808080] flex w-full overflow-auto lg:overflow-auto">
           {menuItems.map((boton) => (
             <Button
               key={boton.id}
