@@ -22,7 +22,7 @@ import FileUpload from "@/components/FileUpload";
 import CvUpload from "@/components/abogado/registro/CvUpload";
 
 interface Educacion {
-  id: number,
+  id: number;
   desde_fecha: string;
   hasta_fecha: string;
   titulo: string;
@@ -41,14 +41,16 @@ interface Experiencia {
 }
 
 const CompleteProfileLawyerPage: React.FC = () => {
-  
   const [listEducacion, setListEducacion] = useState([]);
   const [listExperiencia, setListExperiencia] = useState([]);
   const [showModalAddEducacion, setShowModalAddEducacion] = useState(false);
 
   const [showModalAddExperiencia, setShowModalAddExperiencia] = useState(false);
-  const [experienciaSelected, setExperienciaSelected] = useState<Experiencia | null>(null);
-  const [educacionSelected, setEducacionSelected] = useState<Educacion | null>(null);
+  const [experienciaSelected, setExperienciaSelected] =
+    useState<Experiencia | null>(null);
+  const [educacionSelected, setEducacionSelected] = useState<Educacion | null>(
+    null
+  );
   const [stepNumber, setStepNumber] = useState(1);
   const [triger, setTriger] = useState("tab1");
 
@@ -63,7 +65,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
   };
 
   const nextStep = () => {
-    if(stepNumber === 4){
+    if (stepNumber === 4) {
       const formData = new FormData();
       const abogado = localStorage.getItem("abogado");
       const especialidad = localStorage.getItem("especialidad");
@@ -174,7 +176,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
   };
 
   function base64ToBlob(base64: string, mimeType: string) {
-    const byteCharacters = atob(base64.split(',')[1]);
+    const byteCharacters = atob(base64.split(",")[1]);
     const byteNumbers = new Array(byteCharacters.length);
     for (let i = 0; i < byteCharacters.length; i++) {
       byteNumbers[i] = byteCharacters.charCodeAt(i);
@@ -184,10 +186,10 @@ const CompleteProfileLawyerPage: React.FC = () => {
   }
 
   const prevStep = () => {
-    if(stepNumber === 1){
-      window.location.href = 'http://localhost:3000/registro/abogado/objetivos';
+    if (stepNumber === 1) {
+      window.location.href = "http://localhost:3000/registro/abogado/objetivos";
     }
-    
+
     switch (stepNumber) {
       case 2:
         setTriger("tab1");
@@ -286,8 +288,12 @@ const CompleteProfileLawyerPage: React.FC = () => {
       <FileUpload></FileUpload>
       {/* lateral menu  */}
       <div className="my-4 pb-32">
-        <Tabs defaultValue="tab1" value={triger}  className="flex gap-4 flex-col lg:flex-row">
-          <TabsList className="flex flex-row justify-start overflow-scroll lg:flex-col lg:w-1/4 h-full p-4 gap-2 bg-white pl-0 lg:items-start lg:overflow-hidden">
+        <Tabs
+          defaultValue="tab1"
+          value={triger}
+          className="flex gap-4 flex-col lg:flex-row"
+        >
+          <TabsList className="flex flex-row justify-start overflow-auto lg:flex-col lg:w-1/4 h-full p-4 gap-2 bg-white pl-0 lg:items-start lg:overflow-hidden">
             <TabsTrigger
               value="tab1"
               className="text-[#D1D1D6] w-full justify-start py-4 lg:text-lg font-bold data-[state=active]:bg-[#D9D9D9] data-[state=active]:text-black rounded-[10px]"
@@ -348,13 +354,9 @@ const CompleteProfileLawyerPage: React.FC = () => {
                 {listExperiencia.map((experiencia: Experiencia, index) => (
                   <div className="flex gap-4 p-4" key={index}>
                     <div className="w-1/4 flex gap-1">
-                      <p>
-                        {experiencia.desde_fecha}
-                      </p>
+                      <p>{experiencia.desde_fecha}</p>
                       <span>-</span>
-                      <p>
-                        {experiencia.hasta_fecha}
-                      </p>
+                      <p>{experiencia.hasta_fecha}</p>
                     </div>
                     <div className="w-3/4">
                       <p>{experiencia.titulo}</p>
@@ -472,7 +474,12 @@ const CompleteProfileLawyerPage: React.FC = () => {
       <div className="flex fixed left-0 bottom-0 w-screen h-[115px] bg-[#D5F1F0] ">
         <div className="flex justify-center lg:justify-between items-center container mx-auto px-4 lg:px-8 max-w-[1000px]">
           <div className="w-[30%] ">
-            <Button size="lg" variant="link" className="mx-0 px-2" onClick={prevStep}>
+            <Button
+              size="lg"
+              variant="link"
+              className="mx-0 px-2"
+              onClick={prevStep}
+            >
               <ArrowLeft className="mr-2 h-4 w-4" /> Atras
             </Button>
           </div>
