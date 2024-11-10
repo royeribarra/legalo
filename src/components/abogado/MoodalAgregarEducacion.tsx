@@ -78,11 +78,10 @@ function ModalAgregarEducacion({
   // Efecto para setear el mes y año actual si el checkbox está marcado
   useEffect(() => {
     if (trabajoActualmente) {
-      form.setValue("hasta_fecha", currentMonth);
-    } else {
-      form.setValue("hasta_fecha", "");
+      const currentMonthYear = new Date().toISOString().slice(0, 7);
+      form.setValue("hasta_fecha", currentMonthYear);
     }
-  }, [trabajoActualmente, form, currentMonth, currentYear]);
+  }, [trabajoActualmente, form]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const estudiosString = localStorage.getItem("listaEstudios");
@@ -99,8 +98,8 @@ function ModalAgregarEducacion({
           : educacionSelected
             ? educacionSelected.id
             : estudios.length + 1,
-      desde_mes: values.desde_fecha,
-      hasta_mes: values.hasta_fecha,
+      desde_fecha: values.desde_fecha,
+      hasta_fecha: values.hasta_fecha,
       titulo: values.titulo,
       institucion: values.institucion,
       ubicacion: values.ubicacion,
@@ -170,8 +169,9 @@ function ModalAgregarEducacion({
                           <FormLabel></FormLabel>
                           <FormControl>
                             <Input
+                              type="month"
                               className="border border-black rounded-[10px] h-12"
-                              placeholder="Enero"
+                              placeholder="Mes y Año"
                               {...field}
                             />
                           </FormControl>
@@ -185,7 +185,7 @@ function ModalAgregarEducacion({
                 <div>
                   <FormLabel>Hasta*</FormLabel>
                   <div className="grid lg:grid-cols-2 gap-2">
-                    <FormField
+                  <FormField
                       control={form.control}
                       name="hasta_fecha"
                       render={({ field }) => (
@@ -193,8 +193,9 @@ function ModalAgregarEducacion({
                           <FormLabel></FormLabel>
                           <FormControl>
                             <Input
+                              type="month"
                               className="border border-black rounded-[10px] h-12"
-                              placeholder="Set. 2024"
+                              placeholder="2024"
                               {...field}
                               disabled={trabajoActualmente ? true : false}
                             />

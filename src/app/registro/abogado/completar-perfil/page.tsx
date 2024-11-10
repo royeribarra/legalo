@@ -65,20 +65,19 @@ const CompleteProfileLawyerPage: React.FC = () => {
   const nextStep = () => {
     if(stepNumber === 4){
       const formData = new FormData();
+      const abogado = localStorage.getItem("abogado");
       const especialidad = localStorage.getItem("especialidad");
       const estudios = localStorage.getItem("estudios");
       const habilidades = localStorage.getItem("habilidades");
-      const listaEstudios = localStorage.getItem("listaEstudios");
-      const listaExperiencia = localStorage.getItem("listaExperiencia");
+      const listaEstudiosLocal = localStorage.getItem("listaEstudios");
+      const listaExperienciaLocal = localStorage.getItem("listaExperiencia");
       const profileImg = localStorage.getItem("profileImg");
       const profileVideo = localStorage.getItem("profileVideo");
+      const industriasLocal = localStorage.getItem("industriasAbogado");
+      const serviciosLocal = localStorage.getItem("serviciosAbogado");
 
       if (especialidad) formData.append("especialidad", especialidad);
       if (estudios) formData.append("estudios", estudios);
-      if (habilidades) formData.append("habilidades", habilidades);
-      if (listaEstudios) formData.append("listaEstudios", listaEstudios);
-      if (listaExperiencia) formData.append("listaExperiencia", listaExperiencia);
-
       if (profileImg) {
         const imgBlob = base64ToBlob(profileImg, "image/jpeg");
         formData.append("profileImg", imgBlob, "profileImg.jpg");
@@ -89,13 +88,74 @@ const CompleteProfileLawyerPage: React.FC = () => {
         formData.append("profileVideo", videoBlob, "profileVideo.mp4");
       }
 
-      fetch('http://localhost:3000/api/abogado/registro', {
-        method: 'POST',
-        body: formData,
-      })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(err=>console.log(err)); 
+      if (habilidades && listaEstudiosLocal && listaExperienciaLocal && industriasLocal && serviciosLocal && especialidad) {
+        const habilidadParse = JSON.parse(habilidades);
+        const industriasParse = JSON.parse(industriasLocal);
+        const serviciosParse = JSON.parse(serviciosLocal);
+        const experienciaParse = JSON.parse(listaExperienciaLocal);
+        const estudioParse = JSON.parse(listaEstudiosLocal);
+        const especialidadParse = JSON.parse(especialidad);
+
+        const habilidadesBlandas = habilidadParse.habilidades_blandas.map((habilidad: any) => ({
+          nombre: habilidad
+        }));
+        const habilidadesDuras = habilidadParse.habilidades_duras.map((habilidad: any) => ({
+          nombre: habilidad
+        }));
+        const industrias = industriasParse.map((industria: any) => ({
+          nombre: industria
+        }));
+        const servicios = serviciosParse.map((servicio: any) => ({
+          nombre: servicio
+        }));
+        const experiencias = experienciaParse.map((servicio: any) => ({
+          institucion: servicio.empresa,
+          fecha_fin: servicio.hasta_fecha,
+          fecha_inicio: servicio.desde_fecha,
+          descripcion: servicio.descripcion,
+          titulo: servicio.titulo
+        }));
+        const educaciones = estudioParse.map((estudio: any) => ({
+          institucion: estudio.institucion,
+          fecha_fin: estudio.hasta_fecha,
+          fecha_inicio: estudio.desde_fecha,
+          descripcion: estudio.descripcion,
+          titulo: estudio.titulo,
+          ubicacion: estudio.ubicacion
+        }));
+        const especialidades  = especialidadParse.listaEspecialidades.map((especialidad: any) => ({
+          nombre: especialidad
+        }));
+        const data = {
+          nombres: abogado ? JSON.parse(abogado)?.names : '',
+          apellidos: abogado ? JSON.parse(abogado)?.lastNames : '',
+          direccion: abogado ? JSON.parse(abogado)?.location : '',
+          correo: abogado ? JSON.parse(abogado)?.email : '',
+          contrasena: abogado ? JSON.parse(abogado)?.password : '',
+          sobre_ti: especialidad ? JSON.parse(especialidad)?.sobre_ti : '',
+          grado_academico: especialidad ? JSON.parse(especialidad)?.grado : '',
+          habilidadesBlandas: habilidadesBlandas,
+          habilidadesDuras: habilidadesDuras,
+          industrias: industrias,
+          servicios: servicios,
+          experiencias: experiencias,
+          educaciones: educaciones,
+          especialidades: especialidades
+        };
+        
+  
+        fetch('http://localhost:3001/abogados/create', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        })
+          .then(response => response.json())
+          .then(data => console.log(data))
+          .catch(err=>console.log(err));
+      }
+        return;
     }
     switch (stepNumber) {
       case 1:
