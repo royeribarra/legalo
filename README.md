@@ -67,3 +67,7 @@ createConnection({
 }).then(() => {
   console.log('Database connected');
 }).catch(error => console.log('Database connection error: ', error));
+
+
+## api consulta datos departamentos
+https://github.com/joseluisq/ubigeos-peru

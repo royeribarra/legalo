@@ -3,7 +3,7 @@ import { ITrabajo } from "./Trabajo.interface";
 import { IUser } from "./User.interface";
 
 export interface IAbogado {
-    id: number;
+    id?: number;
     user: IUser;
     nombres: string;
     apellidos: string;

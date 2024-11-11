@@ -56,6 +56,14 @@ const formSchema = z.object({
     .string()
     .min(2, { message: "El campo email debe tener al menos 2 caracteres" })
     .max(30),
+  dni: z
+    .string()
+    .min(8, { message: "El campo dni debe tener 8 dígitos" })
+    .max(8),
+  telefono: z
+    .string()
+    .min(2, { message: "El campo teléfono debe tener al menos 6 caracteres" })
+    .max(30),
   password: z.string().min(1).max(15),
   terms: z.boolean().refine((val) => val === true, {
     message: "Debes aceptar los términos y condiciones",
@@ -159,6 +167,8 @@ function RegisterLawyer() {
       location: "",
       password: "",
       terms: false,
+      dni: "",
+      telefono: ""
     },
   });
   const { setValue } = form;
@@ -179,6 +189,8 @@ function RegisterLawyer() {
       setValue('email', abogadoData.email || "");
       setValue('location', abogadoData.location || "");
       setValue('password', abogadoData.password || "");
+      setValue('dni', abogadoData.dni || "");
+      setValue('telefono', abogadoData.telefono || "");
       setValue('terms', abogadoData.terms || false);
     }
   }, []);
@@ -221,7 +233,7 @@ function RegisterLawyer() {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-2"
               >
-                <div className=" grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-2 gap-2">
                   {/* Nombres */}
                   <FormField
                     control={form.control}
@@ -268,7 +280,36 @@ function RegisterLawyer() {
                     )}
                   />
                 </div>
-                {/* Ubicacion */}
+                <div className="grid grid-cols-2 gap-2">
+                  <FormField
+                    control={form.control}
+                    name="dni"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>DNI</FormLabel>
+                        <FormControl>
+                          <Input placeholder="DNI" {...field} />
+                        </FormControl>
+                        <FormDescription></FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="telefono"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Teléfono</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Teléfono" {...field} />
+                        </FormControl>
+                        <FormDescription></FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
                 <FormField
                   control={form.control}
                   name="location"
@@ -283,7 +324,6 @@ function RegisterLawyer() {
                     </FormItem>
                   )}
                 />
-                {/* Email */}
                 <FormField
                   control={form.control}
                   name="email"

@@ -2,10 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import Link from "next/link";
 
 import { useState, useEffect } from "react";
-import { Info as IcoInfo, Trash } from "lucide-react";
+import { Trash } from "lucide-react";
 
 import { ArrowRight } from "lucide-react";
 import { Plus } from "lucide-react";
@@ -57,6 +56,10 @@ const PublicarPageEight = () => {
     setItems(filteredItems);
   };
 
+  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value)
+  };
+
   return (
     <div className="container mx-auto p-4 lg:p-8 m-8 lg:w-[600px]">
       <div className="w-full max-w-[480px] mx-auto mb-8">
@@ -86,9 +89,7 @@ const PublicarPageEight = () => {
           <Input
             value={input}
             className="w-full border-t-0 border-l-0 border-r-0 border-b border-black rounded-none focus-visible:border-none"
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setInput(e.target.value)
-            }
+            onChange={onChangeInput}
             placeholder="Escribe aqui..."
           />
         </div>
@@ -129,7 +130,7 @@ const PublicarPageEight = () => {
                 value={item.name}
                 disabled
                 className="bg-[#F2F2F7]"
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   updateItem(item.id, e.target.value)
                 }
               />

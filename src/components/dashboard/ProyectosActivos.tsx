@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Button } from "../ui/button";
-import { ChevronDown, Clock, Key, Check as IconCheck } from "lucide-react";
+import { ChevronDown, Clock, Key } from "lucide-react";
 import Image from "next/image";
 const ProyectosActivos = () => {
   const [openProyecto, setOpenProyecto] = useState(false);

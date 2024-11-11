@@ -24,9 +24,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-  AccordionTriggerBig,
 } from "@/components/ui/accordion";
-import ProyectItem from "@/components/dashboard/ProyectItem";
 import AbogadoResumeCard from "@/components/dashboard/AbogadoResumeCard";
 import ModalInviteProyect from "@/components/dashboard/ModalInviteProyect";
 import ProyectosActivos from "@/components/dashboard/ProyectosActivos";

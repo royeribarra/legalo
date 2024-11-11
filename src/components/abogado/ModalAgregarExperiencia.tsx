@@ -5,14 +5,12 @@ import { useForm, FieldValues } from "react-hook-form";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { X as IconX } from "lucide-react";
@@ -57,7 +55,7 @@ function ModalAgregarExperiencia({
   setExperienciaSelected,
 }: ModalAgregarEducacionProps) {
   console.log(showModal)
-  const [trabajoActualmente, setTrabajoActualmente] = useState(false);
+  const [trabajoActualmente] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -70,6 +68,35 @@ function ModalAgregarExperiencia({
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+    const { desde_fecha, hasta_fecha } = values;
+  
+    // Validar que 'desde_fecha' no sea mayor que el mes actual
+    if (desde_fecha > new Date().toISOString().slice(0, 7)) {
+      form.setError("desde_fecha", {
+        type: "manual",
+        message: "La fecha 'Desde' no puede ser mayor al mes actual.",
+      });
+      return;
+    }
+
+    // Validar que 'hasta_fecha' no sea menor que 'desde_fecha'
+    if (hasta_fecha < desde_fecha) {
+      form.setError("hasta_fecha", {
+        type: "manual",
+        message: "La fecha 'Hasta' no puede ser anterior a la fecha 'Desde'.",
+      });
+      return;
+    }
+
+    // Validar que 'hasta_fecha' no sea mayor que el mes actual
+    if (hasta_fecha > new Date().toISOString().slice(0, 7)) {
+      form.setError("hasta_fecha", {
+        type: "manual",
+        message: "La fecha 'Hasta' no puede ser mayor al mes actual.",
+      });
+      return;
+    }
+    
     const estudiosString = localStorage.getItem("listaExperiencia");
     let estudios = [];
     if (estudiosString) {
@@ -159,8 +186,10 @@ function ModalAgregarExperiencia({
                             <Input
                               type="month"
                               className="border border-black rounded-[10px] h-12"
-                              placeholder="Mes y Año"
+                              placeholder="2024"
                               {...field}
+                              disabled={trabajoActualmente ? true : false}
+                              max={new Date().toISOString().slice(0, 7)}  // Limita la fecha al mes actual
                             />
                           </FormControl>
                           <FormMessage />
@@ -169,7 +198,6 @@ function ModalAgregarExperiencia({
                     />
                   </div>
                 </div>
-
                 <div>
                   <FormLabel>Hasta*</FormLabel>
                   <div className="grid lg:grid-cols-2 gap-2">
@@ -186,25 +214,10 @@ function ModalAgregarExperiencia({
                               placeholder="2024"
                               {...field}
                               disabled={trabajoActualmente ? true : false}
+                              max={new Date().toISOString().slice(0, 7)}  // Limita la fecha al mes actual
+                              min={form.watch('desde_fecha')}  // Asegura que 'hasta_fecha' no sea menor que 'desde_fecha'
                             />
                           </FormControl>
-                          <FormDescription>
-                            <div className="flex items-center space-x-2">
-                              <Checkbox
-                                id="terms"
-                                checked={trabajoActualmente}
-                                onCheckedChange={(checked) =>
-                                  setTrabajoActualmente(!!checked)
-                                }
-                              />
-                              <label
-                                htmlFor="terms"
-                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                              >
-                                Actualmente trabajo aquí
-                              </label>
-                            </div>
-                          </FormDescription>
                           <FormMessage />
                         </FormItem>
                       )}

@@ -1,7 +1,6 @@
 import React from "react";
 
 import { X as IconX } from "lucide-react";
-import { Check as IconCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";

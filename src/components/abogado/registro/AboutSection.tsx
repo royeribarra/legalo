@@ -63,6 +63,7 @@ function AboutSection() {
                         <SelectGroup>
                             <SelectLabel>Grado académico</SelectLabel>
                             <SelectItem value="estudiante">Estudiante</SelectItem>
+                            <SelectItem value="bachiller">Bachiller</SelectItem>
                             <SelectItem value="abogado">Abogado</SelectItem>
                             <SelectItem value="abogado_colegiado">Abogado Colegiado</SelectItem>
                         </SelectGroup>

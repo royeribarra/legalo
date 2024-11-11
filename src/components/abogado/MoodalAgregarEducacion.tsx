@@ -60,9 +60,6 @@ function ModalAgregarEducacion({
 }: ModalAgregarEducacionProps) {
   console.log(showModal);
   const [trabajoActualmente] = useState(false);
-  const currentDate = new Date();
-  const currentMonth = currentDate.toLocaleString("es-ES", { month: "long" });
-  const currentYear = currentDate.getFullYear().toString();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -84,6 +81,26 @@ function ModalAgregarEducacion({
   }, [trabajoActualmente, form]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+    const { desde_fecha, hasta_fecha } = values;
+  
+    // Validar que 'desde_fecha' no sea mayor que el mes actual
+    if (desde_fecha > new Date().toISOString().slice(0, 7)) {
+      form.setError("desde_fecha", {
+        type: "manual",
+        message: "La fecha 'Desde' no puede ser mayor al mes actual.",
+      });
+      return;
+    }
+
+    // Validar que 'hasta_fecha' no sea menor que 'desde_fecha'
+    if (hasta_fecha < desde_fecha) {
+      form.setError("hasta_fecha", {
+        type: "manual",
+        message: "La fecha 'Hasta' no puede ser anterior a la fecha 'Desde'.",
+      });
+      return;
+    }
+
     const estudiosString = localStorage.getItem("listaEstudios");
     let estudios = [];
     if (estudiosString) {
@@ -171,8 +188,10 @@ function ModalAgregarEducacion({
                             <Input
                               type="month"
                               className="border border-black rounded-[10px] h-12"
-                              placeholder="Mes y Año"
+                              placeholder="2024"
                               {...field}
+                              disabled={trabajoActualmente ? true : false}
+                              max={new Date().toISOString().slice(0, 7)}  // Limita la fecha al mes actual
                             />
                           </FormControl>
                           <FormMessage />
@@ -185,7 +204,7 @@ function ModalAgregarEducacion({
                 <div>
                   <FormLabel>Hasta*</FormLabel>
                   <div className="grid lg:grid-cols-2 gap-2">
-                  <FormField
+                    <FormField
                       control={form.control}
                       name="hasta_fecha"
                       render={({ field }) => (
@@ -198,6 +217,8 @@ function ModalAgregarEducacion({
                               placeholder="2024"
                               {...field}
                               disabled={trabajoActualmente ? true : false}
+                              max={new Date().toISOString().slice(0, 7)}  // Limita la fecha al mes actual
+                              min={form.watch('desde_fecha')}  // Asegura que 'hasta_fecha' no sea menor que 'desde_fecha'
                             />
                           </FormControl>
                           <FormMessage />

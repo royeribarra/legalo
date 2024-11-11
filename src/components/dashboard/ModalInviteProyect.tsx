@@ -1,19 +1,14 @@
 import React from "react";
 
 import { X as IconX } from "lucide-react";
-import { Check as IconCheck } from "lucide-react";
 import { Button } from "../ui/button";
-import Link from "next/link";
 import AbogadoResumeCard from "./AbogadoResumeCard";
 
-import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
   CarouselNextReviews,
-  CarouselPrevious,
   CarouselPreviousReviews,
 } from "@/components/ui/carousel";
 

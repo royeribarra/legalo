@@ -20,6 +20,9 @@ import ImageUpload from "@/components/ImageUpload";
 import VideoUpload from "@/components/VideoUpload";
 import FileUpload from "@/components/FileUpload";
 import CvUpload from "@/components/abogado/registro/CvUpload";
+import { IHabilidad } from "@/interfaces/Habilidad.interface";
+import { IExperiencia } from "@/interfaces/Experiencia.interface";
+import { IEstudio } from "@/interfaces/Estudio.interface";
 
 interface Educacion {
   id: number;
@@ -98,26 +101,26 @@ const CompleteProfileLawyerPage: React.FC = () => {
         const estudioParse = JSON.parse(listaEstudiosLocal);
         const especialidadParse = JSON.parse(especialidad);
 
-        const habilidadesBlandas = habilidadParse.habilidades_blandas.map((habilidad: any) => ({
+        const habilidadesBlandas = habilidadParse.habilidades_blandas.map((habilidad: IHabilidad) => ({
           nombre: habilidad
         }));
-        const habilidadesDuras = habilidadParse.habilidades_duras.map((habilidad: any) => ({
+        const habilidadesDuras = habilidadParse.habilidades_duras.map((habilidad: IHabilidad) => ({
           nombre: habilidad
         }));
-        const industrias = industriasParse.map((industria: any) => ({
+        const industrias = industriasParse.map((industria: string) => ({
           nombre: industria
         }));
-        const servicios = serviciosParse.map((servicio: any) => ({
+        const servicios = serviciosParse.map((servicio: string) => ({
           nombre: servicio
         }));
-        const experiencias = experienciaParse.map((servicio: any) => ({
-          institucion: servicio.empresa,
-          fecha_fin: servicio.hasta_fecha,
-          fecha_inicio: servicio.desde_fecha,
-          descripcion: servicio.descripcion,
-          titulo: servicio.titulo
+        const experiencias = experienciaParse.map((experiencia: IExperiencia) => ({
+          institucion: experiencia.empresa,
+          fecha_fin: experiencia.hasta_fecha,
+          fecha_inicio: experiencia.desde_fecha,
+          descripcion: experiencia.descripcion,
+          titulo: experiencia.titulo
         }));
-        const educaciones = estudioParse.map((estudio: any) => ({
+        const educaciones = estudioParse.map((estudio: IEstudio) => ({
           institucion: estudio.institucion,
           fecha_fin: estudio.hasta_fecha,
           fecha_inicio: estudio.desde_fecha,
@@ -125,7 +128,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
           titulo: estudio.titulo,
           ubicacion: estudio.ubicacion
         }));
-        const especialidades  = especialidadParse.listaEspecialidades.map((especialidad: any) => ({
+        const especialidades  = especialidadParse.listaEspecialidades.map((especialidad: string) => ({
           nombre: especialidad
         }));
         const data = {
@@ -133,6 +136,8 @@ const CompleteProfileLawyerPage: React.FC = () => {
           apellidos: abogado ? JSON.parse(abogado)?.lastNames : '',
           direccion: abogado ? JSON.parse(abogado)?.location : '',
           correo: abogado ? JSON.parse(abogado)?.email : '',
+          dni: abogado ? JSON.parse(abogado)?.dni : '',
+          telefono: abogado ? JSON.parse(abogado)?.telefono : '',
           contrasena: abogado ? JSON.parse(abogado)?.password : '',
           sobre_ti: especialidad ? JSON.parse(especialidad)?.sobre_ti : '',
           grado_academico: especialidad ? JSON.parse(especialidad)?.grado : '',
@@ -187,7 +192,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
 
   const prevStep = () => {
     if (stepNumber === 1) {
-      window.location.href = "http://localhost:3000/registro/abogado/objetivos";
+      window.location.href = `${process.env.BASE_APP_API_URL}/registro/abogado/objetivos`;
     }
 
     switch (stepNumber) {
