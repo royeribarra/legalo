@@ -34,36 +34,45 @@ const HomeFaq = () => {
             className="border-b-black border-t border-t-black "
           >
             <AccordionTrigger className="my-2">
-              ¿Cómo puedo asegurarme de que el abogado que estoy contratando sea
-              confiable y competente?
+              ¿Cómo funciona LEGALO?
             </AccordionTrigger>
             <AccordionContent>
-              Yes. It adheres to the WAI-ARIA design pattern.
+              LEGALO es una plataforma que te conecta con abogados especializados según tus necesidades legales. Publicas tu caso, los abogados interesados postulan y te enviamos un listado de propuestas. Así, puedes comparar opciones y elegir la que mejor se ajuste a ti.
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="item-2" className="border-b-black">
+          <AccordionItem
+            value="item-2"
+            className="border-b-black border-t border-t-black "
+          >
             <AccordionTrigger className="my-2">
-              ¿Cómo funciona el proceso de publicación de un proyecto en la
-              plataforma?
+              ¿Cuánto tiempo tarda en encontrar un abogado?
             </AccordionTrigger>
             <AccordionContent>
-              Yes. It adheres to the WAI-ARIA design pattern.
+              En cuanto publicas tu caso, los abogados empiezan a postular. Puedes recibir propuestas en pocas horas y contratar a un abogado en menos de un día o máximo 48 horas. (Aún no cierro esta respuesta)
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-3" className="border-b-black">
             <AccordionTrigger className="my-2">
-              ¿Cómo se maneja la seguridad de los pagos en la plataforma?
+            ¿Es seguro realizar pagos a través de LEGALO?
             </AccordionTrigger>
             <AccordionContent>
-              Yes. It adheres to the WAI-ARIA design pattern.
+              Sí, LEGALO custodia tu pago y solo lo libera al abogado cuando el servicio ha sido completado. Esto asegura que el dinero esté protegido hasta que recibas el servicio acordado.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-4" className="border-b-black">
             <AccordionTrigger className="my-2">
-              ¿Qué debo hacer si no estoy satisfecho con el trabajo del abogado?
+              ¿Cómo elige LEGALO a los abogados de la plataforma?
             </AccordionTrigger>
             <AccordionContent>
-              Yes. It adheres to the WAI-ARIA design pattern.
+              Todos los abogados en LEGALO han sido verificados para asegurar que puedan ejercer, que su experiencia y especialidad sean reales y estén actualizadas. Adicionalmente, puedes ver reseñas y valoraciones de otros clientes para tomar una decisión informada.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-5" className="border-b-black">
+            <AccordionTrigger className="my-2">
+              ¿Qué tipo de servicios legales puedo encontrar en LEGALO?
+            </AccordionTrigger>
+            <AccordionContent>
+              LEGALO ofrece acceso a abogados especializados en diversas áreas, como derecho civil, penal, laboral, corporativo, y más. Puedes buscar abogados por especialidad para encontrar el adecuado para tu caso. Adicionalmente, puedes encontrar a futuros abogados (bachilleres y estudiantes) para investigaciones o practicas pre y profesionales. 
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-5" className="border-b-black">

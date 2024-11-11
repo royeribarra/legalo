@@ -46,6 +46,14 @@ const formSchema = z.object({
   rsocial: z.enum(["natural", "juridica"], {
     required_error: "Necesitas seleccionar alguno",
   }),
+  documento: z
+  .string()
+  .min(2, { message: "El campo debe ser rellenado" })
+  .max(30),
+  password: z
+  .string()
+  .min(2, { message: "El campo debe ser rellenado" })
+  .max(30),
 });
 
 const RegisterClient = () => {
@@ -57,15 +65,38 @@ const RegisterClient = () => {
       names: "",
       lastNames: "",
       email: "",
+      documento: "",
+      password: ""
     },
   });
 
-  // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-    router.push("/registro/cliente/email-verify");
+    const data = {
+      nombres: values.names,
+      apellidos: values.lastNames,
+      correo: values.email,
+      documento: values.documento,
+      tipoPersona: values.rsocial,
+      telefono: values.phone,
+      empresa: values.company,
+      comentario: values.howDiscover,
+      contrasena: values.password
+    };
+    fetch(`${process.env.BASE_APP_API_URL}/clientes/create`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(data => {
+        if(data.state){
+          localStorage.clear();
+          router.push("/registro/cliente/bienvenida")
+        }
+      })
+      .catch(err=>console.log(err));
   }
 
   return (
@@ -164,6 +195,24 @@ const RegisterClient = () => {
                     </FormItem>
                   )}
                 />
+                <FormField
+                  control={form.control}
+                  name="documento"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>RUC o DNI</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="23234..."
+                          {...field}
+                          className="border-black focus-visible:border-none rounded-[10px] h-12"
+                        />
+                      </FormControl>
+                      <FormDescription></FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 {/* Razon social */}
                 <FormField
                   control={form.control}
@@ -241,7 +290,24 @@ const RegisterClient = () => {
                     )}
                   />
                 </div>
-
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Contraseña</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="*****"
+                          {...field}
+                          className="border-black focus-visible:border-none rounded-[10px] h-12"
+                        />
+                      </FormControl>
+                      <FormDescription></FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 {/* Celular */}
                 <FormField
                   control={form.control}

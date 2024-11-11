@@ -9,9 +9,10 @@ type HeaderProps = {
 };
 
 const Header: React.FC<HeaderProps> = ({ serviceTipe, updateServiceTipe }) => {
+  console.log(serviceTipe)
   return (
     <>
-      {serviceTipe === "lawyer" ? (
+      {serviceTipe === "client" ? (
         <header>
           <div className="mx-auto max-w-[1920px] px-4 lg:px-16 h-[80px] lg:h-[160px] bg-background flex justify-between items-center">
             <div className="flex items-center">
@@ -50,7 +51,7 @@ const Header: React.FC<HeaderProps> = ({ serviceTipe, updateServiceTipe }) => {
 
             <div className="flex gap-2">
               <Button variant="outline" size="sm" className="border-none">
-                Iniciar Sesión
+                Iniciar sesión
               </Button>
               <Link href="/registro/tipo">
                 <Button size="sm">Regístrate</Button>
@@ -115,7 +116,7 @@ const Header: React.FC<HeaderProps> = ({ serviceTipe, updateServiceTipe }) => {
             </div>
             <div className="flex gap-2">
               <Button size="sm" className="bg-black border-none">
-                Iniciar Sesión
+                Iniciar sesión
               </Button>
               <Link href="/registro/tipo">
                 <Button variant="outline" size="sm">

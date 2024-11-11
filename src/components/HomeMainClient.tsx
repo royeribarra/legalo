@@ -91,12 +91,12 @@ const HomeMain: React.FC<HomeMainProps> = ({
 
         <div className="max-w-[780px] mx-auto my-8">
           <h1 className="text-black text-3xl lg:text-[64px] font-tiempos text-center leading-[1.2]">
-            Accede a una amplia red de{" "}
+            Accede a una comunidad de {" "}
             <span className="italic font-light">abogados de confianza</span>
           </h1>
           <p className="my-6 text-center text-lg">
-            Crea una cuenta en pocos pasos y accede a nuestra amplia red de
-            abogados.
+            Crea una cuenta en pocos pasos y únete a nuestra comunidad de abogados.
+            Protegemos tu pago hasta que recibas el servicio.
           </p>
         </div>
 
@@ -119,8 +119,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 Regístrate <span className="italic">gratis</span>
               </CardTitle>
               <CardDescription className="line-clamp-4 text-lg text-black">
-                Crea una cuenta en pocos pasos y accede a nuestra amplia red de
-                abogados.
+                Crea una cuenta facilmente y accede a nuestra comunidad de abogados de confianza.
               </CardDescription>
             </CardHeader>
           </Card>
@@ -164,11 +163,10 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 />
               </div>
               <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4">
-                Explora <span className="italic">perfiles</span>
+                Explora <span className="italic">y compara ofertas</span>
               </CardTitle>
               <CardDescription className="line-clamp-4 text-lg text-black">
-                Revisa los perfiles de nuestros abogados, incluyendo sus
-                especialidades y valoraciones.
+                Revisa las propuestas de los abogados interesados, consulta sus perfiles y valoraciones para tomar una decisión informada.
               </CardDescription>
             </CardHeader>
           </Card>
@@ -188,11 +186,10 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 />
               </div>
               <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4">
-                Contacta al <span className="italic">abogado</span>
+                Selecciona y contrata a tu <span className="italic">abogado</span>
               </CardTitle>
               <CardDescription className="line-clamp-4 text-lg text-black">
-                Envía un mensaje o solicita una consulta para discutir tu caso y
-                obtener asesoría.
+                Escoge al abogado que mejor se ajuste a tus necesidades y contrátalo para resolver tu caso.
               </CardDescription>
             </CardHeader>
           </Card>
@@ -215,8 +212,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 Resuelve tu <span className="italic">caso</span>
               </CardTitle>
               <CardDescription className="line-clamp-4 text-lg text-black">
-                Trabaja de la mano con el abogado seleccionado para resolver tu
-                situación legal con confianza y tranquilidad.
+                Trabaja con el abogado seleccionado y recibe el apoyo que necesitas. Tu pago está protegido hasta que el servicio esté completado.
               </CardDescription>
             </CardHeader>
           </Card>
@@ -240,8 +236,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                     <span className="italic font-light">Experiencia</span>
                   </h3>
                   <p className="text-base">
-                    Todos nuestros abogados están certificados y cuentan con
-                    años de experiencia en sus respectivas áreas.
+                    Todos nuestros abogados han sido verificados y cuentan con años de experiencia en su especialidad.
                   </p>
                 </div>
               </div>
@@ -257,11 +252,9 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   <h3 className="text-lg lg:text-2xl font-tiempos mb-2">
                     Opiniones y{" "}
                     <span className="italic font-light">Valoraciones</span>{" "}
-                    Valoraciones
                   </h3>
                   <p className="text-base">
-                    Lee las reseñas de otros clientes para tomar una decisión
-                    informada.
+                    Lee las reseñas de otros clientes para tomar una decisión informada.
                   </p>
                 </div>
               </div>
@@ -279,8 +272,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                     <span className="italic font-light">Personalizada</span>
                   </h3>
                   <p className="text-base">
-                    Recibe asesoría legal adaptada a tus necesidades
-                    específicas.
+                    Recibe asesoría legal ajustada a tus necesidades específicas.
                   </p>
                 </div>
               </div>
@@ -298,8 +290,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                     <span className="italic font-light">Confidencialidad</span>
                   </h3>
                   <p className="text-base">
-                    Garantizamos la protección de tu información y la
-                    confidencialidad de tu caso.
+                    Aseguramos la confidencialidad de tu caso y protegemos tu pago hasta que recibas el servicio.
                   </p>
                 </div>
               </div>
@@ -352,14 +343,10 @@ const HomeMain: React.FC<HomeMainProps> = ({
         </div>
         <div className="flex justify-center items-star flex-col gap-8 w-full lg:w-[50%] lg:pr-16 mt-8 lg:mt-0">
           <h2 className="text-5xl font-tiempos 3xl:text-6xl">
-            Publica <span className="italic">hoy</span>, encuentra tu abogado
-            mañana.
+          Cuéntanos hoy tu caso y encuentra <span className="italic">tu abogado</span> mañana
           </h2>
           <p className="text-lg 3xl:text-2xl">
-            Publica tu caso hoy mismo y accede a una red de abogados
-            especializados listos para ayudarte. Encuentra al profesional ideal
-            para tus necesidades legales y resuelve tu situación con confianza y
-            rapidez.{" "}
+            Cuéntanos tu caso y accede a una comunidad de abogados especializados listos para ayudarte. Encuentra al profesional ideal para tus necesidades legales y resuelve tu caso con confianza y rapidez.
           </p>
           <Button className="w-fit">Publicar proyecto</Button>
         </div>

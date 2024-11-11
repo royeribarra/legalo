@@ -17,7 +17,7 @@ const NavBar = () => {
       </div>
       <div>
         <BtnPrimary href="/about">Regístrate</BtnPrimary>
-        <BtnPrimary href="/about">Iniciar Sesión</BtnPrimary>
+        <BtnPrimary href="/about">Iniciar sesión</BtnPrimary>
       </div>
     </nav>
   );

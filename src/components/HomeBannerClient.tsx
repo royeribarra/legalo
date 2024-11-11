@@ -106,8 +106,8 @@ const HomeBannerClient = () => {
         <div className="bg-lg-client p-4 lg:pl-16 2xl:p-16 h-full flex lg:w-[44%] items-center w-full">
           <div className="flex flex-col gap-8 py-4 ">
             <h1 className="text-black text-2xl lg:text-[48px] xl:text-[60px] 3xl:text-7xl font-tiempos leading-[1.2]">
-              Simplificamos la contratación de abogados,{" "}
-              <span className="italic font-light">donde y cuando </span>los
+              Simplificamos la contratación de tu abogado,{" "}
+              <span className="italic font-light">donde y cuándo </span>lo
               necesites
             </h1>
             <div className="w-full  flex gap-4 relative ">

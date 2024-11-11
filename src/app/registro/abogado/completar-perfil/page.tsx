@@ -23,6 +23,7 @@ import CvUpload from "@/components/abogado/registro/CvUpload";
 import { IHabilidad } from "@/interfaces/Habilidad.interface";
 import { IExperiencia } from "@/interfaces/Experiencia.interface";
 import { IEstudio } from "@/interfaces/Estudio.interface";
+import { useRouter } from "next/navigation";
 
 interface Educacion {
   id: number;
@@ -44,6 +45,7 @@ interface Experiencia {
 }
 
 const CompleteProfileLawyerPage: React.FC = () => {
+  const router = useRouter();
   const [listEducacion, setListEducacion] = useState([]);
   const [listExperiencia, setListExperiencia] = useState([]);
   const [showModalAddEducacion, setShowModalAddEducacion] = useState(false);
@@ -151,7 +153,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
         };
         
   
-        fetch('http://localhost:3001/abogados/create', {
+        fetch(`${process.env.BASE_APP_API_URL}/abogados/create`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -159,7 +161,12 @@ const CompleteProfileLawyerPage: React.FC = () => {
           body: JSON.stringify(data)
         })
           .then(response => response.json())
-          .then(data => console.log(data))
+          .then(data => {
+            if(data.state){
+              localStorage.clear();
+              router.push("/registro/abogado/bienvenida")
+            }
+          })
           .catch(err=>console.log(err));
       }
         return;
