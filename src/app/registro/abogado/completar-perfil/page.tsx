@@ -48,6 +48,14 @@ const CompleteProfileLawyerPage: React.FC = () => {
   const router = useRouter();
   const [listEducacion, setListEducacion] = useState([]);
   const [listExperiencia, setListExperiencia] = useState([]);
+  const [noExperiencia, setNoExperiencia] = useState(false);
+  const [habilidadesBlandas, setHabilidadesBlandas] = useState([]);
+  const [habilidadesDuras, setHabilidadesDuras] = useState([]);
+  const [especialidad, setEspecialidad] = useState({
+    grado: "",
+    listaEspecialidades: [],
+    sobre_ti: ""
+  });
   const [showModalAddEducacion, setShowModalAddEducacion] = useState(false);
 
   const [showModalAddExperiencia, setShowModalAddExperiencia] = useState(false);
@@ -64,13 +72,27 @@ const CompleteProfileLawyerPage: React.FC = () => {
     setShowModalAddExperiencia(true);
   };
 
+  const eliminarExperiencia = (experiencia: Experiencia) => {
+    const newLista = listExperiencia.filter((item: Experiencia) => item.id !== experiencia.id);
+    setListExperiencia(newLista);
+    localStorage.setItem("listaExperiencia", JSON.stringify(newLista));
+  };
+
   const editarEducacion = (educacion: Educacion) => {
     setEducacionSelected(educacion);
     setShowModalAddEducacion(true);
   };
 
+  const eliminarEducacion = (educacion: Educacion) => {
+    const newLista = listEducacion.filter((item: Educacion) => item.id !== educacion.id);
+    setListEducacion(newLista);
+    localStorage.setItem("listaEstudios", JSON.stringify(newLista));
+  };
+
   const nextStep = () => {
+    
     if (stepNumber === 4) {
+      
       const formData = new FormData();
       const abogado = localStorage.getItem("abogado");
       const especialidad = localStorage.getItem("especialidad");
@@ -94,8 +116,9 @@ const CompleteProfileLawyerPage: React.FC = () => {
         const videoBlob = base64ToBlob(profileVideo, "video/mp4");
         formData.append("profileVideo", videoBlob, "profileVideo.mp4");
       }
-
+      
       if (habilidades && listaEstudiosLocal && listaExperienciaLocal && industriasLocal && serviciosLocal && especialidad) {
+        
         const habilidadParse = JSON.parse(habilidades);
         const industriasParse = JSON.parse(industriasLocal);
         const serviciosParse = JSON.parse(serviciosLocal);
@@ -152,7 +175,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
           especialidades: especialidades
         };
         
-  
+        
         fetch(`${process.env.BASE_APP_API_URL}/abogados/create`, {
           method: 'POST',
           headers: {
@@ -173,18 +196,33 @@ const CompleteProfileLawyerPage: React.FC = () => {
     }
     switch (stepNumber) {
       case 1:
-        setTriger("tab2");
+        if(!listExperiencia.length && !noExperiencia){
+          alert("Debes rellenar la experiencia.")
+        }else{
+          setTriger("tab2");
+          setStepNumber(stepNumber + 1);
+        }
         break;
       case 2:
-        setTriger("tab3");
+        if(!listEducacion.length){
+          alert("Debes rellenar la educación.")
+        }else{
+          setTriger("tab3");
+          setStepNumber(stepNumber + 1);
+        }
         break;
       case 3:
-        setTriger("tab4");
+        console.log(especialidad)
+        if(!especialidad.grado || !especialidad.listaEspecialidades.length || !especialidad.sobre_ti){
+          alert("Debes rellenar todos los campos de la especialidad.")
+        }else{
+          setTriger("tab4");
+          setStepNumber(stepNumber + 1);
+        }
         break;
       default:
         break;
     }
-    setStepNumber(stepNumber + 1);
   };
 
   function base64ToBlob(base64: string, mimeType: string) {
@@ -225,7 +263,8 @@ const CompleteProfileLawyerPage: React.FC = () => {
       estudios = JSON.parse(estudiosString);
       setListEducacion(estudios);
     } else {
-      estudios = {};
+      localStorage.setItem("listaEstudios", JSON.stringify([]));
+      setListEducacion([]);
     }
     console.log(estudios);
   }, [showModalAddEducacion]);
@@ -237,39 +276,42 @@ const CompleteProfileLawyerPage: React.FC = () => {
       experiencia = JSON.parse(experienciaString);
       setListExperiencia(experiencia);
     } else {
-      experiencia = {};
+      localStorage.setItem("listaExperiencia", JSON.stringify([]));
+      setListExperiencia([]);
     }
-    console.log(experiencia);
   }, [showModalAddExperiencia]);
 
   useEffect(() => {
-    const listaExperiencia = localStorage.getItem("listaExperiencia");
-    const listaEstudios = localStorage.getItem("listaEstudios");
-    const especialidad = localStorage.getItem("especialidad");
-    const habilidad = localStorage.getItem("habilidades");
-
-    if (!listaExperiencia) {
-      localStorage.setItem("listaExperiencia", JSON.stringify([]));
+    const especialidadString = localStorage.getItem("especialidad");
+    let especialidad;
+    if (especialidadString) {
+      especialidad = JSON.parse(especialidadString);
+      setEspecialidad(especialidad);
+    } else {
+      const especialidadDefault = {
+        grado: "",
+        listaEspecialidades: [],
+        sobre_ti: ""
+      };
+      localStorage.setItem("especialidad", JSON.stringify(especialidadDefault));
     }
-    if (!listaEstudios) {
-      localStorage.setItem("listaEstudios", JSON.stringify([]));
+  }, []);
+
+  useEffect(() => {
+    const habilidad = localStorage.getItem("habilidades");
+    if(habilidad){
+      const habilidadParse = JSON.parse(habilidad);
+      setHabilidadesBlandas(habilidadParse.habilidades_blandas);
+      setHabilidadesDuras(habilidadParse.habilidades_duras);
     }
     if (!habilidad) {
+      setHabilidadesBlandas([]);
+      setHabilidadesDuras([]);
       localStorage.setItem(
         "habilidades",
         JSON.stringify({
           habilidades_blandas: [],
           habilidades_duras: [],
-        })
-      );
-    }
-    if (!especialidad) {
-      localStorage.setItem(
-        "especialidad",
-        JSON.stringify({
-          grado: "",
-          listaEspecialidades: [],
-          sobre_ti: "",
         })
       );
     }
@@ -387,6 +429,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
                           variant="outline"
                           size="sm"
                           className="w-[120px] rounded-2xl border-black"
+                          onClick={() => eliminarExperiencia(experiencia)}
                         >
                           Eliminar
                         </Button>
@@ -395,7 +438,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
                   </div>
                 ))}
                 <div className="flex items-center space-x-2 my-4">
-                  <Checkbox id="terms" />
+                  <Checkbox id="terms" onClick={()=>setNoExperiencia(!noExperiencia)} />
                   <label
                     htmlFor="terms"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -445,6 +488,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
                           variant="outline"
                           size="sm"
                           className="w-[120px] rounded-2xl border-black"
+                          onClick={() => eliminarEducacion(educacion)}
                         >
                           Eliminar
                         </Button>
