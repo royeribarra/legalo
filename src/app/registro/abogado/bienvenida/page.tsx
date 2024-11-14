@@ -1,9 +1,50 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
 const WelcomeLawerPage = () => {
+  const [isVerified, setIsVerified] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const activationCode = params.get("code_activation");
+
+    if (activationCode) {
+      // Hacer el fetch para verificar el código
+      const verifyActivationCode = async () => {
+        try {
+          const response = await fetch(`${process.env.BASE_APP_API_URL}/usuarios/verify-activation`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ code: activationCode }),
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            if (data.success) {
+              setIsVerified(true);
+            } else {
+              console.error("Código de activación no válido o expirado.");
+            }
+          } else {
+            console.error("Error en la verificación del código.");
+          }
+        } catch (error) {
+          console.error("Error en la solicitud de verificación:", error);
+        }
+      };
+
+      verifyActivationCode();
+    }
+  }, []);
+
   return (
     <div className="bg-lg-lawyer h-[100vh]">
       <header className="container mx-auto px-4 lg:px-8 flex justify-between items-center align h-[72px]  ">

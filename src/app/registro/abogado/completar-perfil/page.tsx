@@ -164,7 +164,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
           .then(data => {
             if(data.state){
               localStorage.clear();
-              router.push("/registro/abogado/bienvenida")
+              router.push("/registro/abogado/email-verify")
             }
           })
           .catch(err=>console.log(err));
