@@ -41,13 +41,47 @@ function AboutSection() {
         }
     };
 
+    const onChangeCip = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setCip(e.target.value);
+        const especialidadString = localStorage.getItem("especialidad");
+        if (especialidadString) {
+        const especialidad = JSON.parse(especialidadString);
+        especialidad.cip = e.target.value; // Actualizar el valor de 'sobre_ti'
+
+        // Guardar el objeto actualizado de vuelta en localStorage
+        localStorage.setItem("especialidad", JSON.stringify(especialidad));
+        }
+    };
+
+    const onChangeColegio = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setColegio(e.target.value);
+        const especialidadString = localStorage.getItem("especialidad");
+        if (especialidadString) {
+        const especialidad = JSON.parse(especialidadString);
+        especialidad.colegio = e.target.value; // Actualizar el valor de 'sobre_ti'
+
+        // Guardar el objeto actualizado de vuelta en localStorage
+        localStorage.setItem("especialidad", JSON.stringify(especialidad));
+        }
+    };
+
     useEffect(() => {
         const especialidadString = localStorage.getItem("especialidad");
         if (especialidadString) {
             const especialidad = JSON.parse(especialidadString);
             setGrado(especialidad.grado);
             setSobreTi(especialidad.sobre_ti);
+            setCip(especialidad.cip);
+            setColegio(especialidad.colegio);
             setEspecialidades(especialidad.listaEspecialidades);
+        }else{
+            localStorage.setItem("especialidad", JSON.stringify({
+                listaEspecialidades: [],
+                grado: '',
+                sobre_ti: '',
+                cip: '',
+                colegio: ','
+            }));
         }
     }, []);
 
@@ -78,13 +112,13 @@ function AboutSection() {
                         placeholder="Número de CIP"
                         type="number"
                         value={cip}
-                        onChange={(e) => setCip(e.target.value)}
+                        onChange={onChangeCip}
                     />
                     <p className="text-sm my-2">Colegio*</p>
                     <Input
                         placeholder="Nombre del Colegio"
                         value={colegio}
-                        onChange={(e) => setColegio(e.target.value)}
+                        onChange={onChangeColegio}
                     />
                 </div>
             )}

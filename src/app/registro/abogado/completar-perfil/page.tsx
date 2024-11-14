@@ -166,6 +166,8 @@ const CompleteProfileLawyerPage: React.FC = () => {
           contrasena: abogado ? JSON.parse(abogado)?.password : '',
           sobre_ti: especialidad ? JSON.parse(especialidad)?.sobre_ti : '',
           grado_academico: especialidad ? JSON.parse(especialidad)?.grado : '',
+          cip: especialidad ? JSON.parse(especialidad)?.cip : '',
+          colegio: especialidad ? JSON.parse(especialidad)?.colegio : '',
           habilidadesBlandas: habilidadesBlandas,
           habilidadesDuras: habilidadesDuras,
           industrias: industrias,
@@ -174,8 +176,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
           educaciones: educaciones,
           especialidades: especialidades
         };
-        
-        
+
         fetch(`${process.env.BASE_APP_API_URL}/abogados/create`, {
           method: 'POST',
           headers: {
