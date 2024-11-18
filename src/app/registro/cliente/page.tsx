@@ -24,6 +24,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Eye, EyeOff, Check } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type PasswordFieldProps<T extends FieldValues> = {
   field: {
@@ -353,7 +360,7 @@ const RegisterClient = () => {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email de empresa</FormLabel>
+                      <FormLabel>{tipoPersona === 'juridica' ? 'Email de empresa' : 'Email'}</FormLabel>
                       <FormControl>
                         <Input
                           type="email"
@@ -368,6 +375,7 @@ const RegisterClient = () => {
                   )}
                 />
                 <div className=" grid grid-cols-2 gap-4">
+                  {tipoPersona === 'juridica' && (
                   <FormField
                     control={form.control}
                     name="company"
@@ -385,7 +393,8 @@ const RegisterClient = () => {
                         <FormMessage />
                       </FormItem>
                     )}
-                  />
+                  />)
+                  }
                   <FormField
                     control={form.control}
                     name="phone"
@@ -427,11 +436,17 @@ const RegisterClient = () => {
                     <FormItem>
                       <FormLabel>¿Cómo oíste de nosotros? (OPCIONAL)</FormLabel>
                       <FormControl>
-                        <Textarea
-                          placeholder="..."
-                          {...field}
-                          className="border-black focus-visible:border-none rounded-[10px] h-12"
-                        />
+                        <Select {...field}>
+                          <SelectTrigger>
+                            {/* Aquí puedes colocar un texto de placeholder si lo necesitas */}
+                            <span>Selecciona una opción</span>
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="facebook">Facebook</SelectItem>
+                            <SelectItem value="instagram">Instagram</SelectItem>
+                            <SelectItem value="whatsapp">Whatsapp</SelectItem>
+                          </SelectContent>
+                        </Select>
                       </FormControl>
                       <FormDescription></FormDescription>
                       <FormMessage />
