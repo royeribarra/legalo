@@ -2,7 +2,7 @@ import { IEspecialidad } from "@/interfaces/Especialidad.interface";
 import { IPregunta } from "@/interfaces/Pregunta.interface";
 import { IPresupuesto } from "@/interfaces/Presupuesto.interface";
 import { IServicio } from "@/interfaces/Servicio.interface";
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
 // Define la estructura del estado
 type OfertaState = {
@@ -31,25 +31,27 @@ type OfertaProviderProps = {
 };
 
 export const OfertaProvider = ({ children }: OfertaProviderProps) => {
-  const [state, setState] = useState<OfertaState>(() => {
-    // Recuperar el estado del localStorage al cargar
-    const savedState = localStorage.getItem("ofertaState");
-    return savedState
-      ? JSON.parse(savedState)
-      : {
-          selected: null,
-          uso: 1,
-          titulo: "",
-          especialidades: [],
-          descripcion: "",
-          documento: null,
-          servicios: [],
-          duracion: "",
-          nivelExperiencia: "",
-          presupuesto: null,
-          preguntas: [],
-        };
+  const [state, setState] = useState<OfertaState>({
+    selected: null,
+    uso: "1",
+    titulo: "",
+    especialidades: [],
+    descripcion: "",
+    documento: null,
+    servicios: [],
+    duracion: "",
+    nivelExperiencia: "",
+    presupuesto: null,
+    preguntas: [],
   });
+
+  // Usamos useEffect para acceder a localStorage solo en el cliente
+  useEffect(() => {
+    const savedState = localStorage.getItem("ofertaState");
+    if (savedState) {
+      setState(JSON.parse(savedState));
+    }
+  }, []); // Este efecto solo se ejecutará en el cliente, después del montaje
 
   const updateState = (newState: Partial<OfertaState>) => {
     setState((prevState) => {
