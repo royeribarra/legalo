@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import Link from "next/link";
 import React from "react";
 
 import { ArrowRight } from "lucide-react";

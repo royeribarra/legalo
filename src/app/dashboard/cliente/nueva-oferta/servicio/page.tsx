@@ -2,14 +2,12 @@
 
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 import { ArrowRight } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useOferta } from "@/contexts/ofertaContext";
 import { useRouter } from "next/navigation";
-import { IServicio } from "@/interfaces/Servicio.interface";
 
 const PublicarPageFour = () => {
   const route = useRouter();

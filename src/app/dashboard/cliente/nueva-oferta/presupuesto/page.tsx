@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation";
 
 const PublicarPageSeven = () => {
   const route = useRouter();
-  const { state, updateState } = useOferta();
+  const { updateState } = useOferta();
   const [selected, setSelected] = useState("rango");
   const [rangoDesde, setRangoDesde] = useState("");
   const [rangoHasta, setRangoHasta] = useState("");

@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 
 const NuevaOferta = () => {
   const route = useRouter();
-  const { state, updateState } = useOferta();
+  const { updateState } = useOferta();
 
   // Inicializa usoSelect con el valor del primer elemento
   const [usoSelect, setUsoSelect] = useState("uso personal");

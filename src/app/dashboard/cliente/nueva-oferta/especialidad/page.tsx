@@ -19,7 +19,7 @@ interface Especialidad {
 
 const PublicarPageThree = () => {
   const route = useRouter();
-  const { state, updateState } = useOferta();
+  const { updateState } = useOferta();
   const [selectServices, setSelectServices] = useState<IEspecialidad[]>([]);
 
   const selectEspecialidad = (item: Especialidad) => {

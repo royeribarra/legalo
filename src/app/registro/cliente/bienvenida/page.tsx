@@ -4,10 +4,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
-import { useRouter } from "next/navigation";
-
 const CompleteProfileLawyerPage = () => {
-  const [showStep, setshowStep] = useState(true);
   const [isVerified, setIsVerified] = useState(false);
 
   useEffect(() => {
@@ -30,7 +27,6 @@ const CompleteProfileLawyerPage = () => {
             const data = await response.json();
             if (data.success) {
               setIsVerified(true);
-              setshowStep(false);
             } else {
               console.error("Código de activación no válido o expirado.");
             }

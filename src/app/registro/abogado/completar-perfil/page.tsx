@@ -60,9 +60,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
   const [listExperiencia, setListExperiencia] = useState([]);
   const [noExperiencia, setNoExperiencia] = useState(false);
   const [profileImg, setProfileImg] = useState<string | null>(null);
-  const [culFile, setCulFile] = useState<File | null>(null); 
-  const [habilidadesBlandas, setHabilidadesBlandas] = useState([]);
-  const [habilidadesDuras, setHabilidadesDuras] = useState([]);
+  const [culFile, setCulFile] = useState<File | null>(null);
   const [especialidad, setEspecialidad] = useState({
     grado: "",
     listaEspecialidades: [],
@@ -342,14 +340,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
 
   useEffect(() => {
     const habilidad = localStorage.getItem("habilidades");
-    if(habilidad){
-      const habilidadParse = JSON.parse(habilidad);
-      setHabilidadesBlandas(habilidadParse.habilidades_blandas);
-      setHabilidadesDuras(habilidadParse.habilidades_duras);
-    }
     if (!habilidad) {
-      setHabilidadesBlandas([]);
-      setHabilidadesDuras([]);
       localStorage.setItem(
         "habilidades",
         JSON.stringify({

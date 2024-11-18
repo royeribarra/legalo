@@ -21,8 +21,9 @@ interface Item {
 
 const PublicarPageEight = () => {
   const router = useRouter();
+  console.log(router)
   const { state, updateState } = useOferta();
-  const { token, userRole } = useAuth();
+  const { token } = useAuth();
   const [items, setItems] = useState<Item[]>([{ id: 1, name: "Tu Pregunta" }]);
   const [input, setInput] = useState<string>("");
 
