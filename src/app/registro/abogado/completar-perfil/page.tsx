@@ -114,7 +114,6 @@ const CompleteProfileLawyerPage: React.FC = () => {
       const formData = new FormData();
       // const abogado = localStorage.getItem("abogado");
       const especialidad = localStorage.getItem("especialidad");
-      const estudios = localStorage.getItem("estudios");
       const habilidades = localStorage.getItem("habilidades");
       const listaEstudiosLocal = localStorage.getItem("listaEstudios");
       const listaExperienciaLocal = localStorage.getItem("listaExperiencia");
