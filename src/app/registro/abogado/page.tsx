@@ -193,7 +193,7 @@ function RegisterLawyer() {
       setValue('telefono', abogadoData.telefono || "");
       setValue('terms', abogadoData.terms || false);
     }
-  }, []);
+  }, [setValue]);
 
   return (
     <div className="h-screen grid grid-cols-4 gap-4">
