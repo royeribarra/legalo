@@ -46,9 +46,21 @@ interface Experiencia {
 
 const CompleteProfileLawyerPage: React.FC = () => {
   const router = useRouter();
+  const [abogado, setAbogado] = useState({
+    dni:"",
+    email: "",
+    lastNames: "",
+    location: "",
+    names: "",
+    password: "",
+    telefono: "",
+    terms: ""
+  });
   const [listEducacion, setListEducacion] = useState([]);
   const [listExperiencia, setListExperiencia] = useState([]);
   const [noExperiencia, setNoExperiencia] = useState(false);
+  const [profileImg, setProfileImg] = useState<string | null>(null);
+  const [culFile, setCulFile] = useState<File | null>(null); 
   const [habilidadesBlandas, setHabilidadesBlandas] = useState([]);
   const [habilidadesDuras, setHabilidadesDuras] = useState([]);
   const [especialidad, setEspecialidad] = useState({
@@ -89,35 +101,65 @@ const CompleteProfileLawyerPage: React.FC = () => {
     localStorage.setItem("listaEstudios", JSON.stringify(newLista));
   };
 
-  const nextStep = () => {
+  const nextStep = async() => {
     
     if (stepNumber === 4) {
+      if(!profileImg) {
+        alert("Debes cargar una imagen de perfil.");
+        return;
+      }
       
+      if(!culFile) {
+        alert("Debes cargar una documento en CUL.");
+        return;
+      }
       const formData = new FormData();
-      const abogado = localStorage.getItem("abogado");
+      // const abogado = localStorage.getItem("abogado");
       const especialidad = localStorage.getItem("especialidad");
       const estudios = localStorage.getItem("estudios");
       const habilidades = localStorage.getItem("habilidades");
       const listaEstudiosLocal = localStorage.getItem("listaEstudios");
       const listaExperienciaLocal = localStorage.getItem("listaExperiencia");
-      const profileImg = localStorage.getItem("profileImg");
+      const profileImgLocal = localStorage.getItem("profileImg");
       const profileVideo = localStorage.getItem("profileVideo");
       const industriasLocal = localStorage.getItem("industriasAbogado");
       const serviciosLocal = localStorage.getItem("serviciosAbogado");
 
-      if (especialidad) formData.append("especialidad", especialidad);
-      if (estudios) formData.append("estudios", estudios);
-      if (profileImg) {
-        const imgBlob = base64ToBlob(profileImg, "image/jpeg");
-        formData.append("profileImg", imgBlob, "profileImg.jpg");
-      }
+      if (profileImgLocal) {
+        const imgBlob = base64ToBlob(profileImgLocal, "image/jpeg");
+        const formDataImg = new FormData();
+        formDataImg.append("profileImg", imgBlob, "profileImg.jpg");
+        formDataImg.append("dni", JSON.stringify(abogado?.dni ? abogado.dni : '999'));
+        formDataImg.append("correo", JSON.stringify(abogado?.email ? abogado.email : '999'));
 
+        try {
+          const response = await fetch(`${process.env.BASE_APP_API_URL}/temp-files/upload-profile-img`, {
+            method: "POST",
+            body: formDataImg,
+          });
+        
+          if (!response.ok) {
+            throw new Error(`Error en la petición: ${response.statusText}`);
+          }
+        
+          const data = await response.json();
+          console.log("Imagen enviada correctamente", data);
+        } catch (error) {
+          console.error("Error al enviar la imagen", error);
+        }
+      }
       if (profileVideo) {
         const videoBlob = base64ToBlob(profileVideo, "video/mp4");
         formData.append("profileVideo", videoBlob, "profileVideo.mp4");
       }
-      
-      if (habilidades && listaEstudiosLocal && listaExperienciaLocal && industriasLocal && serviciosLocal && especialidad) {
+      console.log(habilidades, "habilidades");
+      console.log(listaEstudiosLocal, "listaEstudiosLocal");
+      console.log(listaExperienciaLocal, "listaExperienciaLocal");
+      console.log(industriasLocal, "industriasLocal");
+      console.log(serviciosLocal, "serviciosLocal");
+      console.log(especialidad, "especialidad");
+      console.log(profileImgLocal, "profileImgLocal");
+      if (habilidades && listaEstudiosLocal && listaExperienciaLocal && industriasLocal && serviciosLocal && especialidad && profileImgLocal) {
         
         const habilidadParse = JSON.parse(habilidades);
         const industriasParse = JSON.parse(industriasLocal);
@@ -157,13 +199,13 @@ const CompleteProfileLawyerPage: React.FC = () => {
           nombre: especialidad
         }));
         const data = {
-          nombres: abogado ? JSON.parse(abogado)?.names : '',
-          apellidos: abogado ? JSON.parse(abogado)?.lastNames : '',
-          direccion: abogado ? JSON.parse(abogado)?.location : '',
-          correo: abogado ? JSON.parse(abogado)?.email : '',
-          dni: abogado ? JSON.parse(abogado)?.dni : '',
-          telefono: abogado ? JSON.parse(abogado)?.telefono : '',
-          contrasena: abogado ? JSON.parse(abogado)?.password : '',
+          nombres: abogado.names,
+          apellidos: abogado.lastNames,
+          direccion: abogado.location,
+          correo: abogado.email,
+          dni: abogado.dni,
+          telefono: abogado.telefono,
+          contrasena: abogado.password,
           sobre_ti: especialidad ? JSON.parse(especialidad)?.sobre_ti : '',
           grado_academico: especialidad ? JSON.parse(especialidad)?.grado : '',
           cip: especialidad ? JSON.parse(especialidad)?.cip : '',
@@ -238,7 +280,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
 
   const prevStep = () => {
     if (stepNumber === 1) {
-      window.location.href = `${process.env.BASE_APP_API_URL}/registro/abogado/objetivos`;
+      window.location.href = `${process.env.BASE_APP_URL}/registro/abogado/objetivos`;
     }
 
     switch (stepNumber) {
@@ -318,6 +360,33 @@ const CompleteProfileLawyerPage: React.FC = () => {
     }
   }, []);
 
+  useEffect(()=> {
+    const abogado = localStorage.getItem("abogado");
+    if(abogado){
+      setAbogado(JSON.parse(abogado));
+    }
+  }, []);
+
+  useEffect(()=> {
+    const imagen = localStorage.getItem("profileImg");
+    if(imagen){
+      setProfileImg(imagen);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Verifica si hay un archivo en localStorage al cargar el componente
+    const storedFile = localStorage.getItem("culFile");
+    const storedFileName = localStorage.getItem("uploadedCulFileName");
+
+    if (storedFile && storedFileName) {
+      // Crear un blob y mostrarlo como archivo
+      const blob = new Blob([atob(storedFile)], { type: "application/octet-stream" });
+      const restoredFile = new File([blob], storedFileName);
+      setCulFile(restoredFile);
+    }
+  }, []);
+
   return (
     <div className="container mx-auto p-4 lg:py-8 lg:px-0 w-full lg:max-w-[960px]">
       <div className="max-w-[680px] mb-4 mx-auto">
@@ -331,7 +400,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
         <ImageUpload></ImageUpload>
 
         <div className="w-full lg:w-4/6 flex flex-col justify-center">
-          <p className="font-bold">JUAN A.</p>
+          <p className="font-bold">{abogado.names + ' ' + abogado.lastNames[0]+ '.'}</p>
           <div className="w-full flex flex-col md:flex-row gap-4">
             <ServiceSelectAbogado />
             <IndustrySelectAbogado />

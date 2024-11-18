@@ -62,7 +62,7 @@ const CompleteProfileLawyerPage = () => {
             </p>
           </div>
           <div className="flex flex-col lg:flex-row gap-4 mt-10">
-            <Link href="/publicar">
+            <Link href="/dashboard/cliente/nueva-oferta">
               <Button className="rounded-[10px] h-12 px-6 text-base">
                 Publicar proyecto
               </Button>

@@ -1,6 +1,8 @@
+"use client"
+
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { ReactNode } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
@@ -13,11 +15,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useRouter } from "next/navigation";
 interface LayoutProps {
   children: ReactNode;
 }
 
 const DashboardLawyerLayout = ({ children }: LayoutProps) => {
+  const router = useRouter();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const userRole = localStorage.getItem("userRole");
+
+    if (!token) {
+      router.push("/login");
+    } else if (userRole === "cliente") {
+      router.push("/dashboard/cliente");
+    } else if (userRole !== "abogado") {
+      router.push("/login");
+    }
+  }, [router]);
   return (
     <div className="">
       <header className="py-4  px-4 lg:px-16 flex justify-between items-center align h-auto lg:h-[72px] bg-lg-lawyer overflow-hidden gap-4 lg:gap-8 flex-wrap lg:flex-row">

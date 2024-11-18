@@ -58,6 +58,8 @@ const WelcomeLawerPage = () => {
           />
         </Link>
       </header>
+      {
+      isVerified ?
       <main className="container mx-auto px-4 lg:px-8 flex justify-center flex-col items-center gap-6">
         <Image
           src="/assets/images/img-welcome-lawyer.jpg"
@@ -88,6 +90,14 @@ const WelcomeLawerPage = () => {
           </Button>
         </Link>
       </main>
+      :
+      <div className="flex mt-[3%] flex-col items-center gap-5 flex-auto pb-20">
+        <h2 className="text-4xl text-center font-tiempos mt-2 text-red-500">
+          Error en la verificación del código
+        </h2>
+        <p className="text-center">El código de activación no es válido o ha expirado.</p>
+      </div>
+      }
     </div>
   );
 };

@@ -11,8 +11,9 @@ export default function LoginPage() {
 
   const onFinish = async (values: { username: string; password: string }) => {
     setLoading(true);
+    
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch(`${process.env.BASE_APP_API_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -22,31 +23,29 @@ export default function LoginPage() {
 
       const data = await response.json();
 
-      if (response.ok) {
+      if (data.status === 200) {
+        console.log(data)
         message.success('Login successful');
-        // Store the token and user role in localStorage
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('userRole', data.user.role);
-        // Redirect based on user role
-        switch (data.user.role) {
-          case 'admin':
-            router.push('/admin/master/dashboard');
-            break;
-          case 'lawyer':
-            router.push('/admin/lawyer/postulaciones');
-            break;
-          case 'client':
-            router.push('/admin/client/ofertas');
-            break;
-          default:
-            message.error('Unknown user role');
+
+        localStorage.setItem('token', JSON.stringify(data.jwt.user));
+        
+        if(data.jwt?.user?.abogado)
+        {
+          localStorage.setItem('userRole', "abogado");
+          router.push('/dashboard/abogado');
         }
+        if(data.jwt?.user?.cliente)
+        {
+          localStorage.setItem('userRole', "cliente");
+          router.push('/dashboard/cliente');
+        }
+        
       } else {
-        message.error(data.error || 'Login failed');
+        message.error(data.message || 'credenciales inválidas');
       }
     } catch (error) {
       console.error('Login error:', error);
-      message.error('An error occurred during login');
+      message.error('Ocurrió un error en el intento de login.');
     } finally {
       setLoading(false);
     }
@@ -61,16 +60,16 @@ export default function LoginPage() {
           onFinish={onFinish}
         >
           <Form.Item
-            name="username"
-            rules={[{ required: true, message: 'Please input your Username!' }]}
+            name="correo"
+            rules={[{ required: true, message: 'Ingresa tu email' }]}
           >
-            <Input prefix={<UserOutlined />} placeholder="Username" />
+            <Input prefix={<UserOutlined />} placeholder="Correo" />
           </Form.Item>
           <Form.Item
-            name="password"
-            rules={[{ required: true, message: 'Please input your Password!' }]}
+            name="contrasena"
+            rules={[{ required: true, message: 'Ingresa tu contraseña' }]}
           >
-            <Input.Password prefix={<LockOutlined />} placeholder="Password" />
+            <Input.Password prefix={<LockOutlined />} placeholder="Contraseña" />
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit" loading={loading} block>

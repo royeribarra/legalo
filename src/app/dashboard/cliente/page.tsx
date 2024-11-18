@@ -30,6 +30,7 @@ import ModalInviteProyect from "@/components/dashboard/ModalInviteProyect";
 import ProyectosActivos from "@/components/dashboard/ProyectosActivos";
 import ProyectosPorAceptar from "@/components/dashboard/ProyectosPorAceptar";
 import ProyectosFinalizados from "@/components/dashboard/ProyectosFinalizados";
+import Link from "next/link";
 
 const DashboardClientPage = () => {
   const [openFilter, setOpenFilter] = useState(true);
@@ -307,7 +308,9 @@ const DashboardClientPage = () => {
                     </Button>
                   ))}
                 </div>
-                <Button>Publicar proyecto</Button>
+                <Link href="/dashboard/cliente/nueva-oferta">
+                  <Button>Publicar proyecto</Button>
+                </Link>
               </div>
 
               {subMenuActive === "activos" && (
