@@ -4,6 +4,7 @@ export const metadata = {
 };
 
 import "@/app/globals.css";
+import { ToastProvider } from "@/contexts/toastContext";
 // import "antd/dist/antd.css";
 // import "../../public/assets/styles/main.css";
 // import "../../public/assets/styles/responsive.css";
@@ -15,7 +16,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ToastProvider>
+        {children}
+        </ToastProvider>
+      </body>
     </html>
   );
 }

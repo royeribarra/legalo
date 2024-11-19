@@ -24,6 +24,7 @@ import Image from "next/image";
 import { Check } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { useRegistroAbogado } from "@/contexts/registroAbogadoContext";
 
 type PasswordFieldProps<T extends FieldValues> = {
   field: {
@@ -88,7 +89,6 @@ const PasswordField = <T extends FieldValues>({
       const lowerCaseRegex = /[a-z]/;
       const upperCaseRegex = /[A-Z]/;
       const numberRegex = /\d/;
-      console.log(lowerCaseRegex.test(password));
       setValidations({
         hasLowerCase: lowerCaseRegex.test(password),
         hasUpperCase: upperCaseRegex.test(password),
@@ -153,11 +153,9 @@ const PasswordField = <T extends FieldValues>({
   );
 };
 
-type FormData = z.infer<typeof formSchema>;
-
 function RegisterLawyer() {
   const router = useRouter();
-  // 1. Define your form.
+  const { stateAbogado, updateStateAbogado } = useRegistroAbogado();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -173,27 +171,29 @@ function RegisterLawyer() {
   });
   const { setValue } = form;
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    localStorage.setItem("abogado", JSON.stringify(values));
+    updateStateAbogado({
+      nombres: values.names,
+      apellidos: values.lastNames,
+      email: values.email,
+      ubicacion: values.location,
+      contrasena: values.password,
+      terms: values.terms,
+      dni: values.dni,
+      telefono: values.telefono
+    })
     router.push("/registro/abogado/objetivos");
   }
 
   useEffect(() => {
-    const abogado = localStorage.getItem('abogado');
-
-    if (abogado) {
-      const abogadoData: Partial<FormData> = JSON.parse(abogado);
-
-      setValue('names', abogadoData.names || "");
-      setValue('lastNames', abogadoData.lastNames || "");
-      setValue('email', abogadoData.email || "");
-      setValue('location', abogadoData.location || "");
-      setValue('password', abogadoData.password || "");
-      setValue('dni', abogadoData.dni || "");
-      setValue('telefono', abogadoData.telefono || "");
-      setValue('terms', abogadoData.terms || false);
-    }
-  }, [setValue]);
+    setValue('names', stateAbogado.nombres || "");
+    setValue('lastNames', stateAbogado.apellidos || "");
+    setValue('email', stateAbogado.email || "");
+    setValue('location', stateAbogado.ubicacion || "");
+    setValue('password', stateAbogado.contrasena || "");
+    setValue('dni', stateAbogado.dni || "");
+    setValue('telefono', stateAbogado.telefono || "");
+    setValue('terms', stateAbogado.terms || false);
+  }, [setValue, stateAbogado]);
 
   return (
     <div className="h-screen grid grid-cols-4 gap-4">

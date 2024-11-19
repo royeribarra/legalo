@@ -24,6 +24,8 @@ import { IHabilidad } from "@/interfaces/Habilidad.interface";
 import { IExperiencia } from "@/interfaces/Experiencia.interface";
 import { IEstudio } from "@/interfaces/Estudio.interface";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/contexts/toastContext";
+import { useRegistroAbogado } from "@/contexts/registroAbogadoContext";
 
 interface Educacion {
   id: number;
@@ -46,16 +48,9 @@ interface Experiencia {
 
 const CompleteProfileLawyerPage: React.FC = () => {
   const router = useRouter();
-  const [abogado, setAbogado] = useState({
-    dni:"",
-    email: "",
-    lastNames: "",
-    location: "",
-    names: "",
-    password: "",
-    telefono: "",
-    terms: ""
-  });
+  const { showToast } = useToast();
+  const { stateAbogado, updateStateAbogado } = useRegistroAbogado();
+
   const [listEducacion, setListEducacion] = useState([]);
   const [listExperiencia, setListExperiencia] = useState([]);
   const [noExperiencia, setNoExperiencia] = useState(false);
@@ -103,14 +98,18 @@ const CompleteProfileLawyerPage: React.FC = () => {
     
     if (stepNumber === 4) {
       if(!profileImg) {
-        alert("Debes cargar una imagen de perfil.");
-        return;
+        // alert("Debes cargar una imagen de perfil.");
+        showToast(
+          "success",
+          "Operación exitosa",
+          "El formulario fue enviado correctamente."
+        )
       }
       
-      if(!culFile) {
-        alert("Debes cargar una documento en CUL.");
-        return;
-      }
+      // if(!culFile) {
+      //   alert("Debes cargar una documento en CUL.");
+      //   return;
+      // }
       const formData = new FormData();
       // const abogado = localStorage.getItem("abogado");
       const especialidad = localStorage.getItem("especialidad");
@@ -126,8 +125,8 @@ const CompleteProfileLawyerPage: React.FC = () => {
         const imgBlob = base64ToBlob(profileImgLocal, "image/jpeg");
         const formDataImg = new FormData();
         formDataImg.append("profileImg", imgBlob, "profileImg.jpg");
-        formDataImg.append("dni", JSON.stringify(abogado?.dni ? abogado.dni : '999'));
-        formDataImg.append("correo", JSON.stringify(abogado?.email ? abogado.email : '999'));
+        formDataImg.append("dni", stateAbogado.dni);
+        formDataImg.append("correo", stateAbogado.email);
 
         try {
           const response = await fetch(`${process.env.BASE_APP_API_URL}/temp-files/upload-profile-img`, {
@@ -156,7 +155,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
       console.log(serviciosLocal, "serviciosLocal");
       console.log(especialidad, "especialidad");
       console.log(profileImgLocal, "profileImgLocal");
-      if (habilidades && listaEstudiosLocal && listaExperienciaLocal && industriasLocal && serviciosLocal && especialidad && profileImgLocal) {
+      if (habilidades && listaEstudiosLocal && listaExperienciaLocal && industriasLocal && serviciosLocal && especialidad) {
         
         const habilidadParse = JSON.parse(habilidades);
         const industriasParse = JSON.parse(industriasLocal);
@@ -196,13 +195,13 @@ const CompleteProfileLawyerPage: React.FC = () => {
           nombre: especialidad
         }));
         const data = {
-          nombres: abogado.names,
-          apellidos: abogado.lastNames,
-          direccion: abogado.location,
-          correo: abogado.email,
-          dni: abogado.dni,
-          telefono: abogado.telefono,
-          contrasena: abogado.password,
+          nombres: stateAbogado.nombres,
+          apellidos: stateAbogado.apellidos,
+          direccion: stateAbogado.ubicacion,
+          correo: stateAbogado.email,
+          dni: stateAbogado.dni,
+          telefono: stateAbogado.telefono,
+          contrasena: stateAbogado.contrasena,
           sobre_ti: especialidad ? JSON.parse(especialidad)?.sobre_ti : '',
           grado_academico: especialidad ? JSON.parse(especialidad)?.grado : '',
           cip: especialidad ? JSON.parse(especialidad)?.cip : '',
@@ -237,6 +236,11 @@ const CompleteProfileLawyerPage: React.FC = () => {
     switch (stepNumber) {
       case 1:
         if(!listExperiencia.length && !noExperiencia){
+          showToast(
+            "info",
+            "Operación exitosa",
+            "El formulario fue enviado correctamente."
+          )
           alert("Debes rellenar la experiencia.")
         }else{
           setTriger("tab2");
@@ -351,13 +355,6 @@ const CompleteProfileLawyerPage: React.FC = () => {
   }, []);
 
   useEffect(()=> {
-    const abogado = localStorage.getItem("abogado");
-    if(abogado){
-      setAbogado(JSON.parse(abogado));
-    }
-  }, []);
-
-  useEffect(()=> {
     const imagen = localStorage.getItem("profileImg");
     if(imagen){
       setProfileImg(imagen);
@@ -390,7 +387,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
         <ImageUpload></ImageUpload>
 
         <div className="w-full lg:w-4/6 flex flex-col justify-center">
-          <p className="font-bold">{abogado.names + ' ' + abogado.lastNames[0]+ '.'}</p>
+          <p className="font-bold">{stateAbogado.nombres + ' ' + stateAbogado.apellidos[0]+ '.'}</p>
           <div className="w-full flex flex-col md:flex-row gap-4">
             <ServiceSelectAbogado />
             <IndustrySelectAbogado />
