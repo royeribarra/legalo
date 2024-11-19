@@ -1,9 +1,5 @@
-import React from 'react';
-
 function AdminPage() {
-  return (
-    <h2>Bienvenido al panel de administración</h2>
-  );
+  return <div>Pagina por defecto</div>;
 }
 
 export default AdminPage;

@@ -1,136 +1,104 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Layout, Menu, Input, Card, Row, Col } from "antd";
-// import {
-//   EditOutlined,
-//   LogoutOutlined,
-// } from '@ant-design/icons';
-import Link from "next/link";
 import { usePathname } from "next/navigation";
-import HeaderAdmin from "@/components/admin/HeaderAdmin";
-import type { GetProps } from "antd";
 
-const { Content, Footer } = Layout;
+import { AppSidebar } from "@/components/admin/app-sidebar";
 
-interface MenuItem {
-  key: string;
-  label: JSX.Element;
+import { Separator } from "@/components/ui/separator";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
+
+import { ReactNode } from "react";
+import { SearchForm } from "@/components/admin/search-form";
+import { NavUser } from "@/components/admin/nav-user";
+
+interface LayoutProps {
+  children: ReactNode;
+}
+interface Item {
+  title: string;
+  url: string;
+}
+interface NavItem {
+  title: string;
+  url: string;
+  items: Item[];
 }
 
-export default function AdminLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+const navData: NavItem[] = [
+  {
+    title: "Listas",
+    url: "#",
+    items: [
+      {
+        title: "Ofertas",
+        url: "/admin/ofertas",
+      },
+      {
+        title: "Oportunidades",
+        url: "/admin/oportunidades",
+      },
+    ],
+  },
+  {
+    title: "Personas",
+    url: "#",
+    items: [
+      {
+        title: "Lista de clientes",
+        url: "/admin/clientes",
+      },
+      {
+        title: "Lista de abogados",
+        url: "/admin/abogados",
+      },
+    ],
+  },
+];
+
+function AdminLayout({ children }: LayoutProps) {
   const pathname = usePathname();
-  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
-
-  useEffect(() => {
-    // const userRole = localStorage.getItem('userRole');
-    if (
-      pathname?.includes("/admin/client") ||
-      pathname?.includes("/admin/lawyer") ||
-      pathname?.includes("/admin/oportunidades")
-    ) {
-      setMenuItems([
-        {
-          key: "oportunidades",
-          label: <Link href="/admin/oportunidades">Oportunidades para ti</Link>,
-        },
-        {
-          key: "recientes",
-          label: <Link href="/admin/recientes">Publicadas recientemente</Link>,
-        },
-        {
-          key: "invitaciones",
-          label: <Link href="/admin/invitaciones">Invitaciones</Link>,
-        },
-        {
-          key: "guardado",
-          label: <Link href="/admin/guardado">Guardados</Link>,
-        },
-        {
-          key: "postulaciones",
-          label: <Link href="/admin/postulaciones">Postulaciones</Link>,
-        },
-      ]);
-    } else if (pathname?.includes("/admin/master")) {
-      setMenuItems([
-        {
-          key: "dashboard",
-          label: <Link href="/admin/master/dashboard">Dashboard</Link>,
-        },
-        {
-          key: "users",
-          label: <Link href="/admin/master/users">User Management</Link>,
-        },
-        {
-          key: "settings",
-          label: <Link href="/admin/master/settings">System Settings</Link>,
-        },
-      ]);
-    }
-  }, [pathname]);
-
-  // const userMenu = (
-  //   <Menu>
-  //     <Menu.Item key="1" icon={<EditOutlined />}>
-  //       Edit Profile
-  //     </Menu.Item>
-  //     <Menu.Item key="2" icon={<LogoutOutlined />}>
-  //       Logout
-  //     </Menu.Item>
-  //   </Menu>
-  // );
-  type SearchProps = GetProps<typeof Input.Search>;
-
-  const { Search } = Input;
-  const onSearch: SearchProps["onSearch"] = (value, _e, info) =>
-    console.log(info?.source, value);
-
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <HeaderAdmin></HeaderAdmin>
-      <Layout style={{ padding: "24px", background: "#fff" }}>
-        <div style={{ padding: "12px" }}>
-          <Row>
-            <Col span={12} style={{ display: "flex", alignItems: "center" }}>
-              <Search
-                placeholder="input search text"
-                allowClear
-                onSearch={onSearch}
-                style={{ maxWidth: 400 }}
-              />
-            </Col>
-            <Col span={12}>
-              <Card style={{ backgroundColor: "#e7c8c8" }}>
-                <p>Postulaciones: 5</p>
-                <p>Tipo de membresía: Gratuita</p>
-                <Link href="#" style={{ color: "blue" }}>
-                  Aumenta tus chances
-                </Link>
-              </Card>
-            </Col>
-          </Row>
-        </div>
-        <Content style={{ padding: "0 24px" }}>
-          <Menu
-            mode="horizontal"
-            selectedKeys={[pathname?.split("/").pop() || ""]}
-            style={{ marginBottom: "24px" }}
-            items={menuItems}
-          />
-          <Layout style={{ padding: "24px 0", background: "#fff" }}>
-            <Content style={{ padding: "0 24px", minHeight: 280 }}>
-              {children}
-            </Content>
-          </Layout>
-        </Content>
-      </Layout>
-      <Footer style={{ textAlign: "center" }}>
-        ©2023 Legal Services Platform. All rights reserved.
-      </Footer>
-    </Layout>
+    <SidebarProvider>
+      <AppSidebar navData={navData} pathname={pathname} />
+      <SidebarInset>
+        <header className="flex sticky top-0 bg-background h-16 shrink-0 items-center gap-2 border-b px-4 bg-lg-client">
+          <SidebarTrigger className="-ml-1" />
+
+          <div className="flex justify-start items-center w-full">
+            {navData.map((item) => (
+              <div key={item.title} className="flex-none">
+                {item.items?.map(
+                  (subItem) =>
+                    subItem.url === pathname && (
+                      <h1 className="font-tiempos text-xl" key={subItem.url}>
+                        {subItem.title}
+                      </h1>
+                    )
+                )}
+              </div>
+            ))}
+            <div className="flex justify-end items-center w-full">
+              <div className="flex items-center">
+                <SearchForm className="lg:min-w-[300px]" />
+                <NavUser
+                  user={{
+                    name: "Royer",
+                    email: "royer@gmail.com",
+                    avatar: "",
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </header>
+        <main className="p-8">{children}</main>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }
+
+export default AdminLayout;
