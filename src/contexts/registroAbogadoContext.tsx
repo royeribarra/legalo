@@ -8,7 +8,7 @@ import { IServicio } from "@/interfaces/Servicio.interface";
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
 // Define la estructura del estado
-type RegistroAbogadoState = {
+export type RegistroAbogadoState = {
   nombres: string;
   apellidos: string;
   email: string;

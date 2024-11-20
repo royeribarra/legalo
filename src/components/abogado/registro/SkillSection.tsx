@@ -1,186 +1,182 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus, X } from "lucide-react";
+import { RegistroAbogadoState } from "@/contexts/registroAbogadoContext";
 
-interface SugerenciaBlanda{
+interface SugerenciaBlanda {
   label: string;
   value: string;
 }
-// Sugerencias iniciales de habilidades blandas
-const SugerenciasBlandasIniciales = [
-  {
-    label: "Liderazgo",
-    value: "liderazgo",
-  },
-  {
-    label: "Eficiencia",
-    value: "eficiencia",
-  },
-  {
-    label: "Responsabilidad",
-    value: "responsabilidad",
-  },
+
+const SugerenciasBlandasIniciales: SugerenciaBlanda[] = [
+  { label: "Liderazgo", value: "liderazgo" },
+  { label: "Eficiencia", value: "eficiencia" },
+  { label: "Responsabilidad", value: "responsabilidad" },
 ];
 
-function SkillSection() {
+type SkillSectionProps = {
+  updateStateAbogado: (newState: Partial<RegistroAbogadoState>) => void;
+  stateAbogado: RegistroAbogadoState;
+};
+
+function SkillSection({ updateStateAbogado, stateAbogado }: SkillSectionProps) {
   const [habilidadDura, setHabilidadDura] = useState("");
-  const [habilidadesDuras, setHabilidadesDuras] = useState<string[]>(() => {
-    const savedData = localStorage.getItem("habilidades");
-    return savedData ? JSON.parse(savedData).habilidades_duras : [];
-  });
-
   const [habilidadBlanda, setHabilidadBlanda] = useState("");
-  const [habilidadesBlandas, setHabilidadesBlandas] = useState<string[]>(() => {
-    const savedData = localStorage.getItem("habilidades");
-    return savedData ? JSON.parse(savedData).habilidades_blandas : [];
-  });
+  const [sugerenciasBlandas, setSugerenciasBlandas] = useState<SugerenciaBlanda[]>([]);
 
-  const [sugerenciasBlandas, setSugerenciasBlandas] = useState(
-    SugerenciasBlandasIniciales.filter(
-      (sugerencia) =>
-        !habilidadesBlandas.includes(sugerencia.value) // No mostrar sugerencias ya seleccionadas
-    )
-  );
-
-  const guardarEnLocalStorage = (habilidadesDuras: string[], habilidadesBlandas: string[]) => {
-    localStorage.setItem(
-      "habilidades",
-      JSON.stringify({
-        habilidades_duras: habilidadesDuras,
-        habilidades_blandas: habilidadesBlandas,
-      })
+  // Sincronizar sugerencias con el estado global
+  useEffect(() => {
+    setSugerenciasBlandas(
+      SugerenciasBlandasIniciales.filter(
+        (sugerencia) =>
+          !stateAbogado.habilidades_blandas.some(
+            (habilidad) => habilidad.nombre === sugerencia.value
+          )
+      )
     );
-  };
+  }, [stateAbogado.habilidades_blandas]);
 
   const agregarHabilidadDura = () => {
-    if (habilidadesDuras.length >= 5) {
-      console.log("No se admite más de 5 habilidades duras");
+    if (
+      stateAbogado.habilidades_duras.length >= 5 ||
+      habilidadDura === "" ||
+      stateAbogado.habilidades_duras.some((item) => item.nombre === habilidadDura) ||
+      stateAbogado.habilidades_blandas.some((item) => item.nombre === habilidadDura)
+    ) {
       return;
     }
-    if (habilidadDura && !habilidadesDuras.includes(habilidadDura)) {
-      const nuevasHabilidadesDuras = [...habilidadesDuras, habilidadDura];
-      setHabilidadesDuras(nuevasHabilidadesDuras);
-      guardarEnLocalStorage(nuevasHabilidadesDuras, habilidadesBlandas);
-      setHabilidadDura("");
-    }
+
+    const nuevasHabilidadesDuras = [
+      ...stateAbogado.habilidades_duras,
+      { id: Date.now(), nombre: habilidadDura },
+    ];
+
+    updateStateAbogado({ habilidades_duras: nuevasHabilidadesDuras });
+    setHabilidadDura("");
   };
 
   const agregarHabilidadBlanda = () => {
-    if (habilidadesBlandas.length >= 5) {
-      console.log("No se admite más de 5 habilidades blandas");
+    if (
+      stateAbogado.habilidades_blandas.length >= 5 ||
+      habilidadBlanda === "" ||
+      stateAbogado.habilidades_blandas.some((item) => item.nombre === habilidadBlanda) ||
+      stateAbogado.habilidades_duras.some((item) => item.nombre === habilidadBlanda)
+    ) {
       return;
     }
-    if (habilidadBlanda && !habilidadesBlandas.includes(habilidadBlanda)) {
-      const nuevasHabilidadesBlandas = [...habilidadesBlandas, habilidadBlanda];
-      setHabilidadesBlandas(nuevasHabilidadesBlandas);
-      guardarEnLocalStorage(habilidadesDuras, nuevasHabilidadesBlandas);
-      setHabilidadBlanda("");
-    }
+
+    const nuevasHabilidadesBlandas = [
+      ...stateAbogado.habilidades_blandas,
+      { id: Date.now(), nombre: habilidadBlanda },
+    ];
+
+    updateStateAbogado({ habilidades_blandas: nuevasHabilidadesBlandas });
+    setHabilidadBlanda("");
   };
 
-  const eliminarHabilidadDura = (habilidad: string) => {
-    const nuevasHabilidadesDuras = habilidadesDuras.filter((item) => item !== habilidad);
-    setHabilidadesDuras(nuevasHabilidadesDuras);
-    guardarEnLocalStorage(nuevasHabilidadesDuras, habilidadesBlandas);
+  const eliminarHabilidadDura = (id: number) => {
+    const nuevasHabilidadesDuras = stateAbogado.habilidades_duras.filter((item) => item.id !== id);
+    updateStateAbogado({ habilidades_duras: nuevasHabilidadesDuras });
   };
 
-  const eliminarHabilidadBlanda = (habilidad: string) => {
-    const nuevasHabilidadesBlandas = habilidadesBlandas.filter((item) => item !== habilidad);
-    setHabilidadesBlandas(nuevasHabilidadesBlandas);
-    guardarEnLocalStorage(habilidadesDuras, nuevasHabilidadesBlandas);
+  const eliminarHabilidadBlanda = (id: number) => {
+    const habilidadEliminada = stateAbogado.habilidades_blandas.find((item) => item.id === id);
+    const nuevasHabilidadesBlandas = stateAbogado.habilidades_blandas.filter(
+      (item) => item.id !== id
+    );
 
-    const sugerenciaEliminada = SugerenciasBlandasIniciales.find((s) => s.value === habilidad);
-    if (sugerenciaEliminada) {
-      setSugerenciasBlandas([...sugerenciasBlandas, sugerenciaEliminada]);
+    updateStateAbogado({ habilidades_blandas: nuevasHabilidadesBlandas });
+
+    if (habilidadEliminada) {
+      setSugerenciasBlandas([
+        ...sugerenciasBlandas,
+        SugerenciasBlandasIniciales.find((s) => s.value === habilidadEliminada.nombre)!,
+      ]);
     }
   };
 
   const agregarSugerenciaBlanda = (sugerencia: SugerenciaBlanda) => {
-    if (habilidadesBlandas.length >= 5) {
-      console.log("No se admite más de 5 habilidades blandas");
+    if (
+      stateAbogado.habilidades_blandas.length >= 5 ||
+      stateAbogado.habilidades_duras.some((item) => item.nombre === sugerencia.value)
+    ) {
       return;
     }
-    if (!habilidadesBlandas.includes(sugerencia.value)) {
-      const nuevasHabilidadesBlandas = [...habilidadesBlandas, sugerencia.value];
-      setHabilidadesBlandas(nuevasHabilidadesBlandas);
-      guardarEnLocalStorage(habilidadesDuras, nuevasHabilidadesBlandas);
-      setSugerenciasBlandas(sugerenciasBlandas.filter((s) => s.value !== sugerencia.value));
-    }
+
+    const nuevasHabilidadesBlandas = [
+      ...stateAbogado.habilidades_blandas,
+      { id: Date.now(), nombre: sugerencia.value },
+    ];
+
+    updateStateAbogado({ habilidades_blandas: nuevasHabilidadesBlandas });
+    setSugerenciasBlandas(sugerenciasBlandas.filter((s) => s.value !== sugerencia.value));
   };
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="border-b border-black pb-1">
-        <p className="text-sm my-2">Tus skills o habilidades duras:</p>
+      {/* Habilidades duras */}
+      <div className="border-b pb-2">
+        <p className="text-sm mb-2">Tus skills o habilidades duras:</p>
         <div className="flex gap-2">
           <input
             type="text"
             value={habilidadDura}
             onChange={(e) => setHabilidadDura(e.target.value)}
             placeholder="Escribe tu habilidad dura"
-            className="border border-black p-2 rounded-md flex-grow"
+            className="border p-2 rounded-md flex-grow"
           />
-          <Button onClick={agregarHabilidadDura} className="border-black px-4">
-            Guardar
-          </Button>
+          <Button onClick={agregarHabilidadDura}>Agregar</Button>
         </div>
-        <p className="text-xs text-right my-1">Máximo 5</p>
-
         <div className="flex flex-wrap gap-2 mt-2">
-          {habilidadesDuras.map((habilidad) => (
-            <div
-              key={habilidad}
-              className="bg-gray-200 px-3 py-1 rounded-full flex items-center gap-2"
-            >
-              {habilidad}
-              <button onClick={() => eliminarHabilidadDura(habilidad)}>
-                <X size={16} className="text-black" />
+          {stateAbogado.habilidades_duras.map((habilidad) => (
+            <div key={habilidad.id} className="bg-gray-200 px-3 py-1 rounded-full flex items-center">
+              {habilidad.nombre}
+              <button onClick={() => eliminarHabilidadDura(habilidad.id!)}>
+                <X size={16} />
               </button>
             </div>
           ))}
         </div>
       </div>
-      <div className="border-b border-black pb-1">
-        <p className="text-sm my-2">Tus skills o habilidades blandas:</p>
+
+      {/* Habilidades blandas */}
+      <div className="border-b pb-2">
+        <p className="text-sm mb-2">Tus skills o habilidades blandas:</p>
         <div className="flex gap-2">
           <input
             type="text"
             value={habilidadBlanda}
             onChange={(e) => setHabilidadBlanda(e.target.value)}
             placeholder="Escribe tu habilidad blanda"
-            className="border border-black p-2 rounded-md flex-grow"
+            className="border p-2 rounded-md flex-grow"
           />
-          <Button onClick={agregarHabilidadBlanda} className="border-black px-4">
-            Guardar
-          </Button>
+          <Button onClick={agregarHabilidadBlanda}>Agregar</Button>
         </div>
-        <p className="text-xs text-right my-1">Máximo 5</p>
         <div className="flex flex-wrap gap-2 mt-2">
-          {habilidadesBlandas.map((habilidad) => (
-            <div
-              key={habilidad}
-              className="bg-gray-200 px-3 py-1 rounded-full flex items-center gap-2"
-            >
-              {habilidad}
-              <button onClick={() => eliminarHabilidadBlanda(habilidad)}>
-                <X size={16} className="text-black" />
+          {stateAbogado.habilidades_blandas.map((habilidad) => (
+            <div key={habilidad.id} className="bg-gray-200 px-3 py-1 rounded-full flex items-center">
+              {habilidad.nombre}
+              <button onClick={() => eliminarHabilidadBlanda(habilidad.id!)}>
+                <X size={16} />
               </button>
             </div>
           ))}
         </div>
       </div>
+
+      {/* Sugerencias */}
       <div>
-        <p className="text-sm my-2">Sugerencias de habilidades blandas</p>
-        <div className="flex flex-row gap-2">
-          {sugerenciasBlandas.map((sugerencia: SugerenciaBlanda) => (
+        <p className="text-sm mb-2">Sugerencias de habilidades blandas:</p>
+        <div className="flex flex-wrap gap-2">
+          {sugerenciasBlandas.map((sugerencia) => (
             <Button
               key={sugerencia.value}
               variant="outline"
-              className="rounded-full border-black"
+              className="rounded-full"
               onClick={() => agregarSugerenciaBlanda(sugerencia)}
             >
               {sugerencia.label}
-              <Plus size={20} color="black" className="ml-2" />
+              <Plus size={16} />
             </Button>
           ))}
         </div>

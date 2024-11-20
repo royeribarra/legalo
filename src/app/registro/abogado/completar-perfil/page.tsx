@@ -37,22 +37,11 @@ interface Educacion {
   descripcion: string;
 }
 
-interface Experiencia {
-  id: number;
-  desde_fecha: string;
-  hasta_fecha: string;
-  descripcion: string;
-  empresa: string;
-  titulo: string;
-}
-
 const CompleteProfileLawyerPage: React.FC = () => {
   const router = useRouter();
   const { showToast } = useToast();
   const { stateAbogado, updateStateAbogado } = useRegistroAbogado();
 
-  const [listEducacion, setListEducacion] = useState([]);
-  const [listExperiencia, setListExperiencia] = useState([]);
   const [noExperiencia, setNoExperiencia] = useState(false);
   const [profileImg, setProfileImg] = useState<string | null>(null);
   const [culFile, setCulFile] = useState<File | null>(null);
@@ -65,40 +54,37 @@ const CompleteProfileLawyerPage: React.FC = () => {
 
   const [showModalAddExperiencia, setShowModalAddExperiencia] = useState(false);
   const [experienciaSelected, setExperienciaSelected] =
-    useState<Experiencia | null>(null);
+    useState<IExperiencia | null>(null);
   const [educacionSelected, setEducacionSelected] = useState<Educacion | null>(
     null
   );
   const [stepNumber, setStepNumber] = useState(1);
   const [triger, setTriger] = useState("tab1");
 
-  const editarExperiencia = (experiencia: Experiencia) => {
+  const editarExperiencia = (experiencia: IExperiencia) => {
     setExperienciaSelected(experiencia);
     setShowModalAddExperiencia(true);
   };
 
-  const eliminarExperiencia = (experiencia: Experiencia) => {
-    const newLista = listExperiencia.filter((item: Experiencia) => item.id !== experiencia.id);
-    setListExperiencia(newLista);
-    localStorage.setItem("listaExperiencia", JSON.stringify(newLista));
+  const eliminarExperiencia = (experiencia: IExperiencia) => {
+    const newLista = stateAbogado.experiencias.filter((item: IExperiencia) => item.id !== experiencia.id);
+    updateStateAbogado({experiencias: newLista })
   };
 
-  const editarEducacion = (educacion: Educacion) => {
+  const editarEducacion = (educacion: IEstudio) => {
     setEducacionSelected(educacion);
     setShowModalAddEducacion(true);
   };
 
-  const eliminarEducacion = (educacion: Educacion) => {
-    const newLista = listEducacion.filter((item: Educacion) => item.id !== educacion.id);
-    setListEducacion(newLista);
-    localStorage.setItem("listaEstudios", JSON.stringify(newLista));
+  const eliminarEducacion = (educacion: IEstudio) => {
+    const newLista = stateAbogado.estudios.filter((item: Educacion) => item.id !== educacion.id);
+    updateStateAbogado({estudios: newLista })
   };
 
   const nextStep = async() => {
     
     if (stepNumber === 4) {
       if(!profileImg) {
-        // alert("Debes cargar una imagen de perfil.");
         showToast(
           "success",
           "Operación exitosa",
@@ -111,7 +97,6 @@ const CompleteProfileLawyerPage: React.FC = () => {
       //   return;
       // }
       const formData = new FormData();
-      // const abogado = localStorage.getItem("abogado");
       const especialidad = localStorage.getItem("especialidad");
       const habilidades = localStorage.getItem("habilidades");
       const listaEstudiosLocal = localStorage.getItem("listaEstudios");
@@ -148,13 +133,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
         const videoBlob = base64ToBlob(profileVideo, "video/mp4");
         formData.append("profileVideo", videoBlob, "profileVideo.mp4");
       }
-      console.log(habilidades, "habilidades");
-      console.log(listaEstudiosLocal, "listaEstudiosLocal");
-      console.log(listaExperienciaLocal, "listaExperienciaLocal");
-      console.log(industriasLocal, "industriasLocal");
-      console.log(serviciosLocal, "serviciosLocal");
-      console.log(especialidad, "especialidad");
-      console.log(profileImgLocal, "profileImgLocal");
+
       if (habilidades && listaEstudiosLocal && listaExperienciaLocal && industriasLocal && serviciosLocal && especialidad) {
         
         const habilidadParse = JSON.parse(habilidades);
@@ -235,30 +214,36 @@ const CompleteProfileLawyerPage: React.FC = () => {
     }
     switch (stepNumber) {
       case 1:
-        if(!listExperiencia.length && !noExperiencia){
+        if(!stateAbogado.experiencias.length && !noExperiencia){
           showToast(
-            "info",
-            "Operación exitosa",
-            "El formulario fue enviado correctamente."
+            "error",
+            "Falta:",
+            "Seleccionar experiencia."
           )
-          alert("Debes rellenar la experiencia.")
         }else{
           setTriger("tab2");
           setStepNumber(stepNumber + 1);
         }
         break;
       case 2:
-        if(!listEducacion.length){
-          alert("Debes rellenar la educación.")
+        if(!stateAbogado.estudios.length){
+          showToast(
+            "error",
+            "Falta:",
+            "Seleccionar educación."
+          )
         }else{
           setTriger("tab3");
           setStepNumber(stepNumber + 1);
         }
         break;
       case 3:
-        console.log(especialidad)
-        if(!especialidad.grado || !especialidad.listaEspecialidades.length || !especialidad.sobre_ti){
-          alert("Debes rellenar todos los campos de la especialidad.")
+        if(!stateAbogado.grado || !stateAbogado.especialidades.length || !stateAbogado.sobre_ti){
+          showToast(
+            "error",
+            "Falta:",
+            "Rellenar todos los campos de la especialidad."
+          )
         }else{
           setTriger("tab4");
           setStepNumber(stepNumber + 1);
@@ -300,46 +285,6 @@ const CompleteProfileLawyerPage: React.FC = () => {
     setStepNumber(stepNumber - 1);
   };
 
-  useEffect(() => {
-    const estudiosString = localStorage.getItem("listaEstudios");
-    let estudios;
-    if (estudiosString) {
-      estudios = JSON.parse(estudiosString);
-      setListEducacion(estudios);
-    } else {
-      localStorage.setItem("listaEstudios", JSON.stringify([]));
-      setListEducacion([]);
-    }
-    console.log(estudios);
-  }, [showModalAddEducacion]);
-
-  useEffect(() => {
-    const experienciaString = localStorage.getItem("listaExperiencia");
-    let experiencia;
-    if (experienciaString) {
-      experiencia = JSON.parse(experienciaString);
-      setListExperiencia(experiencia);
-    } else {
-      localStorage.setItem("listaExperiencia", JSON.stringify([]));
-      setListExperiencia([]);
-    }
-  }, [showModalAddExperiencia]);
-
-  useEffect(() => {
-    const especialidadString = localStorage.getItem("especialidad");
-    let especialidad;
-    if (especialidadString) {
-      especialidad = JSON.parse(especialidadString);
-      setEspecialidad(especialidad);
-    } else {
-      const especialidadDefault = {
-        grado: "",
-        listaEspecialidades: [],
-        sobre_ti: ""
-      };
-      localStorage.setItem("especialidad", JSON.stringify(especialidadDefault));
-    }
-  }, []);
 
   useEffect(() => {
     const habilidad = localStorage.getItem("habilidades");
@@ -462,7 +407,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
                     experiencia
                   </Button>
                 </div>
-                {listExperiencia.map((experiencia: Experiencia, index) => (
+                {stateAbogado.experiencias.map((experiencia: IExperiencia, index) => (
                   <div className="flex gap-4 p-4" key={index}>
                     <div className="w-1/4 flex gap-1">
                       <p>{experiencia.desde_fecha}</p>
@@ -521,7 +466,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
                 </Button>
               </div>
               <div>
-                {listEducacion.map((educacion: Educacion, index) => (
+                {stateAbogado.estudios.map((educacion: IEstudio, index) => (
                   <div className="flex gap-4 p-4" key={index}>
                     <div className="w-1/4 flex gap-1">
                       <p>{educacion.desde_fecha}</p>
@@ -556,10 +501,16 @@ const CompleteProfileLawyerPage: React.FC = () => {
               </div>
             </TabsContent>
             <TabsContent value="tab3">
-              <AboutSection></AboutSection>
+              <AboutSection 
+                stateAbogado={stateAbogado}
+                updateStateAbogado={updateStateAbogado}
+              />
             </TabsContent>
             <TabsContent value="tab4">
-              <SkillSection></SkillSection>
+              <SkillSection 
+                stateAbogado={stateAbogado}
+                updateStateAbogado={updateStateAbogado}
+              />
             </TabsContent>
           </div>
         </Tabs>
@@ -572,6 +523,8 @@ const CompleteProfileLawyerPage: React.FC = () => {
           setShowModal={setShowModalAddEducacion}
           setEducacionSelected={setEducacionSelected}
           educacionSelected={educacionSelected}
+          updateStateAbogado={updateStateAbogado}
+          stateAbogado={stateAbogado}
         />
       )}
 
@@ -582,6 +535,8 @@ const CompleteProfileLawyerPage: React.FC = () => {
           setShowModal={setShowModalAddExperiencia}
           setExperienciaSelected={setExperienciaSelected}
           experienciaSelected={experienciaSelected}
+          updateStateAbogado={updateStateAbogado}
+          stateAbogado={stateAbogado}
         />
       )}
       <div className="flex fixed left-0 bottom-0 w-screen h-[115px] bg-[#D5F1F0] ">
