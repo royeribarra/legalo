@@ -97,14 +97,8 @@ const CompleteProfileLawyerPage: React.FC = () => {
       //   return;
       // }
       const formData = new FormData();
-      const especialidad = localStorage.getItem("especialidad");
-      const habilidades = localStorage.getItem("habilidades");
-      const listaEstudiosLocal = localStorage.getItem("listaEstudios");
-      const listaExperienciaLocal = localStorage.getItem("listaExperiencia");
       const profileImgLocal = localStorage.getItem("profileImg");
       const profileVideo = localStorage.getItem("profileVideo");
-      const industriasLocal = localStorage.getItem("industriasAbogado");
-      const serviciosLocal = localStorage.getItem("serviciosAbogado");
 
       if (profileImgLocal) {
         const imgBlob = base64ToBlob(profileImgLocal, "image/jpeg");
@@ -134,44 +128,23 @@ const CompleteProfileLawyerPage: React.FC = () => {
         formData.append("profileVideo", videoBlob, "profileVideo.mp4");
       }
 
-      if (habilidades && listaEstudiosLocal && listaExperienciaLocal && industriasLocal && serviciosLocal && especialidad) {
+      if (true) {
         
-        const habilidadParse = JSON.parse(habilidades);
-        const industriasParse = JSON.parse(industriasLocal);
-        const serviciosParse = JSON.parse(serviciosLocal);
-        const experienciaParse = JSON.parse(listaExperienciaLocal);
-        const estudioParse = JSON.parse(listaEstudiosLocal);
-        const especialidadParse = JSON.parse(especialidad);
 
-        const habilidadesBlandas = habilidadParse.habilidades_blandas.map((habilidad: IHabilidad) => ({
-          nombre: habilidad
-        }));
-        const habilidadesDuras = habilidadParse.habilidades_duras.map((habilidad: IHabilidad) => ({
-          nombre: habilidad
-        }));
-        const industrias = industriasParse.map((industria: string) => ({
-          nombre: industria
-        }));
-        const servicios = serviciosParse.map((servicio: string) => ({
-          nombre: servicio
-        }));
-        const experiencias = experienciaParse.map((experiencia: IExperiencia) => ({
+        const experiencias = stateAbogado.experiencias.map((experiencia: IExperiencia) => ({
           institucion: experiencia.empresa,
           fecha_fin: experiencia.hasta_fecha,
           fecha_inicio: experiencia.desde_fecha,
           descripcion: experiencia.descripcion,
           titulo: experiencia.titulo
         }));
-        const educaciones = estudioParse.map((estudio: IEstudio) => ({
+        const educaciones = stateAbogado.estudios.map((estudio: IEstudio) => ({
           institucion: estudio.institucion,
           fecha_fin: estudio.hasta_fecha,
           fecha_inicio: estudio.desde_fecha,
           descripcion: estudio.descripcion,
           titulo: estudio.titulo,
           ubicacion: estudio.ubicacion
-        }));
-        const especialidades  = especialidadParse.listaEspecialidades.map((especialidad: string) => ({
-          nombre: especialidad
         }));
         const data = {
           nombres: stateAbogado.nombres,
@@ -181,17 +154,17 @@ const CompleteProfileLawyerPage: React.FC = () => {
           dni: stateAbogado.dni,
           telefono: stateAbogado.telefono,
           contrasena: stateAbogado.contrasena,
-          sobre_ti: especialidad ? JSON.parse(especialidad)?.sobre_ti : '',
-          grado_academico: especialidad ? JSON.parse(especialidad)?.grado : '',
-          cip: especialidad ? JSON.parse(especialidad)?.cip : '',
-          colegio: especialidad ? JSON.parse(especialidad)?.colegio : '',
-          habilidadesBlandas: habilidadesBlandas,
-          habilidadesDuras: habilidadesDuras,
-          industrias: industrias,
-          servicios: servicios,
+          sobre_ti: stateAbogado.sobre_ti,
+          grado_academico: stateAbogado.grado,
+          cip: stateAbogado.cip,
+          colegio: stateAbogado.colegio,
+          habilidadesBlandas: stateAbogado.habilidades_blandas,
+          habilidadesDuras: stateAbogado.habilidades_duras,
+          industrias: stateAbogado.industrias,
+          servicios: stateAbogado.servicios,
           experiencias: experiencias,
           educaciones: educaciones,
-          especialidades: especialidades
+          especialidades: stateAbogado.especialidades
         };
 
         fetch(`${process.env.BASE_APP_API_URL}/abogados/create`, {
@@ -334,8 +307,14 @@ const CompleteProfileLawyerPage: React.FC = () => {
         <div className="w-full lg:w-4/6 flex flex-col justify-center">
           <p className="font-bold">{stateAbogado.nombres + ' ' + stateAbogado.apellidos[0]+ '.'}</p>
           <div className="w-full flex flex-col md:flex-row gap-4">
-            <ServiceSelectAbogado />
-            <IndustrySelectAbogado />
+            <ServiceSelectAbogado 
+              stateAbogado={stateAbogado}
+              updateStateAbogado={updateStateAbogado}
+            />
+            <IndustrySelectAbogado 
+              stateAbogado={stateAbogado}
+              updateStateAbogado={updateStateAbogado}
+            />
           </div>
         </div>
         <VideoUpload></VideoUpload>

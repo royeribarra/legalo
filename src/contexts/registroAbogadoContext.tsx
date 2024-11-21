@@ -2,6 +2,7 @@ import { IEspecialidad } from "@/interfaces/Especialidad.interface";
 import { IEstudio } from "@/interfaces/Estudio.interface";
 import { IExperiencia } from "@/interfaces/Experiencia.interface";
 import { IHabilidad } from "@/interfaces/Habilidad.interface";
+import { IIndustria } from "@/interfaces/Industria.interface";
 import { IPregunta } from "@/interfaces/Pregunta.interface";
 import { IPresupuesto } from "@/interfaces/Presupuesto.interface";
 import { IServicio } from "@/interfaces/Servicio.interface";
@@ -25,6 +26,7 @@ export type RegistroAbogadoState = {
   habilidades_blandas: IHabilidad[];
   experiencias: IExperiencia[];
   servicios: IServicio[];
+  industrias: IIndustria[];
   estudios: IEstudio[];
   especialidades: IEspecialidad[];
 };
@@ -59,7 +61,8 @@ export const RegistroAbogadoProvider = ({ children }: OfertaProviderProps) => {
     experiencias: [],
     servicios: [],
     estudios: [],
-    especialidades: []
+    especialidades: [],
+    industrias: []
   });
 
   // Usamos useEffect para acceder a localStorage solo en el cliente
