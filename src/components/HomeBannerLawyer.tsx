@@ -31,17 +31,20 @@ const HomeBannerClient = () => {
   const carouselItems = [
     {
       CardTitle: "Abogado Civil",
-      CardDescription: "Remoto, Lima, Arequipa, Callao, Trujillo.",
+      CardDescription:
+        "¿Necesitas revisar o firmar un contrato, asegurar la compra o alquiler de una propiedad o con el trámite de una herencia familiar?",
       ImageSrc: "/icos/ico-d-civil.png",
     },
     {
       CardTitle: "Abogado Penalista",
-      CardDescription: "Remoto, Cusco, Ica, Piura.",
+      CardDescription:
+        "¿Te enfrentas a un juicio penal, necesitas asesoría en una investigación policial o quieres conocer tus derechos ante una detención?",
       ImageSrc: "/icos/ico-d-penal.png",
     },
     {
       CardTitle: "Abogado Laboral",
-      CardDescription: "Remoto, Cusco, Ica, Piura.",
+      CardDescription:
+        "¿Tienes problemas con un contrato de trabajo, fuiste despedido injustamente, necesitas asesoría en una inspección de SUNAFIL o sobre derechos laborales",
       ImageSrc: "/icos/ico-d-laboral.png",
     },
     {
@@ -102,8 +105,8 @@ const HomeBannerClient = () => {
         <div className="bg-lg-lawyer lg:pl-16 p-4 2xl:p-16 h-full flex lg:w-[44%] items-center w-full">
           <div className="flex flex-col gap-8 py-4 ">
             <h1 className="text-black text-2xl lg:text-[48px] xl:text-[64px] 3xl:text-7xl font-tiempos leading-[1.2]">
-              Expande tus oportunidades trabajando casos legales{" "}
-              <span className="italic font-light">a tu medida</span>
+              <span className="italic font-light">Explora </span>
+              nuevas oportunidades trabajando casos legales a tu medida
             </h1>
             <div className="w-full flex gap-4 relative">
               <Input
@@ -157,12 +160,12 @@ const HomeBannerClient = () => {
                     className=" lg:w-1/3 lg:flex-none border-r border-black min-h-[118px] flex items-center m-0 p-0"
                   >
                     <Card className="p-4 border-none flex gap-2 lg:gap-4  lg:items-center flex-col lg:flex-row">
-                      <div className="rounded-full bg-[#D9D9D9] h-12 w-12 flex items-center justify-center flex-none">
+                      <div className="flex items-center justify-center flex-none">
                         <Image
                           src={item.ImageSrc}
                           alt="icon"
-                          width={25}
-                          height={25}
+                          width={48}
+                          height={48}
                         />
                       </div>
                       <CardHeader className="p-0 space-y-0">

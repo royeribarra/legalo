@@ -15,9 +15,9 @@ const Footer = () => {
             className="my-8"
           />
           <div className="text-white flex gap-8 flex-col lg:flex-row ">
-            <Link href="#">Nosotros</Link>
-            <Link href="#">Contacto</Link>
-            <Link href="#">Ayuda Online</Link>
+            <Link href="/nosotros">Nosotros</Link>
+            <Link href="/contacto">Contacto</Link>
+            <Link href="/ayuda">Ayuda Online</Link>
           </div>
 
           <div className="flex space-x-4 my-4 ">
@@ -61,15 +61,15 @@ const Footer = () => {
         </div>
 
         <div className="w-full   flex flex-col-reverse lg:flex-wrap gap-8 justify-center text-white my-8 lg:flex-row ">
-          <p>© 2023 Legalo. All rights reserved.</p>
+          <p>© 2024 Legalo. Todos los derechos reservados</p>
           <Link href="#" className="underline">
-            Privacy Policy
+            Política de privacidad
+          </Link>
+          <Link href="/terminos-y-condiciones" className="underline">
+            Términos y Condiciones
           </Link>
           <Link href="#" className="underline">
-            Terms of Service
-          </Link>
-          <Link href="#" className="underline">
-            Cookies Settings
+            Libro de Reclamaciones
           </Link>
         </div>
       </div>

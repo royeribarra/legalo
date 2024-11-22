@@ -32,19 +32,19 @@ const HomeBannerClient = () => {
     {
       CardTitle: "Abogado Civil",
       CardDescription:
-        "¿Listo para proteger tus contratos, gestionar propiedades, y planificar herencias sin complicaciones?",
+        "¿Necesitas revisar o firmar un contrato, asegurar la compra o alquiler de una propiedad o con el trámite de una herencia familiar?",
       ImageSrc: "/icos/ico-d-civil.png",
     },
     {
       CardTitle: "Abogado Penalista",
       CardDescription:
-        "¿Buscas defensa legal en juicios penales, asistencia en investigaciones, o asesoramiento sobre detenciones y casos de violencia? ",
+        "¿Te enfrentas a un juicio penal, necesitas asesoría en una investigación policial o quieres conocer tus derechos ante una detención?",
       ImageSrc: "/icos/ico-d-penal.png",
     },
     {
       CardTitle: "Abogado Laboral",
       CardDescription:
-        "¿Problemas laborales? Desde contratos y despidos hasta reclamaciones salariales y defensa contra el acoso, te respaldamos en cada paso.",
+        "¿Tienes problemas con un contrato de trabajo, fuiste despedido injustamente, necesitas asesoría en una inspección de SUNAFIL o sobre derechos laborales",
       ImageSrc: "/icos/ico-d-laboral.png",
     },
     {
@@ -106,9 +106,8 @@ const HomeBannerClient = () => {
         <div className="bg-lg-client p-4 lg:pl-16 2xl:p-16 h-full flex lg:w-[44%] items-center w-full">
           <div className="flex flex-col gap-8 py-4 ">
             <h1 className="text-black text-2xl lg:text-[48px] xl:text-[60px] 3xl:text-7xl font-tiempos leading-[1.2]">
-              Simplificamos la contratación de tu abogado,{" "}
-              <span className="italic font-light">donde y cuándo </span>lo
-              necesites
+              <span className="italic font-light"> Simplificamos</span> la
+              contratación de tu abogado, donde y cuándo lo necesites
             </h1>
             <div className="w-full  flex gap-4 relative ">
               <Input
@@ -154,19 +153,19 @@ const HomeBannerClient = () => {
                     className="lg:w-1/3 lg:flex-none border-r border-black min-h-[118px] flex items-center m-0 p-0"
                   >
                     <Card className="p-4 border-none flex gap-2 lg:gap-4 lg:items-center flex-col lg:flex-row">
-                      <div className="rounded-full bg-[#D9D9D9] h-12 w-12 flex items-center justify-center flex-none">
+                      <div className="flex-none flex items-center justify-center">
                         <Image
                           src={item.ImageSrc}
                           alt="icon"
-                          width={25}
-                          height={25}
+                          width={48}
+                          height={48}
                         />
                       </div>
                       <CardHeader className="p-0 space-y-0">
                         <CardTitle className="text-base lg:text-lg  font-tiempos">
                           {item.CardTitle}
                         </CardTitle>
-                        <CardDescription className="line-clamp-3 lg:text-sm text-xs ">
+                        <CardDescription className="line-clamp-3 lg:text-sm text-xs text-black">
                           {item.CardDescription}
                         </CardDescription>
                       </CardHeader>

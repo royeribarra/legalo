@@ -72,17 +72,17 @@ const HomeMain: React.FC<HomeMainProps> = ({
   ];
   return (
     <div className="overflow-hidden">
-      <div className="container p-4 lg:p-8 mx-auto flex justify-center flex-col items-center  mb-5 lg:mt-20">
+      <div className="container p-4 lg:p-8 mx-auto flex justify-center flex-col items-center  mb-5 lg:mt-10">
         <div>
           <div className="lg:flex gap-2  border border-black rounded-full p-[2px] w-auto">
             <Button
-              variant="switch"
+              variant="switchOutline"
               onClick={() => updateServiceTipe("client")}
             >
               ¿Quieres contratar?
             </Button>
             <Button
-              variant="switchOutline"
+              variant="switch"
               onClick={() => updateServiceTipe("lawyer")}
             >
               ¿Quieres trabajar?
@@ -92,12 +92,12 @@ const HomeMain: React.FC<HomeMainProps> = ({
 
         <div className="max-w-[680px] mx-auto my-8">
           <h1 className="text-black text-3xl lg:text-[64px] font-tiempos text-center leading-[1.2]">
-            Conviértete en nuestro{" "}
-            <span className="italic font-light">abogado de confianza</span>
+            Conviértete en nuestro abogado de{" "}
+            <span className="italic font-light"> confianza</span>
           </h1>
-          <p className="my-6 text-center text-lg">
-            Crea una cuenta en pocos pasos y accede a nuestra amplia red de
-            abogados.
+          <p className="mx-auto my-6 text-center text-lg max-w-[580px]">
+            Crea una cuenta en pocos pasos y únete a nuestra comunidad de
+            abogados. Encuentra proyectos que se adapten a tus áreas de interés.
           </p>
         </div>
 
@@ -116,11 +116,11 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg"
                 />
               </div>
-              <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4">
-                Registrate <span className="italic">gratis</span>
+              <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4 text-center py-4">
+                Regístrate gratis
               </CardTitle>
-              <CardDescription className="line-clamp-4 text-lg text-black">
-                Regístrate y completa tu perfil profesional.
+              <CardDescription className="line-clamp-4 text-base text-black text-center">
+                Regístrate en nuestra web y completa tu perfil profesional.
               </CardDescription>
             </CardHeader>
           </Card>
@@ -139,12 +139,12 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg"
                 />
               </div>
-              <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4">
-                Busca <span className="italic">proyectos</span>
+              <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4 text-center py-4">
+                Busca proyectos
               </CardTitle>
-              <CardDescription className="line-clamp-4 text-lg text-black">
+              <CardDescription className="line-clamp-4 text-base text-black text-center">
                 Utiliza nuestros filtros para encontrar proyectos que se adapten
-                a tus necesidades.
+                a tus preferencias.
               </CardDescription>
             </CardHeader>
           </Card>
@@ -163,11 +163,11 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg"
                 />
               </div>
-              <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4">
-                Explora <span className="italic">perfiles</span>
+              <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4 text-center py-4">
+                Explora perfiles
               </CardTitle>
-              <CardDescription className="line-clamp-4 text-lg text-black">
-                Envía tu propuesta y elige tu forma de pago.
+              <CardDescription className="line-clamp-4 text-base text-black text-center">
+                Envía tu propuesta de trabajo y elige tu forma de pago.
               </CardDescription>
             </CardHeader>
           </Card>
@@ -186,11 +186,12 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg"
                 />
               </div>
-              <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4">
-                Consigue <span className="italic">un contrato</span>
+              <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4 text-center py-4">
+                Obtén un contrato
               </CardTitle>
-              <CardDescription className="line-clamp-4 text-lg text-black">
-                Si eres seleccionado, recibe el contrato y comienza
+              <CardDescription className="line-clamp-4 text-base text-black text-center">
+                Si eres seleccionado, recibe el contrato y comienza a trabajar
+                junto a tu nuevo cliente.
               </CardDescription>
             </CardHeader>
           </Card>
@@ -209,12 +210,12 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg"
                 />
               </div>
-              <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4">
-                Completa el <span className="italic">trabajo</span>
+              <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4 text-center py-4">
+                Completa el trabajo
               </CardTitle>
-              <CardDescription className="line-clamp-4 text-lg text-black">
-                Marca los pasos completados y comunícate con el cliente si
-                tienes dudas.
+              <CardDescription className="line-clamp-4 text-base text-black text-center">
+                Marca los pasos completados y comunícate constantemente con el
+                cliente para resolver dudas.
               </CardDescription>
             </CardHeader>
           </Card>
@@ -233,10 +234,10 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg"
                 />
               </div>
-              <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4">
-                Recibe<span className="italic">tu pago</span>
+              <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4 text-center py-4">
+                Recibe tu pago
               </CardTitle>
-              <CardDescription className="line-clamp-4 text-lg text-black">
+              <CardDescription className="line-clamp-4 text-base text-black text-center">
                 Obtén pagos parciales y finales tras la aprobación del cliente.
               </CardDescription>
             </CardHeader>
@@ -257,8 +258,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 />
                 <div className="text-white">
                   <h3 className="text-lg lg:text-2xl font-tiempos mb-2">
-                    Oportunidades{" "}
-                    <span className="italic font-light">Exclusivas</span>
+                    Oportunidades Exclusivas
                   </h3>
                   <p className="text-base">
                     Accede a proyectos y empleos específicos para abogados,
@@ -276,8 +276,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 />
                 <div className="text-white">
                   <h3 className="text-lg lg:text-2xl font-tiempos mb-2">
-                    Confianza y{" "}
-                    <span className="italic font-light">Seguridad</span>
+                    Confianza y Seguridad
                   </h3>
                   <p className="text-base">
                     Trabaja solo con clientes verificados para garantizar la
@@ -295,7 +294,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 />
                 <div className="text-white">
                   <h3 className="text-lg lg:text-2xl font-tiempos mb-2">
-                    Pagos <span className="italic font-light">Seguros</span>
+                    Pagos Seguros
                   </h3>
                   <p className="text-base">
                     Confía en nuestro sistema para asegurar que recibas tus
@@ -340,16 +339,21 @@ const HomeMain: React.FC<HomeMainProps> = ({
           </div>
         </div>
       </div>
-      <div className="bg-[url('/assets/img-legalo4.webp')] bg-cover lg:h-[242px] px-8 py-8 lg:px-16 ">
-        <div className="max-w-[1920px] mx-auto py-4 lg:pr-8 flex md:items-center items-start lg:justify-between h-full flex-col lg:flex-row">
-          <div className="text-white mb-8">
-            <h3 className="text-3xl lg:text-[40px] mb-8 font-tiempos">
-              Descubre oportunidades legales{" "}
-              <span className="italic font-light"> a tu medida.</span>
-            </h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <div className="bg-[url('/assets/img-home-9.jpeg')] bg-cover  bg-center">
+        <div className="bg-black bg-opacity-70 px-8 py-8 lg:px-16 lg:h-[242px]">
+          <div className="max-w-[1920px] mx-auto py-4 lg:pr-8 flex md:items-center items-start lg:justify-between h-full flex-col lg:flex-row">
+            <div className="text-white mb-8">
+              <h3 className="text-3xl lg:text-[40px] mb-8 font-tiempos">
+                Descubre oportunidades legales
+                <span className="italic font-light"> a tu medida.</span>
+              </h3>
+              <p className="text-lg">
+                Crea una cuenta en pocos pasos y accede a nuestra comunidad de
+                abogados
+              </p>
+            </div>
+            <Button variant={"secondary"}>Regístrate gratis</Button>
           </div>
-          <Button>Regístrate gratis</Button>
         </div>
       </div>
 
