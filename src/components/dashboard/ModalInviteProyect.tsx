@@ -24,7 +24,7 @@ const ModalInviteProyect: React.FC<ModalInviteProyectProps> = ({
       <div className="flex flex-col lg:flex-row bg-white lg:rounded-[24px] shadow-lg relative w-full h-full overflow-y-auto lg:w-[1220px] lg:max-w-[84vw] lg:h-[830px] lg:max-h-[90vh] hidde-scrollbar  lg:px-16 lg:py-10 p-4 ">
         <div className="w-full lg:border border-black overflow-hidden overflow-y-scroll relative">
           <div className="mt-10 my-8">
-            <h2 className="mb-4 font-tiempos text-2xl lg:text-[44px] text-center">
+            <h2 className="mb-4 font-nimbus text-2xl lg:text-[44px] text-center">
               ¡Invitaste a Omar a tu proyecto!
             </h2>
             <p className="text-sm lg:text-base text-center">

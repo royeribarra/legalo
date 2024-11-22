@@ -6,7 +6,7 @@ const SimilarProyect = () => {
   return (
     <div className="p-4 lg:p-8 border border-black rounded-[20px] flex flex-col gap-4 flex-none w-[320px] lg:w-[430px]">
       <div className="flex justify-between flex-col-reverse lg:flex-row">
-        <h2 className="font-tiempos text-base lg:text-lg font-light">
+        <h2 className="font-nimbus text-base lg:text-lg font-light">
           Asesoría para Contrato de Trabajadores Temporales
         </h2>
 

@@ -40,7 +40,7 @@ const RegisterPage = () => {
         </div>
       )} */}
 
-      <h2 className=" text-3xl lg:text-5xl text-left font-tiempos">
+      <h2 className=" text-3xl lg:text-5xl text-left font-nimbus">
         Únete como <span className="italic">cliente</span>&nbsp;o&nbsp;
         <span className="italic">abogado</span>
       </h2>

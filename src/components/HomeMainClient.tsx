@@ -90,7 +90,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
         </div>
 
         <div className="max-w-[780px] mx-auto my-8">
-          <h1 className="text-black text-3xl lg:text-[64px] font-tiempos text-center leading-[1.2]">
+          <h1 className="text-black text-3xl lg:text-[64px] font-nimbus text-center leading-[1.2]">
             Accede a una comunidad de{" "}
             <span className="italic font-light">abogados de confianza</span>
           </h1>
@@ -115,7 +115,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg"
                 />
               </div>
-              <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4 text-center py-4">
+              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4">
                 Regístrate gratis
               </CardTitle>
               <CardDescription className="line-clamp-4 text-base text-black text-center">
@@ -139,7 +139,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg"
                 />
               </div>
-              <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4 text-center py-4">
+              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4">
                 Publica tu caso
               </CardTitle>
               <CardDescription className="line-clamp-4 text-base text-black text-center">
@@ -163,7 +163,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg"
                 />
               </div>
-              <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4 text-center py-4">
+              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4">
                 Explora ofertas
               </CardTitle>
               <CardDescription className="line-clamp-4 text-base text-black text-center">
@@ -187,7 +187,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg"
                 />
               </div>
-              <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4 text-center py-4">
+              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4">
                 Contrata a tu abogado
               </CardTitle>
               <CardDescription className="line-clamp-4 text-base text-black text-center">
@@ -211,7 +211,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg"
                 />
               </div>
-              <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4 text-center py-4">
+              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4">
                 Resuelve tu caso legal
               </CardTitle>
               <CardDescription className="line-clamp-4 text-base text-black text-center">
@@ -235,7 +235,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg"
                 />
               </div>
-              <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4 text-center py-4">
+              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4">
                 Recibe el servicio con tranquilidad
               </CardTitle>
               <CardDescription className="line-clamp-4 text-base text-black text-center">
@@ -259,7 +259,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="mx-auto"
                 />
                 <div className="text-white">
-                  <h3 className="text-lg lg:text-2xl font-tiempos mb-2 ">
+                  <h3 className="text-lg lg:text-2xl font-nimbus mb-2 ">
                     Profesionalismo y{" "}
                     <span className="italic font-light">Experiencia</span>
                   </h3>
@@ -279,7 +279,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="mx-auto"
                 />
                 <div className="text-white">
-                  <h3 className="text-lg lg:text-2xl font-tiempos mb-2">
+                  <h3 className="text-lg lg:text-2xl font-nimbus mb-2">
                     Atención{" "}
                     <span className="italic font-light">Personalizada</span>
                   </h3>
@@ -298,7 +298,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="mx-auto"
                 />
                 <div className="text-white">
-                  <h3 className="text-lg lg:text-2xl font-tiempos mb-2">
+                  <h3 className="text-lg lg:text-2xl font-nimbus mb-2">
                     Seguridad y{" "}
                     <span className="italic font-light">Confidencialidad</span>
                   </h3>
@@ -317,7 +317,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="mx-auto"
                 />
                 <div className="text-white">
-                  <h3 className="text-lg lg:text-2xl font-tiempos mb-2">
+                  <h3 className="text-lg lg:text-2xl font-nimbus mb-2">
                     Opiniones y{" "}
                     <span className="italic font-light">Valoraciones</span>{" "}
                   </h3>
@@ -330,10 +330,10 @@ const HomeMain: React.FC<HomeMainProps> = ({
             </div>
           </div>
           <div className=" bg-lg-client flex flex-col items-center justify-center gap-4 3xl:gap-8 p-8">
-            <h3 className="text-[40px] text-center max-w-[416px] 3xl:max-w-[700px] font-tiempos 3xl:text-6xl">
+            <h3 className="text-[40px] text-center max-w-[416px] 3xl:max-w-[700px] font-nimbus 3xl:text-6xl">
               Con Legalo <span className="italic">ahorra</span> hasta
             </h3>
-            <h2 className="text-6xl italic font-tiempos 3xl:text-7xl">
+            <h2 className="text-6xl italic font-nimbus 3xl:text-7xl">
               S/ 2160
             </h2>
             <p className="text-base max-w-[264px] 3xl:max-w-[400px] text-center 3xl:text-xl">
@@ -375,7 +375,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
           />
         </div>
         <div className="flex justify-center items-star flex-col gap-8 w-full lg:w-[50%] lg:pr-16 mt-8 lg:mt-0">
-          <h2 className="text-5xl font-tiempos 3xl:text-6xl">
+          <h2 className="text-5xl font-nimbus 3xl:text-6xl">
             Cuéntanos hoy tu caso y encuentra{" "}
             <span className="italic">tu abogado</span> mañana
           </h2>
@@ -465,7 +465,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
         <div className="bg-black bg-opacity-70 px-8 py-8 lg:px-16 lg:h-[242px]">
           <div className="max-w-[1920px] mx-auto py-4 lg:pr-8 flex md:items-center items-start lg:justify-between h-full flex-col lg:flex-row">
             <div className="text-white mb-8">
-              <h3 className="text-3xl lg:text-[40px] mb-8 font-tiempos">
+              <h3 className="text-3xl lg:text-[40px] mb-8 font-nimbus">
                 Accede a una comunidad de abogados de confianza
                 <span className="italic font-light"> a tu medida.</span>
               </h3>

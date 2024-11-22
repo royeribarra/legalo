@@ -22,7 +22,13 @@ const PublicarPageFour = () => {
     if (file) {
       if (file.size > 2 * 1024 * 1024) {
         setFileError("El archivo debe ser de menos de 2MB.");
-      } else if (!["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"].includes(file.type)) {
+      } else if (
+        ![
+          "application/pdf",
+          "application/msword",
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        ].includes(file.type)
+      ) {
         setFileError("Solo se permiten archivos DOC, DOCX, y PDF.");
       } else {
         setFileError(null);
@@ -32,7 +38,7 @@ const PublicarPageFour = () => {
   };
 
   const nextStep = () => {
-    route.push("/dashboard/cliente/nueva-oferta/servicio")
+    route.push("/dashboard/cliente/nueva-oferta/servicio");
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -47,7 +53,7 @@ const PublicarPageFour = () => {
       </div>
       <div className="flex flex-wrap lg: flex-nowrap gap-16">
         <div>
-          <h1 className="text-2xl lg:text-5xl my-4 font-tiempos">
+          <h1 className="text-2xl lg:text-5xl my-4 font-nimbus">
             Cuéntanos lo qué necesitas
           </h1>
           <p className="mb-6 lg:text-xl font-bold">
@@ -106,7 +112,10 @@ const PublicarPageFour = () => {
       </div>
 
       <div className="flex justify-end mt-16">
-        <Button className="h-12 px-10 px-text-base rounded-[10px]" onClick={nextStep}>
+        <Button
+          className="h-12 px-10 px-text-base rounded-[10px]"
+          onClick={nextStep}
+        >
           Confirmar <ArrowRight className="ml-2" />
         </Button>
       </div>

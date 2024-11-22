@@ -19,7 +19,7 @@ const PublicarPageTwo = () => {
   };
 
   const nextStep = () => {
-    route.push("/dashboard/cliente/nueva-oferta/especialidad")
+    route.push("/dashboard/cliente/nueva-oferta/especialidad");
   };
 
   return (
@@ -29,7 +29,7 @@ const PublicarPageTwo = () => {
         <p className="text-left">Paso 2/6</p>
       </div>
       <div>
-        <h1 className="text-[32px] my-4 font-tiempos">
+        <h1 className="text-[32px] my-4 font-nimbus">
           Empecemos con el título de tu proyecto
         </h1>
         <p className="mb-6">
@@ -57,7 +57,10 @@ const PublicarPageTwo = () => {
       </div>
 
       <div className="flex justify-end mt-16">
-        <Button className="h-12 px-10 px-text-base rounded-[10px]" onClick={nextStep}>
+        <Button
+          className="h-12 px-10 px-text-base rounded-[10px]"
+          onClick={nextStep}
+        >
           Siguiente <ArrowRight className="ml-2" />
         </Button>
       </div>

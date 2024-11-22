@@ -18,18 +18,18 @@ const PublicarPageSix = () => {
 
   // Funciones para manejar los cambios
   const handleDuracionChange = (value: string) => {
-    updateState({duracion: value})
+    updateState({ duracion: value });
   };
 
   const handleNivelExperienciaChange = (value: string) => {
-    updateState({nivelExperiencia: value})
+    updateState({ nivelExperiencia: value });
   };
 
   const handleCheckboxChange = (checked: boolean) => {
     if (checked) {
-      updateState({duracion: 'indefinido'});
+      updateState({ duracion: "indefinido" });
     } else {
-      updateState({duracion: ''});
+      updateState({ duracion: "" });
     }
   };
 
@@ -44,7 +44,7 @@ const PublicarPageSix = () => {
         <p className="text-left">Paso 6/6</p>
       </div>
       <div>
-        <h1 className="text-[36px] my-4 font-tiempos">
+        <h1 className="text-[36px] my-4 font-nimbus">
           Estimemos el alcance de tu trabajo
         </h1>
         <p className="mb-6">Consideremos el tamaño de tu proyecto.</p>
@@ -97,7 +97,10 @@ const PublicarPageSix = () => {
       </div>
 
       <div className="flex justify-end mt-16">
-        <Button className="h-12 px-10 px-text-base rounded-[10px]" onClick={nextStep}>
+        <Button
+          className="h-12 px-10 px-text-base rounded-[10px]"
+          onClick={nextStep}
+        >
           Siguiente <ArrowRight className="ml-2" />
         </Button>
       </div>

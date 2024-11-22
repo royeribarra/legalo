@@ -19,7 +19,7 @@ const PublicarPageSix = () => {
         <p className="text-left">Paso 6/6</p>
       </div>
       <div>
-        <h1 className="text-[36px] my-4 font-tiempos">
+        <h1 className="text-[36px] my-4 font-nimbus">
           Estimemos el alcance de tu trabajo
         </h1>
         <p className="mb-6">Consideremos el tamaño de tu proyecto.</p>

@@ -22,7 +22,7 @@ const ModalCrearProyectoOk: React.FC<ModalPostulacionOkProps> = ({
             width={369}
             height={214}
           />
-          <h2 className="text-3xl lg:text-[40px] font-tiempos text-center">
+          <h2 className="text-3xl lg:text-[40px] font-nimbus text-center">
             ¿Qué sigue después de publicar un proyecto?
           </h2>
           <p className="text-center">

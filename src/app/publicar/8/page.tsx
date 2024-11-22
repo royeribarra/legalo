@@ -57,7 +57,7 @@ const PublicarPageEight = () => {
   };
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value)
+    setInput(e.target.value);
   };
 
   return (
@@ -67,7 +67,7 @@ const PublicarPageEight = () => {
         <p className="text-left">Paso 8/6</p>
       </div>
       <div>
-        <h1 className="text-[36px] my-4 font-tiempos ">
+        <h1 className="text-[36px] my-4 font-nimbus ">
           Preguntas de selección <br />
           (opcional)
         </h1>

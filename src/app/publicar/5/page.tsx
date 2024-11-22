@@ -28,7 +28,7 @@ const PublicarPageFour = () => {
       </div>
       <div>
         <div>
-          <h1 className="text-2xl lg:text-5xl my-4 font-tiempos">
+          <h1 className="text-2xl lg:text-5xl my-4 font-nimbus">
             Tipo de servicio
           </h1>
           <p className="mb-6 lg:text-lg ">Puedes escoger max 2*</p>

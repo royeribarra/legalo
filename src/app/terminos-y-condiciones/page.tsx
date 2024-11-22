@@ -17,7 +17,7 @@ const TerminosPage = () => {
       <Header serviceTipe={serviceTipe} updateServiceTipe={updateServiceTipe} />
       <div>
         <div className="p-8 max-w-[1300px] mx-auto">
-          <h1 className="text-4xl lg:text-6xl font-tiempos my-8">
+          <h1 className="text-4xl lg:text-6xl font-nimbus my-8">
             Términos y condiciones
           </h1>
           <p>Last Modified: July 19, 2021</p>

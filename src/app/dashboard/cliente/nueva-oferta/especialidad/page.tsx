@@ -30,7 +30,7 @@ const PublicarPageThree = () => {
         (service) => service.nombre !== item.CardTitle
       );
       setSelectServices(filteredServices);
-      updateState({especialidades: filteredServices})
+      updateState({ especialidades: filteredServices });
     } else {
       if (selectServices.length >= 5) {
         console.log("No se puede escoger más de una especialidad");
@@ -38,12 +38,12 @@ const PublicarPageThree = () => {
       }
       const updatedServices = [...selectServices, newEspecialidad];
       setSelectServices(updatedServices);
-      updateState({especialidades: updatedServices})
+      updateState({ especialidades: updatedServices });
     }
   };
 
   const nextStep = () => {
-    route.push("/dashboard/cliente/nueva-oferta/descripcion")
+    route.push("/dashboard/cliente/nueva-oferta/descripcion");
   };
 
   return (
@@ -53,7 +53,7 @@ const PublicarPageThree = () => {
         <p className="text-left">Paso 3/6</p>
       </div>
 
-      <h1 className="text-2xl lg:text-5xl my-4 font-tiempos">
+      <h1 className="text-2xl lg:text-5xl my-4 font-nimbus">
         ¿Qué especialidad estás buscando?
       </h1>
       <div className="flex justify-between mt-8">
@@ -108,7 +108,10 @@ const PublicarPageThree = () => {
       </div>
 
       <div className="flex justify-end mt-16">
-        <Button className="h-12 px-10 px-text-base rounded-[10px]" onClick={nextStep}>
+        <Button
+          className="h-12 px-10 px-text-base rounded-[10px]"
+          onClick={nextStep}
+        >
           Siguiente <ArrowRight className="ml-2" />
         </Button>
       </div>

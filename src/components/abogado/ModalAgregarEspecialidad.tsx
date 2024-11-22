@@ -44,10 +44,7 @@ function ModalAgregarEspecialidad({
         )
       );
     } else {
-      setSelectServices([
-        ...selectServices,
-        { nombre: item.CardTitle },
-      ]);
+      setSelectServices([...selectServices, { nombre: item.CardTitle }]);
     }
   };
 
@@ -63,9 +60,10 @@ function ModalAgregarEspecialidad({
   return showModal ? (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
       <div className="relative w-full max-w-[900px] bg-white rounded-lg shadow-lg p-10 overflow-hidden">
-        <h2 className="text-5xl mb-4 font-tiempos">¿Cuál es tu especialidad?</h2>
+        <h2 className="text-5xl mb-4 font-nimbus">¿Cuál es tu especialidad?</h2>
         <p className="text-lg my-4">
-          Puedes escoger como mínimo 1 y como máximo 5. Esto se mostrará en tu perfil público*
+          Puedes escoger como mínimo 1 y como máximo 5. Esto se mostrará en tu
+          perfil público*
         </p>
         <div className="max-h-[400px] overflow-y-auto">
           <div className="grid grid-cols-3 gap-4">
@@ -98,9 +96,7 @@ function ModalAgregarEspecialidad({
                       isSelected ? "bg-[#007AFF]" : "border border-black"
                     }`}
                   >
-                    {isSelected && (
-                      <CheckIcon className="text-white w-4 h-4" />
-                    )}
+                    {isSelected && <CheckIcon className="text-white w-4 h-4" />}
                   </div>
                 </div>
               );

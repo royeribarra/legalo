@@ -31,7 +31,7 @@ const EmailVerify = () => {
             width={460}
             height={320}
           />
-          <h2 className="text-4xl text-center font-tiempos font-light">
+          <h2 className="text-4xl text-center font-nimbus font-light">
             Por favor, verifica tu email
           </h2>
           <p className="text-center">
@@ -52,7 +52,7 @@ const EmailVerify = () => {
             width={460}
             height={460}
           />
-          <h2 className="text-4xl text-center font-tiempos mt-2">
+          <h2 className="text-4xl text-center font-nimbus mt-2">
             ¡Bienvenido a Legalo!
           </h2>
           <p className="text-center">Tu cuenta ha sido creada con éxito.</p>

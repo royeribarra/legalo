@@ -33,7 +33,7 @@ const CompleteProfileLawyerPage = () => {
         <p className="text-left">Paso 1/6</p>
       </div>
       <div>
-        <h1 className="text-4xl my-4 font-tiempos">
+        <h1 className="text-4xl my-4 font-nimbus">
           ¿Para quien estás creando proyecto?
         </h1>
         <p>Como Legalo puede ayudarte:</p>

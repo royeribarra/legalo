@@ -88,7 +88,7 @@ const CheckoutPage = () => {
                 <div className="bg-black w-16 h-16 rounded-full flex items-center justify-center ">
                   <IconCheck size={32} color="white" />
                 </div>
-                <h1 className="text-bold text-3xl font-tiempos my-4">
+                <h1 className="text-bold text-3xl font-nimbus my-4">
                   ¡Gracias por confiar en Legalo!
                 </h1>
 

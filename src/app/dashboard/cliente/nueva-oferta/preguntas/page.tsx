@@ -21,7 +21,7 @@ interface Item {
 
 const PublicarPageEight = () => {
   const router = useRouter();
-  console.log(router)
+  console.log(router);
   const { state, updateState } = useOferta();
   const { token } = useAuth();
   const [items, setItems] = useState<Item[]>([{ id: 1, name: "Tu Pregunta" }]);
@@ -46,7 +46,7 @@ const PublicarPageEight = () => {
   const addItem = () => {
     if (items.length >= 5) {
       // Puedes agregar un mensaje de advertencia o simplemente no permitir agregar más.
-      alert('Has alcanzado el límite de 5 preguntas.');
+      alert("Has alcanzado el límite de 5 preguntas.");
       return;
     }
     const newItem: Item = { id: Date.now(), name: input };
@@ -67,36 +67,34 @@ const PublicarPageEight = () => {
   };
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value)
+    setInput(e.target.value);
   };
 
   const handleSubmit = () => {
-    const newPreguntas = items.map(item => ({ nombre: item.name }));
-    updateState({ preguntas: newPreguntas})
-    
-    
+    const newPreguntas = items.map((item) => ({ nombre: item.name }));
+    updateState({ preguntas: newPreguntas });
+
     const data = {
       ...state,
-      clienteId: token?.id
+      clienteId: token?.id,
     };
-    console.log(data)
-    
+    console.log(data);
 
     fetch(`${process.env.BASE_APP_API_URL}/ofertas/create`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     })
-      .then(response => response.json())
-      .then(data => {
-        if(data.state){
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.state) {
           localStorage.removeItem("ofertaState");
           setModalCrearProyectoOk(true);
         }
       })
-      .catch(err=>console.log(err));
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -106,11 +104,13 @@ const PublicarPageEight = () => {
         <p className="text-left">Paso 8/6</p>
       </div>
       <div>
-        <h1 className="text-[36px] my-4 font-tiempos ">
+        <h1 className="text-[36px] my-4 font-nimbus ">
           Preguntas de selección <br />
           (opcional)
         </h1>
-        <p className="mb-2 ">Esto te ayudará a identificar al candidato ideal.</p>
+        <p className="mb-2 ">
+          Esto te ayudará a identificar al candidato ideal.
+        </p>
         <p className="mb-2 ">Ingresa un máximo de 5 preguntas.</p>
 
         <Button

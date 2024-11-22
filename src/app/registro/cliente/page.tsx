@@ -147,15 +147,16 @@ const formSchema = z.object({
     required_error: "Necesitas seleccionar alguno",
   }),
   documento: z
-  .string()
-  .min(2, { message: "El campo debe ser rellenado" })
-  .max(30),
-  password: z.string()
-  .min(8, { message: "La contraseña debe tener al menos 8 caracteres." })
-  .max(30, { message: "La contraseña no debe exceder los 30 caracteres." })
-  .regex(/[a-z]/, { message: "Debe contener al menos una letra minúscula." })
-  .regex(/[A-Z]/, { message: "Debe contener al menos una letra mayúscula." })
-  .regex(/\d/, { message: "Debe contener al menos un número." })
+    .string()
+    .min(2, { message: "El campo debe ser rellenado" })
+    .max(30),
+  password: z
+    .string()
+    .min(8, { message: "La contraseña debe tener al menos 8 caracteres." })
+    .max(30, { message: "La contraseña no debe exceder los 30 caracteres." })
+    .regex(/[a-z]/, { message: "Debe contener al menos una letra minúscula." })
+    .regex(/[A-Z]/, { message: "Debe contener al menos una letra mayúscula." })
+    .regex(/\d/, { message: "Debe contener al menos un número." }),
 });
 
 const RegisterClient = () => {
@@ -169,7 +170,7 @@ const RegisterClient = () => {
       email: "",
       documento: "",
       password: "",
-      rsocial: "natural"
+      rsocial: "natural",
     },
   });
 
@@ -183,24 +184,24 @@ const RegisterClient = () => {
       telefono: values.phone,
       empresa: values.company,
       opinion: values.howDiscover,
-      contrasena: values.password
+      contrasena: values.password,
     };
     fetch(`${process.env.BASE_APP_API_URL}/clientes/create`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data)
-        if(data.state){
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (data.state) {
           localStorage.clear();
-          router.push("/registro/cliente/email-verify")
+          router.push("/registro/cliente/email-verify");
         }
       })
-      .catch(err=>console.log(err));
+      .catch((err) => console.log(err));
   }
 
   return (
@@ -230,7 +231,7 @@ const RegisterClient = () => {
               <Progress value={50} className="mx-auto mb-4 h-2" />
               <p className="text-left">Paso 1/2</p>
             </div>
-            <h2 className="text-3xl lg:text-5xl font-tiempos mt-4">
+            <h2 className="text-3xl lg:text-5xl font-nimbus mt-4">
               Bienvenido a <span className="italic">Legalo</span> 👋
             </h2>
             <h3 className=" lg:text-[28px]">Datos personales</h3>
@@ -254,7 +255,10 @@ const RegisterClient = () => {
                             className="border-black focus-visible:border-none rounded-[10px] h-12"
                             onInput={(e: React.FormEvent<HTMLInputElement>) => {
                               const input = e.currentTarget;
-                              input.value = input.value.replace(/[^A-Za-z\s]/g, "");
+                              input.value = input.value.replace(
+                                /[^A-Za-z\s]/g,
+                                ""
+                              );
                             }}
                           />
                         </FormControl>
@@ -277,7 +281,10 @@ const RegisterClient = () => {
                             className="border-black focus-visible:border-none rounded-[10px] h-12"
                             onInput={(e: React.FormEvent<HTMLInputElement>) => {
                               const input = e.currentTarget;
-                              input.value = input.value.replace(/[^A-Za-z\s]/g, "");
+                              input.value = input.value.replace(
+                                /[^A-Za-z\s]/g,
+                                ""
+                              );
                             }}
                           />
                         </FormControl>
@@ -288,8 +295,7 @@ const RegisterClient = () => {
                   />
                 </div>
                 {/* Email */}
-                
-                
+
                 {/* Razon social */}
                 <FormField
                   control={form.control}
@@ -334,16 +340,24 @@ const RegisterClient = () => {
                   name="documento"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{tipoPersona === "natural" ? "DNI" : "RUC"}</FormLabel>
+                      <FormLabel>
+                        {tipoPersona === "natural" ? "DNI" : "RUC"}
+                      </FormLabel>
                       <FormControl>
                         <Input
-                          placeholder={tipoPersona === "natural" ? "Ingrese DNI" : "Ingrese RUC"}
+                          placeholder={
+                            tipoPersona === "natural"
+                              ? "Ingrese DNI"
+                              : "Ingrese RUC"
+                          }
                           {...field}
                           className="border-black focus-visible:border-none rounded-[10px] h-12"
                           maxLength={tipoPersona === "natural" ? 8 : 11}
                           onInput={(e: React.FormEvent<HTMLInputElement>) => {
                             const input = e.currentTarget;
-                            input.value = input.value.replace(/\D/g, "").slice(0, tipoPersona === "natural" ? 8 : 11);
+                            input.value = input.value
+                              .replace(/\D/g, "")
+                              .slice(0, tipoPersona === "natural" ? 8 : 11);
                             field.onChange(input.value);
                           }}
                         />
@@ -358,7 +372,11 @@ const RegisterClient = () => {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{tipoPersona === 'juridica' ? 'Email de empresa' : 'Email'}</FormLabel>
+                      <FormLabel>
+                        {tipoPersona === "juridica"
+                          ? "Email de empresa"
+                          : "Email"}
+                      </FormLabel>
                       <FormControl>
                         <Input
                           type="email"
@@ -373,26 +391,26 @@ const RegisterClient = () => {
                   )}
                 />
                 <div className=" grid grid-cols-2 gap-4">
-                  {tipoPersona === 'juridica' && (
-                  <FormField
-                    control={form.control}
-                    name="company"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Empresa</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="Nombre de la empresa"
-                            {...field}
-                            className="border-black focus-visible:border-none rounded-[10px] h-12"
-                          />
-                        </FormControl>
-                        <FormDescription></FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />)
-                  }
+                  {tipoPersona === "juridica" && (
+                    <FormField
+                      control={form.control}
+                      name="company"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Empresa</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Nombre de la empresa"
+                              {...field}
+                              className="border-black focus-visible:border-none rounded-[10px] h-12"
+                            />
+                          </FormControl>
+                          <FormDescription></FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  )}
                   <FormField
                     control={form.control}
                     name="phone"

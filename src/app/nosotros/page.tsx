@@ -20,7 +20,7 @@ const NosotrosPage = () => {
       <div className=" bg-gradient-to-b from-[#FCFEEF] to-[#EEF79C] p-8 lg:py-20 border-b border-black">
         <div className="text-center max-w-[960px] mx-auto space-y-10">
           <h1>NOSOTROS</h1>
-          <h2 className="text-5xl lg:text-7xl font-tiempos ">
+          <h2 className="text-5xl lg:text-7xl font-nimbus ">
             Queremos presentarte a tu <i>abogado de confianza</i>
           </h2>
           <p className="text-lg lg:text-[22px]">
@@ -66,7 +66,7 @@ const NosotrosPage = () => {
                 height={107}
               />
               <div>
-                <p className="text-[30px] font-tiempos">Evelyn Castro</p>
+                <p className="text-[30px] font-nimbus">Evelyn Castro</p>
                 <p className="font-bold">Fundadora de LEGALO</p>
                 <p>
                   Abogada con más de 14 años de experiencia y Máster en la
@@ -80,7 +80,7 @@ const NosotrosPage = () => {
 
       <div className="border-t border-black p-8 lg:py-20">
         <div className="max-w-[1200px] mx-auto">
-          <h2 className="text-xl lg:text-[60px] text-center font-tiempos leading-[1.2]">
+          <h2 className="text-xl lg:text-[60px] text-center font-nimbus leading-[1.2]">
             Especialidades de derecho
           </h2>
           <div className="flex flex-wrap justify-center gap-10 my-16">
@@ -107,10 +107,10 @@ const NosotrosPage = () => {
       </div>
       <div className="mx-auto max-w-[1340px] bg-lg-lawyer border border-black flex mb-16 flex-wrap">
         <div className="p-6 lg:p-12 lg:w-[55%]">
-          <h3 className="font-tiempos text-4xl lg:text-5xl">
+          <h3 className="font-nimbus text-4xl lg:text-5xl">
             Tu abogado de confianza:
           </h3>
-          <h2 className="font-tiempos text-4xl lg:text-5xl italic mb-8">
+          <h2 className="font-nimbus text-4xl lg:text-5xl italic mb-8">
             La misión de Legalo
           </h2>
           <p>

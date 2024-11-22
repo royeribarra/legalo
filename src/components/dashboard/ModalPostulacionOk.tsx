@@ -22,7 +22,7 @@ const ModalPostulacionOk: React.FC<ModalPostulacionOkProps> = ({
             </div>
           </div>
           <div className="flex flex-col items-center justify-center gap-8 border-t border-black  p-8 lg:flex-1">
-            <h1 className="text-4xl lg:text-[42px] text-center font-bold font-tiempos">
+            <h1 className="text-4xl lg:text-[42px] text-center font-bold font-nimbus">
               Postulación enviada con éxito
             </h1>
             <p className="text-center">

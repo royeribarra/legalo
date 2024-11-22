@@ -13,7 +13,7 @@ const ProyectItem: React.FC<ProyectItemProps> = ({ tipe }) => {
       className={`p-4 lg:p-8 border border-black rounded-[20px] flex flex-col gap-4 ${tipe === "cotizacionAceptada" && "bg-[#EEF79C]"} ${tipe === "cotizacionPorExpirar" && "bg-[#EDEDED]"}`}
     >
       <div className="flex justify-between flex-col-reverse lg:flex-row">
-        <h2 className="font-tiempos text-xl lg:text-2xl font-light">
+        <h2 className="font-nimbus text-xl lg:text-2xl font-light">
           Asesoría para Contrato de Trabajadores Temporales
         </h2>
         {(tipe === "cotizacionAceptada" || tipe === "cotizacionPorExpirar") && (

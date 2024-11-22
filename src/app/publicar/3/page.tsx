@@ -41,7 +41,7 @@ const PublicarPageThree = () => {
         <p className="text-left">Paso 3/6</p>
       </div>
 
-      <h1 className="text-2xl lg:text-5xl my-4 font-tiempos">
+      <h1 className="text-2xl lg:text-5xl my-4 font-nimbus">
         ¿Qué especialidad estás buscando?
       </h1>
       <div className="flex justify-between mt-8">

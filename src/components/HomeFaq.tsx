@@ -11,7 +11,7 @@ const HomeFaq = () => {
   return (
     <div className="max-w-[1920px] mx-auto p-4 lg:px-16  flex gap-4  items-center lg:py-28 3xl:py-36 w-full flex-col lg:flex-row">
       <div className="w-full lg:w-[40%] flex flex-col gap-4 items-center lg:items-start my-8 lg:my-auto">
-        <h2 className="text-3xl lg:text-5xl max-w-[400px] text-center lg:text-left font-tiempos">
+        <h2 className="text-3xl lg:text-5xl max-w-[400px] text-center lg:text-left font-nimbus">
           Respondemos a tus <span className="italic">preguntas</span>
         </h2>
         <p className="text-[18px]">¿Tienes más preguntas?</p>

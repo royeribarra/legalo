@@ -408,7 +408,7 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
         </div>
         <div className="w-full lg:w-[416px] mt-10 lg:mt-20 border-l border-black lg:sticky top-20 lg:mr-[-20px]">
           <div className="px-5 pt-0 pb-2">
-            <h3 className="font-tiempos text-xl mb-4">
+            <h3 className="font-nimbus text-xl mb-4">
               Asesoría para Contrato de Trabajadores Temporales
             </h3>
             <div className="flex gap-4 flex-wrap">
@@ -494,7 +494,7 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                 </div>
               </div>
             </div>
-            <h3 className="font-tiempos text-2xl mt-8">Sobre el cliente:</h3>
+            <h3 className="font-nimbus text-2xl mt-8">Sobre el cliente:</h3>
           </div>
           <div className="p-5 border-t border-black pb-24 lg:pb-5">
             <p>Nombre y apellido</p>

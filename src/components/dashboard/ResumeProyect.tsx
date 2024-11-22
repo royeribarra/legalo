@@ -7,7 +7,7 @@ const ResumeProyect = () => {
   return (
     <div className="p-4 lg:p-8 border border-black rounded-[20px] flex flex-col gap-4">
       <div className="flex justify-between flex-col-reverse lg:flex-row">
-        <h2 className="font-tiempos text-xl lg:text-2xl font-light">
+        <h2 className="font-nimbus text-xl lg:text-2xl font-light">
           Asesoría para Contrato de Trabajadores Temporales
         </h2>
 

@@ -35,7 +35,7 @@ const StepsForProyects: React.FC<StepsForProyectsProps> = ({
             className="rounded-full"
           />
         </div>
-        <CardTitle className="font-tiempos lg:text-[32px] lg:pt-4">
+        <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4">
           {title}
         </CardTitle>
         <CardDescription className="line-clamp-4 text-lg text-black">

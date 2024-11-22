@@ -15,13 +15,16 @@ const CompleteProfileLawyerPage = () => {
       // Hacer el fetch para verificar el código
       const verifyActivationCode = async () => {
         try {
-          const response = await fetch(`${process.env.BASE_APP_API_URL}/usuarios/verify-activation`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ code: activationCode }),
-          });
+          const response = await fetch(
+            `${process.env.BASE_APP_API_URL}/usuarios/verify-activation`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ code: activationCode }),
+            }
+          );
 
           if (response.ok) {
             const data = await response.json();
@@ -44,10 +47,9 @@ const CompleteProfileLawyerPage = () => {
 
   return (
     <>
-      {
-        isVerified ?
+      {isVerified ? (
         <div className="container mx-auto p-4 m-8 max-w-[720px] flex flex-col gap-8">
-          <h1 className="text-5xl my-4 font-tiempos">
+          <h1 className="text-5xl my-4 font-nimbus">
             ¡Bienvenida(o) a <span className="italic font-light">Legalo!</span>
           </h1>
           <div>
@@ -70,14 +72,17 @@ const CompleteProfileLawyerPage = () => {
               Ver recomendaciones
             </Button>
           </div>
-        </div> :
+        </div>
+      ) : (
         <div className="flex mt-[3%] flex-col items-center gap-5 flex-auto pb-20">
-          <h2 className="text-4xl text-center font-tiempos mt-2 text-red-500">
+          <h2 className="text-4xl text-center font-nimbus mt-2 text-red-500">
             Error en la verificación del código
           </h2>
-          <p className="text-center">El código de activación no es válido o ha expirado.</p>
+          <p className="text-center">
+            El código de activación no es válido o ha expirado.
+          </p>
         </div>
-      }
+      )}
     </>
   );
 };

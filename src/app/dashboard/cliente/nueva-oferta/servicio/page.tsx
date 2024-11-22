@@ -34,20 +34,20 @@ const PublicarPageFour = () => {
       setSelectedServices(servicioIds);
     }
   }, [state.servicios]);
-  
+
   const handleCheckboxChange = (checked: boolean, serviceId: number) => {
     setSelectedServices((prevState) => {
       const newSelection = checked
         ? [...prevState, serviceId] // Agregar si está marcado
         : prevState.filter((id) => id !== serviceId); // Quitar si no está marcado
-  
+
       // Actualizamos el contexto
       const updatedServicios = newSelection.map((id) => ({
         id,
         nombre: serviceItems.find((item) => item.id === id)?.name || "",
       }));
       updateState({ servicios: updatedServicios });
-  
+
       return newSelection;
     });
   };
@@ -63,7 +63,7 @@ const PublicarPageFour = () => {
         <p className="text-left">Paso 5/6</p>
       </div>
       <div>
-        <h1 className="text-2xl lg:text-5xl my-4 font-tiempos">
+        <h1 className="text-2xl lg:text-5xl my-4 font-nimbus">
           Tipo de servicio
         </h1>
         <p className="mb-6 lg:text-lg">Puedes escoger max 2*</p>
@@ -76,9 +76,14 @@ const PublicarPageFour = () => {
               <Checkbox
                 id={item.id.toString()}
                 checked={selectedServices.includes(item.id)}
-                onCheckedChange={(checked) => handleCheckboxChange(!!checked, item.id)}
+                onCheckedChange={(checked) =>
+                  handleCheckboxChange(!!checked, item.id)
+                }
               />
-              <label htmlFor={item.id.toString()} className="text-sm font-medium">
+              <label
+                htmlFor={item.id.toString()}
+                className="text-sm font-medium"
+              >
                 {item.name}
               </label>
             </div>
@@ -87,7 +92,10 @@ const PublicarPageFour = () => {
       </div>
 
       <div className="flex justify-end mt-16">
-        <Button className="h-12 px-10 px-text-base rounded-[10px]" onClick={nextStep}>
+        <Button
+          className="h-12 px-10 px-text-base rounded-[10px]"
+          onClick={nextStep}
+        >
           Siguiente <ArrowRight className="ml-2" />
         </Button>
       </div>

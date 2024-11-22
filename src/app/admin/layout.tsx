@@ -74,7 +74,7 @@ function AdminLayout({ children }: LayoutProps) {
                 {item.items?.map(
                   (subItem) =>
                     subItem.url === pathname && (
-                      <h1 className="font-tiempos text-xl" key={subItem.url}>
+                      <h1 className="font-nimbus text-xl" key={subItem.url}>
                         {subItem.title}
                       </h1>
                     )

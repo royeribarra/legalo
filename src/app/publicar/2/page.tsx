@@ -17,7 +17,7 @@ const PublicarPageTwo = () => {
         <p className="text-left">Paso 2/6</p>
       </div>
       <div>
-        <h1 className="text-[32px] my-4 font-tiempos">
+        <h1 className="text-[32px] my-4 font-nimbus">
           Empecemos con el título de tu proyecto
         </h1>
         <p className="mb-6">

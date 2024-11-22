@@ -45,7 +45,7 @@ const NuevaOferta = () => {
         <p className="text-left">Paso 1/6</p>
       </div>
       <div>
-        <h1 className="text-4xl my-4 font-tiempos">
+        <h1 className="text-4xl my-4 font-nimbus">
           ¿Para quien estás creando proyecto?
         </h1>
         <p>Como Legalo puede ayudarte:</p>
@@ -71,7 +71,9 @@ const NuevaOferta = () => {
             </div>
             <div
               className={`rounded-full w-[20px] h-[20px] flex justify-center items-center ${
-                usoSelect === option.value ? "bg-[#007AFF]" : "border border-black"
+                usoSelect === option.value
+                  ? "bg-[#007AFF]"
+                  : "border border-black"
               }`}
             >
               {usoSelect === option.value && (

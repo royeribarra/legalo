@@ -19,7 +19,7 @@ const PublicarPageFour = () => {
       </div>
       <div className="flex flex-wrap lg: flex-nowrap gap-16">
         <div>
-          <h1 className="text-2xl lg:text-5xl my-4 font-tiempos">
+          <h1 className="text-2xl lg:text-5xl my-4 font-nimbus">
             Cuéntanos lo qué necesitas
           </h1>
           <p className="mb-6 lg:text-xl font-bold">

@@ -28,15 +28,15 @@ const PublicarPageSeven = () => {
       updateState({
         presupuesto: {
           presupuesto_maximo: rangoHasta,
-          presupuesto_minimo: rangoDesde
-        }
+          presupuesto_minimo: rangoDesde,
+        },
       });
     } else if (selected === "monto-fijo") {
       updateState({
         presupuesto: {
           presupuesto_maximo: montoFijo,
-          presupuesto_minimo: montoFijo
-        }
+          presupuesto_minimo: montoFijo,
+        },
       });
     }
   };
@@ -53,7 +53,7 @@ const PublicarPageSeven = () => {
         <p className="text-left">Paso 7/6</p>
       </div>
       <div>
-        <h1 className="text-[36px] my-4 font-tiempos">
+        <h1 className="text-[36px] my-4 font-nimbus">
           ¿Cuánto es tu presupuesto?
         </h1>
         <p className="mb-6 border-b border-gray pb-2">
@@ -127,7 +127,10 @@ const PublicarPageSeven = () => {
           <Link href="#" className="font-bold underline">
             No estoy listo para poner un presupuesto
           </Link>
-          <Button className="h-12 px-10 px-text-base rounded-[10px]" onClick={nextStep}>
+          <Button
+            className="h-12 px-10 px-text-base rounded-[10px]"
+            onClick={nextStep}
+          >
             Siguiente <ArrowRight className="ml-2" />
           </Button>
         </div>

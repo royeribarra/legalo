@@ -166,7 +166,7 @@ function RegisterLawyer() {
       password: "",
       terms: false,
       dni: "",
-      telefono: ""
+      telefono: "",
     },
   });
   const { setValue } = form;
@@ -179,20 +179,20 @@ function RegisterLawyer() {
       contrasena: values.password,
       terms: values.terms,
       dni: values.dni,
-      telefono: values.telefono
-    })
+      telefono: values.telefono,
+    });
     router.push("/registro/abogado/objetivos");
   }
 
   useEffect(() => {
-    setValue('names', stateAbogado.nombres || "");
-    setValue('lastNames', stateAbogado.apellidos || "");
-    setValue('email', stateAbogado.email || "");
-    setValue('location', stateAbogado.ubicacion || "");
-    setValue('password', stateAbogado.contrasena || "");
-    setValue('dni', stateAbogado.dni || "");
-    setValue('telefono', stateAbogado.telefono || "");
-    setValue('terms', stateAbogado.terms || false);
+    setValue("names", stateAbogado.nombres || "");
+    setValue("lastNames", stateAbogado.apellidos || "");
+    setValue("email", stateAbogado.email || "");
+    setValue("location", stateAbogado.ubicacion || "");
+    setValue("password", stateAbogado.contrasena || "");
+    setValue("dni", stateAbogado.dni || "");
+    setValue("telefono", stateAbogado.telefono || "");
+    setValue("terms", stateAbogado.terms || false);
   }, [setValue, stateAbogado]);
 
   return (
@@ -222,7 +222,7 @@ function RegisterLawyer() {
               <Progress value={33} className="mx-auto mb-4 h-2" />
               <p className="text-left">Paso 1/3</p>
             </div>
-            <h2 className="font-bold text-3xl lg:text-5xl font-tiempos">
+            <h2 className="font-bold text-3xl lg:text-5xl font-nimbus">
               Bienvenido a <span className="italic">Legalo</span>
             </h2>
             <h3 className="lg:text-lg lg:mb-8">

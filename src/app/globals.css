@@ -119,8 +119,35 @@
   font-style: italic;
 }
 
+/* nueva fuente */
+@font-face {
+  font-family: "NimbusRom";
+  src: url("/fonts/NimbusRomNo9L-Reg.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "NimbusRom";
+  src: url("/fonts/NimbusRomNo9L-RegIta.otf") format("opentype");
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "InterTitles";
+  src: url("/fonts/Inter-VariableFont_opsz,wght.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "InterText";
+  src: url("/fonts/Inter-Italic-VariableFont_opsz,wght.ttf") format("truetype");
+  font-weight: 300;
+  font-style: italic;
+}
+
 body {
-  font-family: "ABCDiatype", sans-serif;
+  font-family: "InterText", sans-serif;
   font-weight: 300;
 }
 /**/

@@ -43,7 +43,7 @@ const ProyectPage = () => {
           </Link>
           <div className="flex items-center justify-between flex-wrap">
             <div>
-              <h1 className="font-tiempos text-2xl mb-4">
+              <h1 className="font-nimbus text-2xl mb-4">
                 Asesoría para Contrato de Trabajadores Temporales
               </h1>
               <p className="text-slate-500">Publicado hace 10 días</p>
@@ -183,7 +183,7 @@ const ProyectPage = () => {
         </div>
         <div className="w-full lg:w-[260px]">
           <div className="p-6 border border-black rounded-[10px] mb-8">
-            <h3 className="text-center font-tiempos">Sobre el cliente:</h3>
+            <h3 className="text-center font-nimbus">Sobre el cliente:</h3>
             <p>Nombre y apellido</p>
             <p>Miembro desde 2021</p>
             <p>Para trabajo/personal</p>

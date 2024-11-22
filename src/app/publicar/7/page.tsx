@@ -23,7 +23,7 @@ const PublicarPageSeven = () => {
         <p className="text-left">Paso 7/6</p>
       </div>
       <div>
-        <h1 className="text-[36px] my-4 font-tiempos ">
+        <h1 className="text-[36px] my-4 font-nimbus ">
           ¿Cuánto es tu presupuesto?
         </h1>
         <p className="mb-6 border-b border-gray pb-2">
