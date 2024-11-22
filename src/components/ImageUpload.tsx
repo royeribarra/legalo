@@ -1,72 +1,113 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "./ui/button";
+import { RegistroAbogadoState } from "@/contexts/registroAbogadoContext";
 
-function ImageUpload(){
-    const [selectedImage, setSelectedImage] = useState<File | null>(null);
-    const [imageBase64, setImageBase64] = useState<string | null>(null);
-  
-    // Cargar la imagen guardada en localStorage cuando se monta el componente
-    console.log(selectedImage);
-    useEffect(() => {
-      const storedImage = localStorage.getItem("profileImg");
-      if (storedImage) {
-        setImageBase64(storedImage);
+type CvUploadProps = {
+  updateStateAbogado: (newState: Partial<RegistroAbogadoState>) => void;
+  stateAbogado: RegistroAbogadoState;
+  campo: "cul_url" | "foto_url" | "pdf_url";
+};
+
+function ImageUpload({ campo, stateAbogado, updateStateAbogado }: CvUploadProps) {
+  const [preview, setPreview] = useState<string | null>(null); // Para manejar la previsualización
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0];
+
+    if (selectedFile) {
+      const validTypes = ["application/pdf", "image/jpeg", "image/png"];
+      if (!validTypes.includes(selectedFile.type)) {
+        alert("Formato de archivo no válido. Solo se aceptan PDF, JPG y PNG.");
+        return;
       }
-    }, []);
-  
-    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0];
-      if (file) {
-        setSelectedImage(file);
-  
-        // Convertir la imagen a base64 para almacenarla en localStorage
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-          const base64String = reader.result as string;
-          setImageBase64(base64String);
-          localStorage.setItem("profileImg", base64String); // Guardar en localStorage
-        };
+
+      const fileSizeLimit = 5 * 1024 * 1024;
+      if (selectedFile.size > fileSizeLimit) {
+        alert("El archivo debe pesar menos de 5 MB.");
+        return;
       }
-    };
-  
-    const handleButtonClick = () => {
-      const input = document.getElementById("image-upload") as HTMLInputElement;
-      input.click();
-    };
-  
-    return (
-      <div className="w-full lg:w-1/6 flex flex-col items-center gap-2">
-        <Image
-          src={
-            imageBase64
-              ? imageBase64
-              : "/assets/images/ico-photo-perfil.png"
-          }
-          alt="Imagen subida"
-          width={96}
-          height={96}
-          className="rounded-full"
-          style={{ width: '96px', height: '96px', borderRadius: '50%', objectFit: 'cover' }}
-        />
-        <input
-          type="file"
-          id="image-upload"
-          accept="image/*"
-          onChange={handleImageChange}
-          style={{ display: "none" }}
-        />
+
+      // Crear una URL para previsualización
+      const objectUrl = URL.createObjectURL(selectedFile);
+      setPreview(objectUrl);
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64File = reader.result?.toString().split(",")[1];
+        if (base64File) {
+          updateStateAbogado({
+            [campo]: {
+              nombre: selectedFile.name,
+              tipo: selectedFile.type,
+              contenido: base64File,
+            },
+          });
+        }
+      };
+      reader.readAsDataURL(selectedFile);
+    }
+  };
+
+  const handleRemoveFile = () => {
+    updateStateAbogado({ [campo]: null });
+    setPreview(null); // Limpiar la previsualización
+  };
+
+  const handleClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click(); // Activa el input oculto al hacer clic en el botón
+    }
+  };
+
+  const archivo = stateAbogado[campo];
+
+  return (
+    <div className="w-full lg:w-1/6 flex flex-col items-center gap-2">
+      <Image
+        src={
+          preview || // Mostrar previsualización si existe
+          (archivo ? `data:${archivo.tipo};base64,${archivo.contenido}` : "/assets/images/ico-photo-perfil.png")
+        }
+        alt="Imagen subida"
+        width={96}
+        height={96}
+        className="rounded-full"
+        style={{
+          width: "96px",
+          height: "96px",
+          borderRadius: "50%",
+          objectFit: "cover",
+        }}
+      />
+      <input
+        type="file"
+        ref={fileInputRef}
+        accept="image/*"
+        onChange={handleFileChange}
+        style={{ display: "none" }}
+      />
+      <Button
+        size="sm"
+        variant="outline"
+        className="rounded-full"
+        onClick={handleClick}
+      >
+        Sube una imagen*
+      </Button>
+      {preview && (
         <Button
           size="sm"
           variant="outline"
-          className="rounded-full"
-          onClick={handleButtonClick}
+          className="rounded-full mt-2"
+          onClick={handleRemoveFile}
         >
-          Sube una imagen*
+          Eliminar imagen
         </Button>
-      </div>
-    );
-};
+      )}
+    </div>
+  );
+}
 
 export default ImageUpload;

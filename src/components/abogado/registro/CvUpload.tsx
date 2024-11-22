@@ -1,102 +1,114 @@
-import { useEffect, useRef, useState } from "react";
-import { Button } from "../../ui/button";
-import { Eye, Trash, Check } from "lucide-react";
-import Image from "next/image";
+import { RegistroAbogadoState } from "@/contexts/registroAbogadoContext";
+import { useRef, useState } from "react";
+import { Eye, Trash } from "lucide-react";
 
-function CvUpload() {
-  const [file, setFile] = useState<File | null>(null);
+type CvUploadProps = {
+  updateStateAbogado: (newState: Partial<RegistroAbogadoState>) => void;
+  stateAbogado: RegistroAbogadoState;
+  campo: "cul_url" | "foto_url" | "pdf_url";
+};
+
+function CvUpload({ campo, stateAbogado, updateStateAbogado }: CvUploadProps) {
   const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);
+  console.log(uploadSuccess)
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-  // Cargar el archivo desde localStorage al cargar el componente
-  useEffect(() => {
-    const storedFile = localStorage.getItem("cvFile");
-    const storedFileName = localStorage.getItem("uploadedCvFileName");
-
-    if (storedFile && storedFileName) {
-      const blob = new Blob([atob(storedFile)], { type: "application/octet-stream" });
-      const restoredFile = new File([blob], storedFileName);
-      setFile(restoredFile);
-      setUploadSuccess(true);
-    }
-  }, []);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
 
     if (selectedFile) {
-      const validTypes = ["application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/msword"];
+      const validTypes = ["application/pdf", "image/jpeg", "image/png"];
       if (!validTypes.includes(selectedFile.type)) {
-        alert("Por favor, sube un archivo PDF o DOC/DOCX.");
+        alert("Formato de archivo no válido. Solo se aceptan PDF, JPG y PNG.");
         return;
       }
 
-      const fileSizeLimit = 4.5 * 1024 * 1024;
+      const fileSizeLimit = 5 * 1024 * 1024;
       if (selectedFile.size > fileSizeLimit) {
         alert("El archivo debe pesar menos de 5 MB.");
         return;
       }
 
-      setFile(selectedFile);
-      setUploadSuccess(true);
-
       const reader = new FileReader();
       reader.onload = () => {
         const base64File = reader.result?.toString().split(",")[1];
         if (base64File) {
-          localStorage.setItem("cvFile", base64File);
-          localStorage.setItem("uploadedCvFileName", selectedFile.name);
+          updateStateAbogado({
+            [campo]: {
+              nombre: selectedFile.name,
+              tipo: selectedFile.type,
+              contenido: base64File,
+            },
+          });
+          setUploadSuccess(true);
         }
       };
       reader.readAsDataURL(selectedFile);
     }
   };
 
-  const handleButtonClick = () => {
-    fileInputRef.current?.click();
-  };
-
   const handleRemoveFile = () => {
-    setFile(null);
+    updateStateAbogado({ [campo]: null });
     setUploadSuccess(false);
-    localStorage.removeItem("cvFile");
-    localStorage.removeItem("uploadedCvFileName");
   };
 
   const handleViewFile = () => {
-    if (file) {
-      const fileUrl = URL.createObjectURL(file);
-      window.open(fileUrl);
+    const archivo = stateAbogado[campo];
+    if (archivo) {
+      const fileUrl = `data:${archivo.tipo};base64,${archivo.contenido}`;
+      const link = document.createElement("a");
+      link.href = fileUrl;
+      link.download = archivo.nombre;
+      link.click();
+    }
+  };
+
+  const archivo = stateAbogado[campo];
+
+  const handleClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click(); // Activa el input oculto al hacer clic en el contenedor
     }
   };
 
   return (
     <div>
-      <p className="font-bold text-lg">CV*</p>
+      <p className="font-bold text-lg">Archivo ({campo})</p>
       <div
         className="border border-black border-dashed p-2 flex flex-col items-center cursor-pointer"
-        onClick={handleButtonClick}
+        onClick={handleClick} // Activa el input al hacer clic aquí
       >
-        <Image src="/assets/images/ico-upload.png" alt="ico-cv" width={64} height={64} />
-        <p>Sube tu Curriculum Vitae (CV)</p>
-        <p className="text-xs text-gray-500">{file ? file.name : "DOC, DOCX, PDF (5 MB máximo)"}</p>
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleFileChange}
+          className="hidden"
+          accept=".pdf, .jpg, .png"
+        />
       </div>
-
-      <input
-        type="file"
-        ref={fileInputRef}
-        onChange={handleFileChange}
-        className="hidden"
-        accept=".pdf, .doc, .docx"
-      />
-
-      {file && (
-        <div className="flex mt-2 space-x-2">
-          <Button onClick={handleViewFile}><Eye /> Ver Archivo</Button>
-          <Button onClick={handleRemoveFile}><Trash /> Eliminar</Button>
-          {uploadSuccess && <Check className="text-green-500" />}
-        </div>
-      )}
+      {archivo ? (
+          <>
+            <p className="text-gray-500">{archivo.nombre}</p>
+            <div className="flex space-x-4 mt-2">
+              <button
+                onClick={handleViewFile}
+                className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded hover:bg-gray-100"
+              >
+                <Eye className="w-4 h-4" />
+                <span>Ver Archivo</span>
+              </button>
+              <button
+                onClick={handleRemoveFile}
+                className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded hover:bg-gray-100"
+              >
+                <Trash className="w-4 h-4 text-red-500" />
+                <span>Eliminar</span>
+              </button>
+            </div>
+          </>
+        ) : (
+          <p>Sube tu archivo (PDF, JPG, PNG)</p>
+        )}
     </div>
   );
 }

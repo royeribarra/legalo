@@ -18,20 +18,31 @@ type IndustrySelectProps = {
 
 function IndustrySelectAbogado({
   updateStateAbogado,
-  stateAbogado
+  stateAbogado,
 }: IndustrySelectProps) {
-  const [selectedServices, setSelectedServices] = useState<IIndustria[]>(stateAbogado.industrias);
+  const [selectedServices, setSelectedServices] = useState<IIndustria[]>(
+    stateAbogado.industrias
+  );
 
   // Función para manejar la selección de una industria
   const handleSelect = (value: string) => {
-    if (!selectedServices.includes(value)) {
-      const updatedServices = [...selectedServices, value];
+    const serviceToAdd = services.find((service) => service.value === value);
+    if (serviceToAdd && !selectedServices.some((s) => s.nombre === serviceToAdd.label)) {
+      const updatedServices = [
+        ...selectedServices,
+        { id: undefined, nombre: serviceToAdd.label },
+      ];
+      updateStateAbogado({industrias: updatedServices})
       setSelectedServices(updatedServices);
     }
   };
 
+  // Función para eliminar una industria seleccionada
   const handleRemove = (value: string) => {
-    const updatedServices = selectedServices.filter((service) => service !== value);
+    const updatedServices = selectedServices.filter(
+      (service) => service.nombre !== value
+    );
+    updateStateAbogado({industrias: updatedServices})
     setSelectedServices(updatedServices);
   };
 
@@ -47,6 +58,12 @@ function IndustrySelectAbogado({
     { value: "juicios", label: "Juicios" },
   ];
 
+  useEffect(() => {
+    if (stateAbogado.industrias) {
+      setSelectedServices(stateAbogado.industrias);
+    }
+  }, [stateAbogado.industrias]);
+
   return (
     <div className="w-full lg:w-1/2">
       <p className="text-sm my-2">Industria</p>
@@ -58,13 +75,16 @@ function IndustrySelectAbogado({
           <SelectGroup>
             <SelectLabel>Servicios</SelectLabel>
             {services
-              .filter((service) => !selectedServices.includes(service.value))
+              .filter(
+                (service) =>
+                  !selectedServices.some((s) => s.nombre === service.label)
+              )
               .map((service) => (
                 <SelectItem key={service.value} value={service.value}>
                   {service.label}
                 </SelectItem>
               ))}
-            {selectedServices.length === services.length && (
+            {selectedServices.length > 0 && (
               <SelectItem value="remove-all" onClick={handleRemoveAll}>
                 Quitar todos
               </SelectItem>
@@ -75,15 +95,15 @@ function IndustrySelectAbogado({
       <div className="flex flex-wrap mt-2">
         {selectedServices.map((service) => (
           <span
-            key={service}
+            key={service.nombre}
             className="bg-blue-500 text-white text-sm rounded-full px-3 py-1 mr-2 mb-2 flex items-center"
           >
-            {services.find((s) => s.value === service)?.label}
+            {service.nombre}
             <button
-              onClick={() => handleRemove(service)}
+              onClick={() => handleRemove(service.nombre)}
               className="ml-2 text-white focus:outline-none"
             >
-              &times; {/* Icono de cierre */}
+              &times;
             </button>
           </span>
         ))}

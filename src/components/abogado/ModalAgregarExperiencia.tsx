@@ -34,15 +34,6 @@ const formSchema = z.object({
   descripcion: z.string(),
 });
 
-interface Experiencia {
-  id: number;
-  desde_fecha: string;
-  hasta_fecha: string;
-  descripcion: string;
-  empresa: string;
-  titulo: string;
-}
-
 type ModalAgregarEducacionProps = {
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;

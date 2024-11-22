@@ -58,6 +58,12 @@ function ServiceSelectAbogado({
     updateStateAbogado({ servicios: updatedServices });
   };
 
+  useEffect(() => {
+    if (stateAbogado.servicios) {
+      setSelectedServices(stateAbogado.servicios);
+    }
+  }, [stateAbogado.servicios]);
+
   return (
     <div className="w-full lg:w-1/2">
       <p className="text-sm my-2">¿Cuáles son los servicios que ofreces?*</p>
@@ -72,7 +78,7 @@ function ServiceSelectAbogado({
               .filter(
                 (service) =>
                   !selectedServices.some(
-                    (selected) => selected.nombre === service.value
+                    (selected) => selected.nombre === service.label
                   )
               )
               .map((service) => (

@@ -1,7 +1,7 @@
 "use client";
 
 import { Progress } from "@/components/ui/progress";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 // import { useState } from "react";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,12 +20,12 @@ import ImageUpload from "@/components/ImageUpload";
 import VideoUpload from "@/components/VideoUpload";
 import FileUpload from "@/components/FileUpload";
 import CvUpload from "@/components/abogado/registro/CvUpload";
-import { IHabilidad } from "@/interfaces/Habilidad.interface";
 import { IExperiencia } from "@/interfaces/Experiencia.interface";
 import { IEstudio } from "@/interfaces/Estudio.interface";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/contexts/toastContext";
 import { useRegistroAbogado } from "@/contexts/registroAbogadoContext";
+import { IArchivo } from "@/interfaces/Archivo.interface";
 
 interface Educacion {
   id: number;
@@ -43,13 +43,6 @@ const CompleteProfileLawyerPage: React.FC = () => {
   const { stateAbogado, updateStateAbogado } = useRegistroAbogado();
 
   const [noExperiencia, setNoExperiencia] = useState(false);
-  const [profileImg, setProfileImg] = useState<string | null>(null);
-  const [culFile, setCulFile] = useState<File | null>(null);
-  const [especialidad, setEspecialidad] = useState({
-    grado: "",
-    listaEspecialidades: [],
-    sobre_ti: ""
-  });
   const [showModalAddEducacion, setShowModalAddEducacion] = useState(false);
 
   const [showModalAddExperiencia, setShowModalAddExperiencia] = useState(false);
@@ -84,48 +77,24 @@ const CompleteProfileLawyerPage: React.FC = () => {
   const nextStep = async() => {
     
     if (stepNumber === 4) {
-      if(!profileImg) {
+      console.log(stateAbogado)
+      if(!stateAbogado.servicios.length) {
         showToast(
-          "success",
-          "Operación exitosa",
-          "El formulario fue enviado correctamente."
+          "error",
+          "Servicios",
+          "Selecciona una opción como mínimo."
         )
       }
-      
-      // if(!culFile) {
-      //   alert("Debes cargar una documento en CUL.");
-      //   return;
-      // }
-      const formData = new FormData();
-      const profileImgLocal = localStorage.getItem("profileImg");
-      const profileVideo = localStorage.getItem("profileVideo");
-
-      if (profileImgLocal) {
-        const imgBlob = base64ToBlob(profileImgLocal, "image/jpeg");
-        const formDataImg = new FormData();
-        formDataImg.append("profileImg", imgBlob, "profileImg.jpg");
-        formDataImg.append("dni", stateAbogado.dni);
-        formDataImg.append("correo", stateAbogado.email);
-
-        try {
-          const response = await fetch(`${process.env.BASE_APP_API_URL}/temp-files/upload-profile-img`, {
-            method: "POST",
-            body: formDataImg,
-          });
-        
-          if (!response.ok) {
-            throw new Error(`Error en la petición: ${response.statusText}`);
-          }
-        
-          const data = await response.json();
-          console.log("Imagen enviada correctamente", data);
-        } catch (error) {
-          console.error("Error al enviar la imagen", error);
-        }
+      if(!stateAbogado.industrias.length) {
+        showToast(
+          "error",
+          "Industrias",
+          "Selecciona una opción como mínimo."
+        )
       }
-      if (profileVideo) {
-        const videoBlob = base64ToBlob(profileVideo, "video/mp4");
-        formData.append("profileVideo", videoBlob, "profileVideo.mp4");
+
+      if (stateAbogado.pdf_url) {
+        enviarArchivo(stateAbogado.pdf_url, stateAbogado.dni, stateAbogado.email);
       }
 
       if (true) {
@@ -193,6 +162,12 @@ const CompleteProfileLawyerPage: React.FC = () => {
             "Falta:",
             "Seleccionar experiencia."
           )
+        }else if(!stateAbogado.pdf_url) {
+          showToast(
+            "error",
+            "Falta:",
+            "Sube un CV"
+          )
         }else{
           setTriger("tab2");
           setStepNumber(stepNumber + 1);
@@ -227,15 +202,60 @@ const CompleteProfileLawyerPage: React.FC = () => {
     }
   };
 
-  function base64ToBlob(base64: string, mimeType: string) {
-    const byteCharacters = atob(base64.split(",")[1]);
-    const byteNumbers = new Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
+  function base64ToBlob(base64: string, mimeType: string): Blob {
+    try {
+      // Verificar si la cadena tiene el prefijo esperado
+      if (!base64.includes(",")) {
+        throw new Error("La cadena base64 no tiene el formato esperado.");
+      }
+  
+      const base64Content = base64.split(",")[1];
+      if (!base64Content) {
+        throw new Error("Contenido base64 no encontrado después de ','");
+      }
+  
+      const byteCharacters = atob(base64Content);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      return new Blob([byteArray], { type: mimeType });
+    } catch (error) {
+      console.error("Error al convertir base64 a Blob:", error);
+      throw error; // Opcional: lanzar el error para manejarlo en la llamada
     }
-    const byteArray = new Uint8Array(byteNumbers);
-    return new Blob([byteArray], { type: mimeType });
   }
+  
+
+  const enviarArchivo = async (archivo: IArchivo, dni: string, correo: string) => {
+    if (!archivo) {
+      console.error("No hay archivo para enviar");
+      return;
+    }
+    return;
+    const archivoBlob = base64ToBlob(archivo.contenido, archivo.tipo);
+    const formData = new FormData();
+    formData.append("file", archivoBlob, archivo.nombre);
+    formData.append("dni", dni);
+    formData.append("correo", correo);
+  
+    try {
+      const response = await fetch(`${process.env.BASE_APP_API_URL}/temp-files/upload-profile-img`, {
+        method: "POST",
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error en la petición: ${response.statusText}`);
+      }
+  
+      const data = await response.json();
+      console.log("Archivo enviado correctamente", data);
+    } catch (error) {
+      console.error("Error al enviar el archivo", error);
+    }
+  };
 
   const prevStep = () => {
     if (stepNumber === 1) {
@@ -258,40 +278,6 @@ const CompleteProfileLawyerPage: React.FC = () => {
     setStepNumber(stepNumber - 1);
   };
 
-
-  useEffect(() => {
-    const habilidad = localStorage.getItem("habilidades");
-    if (!habilidad) {
-      localStorage.setItem(
-        "habilidades",
-        JSON.stringify({
-          habilidades_blandas: [],
-          habilidades_duras: [],
-        })
-      );
-    }
-  }, []);
-
-  useEffect(()=> {
-    const imagen = localStorage.getItem("profileImg");
-    if(imagen){
-      setProfileImg(imagen);
-    }
-  }, []);
-
-  useEffect(() => {
-    // Verifica si hay un archivo en localStorage al cargar el componente
-    const storedFile = localStorage.getItem("culFile");
-    const storedFileName = localStorage.getItem("uploadedCulFileName");
-
-    if (storedFile && storedFileName) {
-      // Crear un blob y mostrarlo como archivo
-      const blob = new Blob([atob(storedFile)], { type: "application/octet-stream" });
-      const restoredFile = new File([blob], storedFileName);
-      setCulFile(restoredFile);
-    }
-  }, []);
-
   return (
     <div className="container mx-auto p-4 lg:py-8 lg:px-0 w-full lg:max-w-[960px]">
       <div className="max-w-[680px] mb-4 mx-auto">
@@ -302,7 +288,11 @@ const CompleteProfileLawyerPage: React.FC = () => {
         <p>Campos obligatorios(*)</p>
       </div>
       <div className="border border-black p-5 my-4 rounded-xl flex flex-col md:flex-row gap-4">
-        <ImageUpload></ImageUpload>
+        <ImageUpload 
+          updateStateAbogado={updateStateAbogado}
+          stateAbogado={stateAbogado}
+          campo={"foto_url"}
+        />
 
         <div className="w-full lg:w-4/6 flex flex-col justify-center">
           <p className="font-bold">{stateAbogado.nombres + ' ' + stateAbogado.apellidos[0]+ '.'}</p>
@@ -320,7 +310,11 @@ const CompleteProfileLawyerPage: React.FC = () => {
         <VideoUpload></VideoUpload>
       </div>
 
-      <FileUpload></FileUpload>
+      <FileUpload 
+        updateStateAbogado={updateStateAbogado}
+        stateAbogado={stateAbogado}
+        campo={"cul_url"}
+      />
       {/* lateral menu  */}
       <div className="my-4 pb-32">
         <Tabs
@@ -428,7 +422,11 @@ const CompleteProfileLawyerPage: React.FC = () => {
                   </label>
                 </div>
 
-                <CvUpload></CvUpload>
+                <CvUpload 
+                  updateStateAbogado={updateStateAbogado}
+                  stateAbogado={stateAbogado}
+                  campo={"pdf_url"}
+                />
               </div>
             </TabsContent>
             <TabsContent value="tab2">

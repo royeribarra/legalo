@@ -7,7 +7,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import ModalagregarEspecialidad from "@/components/abogado/ModalAgregarEspecialidad";
 import { Input } from "@/components/ui/input";
