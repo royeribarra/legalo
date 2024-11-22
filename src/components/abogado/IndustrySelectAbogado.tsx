@@ -8,43 +8,36 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { RegistroAbogadoState } from "@/contexts/registroAbogadoContext";
+import { IIndustria } from "@/interfaces/Industria.interface";
 
-function IndustrySelectAbogado() {
-  // Estado para almacenar las industrias seleccionadas
-  const [selectedServices, setSelectedServices] = useState<string[]>([]);
+type IndustrySelectProps = {
+  updateStateAbogado: (newState: Partial<RegistroAbogadoState>) => void;
+  stateAbogado: RegistroAbogadoState;
+};
 
-  // Recupera las industrias seleccionadas desde localStorage
-  useEffect(() => {
-    const storedServices = localStorage.getItem("industriasAbogado");
-    if (storedServices) {
-      setSelectedServices(JSON.parse(storedServices));
-    }
-  }, []);
+function IndustrySelectAbogado({
+  updateStateAbogado,
+  stateAbogado
+}: IndustrySelectProps) {
+  const [selectedServices, setSelectedServices] = useState<IIndustria[]>(stateAbogado.industrias);
 
   // Función para manejar la selección de una industria
   const handleSelect = (value: string) => {
-    // Verifica si la industria ya está seleccionada
     if (!selectedServices.includes(value)) {
       const updatedServices = [...selectedServices, value];
       setSelectedServices(updatedServices);
-      // Guarda la selección en localStorage
-      localStorage.setItem("industriasAbogado", JSON.stringify(updatedServices));
     }
   };
 
-  // Función para eliminar una industria de la selección
   const handleRemove = (value: string) => {
     const updatedServices = selectedServices.filter((service) => service !== value);
     setSelectedServices(updatedServices);
-    // Guarda la nueva selección en localStorage
-    localStorage.setItem("industriasAbogado", JSON.stringify(updatedServices));
   };
 
   // Función para eliminar todas las industrias seleccionadas
   const handleRemoveAll = () => {
     setSelectedServices([]);
-    // Elimina las industrias del localStorage
-    localStorage.removeItem("industriasAbogado");
   };
 
   // Definición de las industrias disponibles
@@ -65,13 +58,12 @@ function IndustrySelectAbogado() {
           <SelectGroup>
             <SelectLabel>Servicios</SelectLabel>
             {services
-              .filter((service) => !selectedServices.includes(service.value)) // Filtra las industrias seleccionadas
+              .filter((service) => !selectedServices.includes(service.value))
               .map((service) => (
                 <SelectItem key={service.value} value={service.value}>
                   {service.label}
                 </SelectItem>
               ))}
-            {/* Opción "Quitar todos" solo si todos están seleccionados */}
             {selectedServices.length === services.length && (
               <SelectItem value="remove-all" onClick={handleRemoveAll}>
                 Quitar todos

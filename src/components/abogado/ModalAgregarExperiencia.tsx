@@ -15,6 +15,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { X as IconX } from "lucide-react";
 import { useEffect, useState } from "react";
+import { RegistroAbogadoState } from "@/contexts/registroAbogadoContext";
+import { IExperiencia } from "@/interfaces/Experiencia.interface";
 
 const formSchema = z.object({
   desde_fecha: z.string().min(2, {
@@ -44,8 +46,10 @@ interface Experiencia {
 type ModalAgregarEducacionProps = {
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  experienciaSelected: Experiencia | null;
-  setExperienciaSelected: React.Dispatch<React.SetStateAction<Experiencia | null>>;
+  experienciaSelected: IExperiencia | null;
+  setExperienciaSelected: React.Dispatch<React.SetStateAction<IExperiencia | null>>;
+  updateStateAbogado: (newState: Partial<RegistroAbogadoState>) => void;
+  stateAbogado: RegistroAbogadoState;
 };
 
 function ModalAgregarExperiencia({
@@ -53,6 +57,8 @@ function ModalAgregarExperiencia({
   setShowModal,
   experienciaSelected,
   setExperienciaSelected,
+  updateStateAbogado,
+  stateAbogado
 }: ModalAgregarEducacionProps) {
   console.log(showModal)
   const [trabajoActualmente] = useState(false);
@@ -97,34 +103,28 @@ function ModalAgregarExperiencia({
       return;
     }
     
-    const estudiosString = localStorage.getItem("listaExperiencia");
-    let estudios = [];
-    if (estudiosString) {
-      estudios = JSON.parse(estudiosString);
-    }
+    const tmpExperiencia = stateAbogado.experiencias || [];
+    const nuevoId = tmpExperiencia.length <= 0 ? 1 : tmpExperiencia[tmpExperiencia.length -1].id + 1;
     const nuevoEstudio = {
-      id:
-        estudios.length === 0
-          ? 1
-          : experienciaSelected
-            ? experienciaSelected.id
-            : estudios.length + 1,
+      id: experienciaSelected ? experienciaSelected.id : nuevoId,
       desde_fecha: values.desde_fecha,
       hasta_fecha: values.hasta_fecha,
       titulo: values.titulo,
       empresa: values.empresa,
       descripcion: values.descripcion,
     };
+    
     if (experienciaSelected) {
-      const indexSelected = estudios.findIndex(
-        (estudio: Experiencia) => estudio.id === experienciaSelected.id
+      const indexSelected = tmpExperiencia.findIndex(
+        (estudio: IExperiencia) => estudio.id === experienciaSelected.id
       );
-      estudios[indexSelected] = nuevoEstudio;
+      tmpExperiencia[indexSelected] = nuevoEstudio;
+      updateStateAbogado({experiencias: tmpExperiencia})
     } else {
-      estudios.push(nuevoEstudio);
+      tmpExperiencia.push(nuevoEstudio);
+      updateStateAbogado({experiencias: tmpExperiencia})
     }
 
-    localStorage.setItem("listaExperiencia", JSON.stringify(estudios));
     setShowModal(false);
     setExperienciaSelected(null);
     form.reset();
@@ -141,8 +141,6 @@ function ModalAgregarExperiencia({
   };
 
   useEffect(() => {
-    const estudiosString = localStorage.getItem("listaExperiencia");
-    if (estudiosString) {
       if (experienciaSelected) {
         form.setValue("desde_fecha", experienciaSelected.desde_fecha);
         form.setValue("hasta_fecha", experienciaSelected.hasta_fecha);
@@ -150,7 +148,6 @@ function ModalAgregarExperiencia({
         form.setValue("empresa", experienciaSelected.empresa);
         form.setValue("descripcion", experienciaSelected.descripcion);
       }
-    }
   }, [experienciaSelected]);
 
   useEffect(() => {

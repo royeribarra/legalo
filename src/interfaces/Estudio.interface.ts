@@ -1,7 +1,7 @@
 // Referencia a habilidadas blandas, trabajo en equipo, buen liderazgo, etc
 
 export interface IEstudio {
-    id?: number;
+    id: number;
     descripcion: string;
     desde_fecha: string;
     institucion: string;

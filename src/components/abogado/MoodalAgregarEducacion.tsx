@@ -15,6 +15,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { X as IconX } from "lucide-react";
 import { useEffect, useState } from "react";
+import { RegistroAbogadoState } from "@/contexts/registroAbogadoContext";
+import { IEstudio } from "@/interfaces/Estudio.interface";
 
 const formSchema = z.object({
   desde_fecha: z.string().min(2, {
@@ -49,7 +51,9 @@ type ModalAgregarEducacionProps = {
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   educacionSelected: Educacion | null;
-  setEducacionSelected: React.Dispatch<React.SetStateAction<Educacion | null>>;
+  setEducacionSelected: React.Dispatch<React.SetStateAction<IEstudio | null>>;
+  updateStateAbogado: (newState: Partial<RegistroAbogadoState>) => void;
+  stateAbogado: RegistroAbogadoState;
 };
 
 function ModalAgregarEducacion({
@@ -57,6 +61,8 @@ function ModalAgregarEducacion({
   setShowModal,
   setEducacionSelected,
   educacionSelected,
+  updateStateAbogado,
+  stateAbogado
 }: ModalAgregarEducacionProps) {
   console.log(showModal);
   const [trabajoActualmente] = useState(false);
@@ -101,20 +107,11 @@ function ModalAgregarEducacion({
       return;
     }
 
-    const estudiosString = localStorage.getItem("listaEstudios");
-    let estudios = [];
-    if (estudiosString) {
-      estudios = JSON.parse(estudiosString);
-    }
-    console.log(estudios);
-    console.log(estudiosString);
+    const tmpEstudio = stateAbogado.estudios || [];
+    const nuevoId = tmpEstudio.length <= 0 ? 1 : tmpEstudio[tmpEstudio.length -1].id + 1;
+
     const nuevoEstudio = {
-      id:
-        estudios.length === 0
-          ? 1
-          : educacionSelected
-            ? educacionSelected.id
-            : estudios.length + 1,
+      id: educacionSelected ? educacionSelected.id : nuevoId,
       desde_fecha: values.desde_fecha,
       hasta_fecha: values.hasta_fecha,
       titulo: values.titulo,
@@ -123,14 +120,15 @@ function ModalAgregarEducacion({
       descripcion: values.descripcion,
     };
     if (educacionSelected) {
-      const indexSelected = estudios.findIndex(
+      const indexSelected = tmpEstudio.findIndex(
         (estudio: Educacion) => estudio.id === educacionSelected.id
       );
-      estudios[indexSelected] = nuevoEstudio;
+      tmpEstudio[indexSelected] = nuevoEstudio;
+      updateStateAbogado({estudios: tmpEstudio})
     } else {
-      estudios.push(nuevoEstudio);
+      tmpEstudio.push(nuevoEstudio);
+      updateStateAbogado({estudios: tmpEstudio})
     }
-    localStorage.setItem("listaEstudios", JSON.stringify(estudios));
 
     setShowModal(false);
     setEducacionSelected(null);
@@ -148,17 +146,13 @@ function ModalAgregarEducacion({
   };
 
   useEffect(() => {
-    const estudiosString = localStorage.getItem("listaEstudios");
-    if (estudiosString) {
-      // const experiencia = JSON.parse(estudiosString);
-      if (educacionSelected) {
-        form.setValue("desde_fecha", educacionSelected.desde_fecha);
-        form.setValue("hasta_fecha", educacionSelected.hasta_fecha);
-        form.setValue("titulo", educacionSelected.titulo);
-        form.setValue("institucion", educacionSelected.institucion);
-        form.setValue("ubicacion", educacionSelected.ubicacion);
-        form.setValue("descripcion", educacionSelected.descripcion);
-      }
+    if (educacionSelected) {
+      form.setValue("desde_fecha", educacionSelected.desde_fecha);
+      form.setValue("hasta_fecha", educacionSelected.hasta_fecha);
+      form.setValue("titulo", educacionSelected.titulo);
+      form.setValue("institucion", educacionSelected.institucion);
+      form.setValue("ubicacion", educacionSelected.ubicacion);
+      form.setValue("descripcion", educacionSelected.descripcion);
     }
   }, [educacionSelected]);
 

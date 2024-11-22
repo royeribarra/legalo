@@ -19,6 +19,7 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
   const [type, setType] = useState<ToastType>("info");
 
   const showToast = (type: ToastType, title: string, description: string) => {
+    
     setType(type);
     setTitle(title);
     setDescription(description);
@@ -38,6 +39,7 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
       <Toast.Provider>
         <Toast.Root
           open={open}
+          // duration={Infinity}
           onOpenChange={setOpen}
           className={clsx(
             "flex items-center gap-4 p-4 rounded-lg shadow-lg w-96 animate-slide-in-up",

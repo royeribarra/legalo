@@ -8,44 +8,55 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { RegistroAbogadoState } from "@/contexts/registroAbogadoContext";
+import { IServicio } from "@/interfaces/Servicio.interface";
 
-function ServiceSelectAbogado() {
-  // Estado para almacenar los servicios seleccionados
-  const [selectedServices, setSelectedServices] = useState<string[]>([]);
+interface ISelectableService {
+  value: string;
+  label: string;
+}
 
-  // Recupera los servicios seleccionados desde localStorage
-  useEffect(() => {
-    const storedServices = localStorage.getItem("serviciosAbogado");
-    if (storedServices) {
-      setSelectedServices(JSON.parse(storedServices));
-    }
-  }, []);
+type ServiceSelectProps = {
+  updateStateAbogado: (newState: Partial<RegistroAbogadoState>) => void;
+  stateAbogado: RegistroAbogadoState;
+};
 
-  // Función para manejar la selección de un servicio
-  const handleSelect = (value: string) => {
-    // Verifica si el servicio ya está seleccionado
-    if (!selectedServices.includes(value)) {
-      const updatedServices = [...selectedServices, value];
-      setSelectedServices(updatedServices);
-      // Guarda la selección en localStorage
-      localStorage.setItem("serviciosAbogado", JSON.stringify(updatedServices));
-    }
-  };
+function ServiceSelectAbogado({
+  updateStateAbogado,
+  stateAbogado,
+}: ServiceSelectProps) {
+  const [selectedServices, setSelectedServices] = useState<IServicio[]>(stateAbogado.servicios);
 
-  // Función para eliminar un servicio de la selección
-  const handleRemove = (value: string) => {
-    const updatedServices = selectedServices.filter((service) => service !== value);
-    setSelectedServices(updatedServices);
-    // Guarda la nueva selección en localStorage
-    localStorage.setItem("serviciosAbogado", JSON.stringify(updatedServices));
-  };
-
-  // Definición de los servicios disponibles
-  const services = [
+  // Servicios para visualización
+  const selectableServices: ISelectableService[] = [
     { value: "consultoria", label: "Consultoría" },
     { value: "investigacion", label: "Investigación" },
     { value: "litigios", label: "Litigios" },
   ];
+
+  const handleSelect = (value: string) => {
+    if (!selectedServices.some((service) => service.nombre === value)) {
+      const selectedService = selectableServices.find(
+        (s) => s.value === value
+      );
+      if (selectedService) {
+        const newService: IServicio = {
+          nombre: selectedService.label,
+        };
+        const updatedServices = [...selectedServices, newService];
+        setSelectedServices(updatedServices);
+        updateStateAbogado({ servicios: updatedServices });
+      }
+    }
+  };
+
+  const handleRemove = (value: string) => {
+    const updatedServices = selectedServices.filter(
+      (service) => service.nombre !== value
+    );
+    setSelectedServices(updatedServices);
+    updateStateAbogado({ servicios: updatedServices });
+  };
 
   return (
     <div className="w-full lg:w-1/2">
@@ -57,33 +68,33 @@ function ServiceSelectAbogado() {
         <SelectContent>
           <SelectGroup>
             <SelectLabel>Servicios</SelectLabel>
-            {services
-              .filter((service) => !selectedServices.includes(service.value)) // Filtra los servicios seleccionados
+            {selectableServices
+              .filter(
+                (service) =>
+                  !selectedServices.some(
+                    (selected) => selected.nombre === service.value
+                  )
+              )
               .map((service) => (
                 <SelectItem key={service.value} value={service.value}>
                   {service.label}
                 </SelectItem>
               ))}
-            {selectedServices.length === services.length && (
-              <div className="p-2 text-green-500 text-sm">
-                Todos fueron seleccionados
-              </div>
-            )}
           </SelectGroup>
         </SelectContent>
       </Select>
       <div className="flex flex-wrap mt-2">
         {selectedServices.map((service) => (
           <span
-            key={service}
+            key={service.nombre}
             className="bg-blue-500 text-white text-sm rounded-full px-3 py-1 mr-2 mb-2 flex items-center"
           >
-            {services.find((s) => s.value === service)?.label}
+            {service.nombre}
             <button
-              onClick={() => handleRemove(service)}
+              onClick={() => handleRemove(service.nombre)}
               className="ml-2 text-white focus:outline-none"
             >
-              &times; {/* Icono de cierre */}
+              &times;
             </button>
           </span>
         ))}
