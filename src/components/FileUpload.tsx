@@ -6,7 +6,7 @@ import { RegistroAbogadoState } from "@/contexts/registroAbogadoContext";
 type CvUploadProps = {
   updateStateAbogado: (newState: Partial<RegistroAbogadoState>) => void;
   stateAbogado: RegistroAbogadoState;
-  campo: "cul_url" | "foto_url" | "pdf_url";
+  campo: "archivo_cul" | "archivo_cv" | "archivo_imagen";
 };
 
 function FileUpload({ campo, stateAbogado, updateStateAbogado }: CvUploadProps) {
@@ -32,7 +32,7 @@ function FileUpload({ campo, stateAbogado, updateStateAbogado }: CvUploadProps) 
 
       const reader = new FileReader();
       reader.onload = () => {
-        const base64File = reader.result?.toString().split(",")[1];
+        const base64File = reader.result?.toString();
         if (base64File) {
           updateStateAbogado({
             [campo]: {
@@ -77,7 +77,9 @@ function FileUpload({ campo, stateAbogado, updateStateAbogado }: CvUploadProps) 
       <div className="flex flex-col lg:flex-row">
         <div className="w-full lg:w-4/5">
           <p><b>Adjunta tu Certificado único Laboral (CUL)</b></p>
-          <p>Importa tu CUL para poder validar tu experiencia y educación en formato PDF, DOC, DOCX.</p>
+          <p>El CUL es un documento gratuito emitido por el MTPE que reúne información personal, antecedentes, educación y experiencia laboral formal. Ingresa a <a href="https://www.empleosperu.gob.pe/" style={{ color: 'blue'}} target="_blank">www.empleosperu.gob.pe</a>, completa el formulario para verificar tu identidad y acepta los términos. Luego, descarga tu certificado.
+          En formato PDF, DOC o DOCX.
+          </p>
         </div>
         <div className="w-full flex items-center justify-end lg:w-1/5">
           <input

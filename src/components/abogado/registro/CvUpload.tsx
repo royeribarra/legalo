@@ -5,7 +5,7 @@ import { Eye, Trash } from "lucide-react";
 type CvUploadProps = {
   updateStateAbogado: (newState: Partial<RegistroAbogadoState>) => void;
   stateAbogado: RegistroAbogadoState;
-  campo: "cul_url" | "foto_url" | "pdf_url";
+  campo: "archivo_cul" | "archivo_imagen" | "archivo_cv";
 };
 
 function CvUpload({ campo, stateAbogado, updateStateAbogado }: CvUploadProps) {
@@ -31,7 +31,8 @@ function CvUpload({ campo, stateAbogado, updateStateAbogado }: CvUploadProps) {
 
       const reader = new FileReader();
       reader.onload = () => {
-        const base64File = reader.result?.toString().split(",")[1];
+        const base64File = reader.result?.toString();
+        
         if (base64File) {
           updateStateAbogado({
             [campo]: {

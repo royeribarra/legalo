@@ -22,9 +22,9 @@ export type RegistroAbogadoState = {
   colegio: string;
   sobre_ti: string;
   // video_url: string;
-  cul_url: IArchivo | null;
-  foto_url: IArchivo | null;
-  pdf_url: IArchivo | null;
+  archivo_cul: IArchivo | null;
+  archivo_imagen: IArchivo | null;
+  archivo_cv: IArchivo | null;
   habilidades_duras: IHabilidad[];
   habilidades_blandas: IHabilidad[];
   experiencias: IExperiencia[];
@@ -66,9 +66,9 @@ export const RegistroAbogadoProvider = ({ children }: OfertaProviderProps) => {
     estudios: [],
     especialidades: [],
     industrias: [],
-    cul_url: null,
-    foto_url: null,
-    pdf_url: null
+    archivo_cul: null,
+    archivo_imagen: null,
+    archivo_cv: null
   });
 
   // Usamos useEffect para acceder a localStorage solo en el cliente

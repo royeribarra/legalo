@@ -4,12 +4,14 @@ import Link from "next/link";
 import React from "react";
 import { ReactNode } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useRegistroAbogado } from "@/contexts/registroAbogadoContext";
 
 interface LayoutProps {
   children: ReactNode;
 }
 
 const CompleteProfileLawyerLayout = ({ children }: LayoutProps) => {
+  const { stateAbogado } = useRegistroAbogado();
   return (
     <div className="">
       <div className="">
@@ -27,7 +29,7 @@ const CompleteProfileLawyerLayout = ({ children }: LayoutProps) => {
           <div className="flex gap-2 p-2 flex-col md:flex-row">
             <Avatar>
               <AvatarImage src="" />
-              <AvatarFallback>JA</AvatarFallback>
+              <AvatarFallback>{stateAbogado.nombres[0] + ' ' + stateAbogado.apellidos[0]+ '.'}</AvatarFallback>
             </Avatar>
           </div>
         </header>

@@ -29,6 +29,7 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select";
+import { useToast } from "@/contexts/toastContext";
 
 type PasswordFieldProps<T extends FieldValues> = {
   field: {
@@ -160,6 +161,7 @@ const formSchema = z.object({
 });
 
 const RegisterClient = () => {
+  const { showToast } = useToast();
   const router = useRouter();
   const [tipoPersona, setTipoPersona] = useState("natural");
   const form = useForm<z.infer<typeof formSchema>>({
@@ -199,9 +201,19 @@ const RegisterClient = () => {
         if (data.state) {
           localStorage.clear();
           router.push("/registro/cliente/email-verify");
+        }else {
+          showToast("error", "Error", data.message || "Ocurrió un error.");
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => 
+        {
+          console.log(err);
+          showToast("error",
+            "Error",
+            "Ocurrió un error al momento del registro."
+          );
+        }
+      );
   }
 
   return (

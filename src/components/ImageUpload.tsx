@@ -6,7 +6,7 @@ import { RegistroAbogadoState } from "@/contexts/registroAbogadoContext";
 type CvUploadProps = {
   updateStateAbogado: (newState: Partial<RegistroAbogadoState>) => void;
   stateAbogado: RegistroAbogadoState;
-  campo: "cul_url" | "foto_url" | "pdf_url";
+  campo: "archivo_imagen" | "archivo_cv" | "archivo_cul";
 };
 
 function ImageUpload({ campo, stateAbogado, updateStateAbogado }: CvUploadProps) {
@@ -35,7 +35,7 @@ function ImageUpload({ campo, stateAbogado, updateStateAbogado }: CvUploadProps)
 
       const reader = new FileReader();
       reader.onload = () => {
-        const base64File = reader.result?.toString().split(",")[1];
+        const base64File = reader.result?.toString();
         if (base64File) {
           updateStateAbogado({
             [campo]: {

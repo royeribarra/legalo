@@ -66,14 +66,14 @@ function IndustrySelectAbogado({
 
   return (
     <div className="w-full lg:w-1/2">
-      <p className="text-sm my-2">Industria</p>
+      <p className="text-sm my-2">¿En qué industria tienes experiencia?</p>
       <Select onValueChange={handleSelect}>
         <SelectTrigger className="flex flex-wrap items-center">
           <SelectValue placeholder="Seleccionar" />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectLabel>Servicios</SelectLabel>
+            <SelectLabel>Industrias</SelectLabel>
             {services
               .filter(
                 (service) =>
@@ -84,11 +84,11 @@ function IndustrySelectAbogado({
                   {service.label}
                 </SelectItem>
               ))}
-            {selectedServices.length > 0 && (
+            {/* {selectedServices.length > 0 && (
               <SelectItem value="remove-all" onClick={handleRemoveAll}>
                 Quitar todos
               </SelectItem>
-            )}
+            )} */}
           </SelectGroup>
         </SelectContent>
       </Select>

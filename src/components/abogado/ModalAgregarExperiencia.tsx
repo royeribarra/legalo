@@ -258,7 +258,7 @@ function ModalAgregarExperiencia({
                     <FormControl>
                       <Textarea
                         className="border border-black rounded-[10px]"
-                        placeholder="Pequeña descripción..."
+                        placeholder="Redacción de contratos laborales, patrocinio procesos civiles de indemnización, etc."
                         {...field}
                       />
                     </FormControl>

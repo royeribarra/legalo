@@ -32,6 +32,7 @@ function ServiceSelectAbogado({
     { value: "consultoria", label: "Consultoría" },
     { value: "investigacion", label: "Investigación" },
     { value: "litigios", label: "Litigios" },
+    { value: "practicas", label: "Prácticas" },
   ];
 
   const handleSelect = (value: string) => {

@@ -226,7 +226,7 @@ function RegisterLawyer() {
               Bienvenido a <span className="italic">Legalo</span>
             </h2>
             <h3 className="lg:text-lg lg:mb-8">
-              Facilita tu búsqueda de proyectos
+              Conecta con clientes y haz crecer tu práctica legal.
             </h3>
             <Form {...form}>
               <form
@@ -315,7 +315,7 @@ function RegisterLawyer() {
                   name="location"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Ubicacion</FormLabel>
+                      <FormLabel>Ingresa tu ciudad</FormLabel>
                       <FormControl>
                         <Input placeholder="Ubicación" {...field} />
                       </FormControl>
@@ -389,7 +389,7 @@ function RegisterLawyer() {
                 />
 
                 <Button type="submit" className="w-full">
-                  Crear mi cuenta
+                  Continuar con mi registro
                 </Button>
               </form>
             </Form>

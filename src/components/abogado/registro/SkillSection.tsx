@@ -114,6 +114,7 @@ function SkillSection({ updateStateAbogado, stateAbogado }: SkillSectionProps) {
 
   return (
     <div className="flex flex-col gap-4">
+      <p>Añade tus habilidades técnicas y blandas para complementar tu perfil profesional</p>
       {/* Habilidades duras */}
       <div className="border-b pb-2">
         <p className="text-sm mb-2">Tus skills o habilidades duras:</p>

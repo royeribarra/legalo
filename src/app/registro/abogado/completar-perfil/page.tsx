@@ -77,24 +77,78 @@ const CompleteProfileLawyerPage: React.FC = () => {
   const nextStep = async() => {
     
     if (stepNumber === 4) {
-      console.log(stateAbogado)
+      if(!stateAbogado.archivo_imagen) {
+        showToast(
+          "error",
+          "Archivo Imagen",
+          "Sube una imagen"
+        );
+        return;
+      }
+      if(!stateAbogado.archivo_cv) {
+        showToast(
+          "error",
+          "Archivo CV",
+          "Sube un archivo"
+        );
+        return;
+      }
+      if(!stateAbogado.archivo_cul) {
+        showToast(
+          "error",
+          "Archivo CUL",
+          "Sube un archivo"
+        );
+        return;
+      }
       if(!stateAbogado.servicios.length) {
         showToast(
           "error",
           "Servicios",
           "Selecciona una opción como mínimo."
-        )
+        );
+        return;
       }
       if(!stateAbogado.industrias.length) {
         showToast(
           "error",
           "Industrias",
           "Selecciona una opción como mínimo."
-        )
+        );
+        return;
       }
 
-      if (stateAbogado.pdf_url) {
-        enviarArchivo(stateAbogado.pdf_url, stateAbogado.dni, stateAbogado.email);
+      if(!stateAbogado.habilidades_blandas.length) {
+        showToast(
+          "error",
+          "Habilidades Blandas",
+          "Selecciona una opción como mínimo."
+        );
+        return;
+      }
+
+      if(!stateAbogado.habilidades_duras.length) {
+        showToast(
+          "error",
+          "Habilidades Duras",
+          "Selecciona una opción como mínimo."
+        );
+        return;
+      }
+
+      if (stateAbogado.archivo_cv) {
+        const url = `${process.env.BASE_APP_API_URL}/temp-files/upload-abogado-cv`;
+        enviarArchivo(stateAbogado.archivo_cv, stateAbogado.dni, stateAbogado.email, 'archivo_cv', url);
+      }
+
+      if (stateAbogado.archivo_cul) {
+        const url = `${process.env.BASE_APP_API_URL}/temp-files/upload-abogado-cul`;
+        enviarArchivo(stateAbogado.archivo_cul, stateAbogado.dni, stateAbogado.email, 'archivo_cul', url);
+      }
+
+      if (stateAbogado.archivo_imagen) {
+        const url = `${process.env.BASE_APP_API_URL}/temp-files/upload-abogado-imagen`;
+        enviarArchivo(stateAbogado.archivo_imagen, stateAbogado.dni, stateAbogado.email, 'archivo_imagen', url);
       }
 
       if (true) {
@@ -162,7 +216,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
             "Falta:",
             "Seleccionar experiencia."
           )
-        }else if(!stateAbogado.pdf_url) {
+        }else if(!stateAbogado.archivo_cv) {
           showToast(
             "error",
             "Falta:",
@@ -228,20 +282,16 @@ const CompleteProfileLawyerPage: React.FC = () => {
   }
   
 
-  const enviarArchivo = async (archivo: IArchivo, dni: string, correo: string) => {
-    if (!archivo) {
-      console.error("No hay archivo para enviar");
-      return;
-    }
-    return;
+  const enviarArchivo = async (archivo: IArchivo, dni: string, correo: string, nombreArchivo: string, url: string) => {
     const archivoBlob = base64ToBlob(archivo.contenido, archivo.tipo);
     const formData = new FormData();
+    formData.append("nombreArchivo", nombreArchivo);
     formData.append("file", archivoBlob, archivo.nombre);
     formData.append("dni", dni);
     formData.append("correo", correo);
   
     try {
-      const response = await fetch(`${process.env.BASE_APP_API_URL}/temp-files/upload-profile-img`, {
+      const response = await fetch(url, {
         method: "POST",
         body: formData,
       });
@@ -291,7 +341,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
         <ImageUpload 
           updateStateAbogado={updateStateAbogado}
           stateAbogado={stateAbogado}
-          campo={"foto_url"}
+          campo={"archivo_imagen"}
         />
 
         <div className="w-full lg:w-4/6 flex flex-col justify-center">
@@ -313,7 +363,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
       <FileUpload 
         updateStateAbogado={updateStateAbogado}
         stateAbogado={stateAbogado}
-        campo={"cul_url"}
+        campo={"archivo_cul"}
       />
       {/* lateral menu  */}
       <div className="my-4 pb-32">
@@ -342,7 +392,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
               className=" text-[#D1D1D6] w-full justify-start py-4 lg:text-lg font-bold data-[state=active]:bg-[#D9D9D9] data-[state=active]:text-black rounded-[10px]"
               disabled={stepNumber != 3 ? true : false}
             >
-              Sobre tí
+              Perfil profesional
             </TabsTrigger>
             <TabsTrigger
               value="tab4"
@@ -380,6 +430,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
                     experiencia
                   </Button>
                 </div>
+                <p>Detalla tus experiencias laborales relevantes para resaltar tu trayectoria profesional</p>
                 {stateAbogado.experiencias.map((experiencia: IExperiencia, index) => (
                   <div className="flex gap-4 p-4" key={index}>
                     <div className="w-1/4 flex gap-1">
@@ -425,7 +476,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
                 <CvUpload 
                   updateStateAbogado={updateStateAbogado}
                   stateAbogado={stateAbogado}
-                  campo={"pdf_url"}
+                  campo={"archivo_cv"}
                 />
               </div>
             </TabsContent>
@@ -442,6 +493,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
                   estudio
                 </Button>
               </div>
+              <p>Añade tus títulos y certificaciones para destacar tu formación académica.</p>
               <div>
                 {stateAbogado.estudios.map((educacion: IEstudio, index) => (
                   <div className="flex gap-4 p-4" key={index}>
