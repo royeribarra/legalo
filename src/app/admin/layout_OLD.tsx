@@ -27,7 +27,8 @@ export default function AdminLayoutOld({
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
 
   useEffect(() => {
-    // const userRole = localStorage.getItem('userRole');
+    const userRole = localStorage.getItem('userRole');
+    console.log(userRole)
     if (
       pathname?.includes("/admin/client") ||
       pathname?.includes("/admin/lawyer") ||
@@ -90,7 +91,7 @@ export default function AdminLayoutOld({
     console.log(info?.source, value);
 
 
-  
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <HeaderAdmin></HeaderAdmin>
