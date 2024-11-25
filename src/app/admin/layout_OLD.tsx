@@ -89,6 +89,8 @@ export default function AdminLayoutOld({
   const onSearch: SearchProps["onSearch"] = (value, _e, info) =>
     console.log(info?.source, value);
 
+
+  
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <HeaderAdmin></HeaderAdmin>
