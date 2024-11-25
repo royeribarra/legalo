@@ -5,7 +5,6 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 
 import { SearchForm } from "@/components/admin/search-form";
-import { VersionSwitcher } from "@/components/admin/version-switcher";
 import {
   Collapsible,
   CollapsibleContent,

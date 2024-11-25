@@ -1,75 +1,74 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { Button } from "./ui/button";
 import { Upload, Eye, Trash, Check } from "lucide-react";
+import { RegistroAbogadoState } from "@/contexts/registroAbogadoContext";
 
-function FileUpload() {
-  const [file, setFile] = useState<File | null>(null);
+type CvUploadProps = {
+  updateStateAbogado: (newState: Partial<RegistroAbogadoState>) => void;
+  stateAbogado: RegistroAbogadoState;
+  campo: "cul_url" | "foto_url" | "pdf_url";
+};
+
+function FileUpload({ campo, stateAbogado, updateStateAbogado }: CvUploadProps) {
+  const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);
+  console.log(uploadSuccess)
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-  useEffect(() => {
-    // Verifica si hay un archivo en localStorage al cargar el componente
-    const storedFile = localStorage.getItem("culFile");
-    const storedFileName = localStorage.getItem("uploadedCulFileName");
-
-    if (storedFile && storedFileName) {
-      // Crear un blob y mostrarlo como archivo
-      const blob = new Blob([atob(storedFile)], { type: "application/octet-stream" });
-      const restoredFile = new File([blob], storedFileName);
-      setFile(restoredFile);
-    }
-  }, []);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
 
     if (selectedFile) {
-      const validTypes = [
-        "application/pdf",
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        "application/msword",
-      ];
-
+      const validTypes = ["application/pdf", "image/jpeg", "image/png"];
       if (!validTypes.includes(selectedFile.type)) {
-        alert("Por favor, sube un archivo PDF o DOC/DOCX.");
+        alert("Formato de archivo no válido. Solo se aceptan PDF, JPG y PNG.");
         return;
       }
 
-      // Verificar tamaño del archivo (5 MB)
-      const fileSizeLimit = 5 * 1024 * 1024; // 5 MB en bytes
+      const fileSizeLimit = 5 * 1024 * 1024;
       if (selectedFile.size > fileSizeLimit) {
         alert("El archivo debe pesar menos de 5 MB.");
         return;
       }
 
-      setFile(selectedFile);
-
-      // Convertir archivo a base64 y guardar en localStorage
       const reader = new FileReader();
       reader.onload = () => {
-        const base64File = reader.result?.toString().split(",")[1]; // Remueve el encabezado "data:..."
+        const base64File = reader.result?.toString().split(",")[1];
         if (base64File) {
-          localStorage.setItem("culFile", base64File);
-          localStorage.setItem("uploadedCulFileName", selectedFile.name);
+          updateStateAbogado({
+            [campo]: {
+              nombre: selectedFile.name,
+              tipo: selectedFile.type,
+              contenido: base64File,
+            },
+          });
+          setUploadSuccess(true);
         }
       };
       reader.readAsDataURL(selectedFile);
     }
   };
 
-  const handleButtonClick = () => {
-    fileInputRef.current?.click();
-  };
-
   const handleRemoveFile = () => {
-    setFile(null);
-    localStorage.removeItem("culFile");
-    localStorage.removeItem("uploadedCulFileName");
+    updateStateAbogado({ [campo]: null });
+    setUploadSuccess(false);
   };
 
   const handleViewFile = () => {
-    if (file) {
-      const fileUrl = URL.createObjectURL(file);
-      window.open(fileUrl);
+    const archivo = stateAbogado[campo];
+    if (archivo) {
+      const fileUrl = `data:${archivo.tipo};base64,${archivo.contenido}`;
+      const link = document.createElement("a");
+      link.href = fileUrl;
+      link.download = archivo.nombre;
+      link.click();
+    }
+  };
+
+  const archivo = stateAbogado[campo];
+
+  const handleClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click(); // Activa el input oculto al hacer clic en el contenedor
     }
   };
 
@@ -88,12 +87,12 @@ function FileUpload() {
             style={{ display: "none" }}
             ref={fileInputRef}
           />
-          <Button onClick={handleButtonClick}>
+          <Button onClick={handleClick}>
             Importa tu CUL <Upload size={18} color="white" className="ml-2" />
           </Button>
         </div>
       </div>
-      {file && (
+      {archivo && (
         <div className="flex justify-between items-center border-t border-gray-300 mt-4 pt-4">
           <div className="flex items-center">
             <div className="flex items-center justify-center w-8 h-8 border-2 border-gray-400 rounded-full mr-3">
@@ -101,7 +100,7 @@ function FileUpload() {
             </div>
             <div className="flex flex-col">
               <p className="text-lg">Certificado único laboral subido con éxito</p>
-              <p className="font-bold text-gray-700">{file.name}</p>
+              <p className="font-bold text-gray-700">{archivo.nombre}</p>
             </div>
           </div>
           <div className="flex items-center">

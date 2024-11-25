@@ -4,7 +4,6 @@ import { usePathname } from "next/navigation";
 
 import { AppSidebar } from "@/components/admin/app-sidebar";
 
-import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
   SidebarProvider,
