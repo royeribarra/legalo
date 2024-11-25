@@ -11,33 +11,64 @@ import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
 import { useOferta } from "@/contexts/ofertaContext";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/contexts/toastContext";
 
 const PublicarPageFour = () => {
   const route = useRouter();
+  const { showToast } = useToast();
   const { state, updateState } = useOferta();
   const [fileError, setFileError] = useState<string | null>(null);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files ? e.target.files[0] : null;
-    if (file) {
-      if (file.size > 2 * 1024 * 1024) {
-        setFileError("El archivo debe ser de menos de 2MB.");
-      } else if (
-        ![
-          "application/pdf",
-          "application/msword",
-          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        ].includes(file.type)
-      ) {
-        setFileError("Solo se permiten archivos DOC, DOCX, y PDF.");
-      } else {
-        setFileError(null);
-        updateState({ documento: file });
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0];
+
+    if (selectedFile) {
+      const validTypes = [
+        "application/pdf", 
+        "application/msword", 
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+        "text/plain" // TXT
+      ];
+      if (!validTypes.includes(selectedFile.type)) {
+        alert("Formato de archivo no válido. Solo se aceptan PDF, DOC, DOCX y TXT.");
+        return;
       }
+
+      const fileSizeLimit = 4 * 1024 * 1024; // 5 MB
+      if (selectedFile.size > fileSizeLimit) {
+        setFileError("El archivo debe pesar menos de 5 MB.");
+        return;
+      }
+
+      setFileError(null); // Limpiar errores previos
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64File = reader.result?.toString();
+        if (base64File) {
+          updateState({
+            documento: {
+              nombre: selectedFile.name,
+              tipo: selectedFile.type,
+              contenido: base64File,
+            },
+          });
+          setUploadSuccess(true);
+        }
+      };
+      reader.readAsDataURL(selectedFile);
     }
   };
 
   const nextStep = () => {
+    if (!state.descripcion) {
+      showToast("error", "Ingresa una descripción", "");
+      return;
+    }
+    if (!state.documento) {
+      showToast("error", "Sube un documento", "");
+      return;
+    }
     route.push("/dashboard/cliente/nueva-oferta/servicio");
   };
 
@@ -51,7 +82,7 @@ const PublicarPageFour = () => {
         <Progress value={67} className="mx-auto mb-4 h-2" />
         <p className="text-left">Paso 4/6</p>
       </div>
-      <div className="flex flex-wrap lg: flex-nowrap gap-16">
+      <div className="flex flex-wrap lg:flex-nowrap gap-16">
         <div>
           <h1 className="text-2xl lg:text-5xl my-4 font-nimbus">
             Cuéntanos lo qué necesitas
@@ -100,12 +131,13 @@ const PublicarPageFour = () => {
             />
             <input
               type="file"
-              accept=".doc,.docx,.pdf"
+              accept=".pdf,.doc,.docx,.txt"
               onChange={handleFileChange}
               className="mb-2"
             />
             {fileError && <p className="text-red-500 text-sm">{fileError}</p>}
-            <p className="text-xs text-gray-500">DOC, DOCX, PDF (2 MB)</p>
+            {uploadSuccess && <p className="text-green-500 text-sm">¡Archivo subido exitosamente!</p>}
+            <p className="text-xs text-gray-500">PDF, JPG, PNG (máx. 5 MB)</p>
           </div>
           <p>Adjunta todo documento que creas que pueda ayudar en tu caso.</p>
         </div>

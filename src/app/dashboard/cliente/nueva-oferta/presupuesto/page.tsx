@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Info as IcoInfo } from "lucide-react";
 import { ArrowRight } from "lucide-react";
@@ -13,35 +13,62 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Input } from "@/components/ui/input";
 import { useOferta } from "@/contexts/ofertaContext";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/contexts/toastContext";
 
 const PublicarPageSeven = () => {
   const route = useRouter();
-  const { updateState } = useOferta();
+  const { state, updateState } = useOferta();
+  const { showToast } = useToast();
   const [selected, setSelected] = useState("rango");
   const [rangoDesde, setRangoDesde] = useState("");
   const [rangoHasta, setRangoHasta] = useState("");
   const [montoFijo, setMontoFijo] = useState("");
+
+  // Cargar valores iniciales si ya existen
+  useEffect(() => {
+    if (state.presupuesto) {
+      const { salario_minimo, salario_maximo } = state.presupuesto;
+      if (salario_minimo !== salario_maximo) {
+        setSelected("rango");
+        setRangoDesde(salario_minimo || "");
+        setRangoHasta(salario_maximo || "");
+      } else {
+        setSelected("monto-fijo");
+        setMontoFijo(salario_maximo || "");
+      }
+    }
+  }, [state.presupuesto]);
 
   // Función para manejar el cambio en los inputs del presupuesto
   const handlePresupuestoUpdate = () => {
     if (selected === "rango") {
       updateState({
         presupuesto: {
-          presupuesto_maximo: rangoHasta,
-          presupuesto_minimo: rangoDesde,
+          salario_minimo: rangoDesde,
+          salario_maximo: rangoHasta,
         },
       });
     } else if (selected === "monto-fijo") {
       updateState({
         presupuesto: {
-          presupuesto_maximo: montoFijo,
-          presupuesto_minimo: montoFijo,
+          salario_minimo: montoFijo,
+          salario_maximo: montoFijo,
         },
       });
     }
   };
 
   const nextStep = () => {
+    // Validaciones
+    if (selected === "rango" && (!rangoDesde || !rangoHasta)) {
+      showToast("error", "Debes ingresar un rango válido.", "");
+      return;
+    }
+    if (selected === "monto-fijo" && !montoFijo) {
+      showToast("error", "Debes ingresar un monto fijo válido.", "");
+      return;
+    }
+
     handlePresupuestoUpdate();
     route.push("/dashboard/cliente/nueva-oferta/preguntas");
   };
@@ -64,7 +91,9 @@ const PublicarPageSeven = () => {
         <div className="mb-4">
           <RadioGroup value={selected} className="flex">
             <div
-              className={`flex flex-col justify-between w-1/2 h-[90px] border rounded-lg p-4 cursor-pointer ${selected === "rango" ? "bg-[#F6F8F7] border-black" : "bg-white"}`}
+              className={`flex flex-col justify-between w-1/2 h-[90px] border rounded-lg p-4 cursor-pointer ${
+                selected === "rango" ? "bg-[#F6F8F7] border-black" : "bg-white"
+              }`}
               onClick={() => setSelected("rango")}
             >
               <div className="flex justify-end">
@@ -73,7 +102,11 @@ const PublicarPageSeven = () => {
               <Label htmlFor="r1">Rango</Label>
             </div>
             <div
-              className={`flex flex-col justify-between w-1/2 h-[90px] border rounded-lg p-4 cursor-pointer ${selected === "monto-fijo" ? "bg-[#F6F8F7] border-black" : "white"}`}
+              className={`flex flex-col justify-between w-1/2 h-[90px] border rounded-lg p-4 cursor-pointer ${
+                selected === "monto-fijo"
+                  ? "bg-[#F6F8F7] border-black"
+                  : "bg-white"
+              }`}
               onClick={() => setSelected("monto-fijo")}
             >
               <div className="flex justify-end">

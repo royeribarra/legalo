@@ -12,6 +12,7 @@ import ModalCrearProyectoOk from "@/components/ModalCrearProyectoOk";
 import { useOferta } from "@/contexts/ofertaContext";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/authContext";
+import { IArchivo } from "@/interfaces/Archivo.interface";
 
 // Definimos un tipo para los items
 interface Item {
@@ -77,8 +78,14 @@ const PublicarPageEight = () => {
     const data = {
       ...state,
       clienteId: token?.id,
+      documento: ''
     };
     console.log(data);
+
+    if (state.documento && token) {
+      const url = `${process.env.BASE_APP_API_URL}/temp-files/upload-oferta-documento`;
+      enviarArchivo(state.documento, token?.id, token.correo, 'oferta', url);
+    }
 
     fetch(`${process.env.BASE_APP_API_URL}/ofertas/create`, {
       method: "POST",
@@ -95,6 +102,57 @@ const PublicarPageEight = () => {
         }
       })
       .catch((err) => console.log(err));
+  };
+
+  function base64ToBlob(base64: string, mimeType: string): Blob {
+    try {
+      // Verificar si la cadena tiene el prefijo esperado
+      if (!base64.includes(",")) {
+        throw new Error("La cadena base64 no tiene el formato esperado.");
+      }
+  
+      const base64Content = base64.split(",")[1];
+      if (!base64Content) {
+        throw new Error("Contenido base64 no encontrado después de ','");
+      }
+  
+      const byteCharacters = atob(base64Content);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      return new Blob([byteArray], { type: mimeType });
+    } catch (error) {
+      console.error("Error al convertir base64 a Blob:", error);
+      throw error; // Opcional: lanzar el error para manejarlo en la llamada
+    }
+  }
+  
+
+  const enviarArchivo = async (archivo: IArchivo, id: number, correo: string, nombreArchivo: string, url: string) => {
+    const archivoBlob = base64ToBlob(archivo.contenido, archivo.tipo);
+    const formData = new FormData();
+    formData.append("nombreArchivo", nombreArchivo);
+    formData.append("file", archivoBlob, archivo.nombre);
+    formData.append("id", `${id}`);
+    formData.append("correo", correo);
+  
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error en la petición: ${response.statusText}`);
+      }
+  
+      const data = await response.json();
+      console.log("Archivo enviado correctamente", data);
+    } catch (error) {
+      console.error("Error al enviar el archivo", error);
+    }
   };
 
   return (

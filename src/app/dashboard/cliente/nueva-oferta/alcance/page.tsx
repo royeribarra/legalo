@@ -11,9 +11,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useOferta } from "@/contexts/ofertaContext";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/contexts/toastContext";
 
 const PublicarPageSix = () => {
   const route = useRouter();
+  const { showToast } = useToast();
   const { state, updateState } = useOferta();
 
   // Funciones para manejar los cambios
@@ -34,6 +36,14 @@ const PublicarPageSix = () => {
   };
 
   const nextStep = () => {
+    if (!state.duracion) {
+      showToast("error", "Debes seleccionar una duración.", "");
+      return;
+    }
+    if (!state.nivelExperiencia) {
+      showToast("error", "Debes seleccionar un nivel.", "");
+      return;
+    }
     route.push("/dashboard/cliente/nueva-oferta/presupuesto");
   };
 

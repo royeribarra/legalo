@@ -47,9 +47,9 @@ function IndustrySelectAbogado({
   };
 
   // Función para eliminar todas las industrias seleccionadas
-  const handleRemoveAll = () => {
-    setSelectedServices([]);
-  };
+  // const handleRemoveAll = () => {
+  //   setSelectedServices([]);
+  // };
 
   // Definición de las industrias disponibles
   const services = [

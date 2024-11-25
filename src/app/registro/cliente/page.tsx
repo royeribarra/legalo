@@ -141,7 +141,8 @@ const formSchema = z.object({
   company: z
     .string()
     .min(2, { message: "El campo debe ser rellenado" })
-    .max(30),
+    .max(30)
+    .optional(),
   phone: z.string().min(1, { message: "El campo debe ser rellenado" }).max(15),
   howDiscover: z.string().min(2).max(100).optional(),
   rsocial: z.enum(["natural", "juridica"], {
@@ -173,10 +174,12 @@ const RegisterClient = () => {
       documento: "",
       password: "",
       rsocial: "natural",
+      howDiscover: "facebook"
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values)
     const data = {
       nombres: values.names,
       apellidos: values.lastNames,
@@ -216,6 +219,10 @@ const RegisterClient = () => {
       );
   }
 
+  function onError(errors: FieldValues) {
+    console.log("Errores de validación", errors);
+  }
+
   return (
     <div className="h-screen grid grid-cols-4 gap-4">
       <div className="col-span-4 lg:col-span-3">
@@ -249,7 +256,7 @@ const RegisterClient = () => {
             <h3 className=" lg:text-[28px]">Datos personales</h3>
             <Form {...form}>
               <form
-                onSubmit={form.handleSubmit(onSubmit)}
+                onSubmit={form.handleSubmit(onSubmit, onError)}
                 className="space-y-4"
               >
                 <div className=" grid grid-cols-2 gap-4">
@@ -464,10 +471,12 @@ const RegisterClient = () => {
                     <FormItem>
                       <FormLabel>¿Cómo oíste de nosotros? (OPCIONAL)</FormLabel>
                       <FormControl>
-                        <Select {...field}>
+                        <Select 
+                          value={field.value} 
+                          onValueChange={field.onChange}
+                        >
                           <SelectTrigger>
-                            {/* Aquí puedes colocar un texto de placeholder si lo necesitas */}
-                            <span>Selecciona una opción</span>
+                            {field.value ? <span>{field.value}</span> : <span className="text-gray-400">Selecciona una opción</span>}
                           </SelectTrigger>
                           <SelectContent>
                             <SelectItem value="facebook">Facebook</SelectItem>

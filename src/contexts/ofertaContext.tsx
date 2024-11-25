@@ -1,3 +1,4 @@
+import { IArchivo } from "@/interfaces/Archivo.interface";
 import { IEspecialidad } from "@/interfaces/Especialidad.interface";
 import { IPregunta } from "@/interfaces/Pregunta.interface";
 import { IPresupuesto } from "@/interfaces/Presupuesto.interface";
@@ -11,7 +12,7 @@ type OfertaState = {
   titulo: string;
   especialidades: IEspecialidad[];
   descripcion: string;
-  documento: File | null;
+  documento: IArchivo | null;
   servicios: IServicio[];
   duracion: string;
   nivelExperiencia: string;

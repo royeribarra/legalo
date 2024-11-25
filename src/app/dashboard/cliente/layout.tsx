@@ -48,7 +48,7 @@ const LayoutContent = ({ children }: { children: ReactNode }) => {
   return (
     <div className="">
       <header className="py-4 px-4 lg:px-16 flex justify-between items-center align h-auto lg:h-[72px] bg-lg-client overflow-hidden gap-4 lg:gap-8 flex-wrap lg:flex-row">
-        <Link href="/" className="max-w-[100px] lg:max-w-none order-1">
+        <Link href="/dashboard/cliente" className="max-w-[100px] lg:max-w-none order-1">
           <Image
             src="/assets/legalo-logo.png"
             alt="logo"

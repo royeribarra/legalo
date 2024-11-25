@@ -8,11 +8,13 @@ import { ArrowRight } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useOferta } from "@/contexts/ofertaContext";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/contexts/toastContext";
 
 const PublicarPageFour = () => {
   const route = useRouter();
+  const { showToast } = useToast();
   const { state, updateState } = useOferta();
-  const [selectedServices, setSelectedServices] = useState<number[]>([]); // Cambiado a number[]
+  const [selectedServices, setSelectedServices] = useState<number[]>([]);
 
   const serviceItems = [
     { id: 1, name: "No estoy seguro del servicio a escoger" },
@@ -26,22 +28,33 @@ const PublicarPageFour = () => {
     { id: 9, name: "Prácticas pre-profesionales" },
   ];
 
+  // Sincronizar estado inicial desde el contexto
   useEffect(() => {
     if (state.servicios) {
+      // Filtramos los elementos con `id` definido y aseguramos que sea un número válido
       const servicioIds = state.servicios
         .filter((servicio) => servicio.id !== undefined)
-        .map((servicio) => servicio.id as number);
+        .map((servicio) => servicio.id as number); // Aquí usamos `as number` porque sabemos que ya hemos filtrado `undefined`
+      
       setSelectedServices(servicioIds);
     }
   }, [state.servicios]);
 
   const handleCheckboxChange = (checked: boolean, serviceId: number) => {
     setSelectedServices((prevState) => {
-      const newSelection = checked
-        ? [...prevState, serviceId] // Agregar si está marcado
-        : prevState.filter((id) => id !== serviceId); // Quitar si no está marcado
+      let newSelection;
 
-      // Actualizamos el contexto
+      if (checked) {
+        if (prevState.length >= 2) {
+          showToast("error", "Solo puedes seleccionar hasta 2 servicios.", "");
+          return prevState; // No agregar más si ya hay 2 seleccionados
+        }
+        newSelection = [...prevState, serviceId];
+      } else {
+        newSelection = prevState.filter((id) => id !== serviceId);
+      }
+
+      // Actualizar el contexto con los servicios seleccionados
       const updatedServicios = newSelection.map((id) => ({
         id,
         nombre: serviceItems.find((item) => item.id === id)?.name || "",
@@ -53,6 +66,10 @@ const PublicarPageFour = () => {
   };
 
   const nextStep = () => {
+    if (selectedServices.length === 0) {
+      alert("Debes seleccionar al menos un servicio.");
+      return;
+    }
     route.push("/dashboard/cliente/nueva-oferta/alcance");
   };
 

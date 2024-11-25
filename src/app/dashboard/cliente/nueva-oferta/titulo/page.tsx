@@ -9,9 +9,11 @@ import { ArrowRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useOferta } from "@/contexts/ofertaContext";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/contexts/toastContext";
 
 const PublicarPageTwo = () => {
   const { state, updateState } = useOferta();
+  const { showToast } = useToast();
   const route = useRouter();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,6 +21,15 @@ const PublicarPageTwo = () => {
   };
 
   const nextStep = () => {
+    if(!state.titulo){
+      showToast(
+        "error",
+        "Completa el título",
+        ""
+      );
+      return;
+    }
+    
     route.push("/dashboard/cliente/nueva-oferta/especialidad");
   };
 

@@ -10,6 +10,7 @@ import specialtiesItems from "@/data/specialtiesItems";
 import { useOferta } from "@/contexts/ofertaContext"; // Asegúrate de importar la interfaz
 import { IEspecialidad } from "@/interfaces/Especialidad.interface";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/contexts/toastContext";
 
 interface Especialidad {
   CardTitle: string;
@@ -18,9 +19,10 @@ interface Especialidad {
 }
 
 const PublicarPageThree = () => {
+  const { showToast } = useToast();
   const route = useRouter();
-  const { updateState } = useOferta();
-  const [selectServices, setSelectServices] = useState<IEspecialidad[]>([]);
+  const { state, updateState } = useOferta();
+  const [selectServices, setSelectServices] = useState<IEspecialidad[]>(state.especialidades);
 
   const selectEspecialidad = (item: Especialidad) => {
     const newEspecialidad: IEspecialidad = { nombre: item.CardTitle };
@@ -32,7 +34,7 @@ const PublicarPageThree = () => {
       setSelectServices(filteredServices);
       updateState({ especialidades: filteredServices });
     } else {
-      if (selectServices.length >= 5) {
+      if (selectServices.length >= 1) {
         console.log("No se puede escoger más de una especialidad");
         return;
       }
@@ -43,6 +45,14 @@ const PublicarPageThree = () => {
   };
 
   const nextStep = () => {
+    if(!state.especialidades.length){
+      showToast(
+        "error",
+        "Selecciona uan especialidad",
+        ""
+      );
+      return;
+    }
     route.push("/dashboard/cliente/nueva-oferta/descripcion");
   };
 
