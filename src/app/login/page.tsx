@@ -13,7 +13,7 @@ export default function LoginPage() {
     setLoading(true);
     
     try {
-      const response = await fetch(`${process.env.BASE_APP_API_URL}/api/auth/login`, {
+      const response = await fetch(`${process.env.BASE_APP_API_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
