@@ -5,7 +5,7 @@ import { Progress } from "@/components/ui/progress";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
-import { Info as IcoInfo } from "lucide-react";
+import { ArrowLeft, Info as IcoInfo } from "lucide-react";
 import { ArrowRight } from "lucide-react";
 
 import { Label } from "@/components/ui/label";
@@ -156,9 +156,11 @@ const PublicarPageSeven = () => {
           <p>Te mostraremos abogados acorde al rango ingresado.</p>
         </div>
 
-        <div className="flex justify-between items-center mt-16">
-          <Link href="#" className="font-bold underline">
-            No estoy listo para poner un presupuesto
+        <div className="flex justify-between mt-16">
+          <Link href="/dashboard/cliente/nueva-oferta/alcance">
+            <Button variant="outline" className="h-12 px-10 text-base rounded-[10px]">
+              <ArrowLeft className="mr-2" /> Volver
+            </Button>
           </Link>
           <Button
             className="h-12 px-10 px-text-base rounded-[10px]"

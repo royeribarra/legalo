@@ -18,7 +18,11 @@ function FileUpload({ campo, stateAbogado, updateStateAbogado }: CvUploadProps) 
     const selectedFile = event.target.files?.[0];
 
     if (selectedFile) {
-      const validTypes = ["application/pdf", "image/jpeg", "image/png"];
+      const validTypes = [
+        "application/pdf", 
+        "application/msword", 
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      ];
       if (!validTypes.includes(selectedFile.type)) {
         alert("Formato de archivo no válido. Solo se aceptan PDF, JPG y PNG.");
         return;
@@ -76,8 +80,8 @@ function FileUpload({ campo, stateAbogado, updateStateAbogado }: CvUploadProps) 
     <div className="border border-black p-5 border-dashed">
       <div className="flex flex-col lg:flex-row">
         <div className="w-full lg:w-4/5">
-          <p><b>Adjunta tu Certificado único Laboral (CUL)</b></p>
-          <p>El CUL es un documento gratuito emitido por el MTPE que reúne información personal, antecedentes, educación y experiencia laboral formal. Ingresa a <a href="https://www.empleosperu.gob.pe/" style={{ color: 'blue'}} target="_blank">www.empleosperu.gob.pe</a>, completa el formulario para verificar tu identidad y acepta los términos. Luego, descarga tu certificado.
+          <p><strong>Adjunta tu Certificado único Laboral (CUL)</strong></p>
+          <p>Este documento lo puedes obtener en el siguiente link: <a href="https://www.empleosperu.gob.pe/" style={{ color: 'blue'}} target="_blank">www.empleosperu.gob.pe</a>.
           En formato PDF, DOC o DOCX.
           </p>
         </div>

@@ -10,10 +10,10 @@ type OfertaState = {
   selected: number | null;
   uso: string;
   titulo: string;
-  especialidades: IEspecialidad[];
+  especialidades: number[];
   descripcion: string;
   documento: IArchivo | null;
-  servicios: IServicio[];
+  servicios: number[];
   duracion: string;
   nivelExperiencia: string;
   presupuesto: IPresupuesto | null | undefined;

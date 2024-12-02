@@ -52,9 +52,11 @@ const Header: React.FC<HeaderProps> = ({ serviceTipe, updateServiceTipe }) => {
             </div>
 
             <div className="flex gap-2">
-              <Button size="sm" className="bg-black border-none">
-                Iniciar sesión
-              </Button>
+              <Link href="/login">
+                <Button size="sm" className="bg-black border-none">
+                  Iniciar sesión
+                </Button>
+              </Link>
               <Link href="/registro/tipo">
                 <Button variant="outline" size="sm">
                   Regístrate
@@ -121,14 +123,16 @@ const Header: React.FC<HeaderProps> = ({ serviceTipe, updateServiceTipe }) => {
               </div>
             </div>
             <div className="flex gap-2">
-              <Button size="sm" className="bg-black border-none">
-                Iniciar sesión
-              </Button>
+              <Link href="/login">
+                <Button size="sm" className="bg-black border-none">
+                  Iniciar sesión
+                </Button>
+              </Link>
               <Link href="/registro/tipo">
                 <Button variant="outline" size="sm">
                   Regístrate
                 </Button>
-              </Link>
+                </Link>
             </div>
           </div>
           {/* btns mobile */}

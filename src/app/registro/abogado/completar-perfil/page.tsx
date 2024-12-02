@@ -75,7 +75,6 @@ const CompleteProfileLawyerPage: React.FC = () => {
   };
 
   const nextStep = async() => {
-    
     if (stepNumber === 4) {
       if(!stateAbogado.archivo_imagen) {
         showToast(
@@ -202,6 +201,12 @@ const CompleteProfileLawyerPage: React.FC = () => {
             if(data.state){
               localStorage.clear();
               router.push("/registro/abogado/email-verify")
+            }else{
+              showToast(
+                "error",
+                "Registro existente",
+                ""
+              );
             }
           })
           .catch(err=>console.log(err));

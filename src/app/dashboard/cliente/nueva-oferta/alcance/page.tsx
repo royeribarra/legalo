@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import React from "react";
 
-import { Info as IcoInfo } from "lucide-react";
+import { ArrowLeft, Info as IcoInfo } from "lucide-react";
 import { ArrowRight } from "lucide-react";
 
 import { Checkbox } from "@/components/ui/checkbox";
@@ -12,6 +12,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useOferta } from "@/contexts/ofertaContext";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/contexts/toastContext";
+import Link from "next/link";
 
 const PublicarPageSix = () => {
   const route = useRouter();
@@ -106,7 +107,12 @@ const PublicarPageSix = () => {
         </div>
       </div>
 
-      <div className="flex justify-end mt-16">
+      <div className="flex justify-between mt-16">
+        <Link href="/dashboard/cliente/nueva-oferta/servicio">
+          <Button variant="outline" className="h-12 px-10 text-base rounded-[10px]">
+            <ArrowLeft className="mr-2" /> Volver
+          </Button>
+        </Link>
         <Button
           className="h-12 px-10 px-text-base rounded-[10px]"
           onClick={nextStep}

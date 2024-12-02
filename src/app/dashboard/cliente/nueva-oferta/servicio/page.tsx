@@ -4,18 +4,21 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import React, { useEffect, useState } from "react";
 
-import { ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useOferta } from "@/contexts/ofertaContext";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/contexts/toastContext";
+import Link from "next/link";
+import axios from "axios";
+import { IServicio } from "@/interfaces/Servicio.interface";
 
 const PublicarPageFour = () => {
   const route = useRouter();
   const { showToast } = useToast();
   const { state, updateState } = useOferta();
   const [selectedServices, setSelectedServices] = useState<number[]>([]);
-
+  const [serviceList, setServiceList] = useState<IServicio[]>([]);
   const serviceItems = [
     { id: 1, name: "No estoy seguro del servicio a escoger" },
     { id: 2, name: "Asesoría legal" },
@@ -33,8 +36,8 @@ const PublicarPageFour = () => {
     if (state.servicios) {
       // Filtramos los elementos con `id` definido y aseguramos que sea un número válido
       const servicioIds = state.servicios
-        .filter((servicio) => servicio.id !== undefined)
-        .map((servicio) => servicio.id as number); // Aquí usamos `as number` porque sabemos que ya hemos filtrado `undefined`
+        .filter((servicio) => servicio !== undefined)
+        .map((servicio) => servicio as number); // Aquí usamos `as number` porque sabemos que ya hemos filtrado `undefined`
       
       setSelectedServices(servicioIds);
     }
@@ -55,11 +58,11 @@ const PublicarPageFour = () => {
       }
 
       // Actualizar el contexto con los servicios seleccionados
-      const updatedServicios = newSelection.map((id) => ({
-        id,
-        nombre: serviceItems.find((item) => item.id === id)?.name || "",
-      }));
-      updateState({ servicios: updatedServicios });
+      // const updatedServicios = newSelection.map((id) => ({
+      //   id,
+      //   nombre: serviceItems.find((item) => item.id === id)?.name || "",
+      // }));
+      updateState({ servicios: newSelection });
 
       return newSelection;
     });
@@ -73,6 +76,19 @@ const PublicarPageFour = () => {
     route.push("/dashboard/cliente/nueva-oferta/alcance");
   };
 
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const response = await axios.get("/api/servicios");
+        setServiceList(response.data);
+      } catch (error) {
+        console.error("Error fetching services", error);
+      }
+    };
+
+    fetchServices();
+  }, []);
+
   return (
     <div className="container mx-auto p-4 lg:p-8 lg:px-20 m-8 max-w-[900px]">
       <div className="w-full max-w-[480px] mx-auto mb-8">
@@ -85,7 +101,7 @@ const PublicarPageFour = () => {
         </h1>
         <p className="mb-6 lg:text-lg">Puedes escoger max 2*</p>
         <div className="grid grid-cols-3 grid-rows-3 gap-4">
-          {serviceItems.map((item) => (
+          {serviceList.map((item) => (
             <div
               key={item.id}
               className="flex flex-col gap-4 p-4 border border-black rounded-[10px]"
@@ -101,14 +117,19 @@ const PublicarPageFour = () => {
                 htmlFor={item.id.toString()}
                 className="text-sm font-medium"
               >
-                {item.name}
+                {item.nombre}
               </label>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="flex justify-end mt-16">
+      <div className="flex justify-between mt-16">
+        <Link href="/dashboard/cliente/nueva-oferta/descripcion">
+          <Button variant="outline" className="h-12 px-10 text-base rounded-[10px]">
+            <ArrowLeft className="mr-2" /> Volver
+          </Button>
+        </Link>
         <Button
           className="h-12 px-10 px-text-base rounded-[10px]"
           onClick={nextStep}

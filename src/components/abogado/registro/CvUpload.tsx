@@ -17,7 +17,11 @@ function CvUpload({ campo, stateAbogado, updateStateAbogado }: CvUploadProps) {
     const selectedFile = event.target.files?.[0];
 
     if (selectedFile) {
-      const validTypes = ["application/pdf", "image/jpeg", "image/png"];
+      const validTypes = [
+        "application/pdf", 
+        "application/msword", 
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      ];
       if (!validTypes.includes(selectedFile.type)) {
         alert("Formato de archivo no válido. Solo se aceptan PDF, JPG y PNG.");
         return;

@@ -37,11 +37,11 @@ function SkillSection({ updateStateAbogado, stateAbogado }: SkillSectionProps) {
   }, [stateAbogado.habilidades_blandas]);
 
   const agregarHabilidadDura = () => {
+    console.log(habilidadBlanda)
     if (
       stateAbogado.habilidades_duras.length >= 5 ||
       habilidadDura === "" ||
-      stateAbogado.habilidades_duras.some((item) => item.nombre === habilidadDura) ||
-      stateAbogado.habilidades_blandas.some((item) => item.nombre === habilidadDura)
+      stateAbogado.habilidades_duras.some((item) => item.nombre === habilidadDura)
     ) {
       return;
     }
@@ -56,15 +56,15 @@ function SkillSection({ updateStateAbogado, stateAbogado }: SkillSectionProps) {
   };
 
   const agregarHabilidadBlanda = () => {
+    console.log(habilidadBlanda)
     if (
       stateAbogado.habilidades_blandas.length >= 5 ||
       habilidadBlanda === "" ||
-      stateAbogado.habilidades_blandas.some((item) => item.nombre === habilidadBlanda) ||
-      stateAbogado.habilidades_duras.some((item) => item.nombre === habilidadBlanda)
+      stateAbogado.habilidades_blandas.some((item) => item.nombre === habilidadBlanda)
     ) {
       return;
     }
-
+    console.log(habilidadBlanda)
     const nuevasHabilidadesBlandas = [
       ...stateAbogado.habilidades_blandas,
       { id: Date.now(), nombre: habilidadBlanda },
@@ -88,17 +88,20 @@ function SkillSection({ updateStateAbogado, stateAbogado }: SkillSectionProps) {
     updateStateAbogado({ habilidades_blandas: nuevasHabilidadesBlandas });
 
     if (habilidadEliminada) {
-      setSugerenciasBlandas([
-        ...sugerenciasBlandas,
-        SugerenciasBlandasIniciales.find((s) => s.value === habilidadEliminada.nombre)!,
-      ]);
+      const habilidadSugerida = SugerenciasBlandasIniciales.find((s) => s.value === habilidadEliminada.nombre)!;
+      if(habilidadSugerida){
+        setSugerenciasBlandas([
+          ...sugerenciasBlandas,
+          SugerenciasBlandasIniciales.find((s) => s.value === habilidadEliminada.nombre)!,
+        ]);
+      }
     }
   };
 
   const agregarSugerenciaBlanda = (sugerencia: SugerenciaBlanda) => {
     if (
       stateAbogado.habilidades_blandas.length >= 5 ||
-      stateAbogado.habilidades_duras.some((item) => item.nombre === sugerencia.value)
+      stateAbogado.habilidades_blandas.some((item) => item.nombre === sugerencia.value)
     ) {
       return;
     }

@@ -1,4 +1,4 @@
 export interface IEspecialidad {
-    id?: number;
+    id: number;
     nombre: string;
 }

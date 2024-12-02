@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import Link from "next/link";
 import React, { useState } from "react";
-import { Check as CheckIcon, ArrowRight } from "lucide-react";
+import { Check as CheckIcon, ArrowRight, ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import specialtiesItems from "@/data/specialtiesItems";
 import { useOferta } from "@/contexts/ofertaContext"; // Asegúrate de importar la interfaz
@@ -117,7 +117,12 @@ const PublicarPageThree = () => {
         </div>
       </div>
 
-      <div className="flex justify-end mt-16">
+      <div className="flex justify-between mt-16">
+        <Link href="/dashboard/cliente/nueva-oferta/titulo">
+          <Button variant="outline" className="h-12 px-10 text-base rounded-[10px]">
+            <ArrowLeft className="mr-2" /> Volver
+          </Button>
+        </Link>
         <Button
           className="h-12 px-10 px-text-base rounded-[10px]"
           onClick={nextStep}
