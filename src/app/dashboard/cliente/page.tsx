@@ -27,15 +27,15 @@ import {
 } from "@/components/ui/accordion";
 import AbogadoResumeCard from "@/components/dashboard/AbogadoResumeCard";
 import ModalInviteProyect from "@/components/dashboard/ModalInviteProyect";
-import ProyectosActivos from "@/components/dashboard/ProyectosActivos";
-import ProyectosPorAceptar from "@/components/dashboard/ProyectosPorAceptar";
+import ProyectosActivos from "@/components/dashboard/OfertasActivas";
+import ProyectosPorAceptar from "@/components/dashboard/AplicacionesPorAceptar";
 import ProyectosFinalizados from "@/components/dashboard/ProyectosFinalizados";
 import Link from "next/link";
 
 const DashboardClientPage = () => {
   const [openFilter, setOpenFilter] = useState(true);
   const [menuActive, setMenuActive] = useState("abogados");
-  const [subMenuActive, setSubMenuActive] = useState("activos");
+  const [subMenuActive, setSubMenuActive] = useState("ofertas-activas");
 
   const [inviteProyectModal, setInviteProyectModal] = useState(false);
 
@@ -45,9 +45,10 @@ const DashboardClientPage = () => {
   ];
 
   const subMenuItems = [
-    { id: "activos", texto: "Activos" },
-    { id: "por-aceptar", texto: "Por aceptar" },
-    { id: "finalizados", texto: "Finalizados" },
+    { id: "ofertas-activas", texto: "Ofertas Activas" },
+    { id: "ofertas-por-aceptar", texto: "Ofertas con aplicación" },
+    { id: "trabajos-activos", texto: "Trabajos activos" },
+    { id: "trabajos-finalizados", texto: "Trabajos finalizados" },
   ];
 
   const handleFilter = () => {
@@ -313,13 +314,13 @@ const DashboardClientPage = () => {
                 </Link>
               </div>
 
-              {subMenuActive === "activos" && (
+              {subMenuActive === "ofertas-activas" && (
                 <ProyectosActivos></ProyectosActivos>
               )}
-              {subMenuActive === "por-aceptar" && (
+              {subMenuActive === "ofertas-por-aceptar" && (
                 <ProyectosPorAceptar></ProyectosPorAceptar>
               )}
-              {subMenuActive === "finalizados" && (
+              {subMenuActive === "trabajos-activos" && (
                 <ProyectosFinalizados></ProyectosFinalizados>
               )}
             </div>
