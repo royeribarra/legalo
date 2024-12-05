@@ -14,6 +14,7 @@ export interface IAplicacionBack {
     fecha_aplicacion: string;
     status: number;
     oferta: IOfertaBack;
+    salarioEsperado: number;
     abogado: IAbogadoBack;
     trabajo: ITrabajoBack;
 }

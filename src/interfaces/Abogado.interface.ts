@@ -41,6 +41,7 @@ export interface IAbogadoBack {
     experiencia_anos: string;
     pdf_cv: string;
     imagen: string;
+    foto_url: string;
     habilidades: IHabilidad[];
     trabajos: ITrabajo[];
 }
