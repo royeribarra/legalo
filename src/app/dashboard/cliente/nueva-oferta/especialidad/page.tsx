@@ -3,54 +3,65 @@
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Check as CheckIcon, ArrowRight, ArrowLeft } from "lucide-react";
 import Image from "next/image";
-import specialtiesItems from "@/data/specialtiesItems";
 import { useOferta } from "@/contexts/ofertaContext"; // Asegúrate de importar la interfaz
 import { IEspecialidad } from "@/interfaces/Especialidad.interface";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/contexts/toastContext";
+import axios from "axios";
 
 interface Especialidad {
-  CardTitle: string;
-  CardDescription: string;
-  ImageSrc: string;
+  id: number; // Cambiado para que use el id numérico
+  nombre: string;
+  imagen: string;
 }
 
 const PublicarPageThree = () => {
   const { showToast } = useToast();
   const route = useRouter();
   const { state, updateState } = useOferta();
-  const [selectServices, setSelectServices] = useState<IEspecialidad[]>(state.especialidades);
+  const [selectServices, setSelectServices] = useState<number[]>(state.especialidades); // Ahora solo almacenamos IDs
+  const [serviceList, setServiceList] = useState<Especialidad[]>([]); // Lista de especialidades obtenidas desde la API
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const response = await axios.get("/api/servicios");
+        setServiceList(response.data); // Aquí se setean las especialidades dinámicamente
+      } catch (error) {
+        console.error("Error fetching services", error);
+      }
+    };
+
+    fetchServices();
+  }, []);
 
   const selectEspecialidad = (item: Especialidad) => {
-    const newEspecialidad: IEspecialidad = { nombre: item.CardTitle };
+    const selectedId = item.id; // Usamos solo el ID
 
-    if (selectServices.find((service) => service.nombre === item.CardTitle)) {
-      const filteredServices = selectServices.filter(
-        (service) => service.nombre !== item.CardTitle
-      );
+    if (selectServices.includes(selectedId)) {
+      // Si la especialidad ya está seleccionada, la eliminamos
+      const filteredServices = selectServices.filter(id => id !== selectedId);
       setSelectServices(filteredServices);
       updateState({ especialidades: filteredServices });
     } else {
+      // Si no está seleccionada y solo hay espacio para una especialidad
       if (selectServices.length >= 1) {
         console.log("No se puede escoger más de una especialidad");
         return;
       }
-      const updatedServices = [...selectServices, newEspecialidad];
+      // Si no está seleccionada, la agregamos
+      const updatedServices = [...selectServices, selectedId];
       setSelectServices(updatedServices);
       updateState({ especialidades: updatedServices });
     }
   };
 
   const nextStep = () => {
-    if(!state.especialidades.length){
-      showToast(
-        "error",
-        "Selecciona uan especialidad",
-        ""
-      );
+    if (selectServices.length === 0) {
+      showToast("error", "Selecciona una especialidad", "");
       return;
     }
     route.push("/dashboard/cliente/nueva-oferta/descripcion");
@@ -75,41 +86,35 @@ const PublicarPageThree = () => {
       <div>
         <div className="mt-8">
           <div className="grid grid-cols-3 gap-4">
-            {specialtiesItems.map((item) => (
+            {serviceList.map((item) => (
               <div
-                key={item.CardTitle}
+                key={item.id} // Usamos `id` como la clave en el map
                 className="relative p-5 bg-white border border-gray-200 rounded-lg shadow-sm cursor-pointer"
                 onClick={() => selectEspecialidad(item)}
               >
                 <div
                   className={`w-12 h-12 flex justify-center items-center rounded-full ${
-                    selectServices.find(
-                      (service) => service.nombre === item.CardTitle
-                    )
+                    selectServices.includes(item.id)
                       ? "bg-[#D5F1F0]"
                       : "bg-[#D9D9D9]"
                   }`}
                 >
                   <Image
-                    src={item.ImageSrc}
-                    alt={item.CardTitle}
+                    src={`${process.env.BASE_APP_URL}/${item.imagen}`}
+                    alt={item.nombre}
                     width={25}
                     height={25}
                   />
                 </div>
-                <p className="mt-2 text-center">{item.CardTitle}</p>
+                <p className="mt-2 text-center">{item.nombre}</p>
                 <div
                   className={`absolute top-5 right-5 w-5 h-5 flex justify-center items-center rounded-sm ${
-                    selectServices.find(
-                      (service) => service.nombre === item.CardTitle
-                    )
+                    selectServices.includes(item.id)
                       ? "bg-[#007AFF]"
                       : "border border-black"
                   }`}
                 >
-                  {selectServices.find(
-                    (service) => service.nombre === item.CardTitle
-                  ) && <CheckIcon className="text-white w-4 h-4" />}
+                  {selectServices.includes(item.id) && <CheckIcon className="text-white w-4 h-4" />}
                 </div>
               </div>
             ))}

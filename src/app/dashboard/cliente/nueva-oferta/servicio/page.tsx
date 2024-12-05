@@ -34,11 +34,9 @@ const PublicarPageFour = () => {
   // Sincronizar estado inicial desde el contexto
   useEffect(() => {
     if (state.servicios) {
-      // Filtramos los elementos con `id` definido y aseguramos que sea un número válido
       const servicioIds = state.servicios
         .filter((servicio) => servicio !== undefined)
-        .map((servicio) => servicio as number); // Aquí usamos `as number` porque sabemos que ya hemos filtrado `undefined`
-      
+        .map((servicio) => servicio as number);
       setSelectedServices(servicioIds);
     }
   }, [state.servicios]);
@@ -57,11 +55,6 @@ const PublicarPageFour = () => {
         newSelection = prevState.filter((id) => id !== serviceId);
       }
 
-      // Actualizar el contexto con los servicios seleccionados
-      // const updatedServicios = newSelection.map((id) => ({
-      //   id,
-      //   nombre: serviceItems.find((item) => item.id === id)?.name || "",
-      // }));
       updateState({ servicios: newSelection });
 
       return newSelection;
