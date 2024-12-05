@@ -33,9 +33,9 @@ function ServiceSelectAbogado({
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get("/api/servicios");
+        const response = await axios.get(`${process.env.BASE_APP_API_URL}/servicios/all`);
         // La respuesta es un array de objetos {id, nombre}
-        setAvailableServices(response.data); 
+        setAvailableServices(response.data);
       } catch (error) {
         console.error("Error fetching services", error);
       }

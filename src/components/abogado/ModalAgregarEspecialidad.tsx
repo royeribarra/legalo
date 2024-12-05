@@ -31,7 +31,7 @@ function ModalAgregarEspecialidad({
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get("/api/servicios");
+        const response = await axios.get(`${process.env.BASE_APP_API_URL}/especialidades/all`);
         setServiceList(response.data); // Seteamos la lista de especialidades obtenidas
       } catch (error) {
         console.error("Error fetching services", error);
