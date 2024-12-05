@@ -17,6 +17,7 @@ function AboutSection({
 }: ModalAgregarEducacionProps) {
   const [showModalAddEspecialidad, setShowModalAddEspecialidad] = useState(false);
   const [serviceList, setServiceList] = useState<{ id: number; nombre: string; imagen: string }[]>([]); // Lista de especialidades
+  const [selectedSpecialties, setSelectedSpecialties] = useState<{ id: number; nombre: string }[]>([]); // Especialidades seleccionadas
 
   // Efecto para obtener las especialidades desde la API
   useEffect(() => {
@@ -31,6 +32,16 @@ function AboutSection({
 
     fetchServices();
   }, []);
+
+  // Efecto para actualizar las especialidades seleccionadas cuando cambian
+  useEffect(() => {
+    if (stateAbogado.especialidades.length > 0) {
+      const selected = serviceList.filter(service =>
+        stateAbogado.especialidades.includes(service.id)
+      );
+      setSelectedSpecialties(selected);
+    }
+  }, [stateAbogado.especialidades, serviceList]); // Este efecto depende de los cambios en especialidades y serviceList
 
   const onChangeGrado = (value: string) => {
     updateStateAbogado({ grado: value });
@@ -48,11 +59,6 @@ function AboutSection({
   const onChangeColegio = (e: React.ChangeEvent<HTMLInputElement>) => {
     updateStateAbogado({ colegio: e.target.value });
   };
-
-  // Obtener los nombres de las especialidades seleccionadas
-  const selectedSpecialties = serviceList.filter(service =>
-    stateAbogado.especialidades.includes(service.id)
-  );
 
   return (
     <div className="flex flex-col gap-2">
