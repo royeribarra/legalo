@@ -6,10 +6,12 @@ import { Button } from "../ui/button";
 import { ChevronDown, Clock, Key } from "lucide-react";
 import Image from "next/image";
 import { useAuth } from "@/contexts/authContext";
+import { AxiosError } from "axios";
+import { IOfertaBack } from "@/interfaces/Oferta.interface";
 
 const OfertasActivas = () => {
   const [openProyecto, setOpenProyecto] = useState(false);
-  const [proyectos, setProyectos] = useState([]);
+  const [proyectos, setProyectos] = useState<IOfertaBack[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { token } = useAuth();
@@ -18,21 +20,26 @@ const OfertasActivas = () => {
     const fetchProyectos = async () => {
       setLoading(true);
       try {
-        // Base URL configurada desde el archivo .env
         const apiUrl = process.env.BASE_APP_API_URL;
-        const clienteId = token?.cliente?.id; // Reemplazar con el ID del cliente dinámico si es necesario
+        const clienteId = token?.cliente?.id;
         const response = await axios.get(`${apiUrl}/clientes/${clienteId}/ofertas`);
-        
         setProyectos(response.data);
-      } catch (err: any) {
-        setError(err.message || "Error al cargar los proyectos");
+      } catch (err) {
+        const error = err as AxiosError;
+        if (error.response) {
+          setError(`Error al cargar los proyectos: ${error.response.status} - ${error.response.data}`);
+        } else if (error.request) {
+          setError('Error de conexión: No se pudo contactar al servidor');
+        } else {
+          setError(error.message || "Error desconocido");
+        }
       } finally {
         setLoading(false);
       }
     };
 
     fetchProyectos();
-  }, []);
+  }, [token?.cliente?.id]);
 
   if (loading) return <p>Cargando proyectos...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -60,7 +67,7 @@ const OfertasActivas = () => {
           </div>
         </div>
 
-        {proyectos.map((proyecto: any) => (
+        {proyectos.map((proyecto) => (
           <div
             key={proyecto.id}
             className="border border-black p-4 flex flex-nowrap justify-between my-8"
@@ -72,13 +79,13 @@ const OfertasActivas = () => {
                     <span>{proyecto.titulo}</span>
                   </div>
                   <div className="flex items-center">
-                    <span>{proyecto.tipoServicio}</span>
+                    <span>{proyecto.titulo}</span>
                   </div>
                   <div className="flex items-center">
-                    <span>{proyecto.abogado}</span>
+                    <span>{proyecto.documento_url}</span>
                   </div>
                   <div className="flex items-center">
-                    <span>{proyecto.fechaPublicacion}</span>
+                    <span>{proyecto.descripcion}</span>
                   </div>
                 </div>
                 <div className="flex flex-nowrap gap-2">
@@ -113,7 +120,7 @@ const OfertasActivas = () => {
                     >
                       <Key size={28} />
                       <p className="ml-2 text-sm lg:text-lg">
-                        {proyecto.tipoServicio}
+                        {proyecto.descripcion}
                       </p>
                     </Button>
                     <Button
@@ -121,7 +128,7 @@ const OfertasActivas = () => {
                       className="border border-black rounded-full h-[40px]"
                     >
                       <p className="ml-2 text-sm lg:text-lg">
-                        Inicio: {proyecto.fechaInicio}
+                        Inicio: {proyecto.duracion}
                       </p>
                     </Button>
                   </div>
@@ -137,9 +144,9 @@ const OfertasActivas = () => {
                       className="rounded-full"
                     />
                     <div>
-                      <p className="text-2xl font-bold">{proyecto.abogado}</p>
+                      <p className="text-2xl font-bold">{proyecto.duracion}</p>
                       <p className="text-2xl font-bold">
-                        S/ {proyecto.pago} pago realizado{" "}
+                        S/ {proyecto.salario_maximo} pago realizado{" "}
                       </p>
                     </div>
                   </div>
