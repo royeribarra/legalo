@@ -13,8 +13,8 @@ import { RegistroAbogadoState } from "@/contexts/registroAbogadoContext";
 import axios from "axios";
 
 interface ISelectableService {
-  id: number;   // ID del servicio
-  nombre: string; // Nombre del servicio
+  id: number;
+  nombre: string;
 }
 
 type ServiceSelectProps = {
@@ -26,15 +26,13 @@ function ServiceSelectAbogado({
   updateStateAbogado,
   stateAbogado,
 }: ServiceSelectProps) {
-  const [selectedServices, setSelectedServices] = useState<number[]>(stateAbogado.servicios); // Solo guardamos los IDs
-  const [availableServices, setAvailableServices] = useState<ISelectableService[]>([]); // Servicios disponibles
+  const [selectedServices, setSelectedServices] = useState<number[]>(stateAbogado.servicios);
+  const [availableServices, setAvailableServices] = useState<ISelectableService[]>([]);
 
-  // Efecto para obtener los servicios disponibles desde la API
   useEffect(() => {
     const fetchServices = async () => {
       try {
         const response = await axios.get(`${process.env.BASE_APP_API_URL}/servicios/all`);
-        // La respuesta es un array de objetos {id, nombre}
         setAvailableServices(response.data);
       } catch (error) {
         console.error("Error fetching services", error);
@@ -44,30 +42,34 @@ function ServiceSelectAbogado({
     fetchServices();
   }, []);
 
+  useEffect(() => {
+    if (stateAbogado.servicios && stateAbogado.servicios.length > 0) {
+      setSelectedServices(stateAbogado.servicios);
+    }
+  }, [stateAbogado.servicios]);
+
   const handleSelect = (value: number) => {
-    // Si el servicio no está ya seleccionado
     if (!selectedServices.includes(value)) {
       const updatedServices = [...selectedServices, value];
       setSelectedServices(updatedServices);
-      updateStateAbogado({ servicios: updatedServices });  // Guardamos solo los IDs
+      updateStateAbogado({ servicios: updatedServices });
     }
   };
 
   const handleRemove = (value: number) => {
     const updatedServices = selectedServices.filter((service) => service !== value);
     setSelectedServices(updatedServices);
-    updateStateAbogado({ servicios: updatedServices });  // Guardamos solo los IDs
+    updateStateAbogado({ servicios: updatedServices });
   };
 
-  // Servicios seleccionados, para mostrar sus nombres
   const selectedServiceNames = availableServices.filter((service) =>
-    selectedServices.includes(service.id) // Comparamos con los IDs seleccionados
+    selectedServices.includes(service.id)
   );
 
   return (
     <div className="w-full lg:w-1/2">
       <p className="text-sm my-2">¿Cuáles son los servicios que ofreces?*</p>
-      <Select onValueChange={(value) => handleSelect(Number(value))}> {/* Aquí convertimos el valor a número */}
+      <Select onValueChange={(value) => handleSelect(Number(value))}>
         <SelectTrigger className="flex flex-wrap items-center">
           <SelectValue placeholder="Seleccionar" />
         </SelectTrigger>
@@ -77,10 +79,10 @@ function ServiceSelectAbogado({
             {availableServices
               .filter(
                 (service) =>
-                  !selectedServices.includes(service.id) // Filtramos los servicios ya seleccionados
+                  !selectedServices.includes(service.id)
               )
               .map((service) => (
-                <SelectItem key={service.id} value={String(service.id)}> {/* Usamos el ID como string */}
+                <SelectItem key={service.id} value={String(service.id)}>
                   {service.nombre}
                 </SelectItem>
               ))}

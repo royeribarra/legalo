@@ -1,13 +1,8 @@
-"use client";
-
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Check as CheckIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RegistroAbogadoState } from "@/contexts/registroAbogadoContext";
-// import { IEspecialidad } from "@/interfaces/Especialidad.interface";
-
-import axios from "axios"; // Asegúrate de importar axios
+import axios from "axios";
 
 type ModalAgregarEspecialidadProps = {
   showModal: boolean;
@@ -41,6 +36,11 @@ function ModalAgregarEspecialidad({
     fetchServices();
   }, []);
 
+  // Sincronizamos el estado inicial con las especialidades de `stateAbogado`
+  useEffect(() => {
+    setSelectServices(stateAbogado.especialidades || []);
+  }, [stateAbogado.especialidades]);
+
   // Función para seleccionar o deseleccionar una especialidad
   const selectEspecialidad = (item: { id: number; nombre: string; imagen: string }) => {
     const exists = selectServices.includes(item.id); // Verificamos si el ID ya está seleccionado
@@ -66,11 +66,6 @@ function ModalAgregarEspecialidad({
     setShowModal(false);
   };
 
-  // Sincronizamos el estado inicial con las especialidades de `stateAbogado`
-  useEffect(() => {
-    setSelectServices(stateAbogado.especialidades || []);
-  }, [stateAbogado.especialidades]);
-
   return showModal ? (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
       <div className="relative w-full max-w-[900px] bg-white rounded-lg shadow-lg p-10 overflow-hidden">
@@ -95,7 +90,7 @@ function ModalAgregarEspecialidad({
                       isSelected ? "bg-[#D5F1F0]" : "bg-[#D9D9D9]"
                     }`}
                   >
-                    <Image
+                    <img
                       src={item.imagen}
                       alt={item.nombre}
                       width={25}
