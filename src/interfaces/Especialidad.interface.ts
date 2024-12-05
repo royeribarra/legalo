@@ -4,6 +4,7 @@ import { IOferta } from "./Oferta.interface";
 export interface IEspecialidad {
     id: number;
     nombre: string;
+    imagen: string;
 }
 
 export interface IEspecialidadOferta {

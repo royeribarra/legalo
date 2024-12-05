@@ -1,17 +1,10 @@
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
-import { useState } from "react";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useState, useEffect } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import ModalagregarEspecialidad from "@/components/abogado/ModalAgregarEspecialidad";
 import { Input } from "@/components/ui/input";
 import { RegistroAbogadoState } from "@/contexts/registroAbogadoContext";
+import axios from "axios";
 
 type ModalAgregarEducacionProps = {
     updateStateAbogado: (newState: Partial<RegistroAbogadoState>) => void;
@@ -21,25 +14,45 @@ type ModalAgregarEducacionProps = {
 function AboutSection({
     updateStateAbogado,
     stateAbogado
-  }: ModalAgregarEducacionProps) {
+}: ModalAgregarEducacionProps) {
     const [showModalAddEspecialidad, setShowModalAddEspecialidad] = useState(false);
+    const [serviceList, setServiceList] = useState<{ id: number; nombre: string; imagen: string }[]>([]); // Lista de especialidades
+
+    // Efecto para obtener las especialidades desde la API
+    useEffect(() => {
+        const fetchServices = async () => {
+            try {
+                const response = await axios.get("/api/servicios");
+                setServiceList(response.data); // Seteamos la lista de especialidades obtenidas
+            } catch (error) {
+                console.error("Error fetching services", error);
+            }
+        };
+
+        fetchServices();
+    }, []);
 
     const onChangeGrado = (value: string) => {
-        updateStateAbogado({grado: value});
+        updateStateAbogado({ grado: value });
     };
 
     const onChangeDescripcion = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const value = e.target.value;
-        updateStateAbogado({sobre_ti: value});
+        updateStateAbogado({ sobre_ti: value });
     };
 
     const onChangeCip = (e: React.ChangeEvent<HTMLInputElement>) => {
-        updateStateAbogado({cip: e.target.value});
+        updateStateAbogado({ cip: e.target.value });
     };
 
     const onChangeColegio = (e: React.ChangeEvent<HTMLInputElement>) => {
-        updateStateAbogado({colegio: e.target.value});
+        updateStateAbogado({ colegio: e.target.value });
     };
+
+    // Obtener los nombres de las especialidades seleccionadas
+    const selectedSpecialties = serviceList.filter(service =>
+        stateAbogado.especialidades.includes(service.id)
+    );
 
     return (
         <div className="flex flex-col gap-2">
@@ -86,10 +99,10 @@ function AboutSection({
                     className="border border-gray-300 rounded-lg p-2 flex items-center flex-wrap gap-2 cursor-pointer"
                     onClick={() => setShowModalAddEspecialidad(true)}
                 >
-                    {stateAbogado.especialidades.length > 0 ? (
-                        stateAbogado.especialidades.map((especialidad, index) => (
+                    {selectedSpecialties.length > 0 ? (
+                        selectedSpecialties.map((especialidad) => (
                             <div
-                                key={index}
+                                key={especialidad.id}
                                 className="bg-blue-500 text-white rounded-full px-3 py-1 text-sm flex items-center"
                             >
                                 {especialidad.nombre}

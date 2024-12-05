@@ -7,7 +7,6 @@ import React, { useState, useEffect } from "react";
 import { Check as CheckIcon, ArrowRight, ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import { useOferta } from "@/contexts/ofertaContext"; // Asegúrate de importar la interfaz
-import { IEspecialidad } from "@/interfaces/Especialidad.interface";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/contexts/toastContext";
 import axios from "axios";

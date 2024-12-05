@@ -1,16 +1,13 @@
+"use client";
+
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Check as CheckIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import specialtiesItems from "@/data/specialtiesItems";
 import { RegistroAbogadoState } from "@/contexts/registroAbogadoContext";
-import { IEspecialidad } from "@/interfaces/Especialidad.interface";
+// import { IEspecialidad } from "@/interfaces/Especialidad.interface";
 
-interface EspecialidadList {
-  CardTitle: string;
-  CardDescription: string;
-  ImageSrc: string;
-}
+import axios from "axios"; // Asegúrate de importar axios
 
 type ModalAgregarEspecialidadProps = {
   showModal: boolean;
@@ -25,12 +22,28 @@ function ModalAgregarEspecialidad({
   stateAbogado,
   updateStateAbogado,
 }: ModalAgregarEspecialidadProps) {
-  const [selectServices, setSelectServices] = useState<IEspecialidad[]>([]);
+  const [selectServices, setSelectServices] = useState<number[]>([]); // Solo guardamos IDs
+  const [serviceList, setServiceList] = useState<
+    { id: number; nombre: string; imagen: string }[]
+  >([]); // Lista de especialidades obtenidas desde la API
 
-  const selectEspecialidad = (item: EspecialidadList) => {
-    const exists = selectServices.some(
-      (especialidad) => especialidad.nombre === item.CardTitle
-    );
+  // Efecto para obtener las especialidades desde la API
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const response = await axios.get("/api/servicios");
+        setServiceList(response.data); // Seteamos la lista de especialidades obtenidas
+      } catch (error) {
+        console.error("Error fetching services", error);
+      }
+    };
+
+    fetchServices();
+  }, []);
+
+  // Función para seleccionar o deseleccionar una especialidad
+  const selectEspecialidad = (item: { id: number; nombre: string; imagen: string }) => {
+    const exists = selectServices.includes(item.id); // Verificamos si el ID ya está seleccionado
 
     if (selectServices.length >= 5 && !exists) {
       console.log("No se puede agregar más de 5 especialidades");
@@ -38,21 +51,22 @@ function ModalAgregarEspecialidad({
     }
 
     if (exists) {
-      setSelectServices(
-        selectServices.filter(
-          (especialidad) => especialidad.nombre !== item.CardTitle
-        )
-      );
+      // Si ya está seleccionada, la eliminamos del array de IDs
+      setSelectServices(selectServices.filter((id) => id !== item.id));
     } else {
-      setSelectServices([...selectServices, { nombre: item.CardTitle }]);
+      // Si no está seleccionada y hay espacio, la agregamos
+      setSelectServices([...selectServices, item.id]);
     }
   };
 
+  // Función para guardar las especialidades seleccionadas
   const guardarEspecialidad = () => {
+    // Solo pasamos los IDs al backend
     updateStateAbogado({ especialidades: selectServices });
     setShowModal(false);
   };
 
+  // Sincronizamos el estado inicial con las especialidades de `stateAbogado`
   useEffect(() => {
     setSelectServices(stateAbogado.especialidades || []);
   }, [stateAbogado.especialidades]);
@@ -67,14 +81,12 @@ function ModalAgregarEspecialidad({
         </p>
         <div className="max-h-[400px] overflow-y-auto">
           <div className="grid grid-cols-3 gap-4">
-            {specialtiesItems.map((item) => {
-              const isSelected = selectServices.some(
-                (especialidad) => especialidad.nombre === item.CardTitle
-              );
+            {serviceList.map((item) => {
+              const isSelected = selectServices.includes(item.id); // Verificamos si el ID está seleccionado
 
               return (
                 <div
-                  key={item.CardTitle}
+                  key={item.id} // Usamos el ID como clave
                   className="relative p-5 bg-white border border-gray-200 rounded-lg shadow-sm cursor-pointer"
                   onClick={() => selectEspecialidad(item)}
                 >
@@ -84,13 +96,13 @@ function ModalAgregarEspecialidad({
                     }`}
                   >
                     <Image
-                      src={item.ImageSrc}
-                      alt={item.CardTitle}
+                      src={item.imagen}
+                      alt={item.nombre}
                       width={25}
                       height={25}
                     />
                   </div>
-                  <p className="mt-2 text-center">{item.CardTitle}</p>
+                  <p className="mt-2 text-center">{item.nombre}</p>
                   <div
                     className={`absolute top-5 right-5 w-5 h-5 flex justify-center items-center rounded-sm ${
                       isSelected ? "bg-[#007AFF]" : "border border-black"
