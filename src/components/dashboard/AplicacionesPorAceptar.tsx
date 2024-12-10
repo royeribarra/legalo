@@ -31,7 +31,7 @@ const AplicacionesPorAceptar = () => {
 
   useEffect(() => {
     fetchOfertasConAplicaciones();
-  }, [fetchOfertasConAplicaciones]);
+  }, []);
 
   // const verAplicaciones = (ofertaId: number) => {
   //   console.log(ofertaId)
