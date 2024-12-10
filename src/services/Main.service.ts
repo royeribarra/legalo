@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
 export class MainService {
   protected url: string;
@@ -13,7 +13,7 @@ export class MainService {
     return `${process.env.BASE_APP_API_URL}/${url}`;
   }
 
-  private addOptions(params?: any): AxiosRequestConfig {
+  private addOptions(params?: Record<string, any>): AxiosRequestConfig {
     return {
       headers: {
         Accept: "application/json",
@@ -22,7 +22,7 @@ export class MainService {
     };
   }
 
-  protected async get<T = any>(
+  protected async get<T = unknown>(
     endpoint: string,
     params?: Record<string, any>
   ): Promise<T> {
@@ -33,9 +33,9 @@ export class MainService {
     return response.data;
   }
 
-  protected async post<T = any>(
+  protected async post<T = unknown>(
     endpoint: string,
-    data?: any,
+    data?: Record<string, any>,
     headers?: Record<string, string>
   ): Promise<T> {
     const response = await axios.post<T>(

@@ -5,7 +5,7 @@ export default class ServicioService extends MainService {
     super(url);
   }
 
-  public async obtenerTodos(params?: any): Promise<any> {
-    return this.get("/all", params);
+  public async obtenerTodos(): Promise<any> {
+    return this.get("/all");
   }
 }
