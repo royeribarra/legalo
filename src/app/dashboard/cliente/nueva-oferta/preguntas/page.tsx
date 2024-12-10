@@ -21,6 +21,7 @@ export interface IPregunta {
 
 const PublicarPageEight = () => {
   const router = useRouter();
+  console.log(router)
   const { state, updateState } = useOferta();
   const { token } = useAuth();
   const [items, setItems] = useState<IPregunta[]>([]);
@@ -121,46 +122,46 @@ const PublicarPageEight = () => {
       .catch((err) => console.log(err));
   };
 
-  const enviarOferta = async () => {
-    const formData = new FormData();
+  // const enviarOferta = async () => {
+  //   const formData = new FormData();
   
-    // Agregar las propiedades al FormData.
-    formData.append('clienteId', JSON.stringify(token?.id));
-    formData.append('descripcion', state.descripcion);
-    formData.append('duracion', state.duracion);
-    formData.append('nivelExperiencia', state.nivelExperiencia);
-    formData.append('titulo', state.titulo);
-    formData.append('uso', state.uso);
-    formData.append('presupuesto', JSON.stringify(state.presupuesto));
+  //   // Agregar las propiedades al FormData.
+  //   formData.append('clienteId', JSON.stringify(token?.id));
+  //   formData.append('descripcion', state.descripcion);
+  //   formData.append('duracion', state.duracion);
+  //   formData.append('nivelExperiencia', state.nivelExperiencia);
+  //   formData.append('titulo', state.titulo);
+  //   formData.append('uso', state.uso);
+  //   formData.append('presupuesto', JSON.stringify(state.presupuesto));
   
-    // Agregar listas como JSON.
-    formData.append('servicios', JSON.stringify(state.servicios));
-    formData.append('especialidades', JSON.stringify(state.especialidades));
-    formData.append('preguntas', JSON.stringify(state.preguntas));
+  //   // Agregar listas como JSON.
+  //   formData.append('servicios', JSON.stringify(state.servicios));
+  //   formData.append('especialidades', JSON.stringify(state.especialidades));
+  //   formData.append('preguntas', JSON.stringify(state.preguntas));
   
-    // Agregar el archivo si existe.
-    if (state.documento) {
-      const archivoBlob = base64ToBlob(state.documento.contenido, state.documento.tipo);
-      formData.append("file", archivoBlob);
-    }
+  //   // Agregar el archivo si existe.
+  //   if (state.documento) {
+  //     const archivoBlob = base64ToBlob(state.documento.contenido, state.documento.tipo);
+  //     formData.append("file", archivoBlob);
+  //   }
   
-    // Enviar la solicitud con fetch o Axios.
-    try {
-      const response = await fetch(`${process.env.BASE_APP_API_URL}/ofertas/create`, {
-        method: 'POST',
-        body: formData,
-      });
+  //   // Enviar la solicitud con fetch o Axios.
+  //   try {
+  //     const response = await fetch(`${process.env.BASE_APP_API_URL}/ofertas/create`, {
+  //       method: 'POST',
+  //       body: formData,
+  //     });
   
-      if (!response.ok) {
-        throw new Error('Error al enviar la oferta');
-      }
+  //     if (!response.ok) {
+  //       throw new Error('Error al enviar la oferta');
+  //     }
   
-      const resultado = await response.json();
-      console.log('Oferta enviada con éxito:', resultado);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
+  //     const resultado = await response.json();
+  //     console.log('Oferta enviada con éxito:', resultado);
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //   }
+  // };
 
   const enviarArchivo = async (
     archivo: IArchivo,
@@ -263,6 +264,10 @@ const PublicarPageEight = () => {
           Publicar <ArrowRight className="ml-2" />
         </Button>
       </div>
+      {
+        showModalCrearProyectoOk &&
+          <ModalCrearProyectoOk handleModalCrearProyectoOk={handleModalCrearProyectoOk}></ModalCrearProyectoOk>
+      }
     </div>
   );
 };

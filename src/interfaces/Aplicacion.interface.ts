@@ -1,6 +1,6 @@
-import { IAbogado, IAbogadoBack } from "./Abogado.interface";
+import { IAbogadoBack } from "./Abogado.interface";
 import { IOfertaBack } from "./Oferta.interface";
-import { ITrabajo, ITrabajoBack } from "./Trabajo.interface";
+import { ITrabajoBack } from "./Trabajo.interface";
 
 export interface IAplicacion {
     id: number;

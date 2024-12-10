@@ -1,4 +1,4 @@
-import { IAplicacion, IAplicacionBack } from "./Aplicacion.interface";
+import { IAplicacionBack } from "./Aplicacion.interface";
 import { ICliente } from "./Cliente.interface";
 import { IEspecialidadOferta } from "./Especialidad.interface";
 import { IIndustriaOferta } from "./Industria.interface";

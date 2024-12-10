@@ -19,17 +19,17 @@ const PublicarPageFour = () => {
   const { state, updateState } = useOferta();
   const [selectedServices, setSelectedServices] = useState<number[]>([]);
   const [serviceList, setServiceList] = useState<IServicio[]>([]);
-  const serviceItems = [
-    { id: 1, name: "No estoy seguro del servicio a escoger" },
-    { id: 2, name: "Asesoría legal" },
-    { id: 3, name: "Consultoría" },
-    { id: 4, name: "Patrocinio en poder judicial" },
-    { id: 5, name: "Patrocinio en procedimiento administrativo" },
-    { id: 6, name: "Redacción de Documentos Legales" },
-    { id: 7, name: "Cumplimiento Regulatorio" },
-    { id: 8, name: "Mediación" },
-    { id: 9, name: "Prácticas pre-profesionales" },
-  ];
+  // const serviceItems = [
+  //   { id: 1, name: "No estoy seguro del servicio a escoger" },
+  //   { id: 2, name: "Asesoría legal" },
+  //   { id: 3, name: "Consultoría" },
+  //   { id: 4, name: "Patrocinio en poder judicial" },
+  //   { id: 5, name: "Patrocinio en procedimiento administrativo" },
+  //   { id: 6, name: "Redacción de Documentos Legales" },
+  //   { id: 7, name: "Cumplimiento Regulatorio" },
+  //   { id: 8, name: "Mediación" },
+  //   { id: 9, name: "Prácticas pre-profesionales" },
+  // ];
 
   // Sincronizar estado inicial desde el contexto
   useEffect(() => {

@@ -1,8 +1,6 @@
 import { IArchivo } from "@/interfaces/Archivo.interface";
-import { IEspecialidad } from "@/interfaces/Especialidad.interface";
 import { IPregunta } from "@/interfaces/Pregunta.interface";
 import { IPresupuesto } from "@/interfaces/Presupuesto.interface";
-import { IServicio } from "@/interfaces/Servicio.interface";
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
 // Define la estructura del estado

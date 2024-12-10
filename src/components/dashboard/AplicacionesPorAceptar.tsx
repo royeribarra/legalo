@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import { IOfertaBack } from "@/interfaces/Oferta.interface";
 import { useAuth } from "@/contexts/authContext";
@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const AplicacionesPorAceptar = () => {
-  const { token, userRole } = useAuth();
+  const { token } = useAuth();
   const router = useRouter();
   const [openProyecto, setOpenProyecto] = useState<number | null>(null);
   const [ofertasConAplicaciones, setOfertasConAplicaciones] = useState<IOfertaBack[]>([]);
@@ -33,10 +33,10 @@ const AplicacionesPorAceptar = () => {
     fetchOfertasConAplicaciones();
   }, []);
 
-  const verAplicaciones = (ofertaId: number) => {
-    console.log(ofertaId)
-    setOpenProyecto(ofertaId);
-  };
+  // const verAplicaciones = (ofertaId: number) => {
+  //   console.log(ofertaId)
+  //   setOpenProyecto(ofertaId);
+  // };
 
   const aceptarOferta = (salario: number, ofertaId: number) => {
     const clienteId = token?.cliente.id;
