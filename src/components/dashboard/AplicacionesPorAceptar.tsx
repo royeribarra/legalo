@@ -6,9 +6,12 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import Image from "next/image";
 import { IOfertaBack } from "@/interfaces/Oferta.interface";
 import { useAuth } from "@/contexts/authContext";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const AplicacionesPorAceptar = () => {
   const { token, userRole } = useAuth();
+  const router = useRouter();
   const [openProyecto, setOpenProyecto] = useState<number | null>(null);
   const [ofertasConAplicaciones, setOfertasConAplicaciones] = useState<IOfertaBack[]>([]);
 
@@ -35,8 +38,10 @@ const AplicacionesPorAceptar = () => {
     setOpenProyecto(ofertaId);
   };
 
-  const aceptarOferta = () => {
-
+  const aceptarOferta = (salario: number, ofertaId: number) => {
+    const clienteId = token?.cliente.id;
+    const url = `/dashboard/cliente/pagos/${ofertaId}?monto=${salario}&clienteId=${clienteId}`;
+    router.push(url); 
   };
 
   return (
@@ -48,24 +53,23 @@ const AplicacionesPorAceptar = () => {
               <div className="min-w-[640px] max-w-[720px] gap-2">
                 <h2 className="text-2xl font-bold">Proyecto: {oferta.titulo}</h2>
                 <p>Aplicaciones recibidas ({oferta.aplicaciones.length})</p>
+                <p>Presupuesto de la Oferta: {oferta.salario_minimo + '-' + oferta.salario_maximo}</p>
               </div>
               <div className="flex flex-nowrap gap-2">
-                {openProyecto !== oferta.id && 
-                // (
-                //   <Button
-                //     onClick={()=>verAplicaciones(null)}
-                //     className="bg-[#727272]"
-                //   >
-                //     Ver aplicaciones 1<ChevronUp />
-                //   </Button>
-                // ) : 
+                {openProyecto !== oferta.id ?
                 (
                   <Button
                     onClick={() => setOpenProyecto(oferta.id)}
                   >
-                    Ver aplicaciones 2<ChevronDown />
+                    Ver aplicaciones<ChevronDown />
                   </Button>
-                )}
+                ) : 
+                <div>
+                  <Button onClick={() => setOpenProyecto(null)}>
+                    Ver menos
+                  </Button>
+                </div>
+                }
               </div>
             </div>
             {openProyecto === oferta.id && (
@@ -98,10 +102,12 @@ const AplicacionesPorAceptar = () => {
                     </div>
 
                     <div className="flex flex-nowrap gap-2">
-                      <Button variant={"outline"} className="border-black">
-                        Ver perfil completo
-                      </Button>
-                      <Button onClick={aceptarOferta}>Aceptar oferta</Button>
+                      <Link href={`/dashboard/cliente/abogado/${aplicacion.abogado.id}`}>
+                        <Button variant={"outline"} className="border-black">
+                          Ver perfil completo
+                        </Button>
+                      </Link>
+                      <Button onClick={() => aceptarOferta(aplicacion.salarioEsperado, oferta.id)}>Aceptar oferta</Button>
                     </div>
                   </div>
                 ))}

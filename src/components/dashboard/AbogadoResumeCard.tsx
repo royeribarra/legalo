@@ -3,12 +3,20 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import { Briefcase } from "lucide-react";
 import { MapPin, Clock } from "lucide-react";
+import { IAbogadoBack } from "@/interfaces/Abogado.interface";
 
-interface inviteProyectProps {
-  inviteProyect: () => void;
+interface InviteProyectProps {
+  inviteProyect: (abogadoId: number) => void;
+  abogado: IAbogadoBack
 }
 
-const AbogadoResumeCard: React.FC<inviteProyectProps> = ({ inviteProyect }) => {
+const AbogadoResumeCard = ({ inviteProyect, abogado }: InviteProyectProps) => {
+  console.log(abogado)
+
+  const invitarALaOferta = () => {
+    inviteProyect(abogado.id);
+  };
+
   return (
     <div
       className={` p-4 lg:px-8 border border-black  flex flex-col gap-4 flex-wrap`}
@@ -23,16 +31,16 @@ const AbogadoResumeCard: React.FC<inviteProyectProps> = ({ inviteProyect }) => {
             className="rounded-full"
           />
           <div>
-            <p className="text-2xl font-bold">Omar T.</p>
-            <p>Abogado Laboral</p>
-            <p>Lima, Perú</p>
+            <p className="text-2xl font-bold">{abogado.nombres + '-' + abogado.apellidos}</p>
+            <p>{abogado.industriasAbogado[0]?.industria.nombre}</p>
+            <p>{abogado.direccion}</p>
           </div>
         </div>
         <div className="flex justify-end">
           <Button
             variant={"outline"}
             className="border border-black rounded-full h-11 text-sm lg:text-lg"
-            onClick={inviteProyect}
+            onClick={invitarALaOferta}
           >
             Invitar a proyecto
           </Button>
@@ -45,7 +53,7 @@ const AbogadoResumeCard: React.FC<inviteProyectProps> = ({ inviteProyect }) => {
           className="border border-black rounded-full h-[40px]"
         >
           <MapPin size={28} />
-          <p className="ml-2 text-sm lg:text-lg">Lima</p>
+          <p className="ml-2 text-sm lg:text-lg">{abogado.direccion}</p>
         </Button>
         <Button
           variant="outline"
@@ -59,7 +67,18 @@ const AbogadoResumeCard: React.FC<inviteProyectProps> = ({ inviteProyect }) => {
       <div>
         <h3 className="mb-2">Especialidades:</h3>
         <div className="flex flex-wrap gap-4  lg:overflow-y-auto">
-          <Button
+          {
+            abogado.especialidadesAbogado.map((especialidad)=> 
+              <Button
+                variant="outline"
+                className="border border-black rounded-full h-[40px]"
+              >
+                <Briefcase size={28} />
+                <p className="ml-2 text-sm lg:text-lg">{especialidad.especialidad.nombre}</p>
+              </Button>
+            )
+          }
+          {/* <Button
             variant="outline"
             className="border border-black rounded-full h-[40px]"
           >
@@ -81,14 +100,12 @@ const AbogadoResumeCard: React.FC<inviteProyectProps> = ({ inviteProyect }) => {
             <p className="ml-2 text-sm lg:text-lg">
               Arbitraje y Mediación Laboral
             </p>
-          </Button>
+          </Button> */}
         </div>
       </div>
 
       <p className="line-clamp-3">
-        Experto en asesorar y representar en temas de despidos, discriminación,
-        negociaciones colectivas y cumplimiento normativo. Comprometido con la
-        protección de los derechos laborales y ambientes de trabajo justos.
+        {abogado.sobre_ti}
       </p>
     </div>
   );

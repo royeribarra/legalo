@@ -79,7 +79,7 @@ const PublicarPageFour = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get("/api/servicios");
+        const response = await axios.get(`${process.env.BASE_APP_API_URL}/servicios/all`);
         setServiceList(response.data);
       } catch (error) {
         console.error("Error fetching services", error);

@@ -31,11 +31,17 @@ import ProyectosActivos from "@/components/dashboard/OfertasActivas";
 import ProyectosPorAceptar from "@/components/dashboard/AplicacionesPorAceptar";
 import ProyectosFinalizados from "@/components/dashboard/ProyectosFinalizados";
 import Link from "next/link";
+import { useDashboardCliente } from "@/contexts/dashboardClienteContext";
+import { abogadoService } from "@/services";
+import { IAbogadoBack } from "@/interfaces/Abogado.interface";
 
 const DashboardClientPage = () => {
   const [openFilter, setOpenFilter] = useState(true);
   const [menuActive, setMenuActive] = useState("abogados");
+  const { state } = useDashboardCliente();
   const [subMenuActive, setSubMenuActive] = useState("ofertas-activas");
+  const [abogados, setAbogados] = useState<IAbogadoBack[]>([]);
+  const [abogadoPrevioInvitado, setAbogadoPrevioInvitado] = useState<number>(0);
 
   const [inviteProyectModal, setInviteProyectModal] = useState(false);
 
@@ -55,17 +61,31 @@ const DashboardClientPage = () => {
     setOpenFilter(!openFilter);
   };
 
-  const inviteProyect = () => {
-    setInviteProyectModal(!inviteProyectModal);
+  const inviteProyect = (abogadoId: number) => {
+    setAbogadoPrevioInvitado(abogadoId);
+    setInviteProyectModal(true);
   };
 
   useEffect(() => {
-    // Fitro contraido por defecto en mobile
     const mediaQuery = window.matchMedia("(min-width: 1024px)");
     setOpenFilter(mediaQuery.matches);
     const handleChange = (e: MediaQueryListEvent) => setOpenFilter(e.matches);
     mediaQuery.addEventListener("change", handleChange);
     return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
+  async function fetchAbogados() {
+    try {
+      const data = await abogadoService.obtenerTodos();
+      setAbogados(data);
+      console.log(data)
+    } catch (error) {
+      console.error("Error al obtener el detalle:", error);
+    }
+  }
+
+  useEffect(()=> {
+    fetchAbogados();
   }, []);
 
   return (
@@ -143,9 +163,11 @@ const DashboardClientPage = () => {
                                 <SelectValue placeholder="Selecciona especialidad" />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="a">Light</SelectItem>
-                                <SelectItem value="b">Dark</SelectItem>
-                                <SelectItem value="c">System</SelectItem>
+                                {
+                                  state.especialidades.map((especialidad)=>
+                                    <SelectItem value={`${especialidad.id}`}>{especialidad.nombre}</SelectItem>
+                                  )
+                                }
                               </SelectContent>
                             </Select>
                           </AccordionContent>
@@ -158,9 +180,11 @@ const DashboardClientPage = () => {
                                 <SelectValue placeholder="Selecciona industria" />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="a">Light</SelectItem>
-                                <SelectItem value="b">Dark</SelectItem>
-                                <SelectItem value="c">System</SelectItem>
+                                {
+                                  state.industrias.map((industria)=>
+                                    <SelectItem value={`${industria.id}`}>{industria.nombre}</SelectItem>
+                                  )
+                                }
                               </SelectContent>
                             </Select>
                           </AccordionContent>
@@ -204,54 +228,22 @@ const DashboardClientPage = () => {
                           </AccordionContent>
                         </AccordionItem>
                         <AccordionItem value="item-5">
-                          <AccordionTrigger>Tipo</AccordionTrigger>
+                          <AccordionTrigger>Servicios</AccordionTrigger>
                           <AccordionContent>
                             <RadioGroup defaultValue="comfortable">
-                              <div className="flex items-center space-x-2 ">
-                                <RadioGroupItem value="r1" id="r1" />
-                                <LabelCn
-                                  htmlFor="r1"
-                                  className="text-base font-light"
-                                >
-                                  Todos
-                                </LabelCn>
-                              </div>
-                              <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="r2" id="r2" />
-                                <LabelCn
-                                  htmlFor="r2"
-                                  className="text-base font-light"
-                                >
-                                  Asesoría legal (Por horas)
-                                </LabelCn>
-                              </div>
-                              <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="r3" id="r3" />
-                                <LabelCn
-                                  htmlFor="r3"
-                                  className="text-base font-light"
-                                >
-                                  Proyecto legal (Días o semanas)
-                                </LabelCn>
-                              </div>
-                              <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="r4" id="r4" />
-                                <LabelCn
-                                  htmlFor="r4"
-                                  className="text-base font-light"
-                                >
-                                  Litigio (Estimación por caso)
-                                </LabelCn>
-                              </div>
-                              <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="r5" id="r5" />
-                                <LabelCn
-                                  htmlFor="r5"
-                                  className="text-base font-light"
-                                >
-                                  Practicas profesionales (meses)
-                                </LabelCn>
-                              </div>
+                              {
+                                state.servicios.map((servicio)=> 
+                                  <div className="flex items-center space-x-2 ">
+                                    <RadioGroupItem value="r1" id="r1" />
+                                    <LabelCn
+                                      htmlFor="r1"
+                                      className="text-base font-light"
+                                    >
+                                      {servicio.nombre}
+                                    </LabelCn>
+                                  </div>
+                                )
+                              }
                             </RadioGroup>
                           </AccordionContent>
                         </AccordionItem>
@@ -283,10 +275,15 @@ const DashboardClientPage = () => {
                   </div>
                 )}
                 <div className="flex flex-col gap-8 flex-1 mt-12">
+                  {
+                    abogados.map((abogado)=> 
+                      <AbogadoResumeCard inviteProyect={inviteProyect} abogado={abogado} />
+                    )
+                  }
+                  {/* <AbogadoResumeCard inviteProyect={inviteProyect} />
                   <AbogadoResumeCard inviteProyect={inviteProyect} />
                   <AbogadoResumeCard inviteProyect={inviteProyect} />
-                  <AbogadoResumeCard inviteProyect={inviteProyect} />
-                  <AbogadoResumeCard inviteProyect={inviteProyect} />
+                  <AbogadoResumeCard inviteProyect={inviteProyect} /> */}
                 </div>
               </div>
             </>
@@ -327,10 +324,13 @@ const DashboardClientPage = () => {
           )}
         </div>
       </div>
-
-      {inviteProyectModal && (
-        <ModalInviteProyect inviteProyect={inviteProyect} />
-      )}
+      <ModalInviteProyect 
+        inviteProyect={inviteProyect} 
+        abogados={abogados} 
+        abogadoPrevioInvitado={abogadoPrevioInvitado}
+        onModalClosed={() => setInviteProyectModal(false)}
+        isOpen={inviteProyectModal}
+      />
     </div>
   );
 };

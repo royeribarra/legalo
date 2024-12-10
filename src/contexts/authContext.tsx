@@ -34,15 +34,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   // Lógica de redirección según el estado del token y el rol de usuario
-  useEffect(() => {
-    if (!token) {
-      router.push('/login');
-    } else if (userRole === 'abogado') {
-      router.push('/dashboard/abogado');
-    } else if (userRole !== 'cliente') {
-      router.push('/login');
-    }
-  }, [token, userRole, router]);
+  // useEffect(() => {
+  //   if (!token) {
+  //     router.push('/login');
+  //   } else if (userRole === 'abogado') {
+  //     router.push('/dashboard/abogado');
+  //   } else if (userRole !== 'cliente') {
+  //     router.push('/login');
+  //   }
+  // }, [token, userRole, router]);
 
   return (
     <AuthContext.Provider value={{ token, userRole, setToken, setUserRole }}>

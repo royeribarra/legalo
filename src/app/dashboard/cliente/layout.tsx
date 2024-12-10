@@ -1,5 +1,5 @@
-"use client"
-import React, { useEffect } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { ReactNode } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { AuthProvider, useAuth } from "@/contexts/authContext";
 import Image from "next/image";
 import Link from "next/link";
+import { DashboardClienteProvider } from "@/contexts/dashboardClienteContext";
 
 interface LayoutProps {
   children: ReactNode;
@@ -23,27 +24,23 @@ const DashboardClientLayout = ({ children }: LayoutProps) => {
 };
 
 const LayoutContent = ({ children }: { children: ReactNode }) => {
-  const { token, userRole } = useAuth(); // Usamos el hook dentro del layout
+  const { token, userRole } = useAuth();
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Asegurarse de que token y userRole existan antes de hacer cualquier redirección
     if (token && userRole) {
       if (userRole === "abogado") {
-        router.push("/dashboard/abogado"); // Redirigir a la página del abogado si el rol es "abogado"
-      } else if (userRole === "cliente") {
-        router.push("/dashboard/cliente"); // Redirigir al login si el rol no es "cliente"
+        router.push("/dashboard/abogado");
+      } else {
+        setLoading(false);
       }
-    } 
-    // else {
-    //   router.push("/login");
-    // }
+    }
   }, [token, userRole, router]);
 
-  useEffect(() => {
-    console.log(token);  // Asegúrate de que token esté disponible aquí
-    console.log(userRole); // Asegúrate de que userRole esté disponible aquí
-  }, [token, userRole]);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="">
@@ -89,7 +86,11 @@ const LayoutContent = ({ children }: { children: ReactNode }) => {
           </Avatar>
         </div>
       </header>
-      <main>{children}</main>
+      <main>
+        <DashboardClienteProvider>
+          {children}
+        </DashboardClienteProvider>
+      </main>
     </div>
   );
 };

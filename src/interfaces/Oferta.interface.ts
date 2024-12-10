@@ -17,6 +17,7 @@ export interface IOferta {
 
 export interface IOfertaBack {
     id: number;
+    createdAt: string;
     uso: string;
     titulo: string;
     descripcion: string;
