@@ -1,10 +1,10 @@
 import { IArchivo } from "@/interfaces/Archivo.interface";
-import { IEspecialidad } from "@/interfaces/Especialidad.interface";
+// import { IEspecialidad } from "@/interfaces/Especialidad.interface";
 import { IEstudio } from "@/interfaces/Estudio.interface";
 import { IExperiencia } from "@/interfaces/Experiencia.interface";
 import { IHabilidad } from "@/interfaces/Habilidad.interface";
 import { IIndustria } from "@/interfaces/Industria.interface";
-import { IServicio } from "@/interfaces/Servicio.interface";
+// import { IServicio } from "@/interfaces/Servicio.interface";
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
 // Define la estructura del estado
@@ -28,10 +28,10 @@ export type RegistroAbogadoState = {
   habilidades_duras: IHabilidad[];
   habilidades_blandas: IHabilidad[];
   experiencias: IExperiencia[];
-  servicios: IServicio[];
+  servicios: number[];
   industrias: IIndustria[];
   estudios: IEstudio[];
-  especialidades: IEspecialidad[];
+  especialidades: number[];
 };
 
 type RegistroAbogadoContextType = {
