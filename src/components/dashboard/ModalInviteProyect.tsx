@@ -12,7 +12,6 @@ import {
 import { IAbogadoBack } from "@/interfaces/Abogado.interface";
 import { IOferta } from "@/interfaces/Oferta.interface"; // Interfaz para ofertas
 import { ofertaservice } from "@/services";
-import { useAuth } from "@/contexts/authContext";
 
 interface ModalInviteProyectProps {
   inviteProyect: (abogadoId: number, ofertaId: number) => void; // Ahora incluye ofertaId
@@ -29,7 +28,6 @@ const ModalInviteProyect: React.FC<ModalInviteProyectProps> = ({
   isOpen,
   onModalClosed,
 }) => {
-  const { token } = useAuth();
   const [visible, setVisible] = useState(isOpen);
   const [currentStep, setCurrentStep] = useState(1);
   const [ofertasDisponibles, setOfertasDisponibles] = useState<IOferta[]>([]);
@@ -38,28 +36,6 @@ const ModalInviteProyect: React.FC<ModalInviteProyectProps> = ({
   useEffect(() => {
     setVisible(isOpen);
   }, [isOpen]);
-
-  useEffect(() => {
-    if (currentStep === 1) {
-      console.log("hola")
-      fetchOfertasDisponibles();
-    }
-  }, [currentStep, abogadoPrevioInvitado]);
-
-  const fetchOfertasDisponibles = async () => {
-    if(token?.cliente.id){
-      try {
-        const body = {
-          abogadoId: abogadoPrevioInvitado,
-          clienteId: token?.cliente.id
-        };
-        const data = await ofertaservice.getOfertasSinAplicacionesPorAbogado(body);
-        setOfertasDisponibles(data);
-      } catch (error) {
-        console.error("Error al obtener las ofertas disponibles:", error);
-      }
-    }
-  };
 
   const handleNextStep = () => {
     if (selectedOferta) {

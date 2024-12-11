@@ -114,7 +114,6 @@ const DashboardClientPage = () => {
             </Button>
           ))}
         </div>
-
         <div>
           {menuActive === "abogados" && (
             <>
