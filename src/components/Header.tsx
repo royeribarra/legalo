@@ -13,7 +13,7 @@ const Header: React.FC<HeaderProps> = ({ serviceTipe, updateServiceTipe }) => {
   return (
     <>
       {serviceTipe === "client" ? (
-        <header className="bg-black">
+        <header className="bg-black lg:sticky lg:top-0 lg:z-20">
           <div className="mx-auto max-w-[1920px] px-4 lg:px-16 h-[80px] lg:h-[160px] flex justify-between items-center">
             <div className="flex items-center">
               <Link href="/">
@@ -85,7 +85,7 @@ const Header: React.FC<HeaderProps> = ({ serviceTipe, updateServiceTipe }) => {
           </div>
         </header>
       ) : (
-        <header className="bg-black">
+        <header className="bg-black lg:sticky lg:top-0 lg:z-20">
           <div className="mx-auto max-w-[1920px] container px-4 lg:px-16 h-[80px] lg:h-[160px] flex justify-between items-center">
             <div className="flex items-center">
               <Link href="/">
@@ -100,7 +100,7 @@ const Header: React.FC<HeaderProps> = ({ serviceTipe, updateServiceTipe }) => {
 
               <div className="hidden lg:block w-[1px] h-10 bg-white mx-6"></div>
 
-              <Link href="/" className="hidden lg:block text-white">
+              <Link href="/nosotros" className="hidden lg:block text-white">
                 Nosotros
               </Link>
             </div>
@@ -132,7 +132,7 @@ const Header: React.FC<HeaderProps> = ({ serviceTipe, updateServiceTipe }) => {
                 <Button variant="outline" size="sm">
                   Regístrate
                 </Button>
-                </Link>
+              </Link>
             </div>
           </div>
           {/* btns mobile */}

@@ -376,16 +376,16 @@ const HomeMain: React.FC<HomeMainProps> = ({
         </div>
         <div className="flex justify-center items-star flex-col gap-8 w-full lg:w-[50%] lg:pr-16 mt-8 lg:mt-0">
           <h2 className="text-5xl font-nimbus 3xl:text-6xl">
-            Cuéntanos hoy tu caso y encuentra{" "}
-            <span className="italic">tu abogado</span> mañana
+            <i>Cuéntanos hoy tu caso </i> y encuentra tu abogado mañana.
           </h2>
           <p className="text-lg 3xl:text-2xl">
-            Cuéntanos tu caso y accede a una comunidad de abogados
-            especializados listos para ayudarte. Encuentra al profesional ideal
-            para tus necesidades legales y resuelve tu caso con confianza y
-            rapidez.
+            Cuéntanos tu caso y accede a una{" "}
+            <span className="font-montreal font-bold">comunidad</span> de
+            abogados especializados listos para ayudarte. Encuentra al
+            profesional ideal para tus necesidades legales y resuelve tu caso
+            con confianza y rapidez.
           </p>
-          <Button className="w-fit">Publicar proyecto</Button>
+          <Button className="w-fit">Cuéntanos tu caso</Button>
         </div>
       </div>
 
@@ -463,11 +463,10 @@ const HomeMain: React.FC<HomeMainProps> = ({
 
       <div className="bg-[url('/assets/img-home-8.jpeg')] bg-cover   bg-bottom">
         <div className="bg-black bg-opacity-70 px-8 py-8 lg:px-16 lg:h-[242px]">
-          <div className="max-w-[1920px] mx-auto py-4 lg:pr-8 flex md:items-center items-start lg:justify-between h-full flex-col lg:flex-row">
-            <div className="text-white mb-8">
-              <h3 className="text-3xl lg:text-[40px] mb-8 font-nimbus">
+          <div className="max-w-[1920px] mx-auto py-4 lg:pr-8 flex md:items-center items-start lg:justify-between h-full flex-col lg:flex-row gap-8 xl:gap-16">
+            <div className="text-white ">
+              <h3 className="text-3xl lg:text-[44px] mb-8 font-nimbus">
                 Accede a una comunidad de abogados de confianza
-                <span className="italic font-light"> a tu medida.</span>
               </h3>
               <p className="text-lg">
                 Crea una cuenta en pocos pasos y accede a nuestra comunidad de

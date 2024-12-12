@@ -30,73 +30,113 @@ import {
 const HomeBannerClient = () => {
   const carouselItems = [
     {
-      CardTitle: "Abogado Civil",
+      CardTitle: "Civil",
       CardDescription:
         "¿Necesitas revisar o firmar un contrato, asegurar la compra o alquiler de una propiedad o con el trámite de una herencia familiar?",
       ImageSrc: "/icos/ico-d-civil.png",
     },
     {
-      CardTitle: "Abogado Penalista",
+      CardTitle: "Penalista",
       CardDescription:
         "¿Te enfrentas a un juicio penal, necesitas asesoría en una investigación policial o quieres conocer tus derechos ante una detención?",
       ImageSrc: "/icos/ico-d-penal.png",
     },
     {
-      CardTitle: "Abogado Laboral",
+      CardTitle: "Laboral",
       CardDescription:
         "¿Tienes problemas con un contrato de trabajo, fuiste despedido injustamente, necesitas asesoría en una inspección de SUNAFIL o sobre derechos laborales",
       ImageSrc: "/icos/ico-d-laboral.png",
     },
     {
-      CardTitle: "Abogado Familiar",
+      CardTitle: "Procesalista",
       CardDescription:
-        "¿Listo para proteger tus contratos, gestionar propiedades, y planificar herencias sin complicaciones?",
+        "¿Quieres presentar una demanda, necesitas ayuda para defenderte en un proceso judicial, o necesitas orientación en el seguimiento de tu caso judicial?",
+      ImageSrc: "/icos/ico-d-procesalista.png",
+    },
+    {
+      CardTitle: "Administrativo",
+      CardDescription:
+        "¿Necesitas apoyo para gestionar trámites con entidades públicas, defenderte de una sanción o multa o resolver problemas con permisos y licencias?",
+      ImageSrc: "/icos/ico-d-administrativo.png",
+    },
+    {
+      CardTitle: "de Familia",
+      CardDescription:
+        "¿Estás atravesando un divorcio, buscas custodia compartida, o necesitas asesoría sobre pensiones alimenticias y acuerdos familiares?",
       ImageSrc: "/icos/ico-d-familia.png",
     },
     {
-      CardTitle: "Abogado Empresarial",
-      CardDescription: "Remoto, Cusco, Ica, Piura.",
-      ImageSrc: "/icos/ico-d-empresarial.png",
+      CardTitle: "Tributario",
+      CardDescription:
+        "¿Necesitas ayuda con la declaración de impuestos, o defensa en fiscalización de SUNAT o en un litigio tributario?",
+      ImageSrc: "/icos/ico-d-tributario.png",
     },
     {
-      CardTitle: "Abogado Ambiental",
-      CardDescription: "Remoto, Cusco, Ica, Piura.",
-      ImageSrc: "/icos/ico-d-ambiental.png",
+      CardTitle: "de Migraciones",
+      CardDescription:
+        "¿Necesitas ayuda con trámites de residencia, permisos de trabajo, o enfrentas problemas de inmigración?",
+      ImageSrc: "/icos/ico-d-migraciones.png",
     },
     {
-      CardTitle: "Abogado de competencia",
-      CardDescription: "Remoto, Cusco, Ica, Piura.",
-      ImageSrc: "/icos/ico-d-competencia.png",
-    },
-    {
-      CardTitle: "Abogado de competencia desleal",
-      CardDescription: "Remoto, Cusco, Ica, Piura.",
-      ImageSrc: "/icos/ico-d-compe-desleal.png",
-    },
-    {
-      CardTitle: "Abogado de propiedad intelectual",
-      CardDescription: "Remoto, Cusco, Ica, Piura.",
-      ImageSrc: "/icos/ico-d-intelectual.png",
-    },
-    {
-      CardTitle: "Abogado de proteccion al consumidor",
-      CardDescription: "Remoto, Cusco, Ica, Piura.",
+      CardTitle: "de Poteccion al Consumidor",
+      CardDescription:
+        "¿Te vendieron un producto defectuoso, no cumplieron con la garantía o te han hecho cobros indebidos?",
       ImageSrc: "/icos/ico-d-consumidor.png",
     },
     {
-      CardTitle: "Abogado de tecnología y datos",
-      CardDescription: "Remoto, Cusco, Ica, Piura.",
+      CardTitle: "Empresarial",
+      CardDescription:
+        "¿Planeas constituir una empresa, necesitas revisar contratos comerciales o estás involucrado en una fusión o disputa entre socios?",
+      ImageSrc: "/icos/ico-d-empresarial.png",
+    },
+    {
+      CardTitle: "Ambiental",
+      CardDescription:
+        "¿Necesitas asesoría sobre normativa ambiental, enfrentas problemas de permisos, o necesitas defensa en casos de contaminación?",
+      ImageSrc: "/icos/ico-d-ambiental.png",
+    },
+    {
+      CardTitle: "de Arbitraje y Resolución de Conflico",
+      CardDescription:
+        "¿Tu contrato requiere resolver un conflicto ante un árbitro o tribunal arbitral o estás considerando iniciar una mediación o demanda arbitral?",
+      ImageSrc: "/icos/ico-d-arbitraje.png",
+    },
+    {
+      CardTitle: "de la Competencia",
+      CardDescription:
+        "¿Te han denunciado por prácticas anticompetitivas, o buscas cumplir con las normativas de competencia y evitar sanciones?",
+      ImageSrc: "/icos/ico-d-competencia2.png",
+    },
+    {
+      CardTitle: "de Competencia Desleal",
+      CardDescription:
+        "¿Necesitas proteger tu marca de publicidad engañosa o tu negocio enfrenta prácticas desleales?",
+      ImageSrc: "/icos/ico-d-compe-desleal.png",
+    },
+    {
+      CardTitle: "de Compliance",
+      CardDescription:
+        "¿Necesitas proteger tu marca de publicidad engañosa o tu negocio enfrenta prácticas desleales?",
+      ImageSrc: "/icos/ico-d-compliance.png",
+    },
+    {
+      CardTitle: "de Propiedad Intelectual",
+      CardDescription:
+        "¿Quieres registrar una marca, proteger una invención o necesitas ayuda para defenderte de infracciones a tus derechos de autor?",
+      ImageSrc: "/icos/ico-d-intelectual.png",
+    },
+
+    {
+      CardTitle: "de Tecnología y Datos",
+      CardDescription:
+        "¿Necesitas asesoría para proteger datos personales, negociar contratos de software, o resolver problemas de ciberseguridad?",
       ImageSrc: "/icos/ico-d-tecnologia.png",
     },
     {
-      CardTitle: "Abogado de Salud",
-      CardDescription: "Remoto, Cusco, Ica, Piura.",
+      CardTitle: "de Salud",
+      CardDescription:
+        "¿Enfrentas un conflicto de mala praxis médica, necesitas asesoría en seguros de salud, o buscas defender tus derechos como paciente?",
       ImageSrc: "/icos/ico-d-salud.png",
-    },
-    {
-      CardTitle: "Abogado de derecho tributario",
-      CardDescription: "Remoto, Cusco, Ica, Piura.",
-      ImageSrc: "/icos/ico-d-tributario.png",
     },
   ];
 
@@ -127,7 +167,7 @@ const HomeBannerClient = () => {
             </div>
           </div>
         </div>
-        <div className="bg-[url('/assets/images/img-landing-clients-2.jpg')] bg-top bg-cover bg-no-repeat h-full lg:block border-l border-l-black lg:w-[56%] w-full min-h-[140px] lg:min-h-[inherit]"></div>
+        <div className="bg-[url('/assets/images/image-banner-clients.jpg')] bg-top bg-cover bg-no-repeat h-full lg:block border-l border-l-black lg:w-[56%] w-full min-h-[140px] lg:min-h-[inherit]"></div>
       </div>
       <div className="bg-white border-t border-b border-black">
         <div className="max-w-[1920px] mx-auto w-[full]  overflow-hidden min-h-[118px]">
@@ -163,7 +203,7 @@ const HomeBannerClient = () => {
                       </div>
                       <CardHeader className="p-0 space-y-0">
                         <CardTitle className="text-base lg:text-lg  font-nimbus">
-                          {item.CardTitle}
+                          Abogado <i>{item.CardTitle}</i>
                         </CardTitle>
                         <CardDescription className="line-clamp-3 lg:text-sm text-xs text-black">
                           {item.CardDescription}
