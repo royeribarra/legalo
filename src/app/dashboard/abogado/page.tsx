@@ -267,10 +267,10 @@ const DashboardLawyerPage = () => {
               )}
 
               <div className="flex flex-col gap-8 flex-1">
+                {/* <ResumeProyect />
                 <ResumeProyect />
                 <ResumeProyect />
-                <ResumeProyect />
-                <ResumeProyect />
+                <ResumeProyect /> */}
               </div>
             </div>
           </div>
