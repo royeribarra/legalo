@@ -29,7 +29,7 @@ export type RegistroAbogadoState = {
   habilidades_blandas: IHabilidad[];
   experiencias: IExperiencia[];
   servicios: number[];
-  industrias: IIndustria[];
+  industrias: number[];
   estudios: IEstudio[];
   especialidades: number[];
 };

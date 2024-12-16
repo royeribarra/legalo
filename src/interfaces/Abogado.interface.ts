@@ -46,6 +46,7 @@ export interface IAbogadoBack {
     pdf_cv: string;
     imagen: string;
     foto_url: string;
+    video_url: string;
     experiencias: IExperiencia[];
     habilidadesBlandas: IHabilidad[];
     habilidadesDuras: IHabilidad[];

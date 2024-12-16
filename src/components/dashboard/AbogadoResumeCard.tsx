@@ -4,6 +4,30 @@ import Image from "next/image";
 import { Briefcase } from "lucide-react";
 import { MapPin, Clock } from "lucide-react";
 import { IAbogadoBack } from "@/interfaces/Abogado.interface";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+
+const CarruselDeIndustrias = ({ abogado } : {abogado: IAbogadoBack}) => {
+  return (
+    <Swiper
+      spaceBetween={5}
+      slidesPerView={3}
+      grabCursor
+    >
+      {abogado.industriasAbogado.map((industria) => (
+        <SwiperSlide key={industria.industria.id} className="w-auto">
+          <Button
+            variant="outline"
+            className="border border-black rounded-full h-[40px] px-4 flex items-center"
+          >
+            <MapPin size={28} />
+            <p className="ml-2 text-sm lg:text-lg">{industria.industria.nombre}</p>
+          </Button>
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  );
+};
 
 interface InviteProyectProps {
   inviteProyect: (abogadoId: number) => void;
@@ -11,8 +35,6 @@ interface InviteProyectProps {
 }
 
 const AbogadoResumeCard = ({ inviteProyect, abogado }: InviteProyectProps) => {
-  console.log(abogado)
-
   const invitarALaOferta = () => {
     inviteProyect(abogado.id);
   };
@@ -46,24 +68,33 @@ const AbogadoResumeCard = ({ inviteProyect, abogado }: InviteProyectProps) => {
           </Button>
         </div>
       </div>
-
-      <div className="flex gap-4 flex-wrap">
-        <Button
-          variant="outline"
-          className="border border-black rounded-full h-[40px]"
-        >
-          <MapPin size={28} />
-          <p className="ml-2 text-sm lg:text-lg">{abogado.direccion}</p>
-        </Button>
-        <Button
-          variant="outline"
-          className="border border-black rounded-full h-[40px]"
-        >
-          <Clock size={28} />
-          <p className="ml-2 text-sm lg:text-lg">30-40 horas por semana</p>
-        </Button>
+      <div>
+      <h3 className="mb-2">Industrias:</h3>
+        <div className="flex gap-4 flex-wrap">
+          {
+            abogado.industriasAbogado.map((industria)=>
+              <Button
+                variant="outline"
+                className="border border-black rounded-full h-[40px]"
+                key={industria.id}
+              >
+                <MapPin size={28} />
+                <p className="ml-2 text-sm lg:text-lg">{industria.industria.nombre}</p>
+              </Button>
+            )
+          }
+            {/* <CarruselDeIndustrias abogado={abogado} /> */}
+          
+        
+          {/* <Button
+            variant="outline"
+            className="border border-black rounded-full h-[40px]"
+          >
+            <Clock size={28} />
+            <p className="ml-2 text-sm lg:text-lg">30-40 horas por semana</p>
+          </Button> */}
+        </div>
       </div>
-
       <div>
         <h3 className="mb-2">Especialidades:</h3>
         <div className="flex flex-wrap gap-4  lg:overflow-y-auto">
@@ -72,6 +103,7 @@ const AbogadoResumeCard = ({ inviteProyect, abogado }: InviteProyectProps) => {
               <Button
                 variant="outline"
                 className="border border-black rounded-full h-[40px]"
+                key={especialidad.id}
               >
                 <Briefcase size={28} />
                 <p className="ml-2 text-sm lg:text-lg">{especialidad.especialidad.nombre}</p>

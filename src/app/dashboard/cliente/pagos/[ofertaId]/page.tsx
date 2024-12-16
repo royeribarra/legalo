@@ -14,7 +14,7 @@ import { useAuth } from "@/contexts/authContext";
 const CheckoutPage = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { id } = useParams();
+  const { ofertaId } = useParams();
   const { token, userRole } = useAuth();
   const [payoutState, setPayoutState] = useState("not-paid");
   const [valueOperation, setValueOperation] = useState<string>("");
@@ -25,9 +25,9 @@ const CheckoutPage = () => {
 
   async function fetchPagarOferta() {
     try {
-      const parsedId = Number(id);
+      const parsedId = Number(ofertaId);
       if (isNaN(parsedId) || isNaN(Number(clienteId)) || isNaN(Number(monto))) {
-        console.error("El id no es un número válido:", id);
+        console.error("El id no es un número válido:", ofertaId);
         return;
       }
 
@@ -35,7 +35,7 @@ const CheckoutPage = () => {
         const pagoData = {
           clienteId: Number(clienteId),
           monto: Number(monto),
-          ofertaId: id,
+          ofertaId: Number(ofertaId),
           operacion: valueOperation
         };
         const response = await pagoService.realizarPago(pagoData);

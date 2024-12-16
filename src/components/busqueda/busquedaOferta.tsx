@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronsLeft } from "lucide-react";
 import { ChevronsRight } from "lucide-react";
 import {
@@ -22,6 +22,9 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label as LabelCn } from "@/components/ui/label";
 import ResumeProyect from "@/components/dashboard/ResumeProyect";
 import ProyectItem from "@/components/dashboard/ProyectItem";
+import { IOfertaBack } from "@/interfaces/Oferta.interface";
+import { ofertaservice } from "@/services";
+import { useDashboardCliente } from "@/contexts/dashboardClienteContext";
 
 const menuItems = [
     { id: "oportunidades", texto: "Oportunidades para ti" },
@@ -32,11 +35,79 @@ const menuItems = [
 ];
 
 function BusquedaOferta(){
+    const { state } = useDashboardCliente();
     const [menuActive, setMenuActive] = useState("oportunidades");
     const [openFilter, setOpenFilter] = useState<boolean>(true);
+    const [ofertas, setOfertas] = useState<IOfertaBack[]>([]);
+    const [ofertasFiltrados, setOfertasFiltrados] = useState<IOfertaBack[]>([]);
+    const [filtroServicio, setFiltroServicio] = useState<number | null>(null);
+    const [filtroEspecialidad, setFiltroEspecialidad] = useState<number | null>(null);
+    const [filtroIndustria, setFiltroIndustria] = useState<number | null>(null);
 
     const handleFilter = () => {
         setOpenFilter(!openFilter);
+    };
+
+    const inviteProyect = (abogadoId: number = 0) => {
+        console.log(abogadoId)
+    };
+
+    async function fetchOfertas() {
+        try {
+          const data = await ofertaservice.obtenerTodos();
+          setOfertas(data);
+          setOfertasFiltrados(data)
+          console.log(data)
+        } catch (error) {
+          console.error("Error al obtener el detalle:", error);
+        }
+      }
+    
+    useEffect(()=> {
+        fetchOfertas();
+    }, []);
+
+    const handleServicioChangue = (newValue: string) => {
+        setFiltroServicio(Number(newValue));
+        filtrarOfertas(filtroEspecialidad, Number(newValue), filtroIndustria);
+      };
+    
+      const handleEspecialidadChange = (selectedValue: string) => {
+        setFiltroEspecialidad(Number(selectedValue));
+        filtrarOfertas(Number(selectedValue), filtroServicio, filtroIndustria);
+      };
+    
+      const handleIndustriaChange = (selectedValue: string) => {
+        setFiltroIndustria(Number(selectedValue));
+        filtrarOfertas(filtroEspecialidad, filtroServicio, Number(selectedValue));
+      };
+    
+      const filtrarOfertas = (especialidadId: number | null, servicioId: number | null, industriaId: number | null ) => {
+        let filtrados = ofertas;
+        if (especialidadId) {
+          filtrados = filtrados.filter((oferta) =>
+            oferta.especialidadesOferta.some(
+              (especialidad) => especialidad.especialidad.id === especialidadId
+            )
+          );
+        }
+    
+        if (servicioId) {
+          filtrados = filtrados.filter((oferta) =>
+            oferta.serviciosOferta.some(
+              (servicio) => servicio.servicio.id === servicioId
+            )
+          );
+        }
+    
+        if (industriaId) {
+          filtrados = filtrados.filter((oferta) =>
+            oferta.industriasOferta.some(
+              (industria) => industria.industria.id === industriaId
+            )
+          );
+        }
+        setOfertasFiltrados(filtrados);
     };
 
     return(
@@ -82,34 +153,38 @@ function BusquedaOferta(){
                         <AccordionItem value="item-1">
                             <AccordionTrigger>Especialidad</AccordionTrigger>
                             <AccordionContent>
-                            <Select>
+                                <Select onValueChange={(selectedValue) => handleEspecialidadChange(selectedValue)}>
                                 <SelectTrigger className="focus-visible:ring-0 border border-black rounded-[10px] focus:ring-0 outline-none">
-                                <SelectValue placeholder="Selecciona especialidad" />
+                                    <SelectValue placeholder="Selecciona especialidad" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                <SelectItem value="a">Light</SelectItem>
-                                <SelectItem value="b">Dark</SelectItem>
-                                <SelectItem value="c">System</SelectItem>
+                                    {
+                                    state.especialidades.map((especialidad)=>
+                                        <SelectItem value={`${especialidad.id}`}>{especialidad.nombre}</SelectItem>
+                                    )
+                                    }
                                 </SelectContent>
-                            </Select>
+                                </Select>
                             </AccordionContent>
                         </AccordionItem>
                         <AccordionItem value="item-2">
                             <AccordionTrigger>Industria</AccordionTrigger>
                             <AccordionContent>
-                            <Select>
+                                <Select onValueChange={(selectedValue) => handleIndustriaChange(selectedValue)}>
                                 <SelectTrigger className="focus-visible:ring-0 border border-black rounded-[10px] focus:ring-0 outline-none">
-                                <SelectValue placeholder="Selecciona industria" />
+                                    <SelectValue placeholder="Selecciona industria" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                <SelectItem value="a">Light</SelectItem>
-                                <SelectItem value="b">Dark</SelectItem>
-                                <SelectItem value="c">System</SelectItem>
+                                    {
+                                    state.industrias.map((industria)=>
+                                        <SelectItem value={`${industria.id}`}>{industria.nombre}</SelectItem>
+                                    )
+                                    }
                                 </SelectContent>
-                            </Select>
+                                </Select>
                             </AccordionContent>
                         </AccordionItem>
-                        <AccordionItem value="item-3">
+                        {/* <AccordionItem value="item-3">
                             <AccordionTrigger>
                             Ubicación del cliente
                             </AccordionTrigger>
@@ -125,8 +200,8 @@ function BusquedaOferta(){
                                 </SelectContent>
                             </Select>
                             </AccordionContent>
-                        </AccordionItem>
-                        <AccordionItem value="item-4">
+                        </AccordionItem> */}
+                        {/* <AccordionItem value="item-4">
                             <AccordionTrigger>Experiencia</AccordionTrigger>
                             <AccordionContent className="flex flex-col gap-2">
                             <div className="flex items-center space-x-2 text-base">
@@ -144,60 +219,26 @@ function BusquedaOferta(){
                                 <label htmlFor="check1">Junior (&lt; 5 años)</label>
                             </div>
                             </AccordionContent>
-                        </AccordionItem>
+                        </AccordionItem> */}
                         <AccordionItem value="item-5">
-                            <AccordionTrigger>Tipo</AccordionTrigger>
+                            <AccordionTrigger>Servicios</AccordionTrigger>
                             <AccordionContent>
-                            <RadioGroup defaultValue="comfortable">
-                                <div className="flex items-center space-x-2 ">
-                                <RadioGroupItem value="r1" id="r1" />
-                                <LabelCn
-                                    htmlFor="r1"
-                                    className="text-base font-light"
-                                >
-                                    Todos
-                                </LabelCn>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="r2" id="r2" />
-                                <LabelCn
-                                    htmlFor="r2"
-                                    className="text-base font-light"
-                                >
-                                    Asesoría legal (Por horas)
-                                </LabelCn>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="r3" id="r3" />
-                                <LabelCn
-                                    htmlFor="r3"
-                                    className="text-base font-light"
-                                >
-                                    Proyecto legal (Días o semanas)
-                                </LabelCn>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="r4" id="r4" />
-                                <LabelCn
-                                    htmlFor="r4"
-                                    className="text-base font-light"
-                                >
-                                    Litigio (Estimación por caso)
-                                </LabelCn>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="r5" id="r5" />
-                                <LabelCn
-                                    htmlFor="r5"
-                                    className="text-base font-light"
-                                >
-                                    Practicas profesionales (meses)
-                                </LabelCn>
-                                </div>
-                            </RadioGroup>
+                                <RadioGroup  defaultValue={`${state.servicios[0]?.id}` || ""} onValueChange={(newValue) => handleServicioChangue(newValue)}>
+                                {state.servicios.map((servicio, index) => {
+                                    const radioId = `radio-${index}`;
+                                    return (
+                                    <div className="flex items-center space-x-2" key={servicio.id || index}>
+                                        <RadioGroupItem value={`${servicio.id}`} id={radioId} />
+                                        <LabelCn htmlFor={radioId} className="text-base font-light">
+                                        {servicio.nombre}
+                                        </LabelCn>
+                                    </div>
+                                    );
+                                })}
+                                </RadioGroup>
                             </AccordionContent>
                         </AccordionItem>
-                        <AccordionItem value="item-6">
+                        {/* <AccordionItem value="item-6">
                             <AccordionTrigger>Duración</AccordionTrigger>
                             <AccordionContent className="flex flex-col gap-2">
                             <div className="flex items-center space-x-2 text-base">
@@ -219,23 +260,28 @@ function BusquedaOferta(){
                                 </label>
                             </div>
                             </AccordionContent>
-                        </AccordionItem>
+                        </AccordionItem> */}
                         </Accordion>
                     </div>
                     </div>
                 )}
 
                 <div className="flex flex-col gap-8 flex-1">
+                    {
+                        ofertasFiltrados.map((oferta)=>
+                            <ResumeProyect oferta={oferta} inviteProyect={inviteProyect} />
+                        )
+                    }
+                    {/* <ResumeProyect />
                     <ResumeProyect />
                     <ResumeProyect />
-                    <ResumeProyect />
-                    <ResumeProyect />
+                    <ResumeProyect /> */}
                 </div>
                 </div>
             </div>
             )}
 
-            {menuActive === "publicadas" && (
+            {/* {menuActive === "publicadas" && (
             <div className="flex flex-col gap-8 flex-1 mt-12">
                 <ProyectItem tipe="sinPostular" />
             </div>
@@ -281,7 +327,7 @@ function BusquedaOferta(){
                 </AccordionItem>
                 </Accordion>
             </div>
-            )}
+            )} */}
         </div>
     );
 }

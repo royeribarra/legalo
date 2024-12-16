@@ -131,13 +131,13 @@ const DashboardClientPage = () => {
             )}
           </div>
         </div>
-        <ModalInviteProyect 
+        {/* <ModalInviteProyect 
           inviteProyect={inviteProyect} 
           abogados={abogados} 
           abogadoPrevioInvitado={abogadoPrevioInvitado}
           onModalClosed={() => setInviteProyectModal(false)}
           isOpen={inviteProyectModal}
-        />
+        /> */}
       </div>
       <Footer />
     </div>

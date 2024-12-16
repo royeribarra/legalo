@@ -31,8 +31,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
 
 const HomeBannerClient = () => {
+  const router = useRouter();
   const [isImageOne, setIsImageOne] = useState(true);
 
   useEffect(() => {
@@ -155,6 +157,11 @@ const HomeBannerClient = () => {
     },
   ];
 
+  const searchAbogado = () => {
+    console.log("cambiando de ruta")
+    router.push("/busqueda");
+  };
+
   return (
     <div className=" 4xl:h-auto flex flex-col bg-lg-lawyer border-t border-t-black">
       <div className="flex w-full lg:min-h-[616px] max-w-[1920px] mx-auto items-center  lg:h-[66vh] flex-col-reverse lg:flex-row">
@@ -173,6 +180,7 @@ const HomeBannerClient = () => {
                 variant="outline"
                 size="icon"
                 className="rounded-full bg-black hover:bg-slate-800 w-[62px] lg:w-[53px] h-12"
+                onClick={searchAbogado}
               >
                 <Search className="h-6 w-6 text-white" />
               </Button>

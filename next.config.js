@@ -9,7 +9,7 @@ const nextConfig = {
         BASE_APP_API_URL: process.env.BASE_APP_API_URL
     },
     images: {
-        domains: ['www.example.com', 'cdn.example.org', 'images.example.net'],
+        domains: ['http.example.com', 'localhost', 'images.example.net', 'www.example.com', 'legalo.pe'],
     },
 };
 

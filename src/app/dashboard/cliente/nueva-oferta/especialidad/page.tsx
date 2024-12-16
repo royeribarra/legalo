@@ -10,6 +10,7 @@ import { useOferta } from "@/contexts/ofertaContext"; // Asegúrate de importar 
 import { useRouter } from "next/navigation";
 import { useToast } from "@/contexts/toastContext";
 import axios from "axios";
+import { especialidadService } from "@/services";
 
 interface Especialidad {
   id: number; // Cambiado para que use el id numérico
@@ -21,14 +22,15 @@ const PublicarPageThree = () => {
   const { showToast } = useToast();
   const route = useRouter();
   const { state, updateState } = useOferta();
-  const [selectServices, setSelectServices] = useState<number[]>(state.especialidades); // Ahora solo almacenamos IDs
-  const [serviceList, setServiceList] = useState<Especialidad[]>([]); // Lista de especialidades obtenidas desde la API
+  const [selectServices, setSelectServices] = useState<number[]>(state.especialidades);
+  const [serviceList, setServiceList] = useState<Especialidad[]>([]);
 
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get("/api/servicios");
-        setServiceList(response.data); // Aquí se setean las especialidades dinámicamente
+        const response = await especialidadService.obtenerTodos();
+        console.log(response)
+        setServiceList(response);
       } catch (error) {
         console.error("Error fetching services", error);
       }
@@ -38,20 +40,17 @@ const PublicarPageThree = () => {
   }, []);
 
   const selectEspecialidad = (item: Especialidad) => {
-    const selectedId = item.id; // Usamos solo el ID
+    const selectedId = item.id;
 
     if (selectServices.includes(selectedId)) {
-      // Si la especialidad ya está seleccionada, la eliminamos
       const filteredServices = selectServices.filter(id => id !== selectedId);
       setSelectServices(filteredServices);
       updateState({ especialidades: filteredServices });
     } else {
-      // Si no está seleccionada y solo hay espacio para una especialidad
       if (selectServices.length >= 1) {
         console.log("No se puede escoger más de una especialidad");
         return;
       }
-      // Si no está seleccionada, la agregamos
       const updatedServices = [...selectServices, selectedId];
       setSelectServices(updatedServices);
       updateState({ especialidades: updatedServices });

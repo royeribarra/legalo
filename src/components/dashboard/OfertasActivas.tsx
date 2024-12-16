@@ -7,6 +7,7 @@ import { ChevronDown } from "lucide-react";
 import { useAuth } from "@/contexts/authContext";
 import { AxiosError } from "axios";
 import { IOfertaBack } from "@/interfaces/Oferta.interface";
+import Link from "next/link";
 
 const OfertasActivas = () => {
   const [expandedProyectoId, setExpandedProyectoId] = useState<number | null>(
@@ -73,7 +74,7 @@ const OfertasActivas = () => {
               <span>{proyecto.titulo}</span>
             </div>
             <div className="flex items-center">
-              <span>{proyecto.documento_url}</span>
+              <Link href={`${process.env.BASE_APP_API_URL}${proyecto.documento_url}`} target="_blank"><Button>Ver documento</Button></Link>
             </div>
             <div className="flex items-center">
               <span>{proyecto.descripcion}</span>
@@ -90,7 +91,7 @@ const OfertasActivas = () => {
               {expandedProyectoId === proyecto.id ? "Ocultar" : "Ver más"}{" "}
               <ChevronDown />
             </Button>
-            <Button variant={"outline"}>Pago realizado</Button>
+            {/* <Button variant={"outline"}>Pago realizado</Button> */}
           </div>
         </div>
       ))}

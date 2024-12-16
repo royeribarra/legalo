@@ -5,6 +5,7 @@ import ModalAgregarEspecialidad from "@/components/abogado/ModalAgregarEspeciali
 import { Input } from "@/components/ui/input";
 import { RegistroAbogadoState } from "@/contexts/registroAbogadoContext";
 import axios from "axios";
+import { especialidadService } from "@/services";
 
 type ModalAgregarEducacionProps = {
   updateStateAbogado: (newState: Partial<RegistroAbogadoState>) => void;
@@ -16,15 +17,16 @@ function AboutSection({
   stateAbogado
 }: ModalAgregarEducacionProps) {
   const [showModalAddEspecialidad, setShowModalAddEspecialidad] = useState(false);
-  const [serviceList, setServiceList] = useState<{ id: number; nombre: string; imagen: string }[]>([]); // Lista de especialidades
-  const [selectedSpecialties, setSelectedSpecialties] = useState<{ id: number; nombre: string }[]>([]); // Especialidades seleccionadas
+  const [serviceList, setServiceList] = useState<{ id: number; nombre: string; imagen: string }[]>([]);
+  const [selectedSpecialties, setSelectedSpecialties] = useState<{ id: number; nombre: string }[]>([]);
 
   // Efecto para obtener las especialidades desde la API
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get("/api/servicios");
-        setServiceList(response.data); // Seteamos la lista de especialidades obtenidas
+        const response = await especialidadService.obtenerTodos();
+        console.log(response)
+        setServiceList(response); // Seteamos la lista de especialidades obtenidas
       } catch (error) {
         console.error("Error fetching services", error);
       }
@@ -33,15 +35,15 @@ function AboutSection({
     fetchServices();
   }, []);
 
-  // Efecto para actualizar las especialidades seleccionadas cuando cambian
   useEffect(() => {
     if (stateAbogado.especialidades.length > 0) {
       const selected = serviceList.filter(service =>
         stateAbogado.especialidades.includes(service.id)
       );
+      console.log(selected)
       setSelectedSpecialties(selected);
     }
-  }, [stateAbogado.especialidades, serviceList]); // Este efecto depende de los cambios en especialidades y serviceList
+  }, [stateAbogado.especialidades, serviceList]);
 
   const onChangeGrado = (value: string) => {
     updateStateAbogado({ grado: value });

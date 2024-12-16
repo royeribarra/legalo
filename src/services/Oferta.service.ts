@@ -24,4 +24,8 @@ export default class OfertaService extends MainService {
   public async getOfertasSinAplicacionesPorAbogado(data: { clienteId: number; abogadoId: number }): Promise<any>{
     return this.post(`/sin-aplicaciones-por-abogado`, data);
   }
+
+  public async invitarAbogado(data: { ofertaId: number | undefined | null; abogadoId: number }): Promise<any>{
+    return this.post(`/invitar-abogado`, data);
+  }
 }
