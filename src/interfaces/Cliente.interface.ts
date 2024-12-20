@@ -18,6 +18,8 @@ export interface ICliente{
 export interface IClienteBack{
     id: number;
     user: IUser;
+    nombres: string;
+    apellidos: string;
     tipo_persona_id: number;
     razon_social: string;
     persona_contacto: string;

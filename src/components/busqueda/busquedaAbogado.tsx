@@ -15,7 +15,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
 
 import { Label as LabelCn } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -172,44 +171,6 @@ function BusquedaAbogado(){
                                 </Select>
                             </AccordionContent>
                         </AccordionItem>
-                        {/* <AccordionItem value="item-3">
-                        <AccordionTrigger>
-                            Ubicación del cliente
-                        </AccordionTrigger>
-                        <AccordionContent>
-                            <Select>
-                            <SelectTrigger className="focus-visible:ring-0 border border-black rounded-[10px] focus:ring-0 outline-none">
-                                <SelectValue placeholder="Selecciona ubicación" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="a">Light</SelectItem>
-                                <SelectItem value="b">Dark</SelectItem>
-                                <SelectItem value="c">System</SelectItem>
-                            </SelectContent>
-                            </Select>
-                        </AccordionContent>
-                        </AccordionItem> */}
-                        {/* <AccordionItem value="item-4">
-                        <AccordionTrigger>Experiencia</AccordionTrigger>
-                        <AccordionContent className="flex flex-col gap-2">
-                            <div className="flex items-center space-x-2 text-base">
-                            <Checkbox id="check1" />
-                            <label htmlFor="check1">Senior (+10 años)</label>
-                            </div>
-                            <div className="flex items-center space-x-2 text-base">
-                            <Checkbox id="check1" />
-                            <label htmlFor="check1">
-                                Intermedio (5-10 años)
-                            </label>
-                            </div>
-                            <div className="flex items-center space-x-2 text-base">
-                            <Checkbox id="check1" />
-                            <label htmlFor="check1">
-                                Junior (&lt; 5 años)
-                            </label>
-                            </div>
-                        </AccordionContent>
-                        </AccordionItem> */}
                         <AccordionItem value="item-5">
                             <AccordionTrigger>Servicios</AccordionTrigger>
                             <AccordionContent>
@@ -230,29 +191,6 @@ function BusquedaAbogado(){
                                 </RadioGroup>
                             </AccordionContent>
                         </AccordionItem>
-                        {/* <AccordionItem value="item-6">
-                        <AccordionTrigger>Duración</AccordionTrigger>
-                        <AccordionContent className="flex flex-col gap-2">
-                            <div className="flex items-center space-x-2 text-base">
-                            <Checkbox id="check1" />
-                            <label htmlFor="check1">
-                                Corto plazo ( 1- 6 meses)
-                            </label>
-                            </div>
-                            <div className="flex items-center space-x-2 text-base">
-                            <Checkbox id="check1" />
-                            <label htmlFor="check1">
-                                Mediano plazo ( 6 - 12 meses)
-                            </label>
-                            </div>
-                            <div className="flex items-center space-x-2 text-base">
-                            <Checkbox id="check1" />
-                            <label htmlFor="check1">
-                                Largo plazo (+ 12 meses)
-                            </label>
-                            </div>
-                        </AccordionContent>
-                        </AccordionItem> */}
                     </Accordion>
                     </div>
                 </div>
