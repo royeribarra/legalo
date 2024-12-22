@@ -272,7 +272,14 @@ function RegisterLawyer() {
                       <FormItem>
                         <FormLabel>Apellidos</FormLabel>
                         <FormControl>
-                          <Input placeholder="Apellidos" {...field} />
+                          <Input 
+                            placeholder="Apellidos" {...field}
+                            onKeyDown={(e) => {
+                              if (!/^[a-zA-Z\s]*$/.test(e.key)) {
+                                e.preventDefault();
+                              }
+                            }}
+                          />
                         </FormControl>
                         <FormDescription></FormDescription>
                         <FormMessage />
@@ -288,7 +295,10 @@ function RegisterLawyer() {
                       <FormItem>
                         <FormLabel>DNI</FormLabel>
                         <FormControl>
-                          <Input placeholder="DNI" {...field} />
+                          <Input
+                            maxLength={8}
+                            placeholder="DNI" {...field} 
+                          />
                         </FormControl>
                         <FormDescription></FormDescription>
                         <FormMessage />
@@ -302,7 +312,11 @@ function RegisterLawyer() {
                       <FormItem>
                         <FormLabel>Teléfono</FormLabel>
                         <FormControl>
-                          <Input placeholder="Teléfono" {...field} />
+                          <Input
+                            maxLength={20}
+                            placeholder="Teléfono" 
+                            {...field} 
+                          />
                         </FormControl>
                         <FormDescription></FormDescription>
                         <FormMessage />
