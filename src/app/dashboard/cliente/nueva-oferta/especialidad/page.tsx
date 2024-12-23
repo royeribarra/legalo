@@ -69,7 +69,7 @@ const PublicarPageThree = () => {
     <div className="container mx-auto p-4 lg:p-8 m-8 lg:w-[900px]">
       <div className="w-full max-w-[480px] mx-auto mb-8">
         <Progress value={50} className="mx-auto mb-4 h-2" />
-        <p className="text-left">Paso 3/6</p>
+        <p className="text-left">Paso 3/8</p>
       </div>
 
       <h1 className="text-2xl lg:text-5xl my-4 font-nimbus">
@@ -98,7 +98,7 @@ const PublicarPageThree = () => {
                   }`}
                 >
                   <Image
-                    src={`${process.env.BASE_APP_URL}/${item.imagen}`}
+                    src={item.imagen}
                     alt={item.nombre}
                     width={25}
                     height={25}

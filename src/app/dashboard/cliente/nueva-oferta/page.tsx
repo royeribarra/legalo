@@ -42,7 +42,7 @@ const NuevaOferta = () => {
     <div className="container mx-auto p-4 lg:p-8 m-8 lg:w-[900px]">
       <div className="w-full max-w-[480px] mx-auto mb-8">
         <Progress value={17} className="mx-auto mb-4 h-2" />
-        <p className="text-left">Paso 1/6</p>
+        <p className="text-left">Paso 1/8</p>
       </div>
       <div>
         <h1 className="text-4xl my-4 font-nimbus">

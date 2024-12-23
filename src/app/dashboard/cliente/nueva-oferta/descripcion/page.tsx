@@ -80,7 +80,7 @@ const PublicarPageFour = () => {
     <div className="container mx-auto p-4 lg:p-8 lg:px-20 m-8">
       <div className="w-full max-w-[480px] mx-auto mb-8">
         <Progress value={67} className="mx-auto mb-4 h-2" />
-        <p className="text-left">Paso 4/6</p>
+        <p className="text-left">Paso 4/8</p>
       </div>
       <div className="flex flex-wrap lg:flex-nowrap gap-16">
         <div>

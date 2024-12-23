@@ -207,7 +207,7 @@ const PublicarPageEight = () => {
     <div className="container mx-auto p-4 lg:p-8 m-8 lg:w-[600px]">
       <div className="w-full max-w-[480px] mx-auto mb-8">
         <Progress value={100} className="mx-auto mb-4 h-2" />
-        <p className="text-left">Paso 8/6</p>
+        <p className="text-left">Paso 8/8</p>
       </div>
       <h1 className="text-[36px] my-4 font-nimbus">Preguntas de selección (opcional)</h1>
       <p>Esto te ayudará a identificar al candidato ideal.</p>

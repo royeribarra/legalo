@@ -86,7 +86,7 @@ const PublicarPageFour = () => {
     <div className="container mx-auto p-4 lg:p-8 lg:px-20 m-8 max-w-[900px]">
       <div className="w-full max-w-[480px] mx-auto mb-8">
         <Progress value={84} className="mx-auto mb-4 h-2" />
-        <p className="text-left">Paso 5/6</p>
+        <p className="text-left">Paso 5/8</p>
       </div>
       <div>
         <h1 className="text-2xl lg:text-5xl my-4 font-nimbus">
