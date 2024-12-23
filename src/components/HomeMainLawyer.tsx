@@ -373,7 +373,9 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 abogados
               </p>
             </div>
-            <Button variant={"secondary"}>Regístrate gratis</Button>
+            <Link href={"/registro-tipo"}>
+              <Button variant={"secondary"}>Regístrate gratis</Button>
+            </Link>
           </div>
         </div>
       </div>

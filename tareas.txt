@@ -1,0 +1,2 @@
+1. Busqueda, debe actuar sobre las industrias y especialidades.
+2. Debe marcar el filtro en la seleccion

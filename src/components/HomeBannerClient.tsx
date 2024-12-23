@@ -171,7 +171,7 @@ const HomeBannerClient = () => {
               </Button>
             </div>
             <div className="underline text-lg lg:text-2xl">
-              <Link href="#">Descubre cuanto puedes llegar a ahorrar</Link>
+              <Link href="#calculo-ahorros">Descubre cuanto puedes llegar a ahorrar</Link>
             </div>
           </div>
         </div>

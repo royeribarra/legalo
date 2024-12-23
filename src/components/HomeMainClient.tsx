@@ -329,7 +329,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
               </div>
             </div>
           </div>
-          <div className=" bg-lg-client flex flex-col items-center justify-center gap-4 3xl:gap-8 p-8">
+          <div className=" bg-lg-client flex flex-col items-center justify-center gap-4 3xl:gap-8 p-8" id="calculo-ahorros">
             <h3 className="text-[40px] text-center max-w-[416px] 3xl:max-w-[700px] font-nimbus 3xl:text-6xl">
               Con Legalo <span className="italic">ahorra</span> hasta
             </h3>
@@ -385,7 +385,9 @@ const HomeMain: React.FC<HomeMainProps> = ({
             profesional ideal para tus necesidades legales y resuelve tu caso
             con confianza y rapidez.
           </p>
-          <Button className="w-fit">Cuéntanos tu caso</Button>
+          <Link href={"/registro-tipo"}>
+            <Button className="w-fit" >Cuéntanos tu caso</Button>
+          </Link>
         </div>
       </div>
 
@@ -474,7 +476,9 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 pago hasta que recibas el servicio.
               </p>
             </div>
-            <Button variant={"secondary"}>Regístrate gratis</Button>
+            <Link href={"/registro-tipo"}>
+              <Button variant={"secondary"}>Regístrate gratis</Button>
+            </Link>
           </div>
         </div>
       </div>

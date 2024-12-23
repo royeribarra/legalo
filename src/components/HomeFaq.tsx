@@ -6,6 +6,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 const HomeFaq = () => {
   return (
@@ -15,9 +16,11 @@ const HomeFaq = () => {
           Respondemos a tus <span className="italic">preguntas</span>
         </h2>
         <p className="text-[18px]">¿Tienes más preguntas?</p>
-        <Button className="w-fit border border-black rounded-[10px] text-base px-6 h-11">
-          Contáctanos
-        </Button>
+        <Link href={"/contacto"}>
+          <Button className="w-fit border border-black rounded-[10px] text-base px-6 h-11">
+            Contáctanos
+          </Button>
+        </Link>
       </div>
 
       <div className="w-full lg:w-[60%] mb-8 lg:mb-auto">
