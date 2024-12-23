@@ -65,12 +65,14 @@ const CompleteProfileLawyerPage = () => {
                 Publicar proyecto
               </Button>
             </Link>
-            <Button
-              variant="outline"
-              className="border-black rounded-[10px] h-12 px-6 text-base"
-            >
-              Ver recomendaciones
-            </Button>
+            <Link href={"/busqueda"}>
+              <Button
+                variant="outline"
+                className="border-black rounded-[10px] h-12 px-6 text-base"
+              >
+                Ver recomendaciones
+              </Button>
+            </Link>
           </div>
         </div>
       ) : (

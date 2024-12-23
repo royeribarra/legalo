@@ -3,6 +3,7 @@ import Link from "next/link";
 // import { Button } from "@/components/ui/button";
 
 const Footer = () => {
+  const whatsappNumber = "51939784580";
   return (
     <footer className="bg-[#1E1E1E]">
       <div className="max-w-[1920px] mx-auto flex flex-col justify-center overflow-hidden lg:pb-10 p-4 lg:px-16">
@@ -17,7 +18,9 @@ const Footer = () => {
           <div className="text-white flex gap-8 flex-col lg:flex-row ">
             <Link href="/nosotros">Nosotros</Link>
             <Link href="/contacto">Contacto</Link>
-            <Link href="/ayuda">Ayuda Online</Link>
+            <Link href={`https://wa.me/${whatsappNumber}`} passHref target="_blank">
+              Ayuda Online
+            </Link>
           </div>
 
           <div className="flex space-x-4 my-4 ">
