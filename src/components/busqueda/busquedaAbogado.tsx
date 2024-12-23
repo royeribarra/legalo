@@ -175,19 +175,17 @@ function BusquedaAbogado(){
                             <AccordionTrigger>Servicios</AccordionTrigger>
                             <AccordionContent>
                                 <RadioGroup  defaultValue={`${state.servicios[0]?.id}` || ""} onValueChange={(newValue) => handleServicioChangue(newValue)}>
-                                {
-                                    state.servicios.map((servicio)=> 
-                                    <div className="flex items-center space-x-2 ">
-                                        <RadioGroupItem value="r1" id="r1" />
-                                        <LabelCn
-                                        htmlFor="r1"
-                                        className="text-base font-light"
-                                        >
+                                {state.servicios.map((servicio, index) => {
+                                    const radioId = `radio-${index}`;
+                                    return (
+                                    <div className="flex items-center space-x-2" key={servicio.id || index}>
+                                        <RadioGroupItem value={`${servicio.id}`} id={radioId} />
+                                        <LabelCn htmlFor={radioId} className="text-base font-light">
                                         {servicio.nombre}
                                         </LabelCn>
                                     </div>
-                                    )
-                                }
+                                    );
+                                })}
                                 </RadioGroup>
                             </AccordionContent>
                         </AccordionItem>
