@@ -136,7 +136,7 @@ const formSchema = z.object({
   email: z
     .string()
     .min(2, { message: "El campo email debe ser rellenado" })
-    .max(30)
+    .max(100)
     .email({ message: "Debe ser un correo electrónico válido" }),
   company: z
     .string()

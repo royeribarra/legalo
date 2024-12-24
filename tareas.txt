@@ -1,2 +1,12 @@
-1. Busqueda, debe actuar sobre las industrias y especialidades.
+1. Busqueda, debe actuar sobre las industrias, especialidades y servicios.
+1.1. Similitud de 70%
+1.2. Si no encuentra, que lo redirija y le muestre "o opciones encontradas", "por favor use el filtro"
 2. Debe marcar el filtro en la seleccion
+3. Boton para quitar filtros o mostrar todos
+4. cuando te mueves desde "descubre tu salario o monto", el div  selecionado centrar mejor
+
+
+
+### FORMULARIO DE REGISTRO DE PROGRESO DE TRABAJO
+1. Campos: fecha de registro, porcentaje, comentario, documento adjunto
+2. Listar en la lista de admin
