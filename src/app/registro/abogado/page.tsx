@@ -25,6 +25,13 @@ import { Check } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useRegistroAbogado } from "@/contexts/registroAbogadoContext";
+import departamentosPeru from "@/data/departamentos";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@/components/ui/select";
 
 type PasswordFieldProps<T extends FieldValues> = {
   field: {
@@ -314,8 +321,8 @@ function RegisterLawyer() {
                         <FormControl>
                           <Input
                             maxLength={20}
-                            placeholder="Teléfono" 
-                            {...field} 
+                            placeholder="Teléfono"
+                            {...field}
                           />
                         </FormControl>
                         <FormDescription></FormDescription>
@@ -329,9 +336,31 @@ function RegisterLawyer() {
                   name="location"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Ingresa tu ciudad</FormLabel>
+                      <FormLabel>Selecciona tu departamento</FormLabel>
                       <FormControl>
-                        <Input placeholder="Ubicación" {...field} />
+                        <Select
+                          value={field.value} // Conecta el valor actual al formulario
+                          onValueChange={(value) => field.onChange(value)} // Maneja el cambio de valor
+                        >
+                          <SelectTrigger>
+                            {field.value ? (
+                              <span>
+                                {
+                                  departamentosPeru.find((departamento) => departamento.nombre === field.value)?.nombre
+                                }
+                              </span>
+                            ) : (
+                              <span className="text-gray-400">Selecciona una opción</span>
+                            )}
+                          </SelectTrigger>
+                          <SelectContent>
+                            {departamentosPeru.map(({ id, nombre }) => (
+                              <SelectItem key={id} value={nombre}>
+                                {nombre}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                       </FormControl>
                       <FormDescription></FormDescription>
                       <FormMessage />

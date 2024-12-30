@@ -191,9 +191,11 @@ const HomeBannerClient = () => {
           </div>
         </div>
         <div
-          className={`bg-[url('/assets/images/${
-            isImageOne ? "image-banner-lawyer.jpg" : "image-banner-lawyer2.jpg"
-          }')] bg-top bg-cover bg-no-repeat w-full h-full lg:block border-l border-l-black lg:w-[56%] min-h-[140px] lg:min-h-[inherit]`}
+          className={`${
+            isImageOne
+              ? "bg-[url('/assets/images/image-banner-lawyer.jpg')]"
+              : "bg-[url('/assets/images/image-banner-lawyer2.jpg')]"
+          } bg-top bg-cover bg-no-repeat w-full h-full lg:block border-l border-l-black lg:w-[56%] min-h-[140px] lg:min-h-[inherit]`}
         ></div>
         {/* <div className="hidden lg:block absolute lg:left-[30vw] xl:left-[38vw] 2xl:left-[30vw] bottom-[24vh]">
           <Image

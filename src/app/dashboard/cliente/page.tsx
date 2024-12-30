@@ -138,7 +138,7 @@ const DashboardClientPage = () => {
 
   return (
     <div className="px-4 py-4 lg:px-16 lg:py-8 max-w-[1920px] mx-auto">
-      <div className="flex justify-between flex-col-reverse lg:flex-row gap-4 ">
+      {/* <div className="flex justify-between flex-col-reverse lg:flex-row gap-4 ">
         <div>
           <p className="pb-2">Búsqueda por palabra clave</p>
           <div className="flex items-center gap-4 border border-black rounded-full h-12 px-4 lg:w-[553px]">
@@ -146,10 +146,17 @@ const DashboardClientPage = () => {
             <input type="text" placeholder="Escribe..." className="" />
           </div>
         </div>
-        {/* <InfoNominations /> */}
-      </div>
+        <InfoNominations />
+      </div> */}
 
       {/* Dashboard */}
+      <div className="mt-8">
+        <Link href={"/dashboard/cliente/nueva-oferta"}>
+          <Button>
+            Crear Proyecto
+          </Button>
+        </Link>
+      </div>
       <div className="mt-8">
         <div className="border-b-2 border-[#808080] flex w-full overflow-auto lg:overflow-auto">
           {menuItems.map((boton) => (
@@ -231,7 +238,7 @@ const DashboardClientPage = () => {
                               <SelectContent>
                                 {
                                   state.industrias.map((industria)=>
-                                    <SelectItem value={`${industria.id}`}>{industria.nombre}</SelectItem>
+                                    <SelectItem value={`${industria.id}`} key={industria.id}>{industria.nombre}</SelectItem>
                                   )
                                 }
                               </SelectContent>

@@ -2,9 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { ReactNode } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Input } from "@/components/ui/input";
-import { Search as IcoSearch } from "lucide-react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
 import { AuthProvider, useAuth } from "@/contexts/authContext";
 import Image from "next/image";
@@ -24,6 +22,7 @@ const DashboardClientLayout = ({ children }: LayoutProps) => {
 };
 
 const LayoutContent = ({ children }: { children: ReactNode }) => {
+  const whatsappNumber = "51939784580";
   const { token, userRole } = useAuth();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
@@ -37,6 +36,12 @@ const LayoutContent = ({ children }: { children: ReactNode }) => {
       }
     }
   }, [token, userRole, router]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("tokenRole");
+    localStorage.removeItem("userRole");
+    router.push("/login"); // Redirige al usuario a la página de login
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -54,42 +59,29 @@ const LayoutContent = ({ children }: { children: ReactNode }) => {
             className="max-w-[100px] md:max-w-none"
           />
         </Link>
-        <div className="flex items-center justify-center lg:justify-end gap-2 lg:gap-4 w-full lg:flex-1 order-3 lg:order-2">
-          <div className="flex items-center h-10 bg-white border border-black rounded-full overflow-hidden px-4 lg:w-[380px]">
-            <IcoSearch />
-            <Input
-              type="text"
-              placeholder="Búsqueda por trabajo"
-              className="bg-white border-none focus-visible:ring-0 rounded-none text-xs lg:text-base"
-            />
-          </div>
-          <div className="rounded-full border border-black overflow-hidden">
-            <Select>
-              <SelectTrigger className="w-[120px] lg:w-[160px] bg-[#EDEDED] focus-visible:ring-0 text-[#505050] text-xs lg:text-base">
-                <SelectValue placeholder="Abogados" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="light">Light</SelectItem>
-                <SelectItem value="dark">Dark</SelectItem>
-                <SelectItem value="system">System</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
         <div className="flex gap-8 items-center w-1/2 lg:w-auto order-2 lg:order-3 max-w-[160px] lg:max-w-none justify-end">
-          <Link href="#" className="underline">
+          <Link href={`https://wa.me/${whatsappNumber}`} passHref target="_blank">
             Ayuda
           </Link>
-          <Avatar>
-            <AvatarImage src="" />
-            <AvatarFallback>JA</AvatarFallback>
-          </Avatar>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Avatar>
+                <AvatarImage src="" />
+                <AvatarFallback>
+                  {token ? token.nombres[0] + token.apellidos[0] : ""}
+                </AvatarFallback>
+              </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem onClick={handleLogout}>
+                Cerrar sesión
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </header>
       <main>
-        <DashboardClienteProvider>
-          {children}
-        </DashboardClienteProvider>
+        <DashboardClienteProvider>{children}</DashboardClienteProvider>
       </main>
     </div>
   );

@@ -385,7 +385,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
             profesional ideal para tus necesidades legales y resuelve tu caso
             con confianza y rapidez.
           </p>
-          <Link href={"/registro-tipo"}>
+          <Link href={"/registro/tipo"}>
             <Button className="w-fit" >Cuéntanos tu caso</Button>
           </Link>
         </div>
@@ -476,7 +476,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 pago hasta que recibas el servicio.
               </p>
             </div>
-            <Link href={"/registro-tipo"}>
+            <Link href={"/registro/tipo"}>
               <Button variant={"secondary"}>Regístrate gratis</Button>
             </Link>
           </div>
