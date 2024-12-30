@@ -3,8 +3,8 @@
 import { DashboardClienteProvider } from "@/contexts/dashboardClienteContext";
 import React, { ReactNode } from "react";
 
-const OfertaLayout = ({ children }:{ children: ReactNode }) => {
+const BusquedaLayout = ({ children }:{ children: ReactNode }) => {
   return <DashboardClienteProvider>{children}</DashboardClienteProvider>;
 };
 
-export default OfertaLayout;
+export default BusquedaLayout;

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Search as IcoSearch } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -123,9 +123,9 @@ const DashboardClientPage = () => {
             ))}
           </div>
           <div>
-            {menuActive === "talentos" && (
-              <BusquedaAbogado></BusquedaAbogado>
-            )}
+            <Suspense fallback={<div>Loading...</div>}>
+              {menuActive === "talentos" && <BusquedaAbogado />}
+            </Suspense>
             {menuActive === "oportunidades" && (
               <BusquedaOferta></BusquedaOferta>
             )}
