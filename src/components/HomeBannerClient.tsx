@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
@@ -30,6 +30,7 @@ import { useRouter } from "next/navigation";
 
 const HomeBannerClient = () => {
   const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState("");
   const carouselItems = [
     {
       CardTitle: "Civil",
@@ -142,9 +143,15 @@ const HomeBannerClient = () => {
     },
   ];
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value); // Actualiza el estado con el valor del input
+  };
+
   const searchAbogado = () => {
-    console.log("cambiando de ruta")
-    router.push("/busqueda");
+    if (searchQuery.trim() !== "") {
+      // Navega a la ruta con el query param
+      router.push(`/busqueda?query=${encodeURIComponent(searchQuery)}`);
+    }
   };
 
   return (
@@ -156,9 +163,16 @@ const HomeBannerClient = () => {
               <span className="italic font-light"> Simplificamos</span> la
               contratación de tu abogado, donde y cuándo lo necesites
             </h1>
-            <div className="w-full  flex gap-4 relative ">
+            <div className="w-full flex gap-4 relative">
               <Input
                 placeholder="Ejemplo Abogado, Minería, etc."
+                value={searchQuery}
+                onChange={handleInputChange}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    searchAbogado();
+                  }
+                }}
                 className="rounded-[30px] border border-black px-[30px] py-[12px] focus-visible:border-none h-12"
               />
               <Button

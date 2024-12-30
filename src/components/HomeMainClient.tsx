@@ -246,7 +246,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
           </Card>
         </div>
       </div>
-      <div className="[background:linear-gradient(to_right,_#1E1E1E_50%,_#D5F1F0_50%)] border-t border-b border-black">
+      <div className="[background:linear-gradient(to_right,_#1E1E1E_50%,_#D5F1F0_50%)] border-t border-b border-black" id="calculo-ahorros">
         <div className="max-w-[1920px] mx-auto lg:h-[620px] 3xl:h-[740px] grid grid-cols-1 lg:grid-cols-2">
           <div className="bg-black flex flex-col  gap-4 py-8 justify-center">
             <div className="flex  flex-col justify-center gap-8 3xl:gap-16 p-4 lg:p-16">
@@ -329,7 +329,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
               </div>
             </div>
           </div>
-          <div className=" bg-lg-client flex flex-col items-center justify-center gap-4 3xl:gap-8 p-8" id="calculo-ahorros">
+          <div className=" bg-lg-client flex flex-col items-center justify-center gap-4 3xl:gap-8 p-8">
             <h3 className="text-[40px] text-center max-w-[416px] 3xl:max-w-[700px] font-nimbus 3xl:text-6xl">
               Con Legalo <span className="italic">ahorra</span> hasta
             </h3>
