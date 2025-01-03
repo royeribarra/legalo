@@ -49,26 +49,30 @@ const Header: React.FC<HeaderProps> = ({ serviceTipe, updateServiceTipe }) => {
           </div>
 
           <div>
-          <div className="lg:flex gap-2 hidden border border-white rounded-full p-[2px] w-auto">
-            <Button
-              variant="switchOutline"
-              onClick={() => updateServiceTipe("client")}
-              className={`h-10 lg:text-base ${
-                serviceTipe === "client" ? "bg-lg-client text-black" : "bg-black text-white"
-              }`}
-            >
-              ¿Quieres contratar?
-            </Button>
-            <Button
-              variant="switch"
-              onClick={() => updateServiceTipe("lawyer")}
-              className={`h-10 lg:text-base ${
-                serviceTipe === "lawyer" ? "bg-lg-client text-black" : "bg-black text-white"
-              }`}
-            >
-              ¿Quieres trabajar?
-            </Button>
-          </div>
+            <div className="lg:flex gap-2 hidden border border-white rounded-full p-[2px] w-auto">
+              <Button
+                variant="switchOutline"
+                onClick={() => updateServiceTipe("client")}
+                className={`h-10 lg:text-base ${
+                  serviceTipe === "client"
+                    ? "bg-lg-client text-black"
+                    : "bg-black text-white"
+                }`}
+              >
+                ¿Quieres contratar?
+              </Button>
+              <Button
+                variant="switch"
+                onClick={() => updateServiceTipe("lawyer")}
+                className={`h-10 lg:text-base ${
+                  serviceTipe === "lawyer"
+                    ? "bg-lg-client text-black"
+                    : "bg-black text-white"
+                }`}
+              >
+                ¿Quieres trabajar?
+              </Button>
+            </div>
           </div>
 
           <div className="flex gap-2">

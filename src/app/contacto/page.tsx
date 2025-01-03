@@ -4,6 +4,36 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import React, { useState } from "react";
 
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
+
+const schema = z.object({
+  name: z.string().min(1, "El nombre es obligatorio"),
+  email: z.string().email("Ingresa un correo válido"),
+  servicio: z.string().min(1, "Selecciona una opción"),
+  tipoServicio: z.string().min(1, "Selecciona un tipo de servicio"),
+  message: z.string().min(1, "El mensaje no puede estar vacío"),
+});
+
 const ContactoPage = () => {
   const [serviceTipe, setServiceTipe] = useState<string>("lawyer");
 
@@ -11,63 +41,170 @@ const ContactoPage = () => {
     setServiceTipe(newType);
   };
 
+  const form = useForm({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      name: "",
+      email: "",
+      servicio: "",
+      tipoServicio: "",
+      message: "",
+    },
+  });
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
   return (
     <div>
       <Header serviceTipe={serviceTipe} updateServiceTipe={updateServiceTipe} />
-      <div className="p-8">
-        <h1 className="text-3xl lg:text-5xl text-center mb-8 font-bold">
-          Contáctanos
-        </h1>
-        <form className="max-w-[600px] mx-auto space-y-6">
-          <div>
-            <label htmlFor="name" className="block text-lg font-medium">
-              Nombre
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Tu nombre completo"
-              className="w-full border border-gray-300 rounded-lg p-3 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
+      <div className="lg:flex p-4 max-w-[1250px] mx-auto gap-8">
+        <div className="flex-1 p-4 max-w-[1250px] font-tiempos mt-8">
+          <h2 className="text-6xl mb-4">
+            <i>Conversa</i> con nosotros
+          </h2>
+          <p>
+            ¿Tienes alguna pregunta o quieres saber más sobre nuestros
+            servicios? Nos encantaría ayudarte. Completa el formulario o
+            escríbenos directamente, y te responderemos lo antes posible.
+            ¡Estamos aquí para expandir tus oportunidades!
+          </p>
+          <h3 className="text-3xl mb-4 my-8">Escríbenos</h3>
+          <p>contacto@legalo.com</p>
+          <h3 className="text-3xl mb-4 my-8">Síguenos</h3>
+          <div className="flex flex-col underline gap-2">
+            <a href="#">Instagram</a>
+            <a href="#">Twitter</a>
+            <a href="#">Facebook</a>
           </div>
-          <div>
-            <label htmlFor="email" className="block text-lg font-medium">
-              Correo Electrónico
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="tucorreo@ejemplo.com"
-              className="w-full border border-gray-300 rounded-lg p-3 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="message" className="block text-lg font-medium">
-              Mensaje
-            </label>
-            <textarea
-              id="message"
-              name="message"
-              placeholder="Escribe tu mensaje aquí"
-              rows={5}
-              className="w-full border border-gray-300 rounded-lg p-3 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
-          <div className="text-center">
-            <button
-              type="submit"
-              className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition"
+        </div>
+        <div className="flex-1 p-4">
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="max-w-[600px] mx-auto space-y-6"
             >
-              Enviar
-            </button>
-          </div>
-        </form>
+              {/* Nombre */}
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Nombre</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Tu nombre completo"
+                        {...field}
+                        className="border-black rounded-[10px] focus:border-none"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Email */}
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="tucorreo@ejemplo.com"
+                        type="email"
+                        className="border-black rounded-[10px] focus:border-none"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* ¿Quieres contratar o trabajar? */}
+              <FormField
+                control={form.control}
+                name="servicio"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>¿Quieres contratar o trabajar?</FormLabel>
+                    <FormControl>
+                      <Select onValueChange={field.onChange}>
+                        <SelectTrigger className="border-black rounded-[10px] focus:border-none">
+                          <SelectValue placeholder="Seleccionar" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="contratar">Contratar</SelectItem>
+                          <SelectItem value="trabajar">Trabajar</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* ¿Qué tipo de servicio te interesa? */}
+              <FormField
+                control={form.control}
+                name="tipoServicio"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>¿Qué tipo de servicio te interesa?</FormLabel>
+                    <FormControl>
+                      <Select onValueChange={field.onChange}>
+                        <SelectTrigger className="border-black rounded-[10px] focus:border-none">
+                          <SelectValue placeholder="Seleccionar" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="laboral">
+                            Derecho laboral
+                          </SelectItem>
+                          <SelectItem value="familiar">
+                            Derecho familiar
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Mensaje */}
+              <FormField
+                control={form.control}
+                name="message"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Mensaje</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Escribe tu mensaje aquí"
+                        className="border-black rounded-[10px] focus:border-none"
+                        rows={5}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Botón */}
+              <div className="text-center">
+                <Button type="submit" className="w-full rounded-[10px]">
+                  Enviar
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </div>
       </div>
+
       <Footer />
     </div>
   );
