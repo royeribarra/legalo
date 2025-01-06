@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { abogadoService } from "@/services";
 
@@ -26,7 +26,7 @@ const EmailVerify = () => {
     }
   };
 
-  useEffect(()=> {
+  useEffect(() => {
     checkDocumentos();
   }, []);
 
@@ -72,7 +72,7 @@ const EmailVerify = () => {
           </Button>
         </div>
       ) : (
-        <div className="flex mt-[3%]  flex-col items-center gap-5 flex-auto pb-20">
+        <div className="flex mt-[3%] flex-col items-center gap-5 flex-auto pb-20">
           <Image
             src="/assets/images/img-client-verify2.jpg"
             alt="img-wireframe"
@@ -94,4 +94,12 @@ const EmailVerify = () => {
   );
 };
 
-export default EmailVerify;
+const WrappedEmailVerify = () => {
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <EmailVerify />
+    </Suspense>
+  );
+};
+
+export default WrappedEmailVerify;
