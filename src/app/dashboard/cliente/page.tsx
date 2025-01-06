@@ -51,14 +51,14 @@ const DashboardClientPage = () => {
 
   const menuItems = [
     { id: "abogados", texto: "Abogados" },
-    { id: "proyectos", texto: "Proyectos" },
+    { id: "proyectos", texto: "Encargos" },
   ];
 
   const subMenuItems = [
     { id: "ofertas-activas", texto: "Ofertas Activas" },
     { id: "ofertas-por-aceptar", texto: "Ofertas con aplicación" },
-    { id: "trabajos-activos", texto: "Trabajos activos" },
-    { id: "trabajos-finalizados", texto: "Trabajos finalizados" },
+    // { id: "trabajos-activos", texto: "Trabajos activos" },
+    // { id: "trabajos-finalizados", texto: "Trabajos finalizados" },
   ];
 
   const handleFilter = () => {
@@ -330,7 +330,7 @@ const DashboardClientPage = () => {
                 )}
                 <div className="flex flex-col gap-8 flex-1 mt-12">
                   {
-                    abogadosFiltrados.map((abogado)=> 
+                    abogadosFiltrados.map((abogado)=>
                       <AbogadoResumeCard inviteProyect={inviteProyect} abogado={abogado} key={abogado.id} />
                     )
                   }
@@ -374,9 +374,9 @@ const DashboardClientPage = () => {
           )}
         </div>
       </div>
-      <ModalInviteProyect 
-        inviteProyect={inviteProyect} 
-        abogados={abogados} 
+      <ModalInviteProyect
+        inviteProyect={inviteProyect}
+        abogados={abogados}
         abogadoPrevioInvitado={abogadoPrevioInvitado}
         onModalClosed={() => setInviteProyectModal(false)}
         isOpen={inviteProyectModal}

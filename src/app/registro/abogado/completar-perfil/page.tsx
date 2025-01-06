@@ -151,8 +151,6 @@ const CompleteProfileLawyerPage: React.FC = () => {
       }
 
       if (true) {
-        
-
         const experiencias = stateAbogado.experiencias.map((experiencia: IExperiencia) => ({
           institucion: experiencia.empresa,
           fecha_fin: experiencia.hasta_fecha,
@@ -200,7 +198,8 @@ const CompleteProfileLawyerPage: React.FC = () => {
           .then(data => {
             if(data.state){
               localStorage.clear();
-              router.push("/registro/abogado/email-verify")
+              router.push(`/registro/abogado/email-verify?correo=${encodeURIComponent(stateAbogado.email)}`);
+              // router.push("/registro/abogado/email-verify")
             }else{
               showToast(
                 "error",
@@ -267,12 +266,12 @@ const CompleteProfileLawyerPage: React.FC = () => {
       if (!base64.includes(",")) {
         throw new Error("La cadena base64 no tiene el formato esperado.");
       }
-  
+
       const base64Content = base64.split(",")[1];
       if (!base64Content) {
         throw new Error("Contenido base64 no encontrado después de ','");
       }
-  
+
       const byteCharacters = atob(base64Content);
       const byteNumbers = new Array(byteCharacters.length);
       for (let i = 0; i < byteCharacters.length; i++) {
@@ -285,7 +284,6 @@ const CompleteProfileLawyerPage: React.FC = () => {
       throw error; // Opcional: lanzar el error para manejarlo en la llamada
     }
   }
-  
 
   const enviarArchivo = async (archivo: IArchivo, dni: string, correo: string, nombreArchivo: string, url: string) => {
     const archivoBlob = base64ToBlob(archivo.contenido, archivo.tipo);
@@ -294,17 +292,17 @@ const CompleteProfileLawyerPage: React.FC = () => {
     formData.append("file", archivoBlob, archivo.nombre);
     formData.append("dni", dni);
     formData.append("correo", correo);
-  
+
     try {
       const response = await fetch(url, {
         method: "POST",
         body: formData,
       });
-  
+
       if (!response.ok) {
         throw new Error(`Error en la petición: ${response.statusText}`);
       }
-  
+
       const data = await response.json();
       console.log("Archivo enviado correctamente", data);
     } catch (error) {

@@ -20,4 +20,8 @@ export default class AbogadoService extends MainService {
   public async rechazarSolicitud(solicitudId: string): Promise<any> {
     return this.post(`/rechazar-solicitud/${solicitudId}`);
   }
+
+  public async updateLinkDocumentos(correo: string): Promise<any>{
+    return this.post(`/update-archivos`, { correo });
+  }
 }

@@ -3,14 +3,38 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { abogadoService } from "@/services";
 
 const EmailVerify = () => {
-  const [showStep, setshowStep] = useState(true);
+  const [showStep, setShowStep] = useState(true);
+  const searchParams = useSearchParams(); // Accede a los parámetros de búsqueda
+  const correo = searchParams.get("correo"); // Obtén el valor de "correo"
+
+  const checkDocumentos = async () => {
+    if (correo) {
+      try {
+        const response = await abogadoService.updateLinkDocumentos(correo);
+        console.log("Respuesta del servidor:", response);
+        // Maneja la respuesta según sea necesario
+      } catch (error) {
+        console.error("Error al verificar el correo:", error);
+      }
+    } else {
+      console.error("No se proporcionó un correo en los parámetros de la URL.");
+    }
+  };
+
+  useEffect(()=> {
+    checkDocumentos();
+  }, []);
 
   return (
     <div
-      className={` h-screen flex flex-col p-4 ${showStep !== true ? "bg-lg-client " : ""}`}
+      className={`h-screen flex flex-col p-4 ${
+        showStep !== true ? "bg-lg-client " : ""
+      }`}
     >
       <header className="container mx-auto px-4 lg:px-8 flex justify-between items-center align h-[72px] min-h-[60px]">
         <Link href="/">
@@ -38,7 +62,10 @@ const EmailVerify = () => {
             No olvides revisar tu carpeta de correo no deseado y otras bandejas
           </p>
           <Button
-            onClick={() => setshowStep(false)}
+            onClick={() => {
+              checkDocumentos(); // Llama a la función al hacer clic
+              setShowStep(false);
+            }}
             className="mt-4 rounded-[10px] h-12 px-6 text-base"
           >
             Enviar de nuevo

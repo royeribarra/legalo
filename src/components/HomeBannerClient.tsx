@@ -148,6 +148,7 @@ const HomeBannerClient = () => {
   };
 
   const searchAbogado = () => {
+    console.log(searchQuery)
     if (searchQuery.trim() !== "") {
       // Navega a la ruta con el query param
       router.push(`/busqueda?query=${encodeURIComponent(searchQuery)}`);

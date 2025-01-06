@@ -23,6 +23,7 @@ import ResumeProyect from "@/components/dashboard/ResumeProyect";
 import { IOfertaBack } from "@/interfaces/Oferta.interface";
 import { ofertaservice } from "@/services";
 import { useDashboardCliente } from "@/contexts/dashboardClienteContext";
+import { useSearchParams } from "next/navigation";
 
 function BusquedaOferta(){
     const { state } = useDashboardCliente();
@@ -32,6 +33,7 @@ function BusquedaOferta(){
     const [filtroServicio, setFiltroServicio] = useState<number | null>(null);
     const [filtroEspecialidad, setFiltroEspecialidad] = useState<number | null>(null);
     const [filtroIndustria, setFiltroIndustria] = useState<number | null>(null);
+    const searchParams = useSearchParams();
 
     const handleFilter = () => {
         setOpenFilter(!openFilter);
@@ -51,7 +53,7 @@ function BusquedaOferta(){
           console.error("Error al obtener el detalle:", error);
         }
       }
-    
+
     useEffect(()=> {
         fetchOfertas();
     }, []);
@@ -60,17 +62,17 @@ function BusquedaOferta(){
         setFiltroServicio(Number(newValue));
         filtrarOfertas(filtroEspecialidad, Number(newValue), filtroIndustria);
     };
-    
+
     const handleEspecialidadChange = (selectedValue: string) => {
         setFiltroEspecialidad(Number(selectedValue));
         filtrarOfertas(Number(selectedValue), filtroServicio, filtroIndustria);
     };
-    
+
     const handleIndustriaChange = (selectedValue: string) => {
         setFiltroIndustria(Number(selectedValue));
         filtrarOfertas(filtroEspecialidad, filtroServicio, Number(selectedValue));
     };
-    
+
     const filtrarOfertas = (especialidadId: number | null, servicioId: number | null, industriaId: number | null ) => {
         let filtrados = ofertas;
         if (especialidadId) {
@@ -80,7 +82,7 @@ function BusquedaOferta(){
             )
           );
         }
-    
+
         if (servicioId) {
           filtrados = filtrados.filter((oferta) =>
             oferta.serviciosOferta.some(
@@ -88,7 +90,7 @@ function BusquedaOferta(){
             )
           );
         }
-    
+
         if (industriaId) {
           filtrados = filtrados.filter((oferta) =>
             oferta.industriasOferta.some(
@@ -98,6 +100,28 @@ function BusquedaOferta(){
         }
         setOfertasFiltrados(filtrados);
     };
+
+    const filtrarOfertaPorTexto = (texto: string) => {
+      const filtrados = ofertas.filter((oferta) =>
+        oferta.especialidadesOferta.some((especialidad) =>
+          especialidad.especialidad.nombre.toLowerCase().includes(texto)
+        ) ||
+        oferta.serviciosOferta.some((servicio) =>
+          servicio.servicio.nombre.toLowerCase().includes(texto)
+        ) ||
+        oferta.industriasOferta.some((industria) =>
+          industria.industria.nombre.toLowerCase().includes(texto)
+        )
+      );
+      setOfertasFiltrados(filtrados);
+    };
+
+    useEffect(() => {
+    const searchParam = searchParams.get("query");
+      if (searchParam) {
+          filtrarOfertaPorTexto(searchParam.toLowerCase());
+      }
+    }, [searchParams, ofertas, state.especialidades, state.industrias, state.servicios]);
 
     return(
         <div className="mt-8">
@@ -147,8 +171,8 @@ function BusquedaOferta(){
                                 </SelectTrigger>
                                 <SelectContent>
                                     {
-                                    state.especialidades.map((especialidad)=>
-                                        <SelectItem value={`${especialidad.id}`}>{especialidad.nombre}</SelectItem>
+                                    state.especialidades.map((especialidad, index)=>
+                                        <SelectItem value={`${especialidad.id}`} key={index}>{especialidad.nombre}</SelectItem>
                                     )
                                     }
                                 </SelectContent>
@@ -164,8 +188,8 @@ function BusquedaOferta(){
                                 </SelectTrigger>
                                 <SelectContent>
                                     {
-                                    state.industrias.map((industria)=>
-                                        <SelectItem value={`${industria.id}`}>{industria.nombre}</SelectItem>
+                                    state.industrias.map((industria, index)=>
+                                        <SelectItem value={`${industria.id}`} key={index}>{industria.nombre}</SelectItem>
                                     )
                                     }
                                 </SelectContent>
@@ -197,8 +221,8 @@ function BusquedaOferta(){
 
                 <div className="flex flex-col gap-8 flex-1">
                     {
-                        ofertasFiltrados.map((oferta)=>
-                            <ResumeProyect oferta={oferta} inviteProyect={inviteProyect} />
+                        ofertasFiltrados.map((oferta, index)=>
+                            <ResumeProyect oferta={oferta} inviteProyect={inviteProyect} key={index} />
                         )
                     }
                 </div>

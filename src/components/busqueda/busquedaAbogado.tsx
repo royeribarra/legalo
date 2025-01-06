@@ -47,7 +47,6 @@ function BusquedaAbogado(){
       const data = await abogadoService.obtenerTodos();
       setAbogados(data);
       setAbogadosFiltrados(data)
-      console.log(data)
     } catch (error) {
       console.error("Error al obtener el detalle:", error);
     }
@@ -105,10 +104,15 @@ function BusquedaAbogado(){
   };
 
   const filtrarAbogadosPorTexto = (texto: string) => {
-    console.log(texto)
     const filtrados = abogados.filter((abogado) =>
       abogado.especialidadesAbogado.some((especialidad) =>
         especialidad.especialidad.nombre.toLowerCase().includes(texto)
+      ) ||
+      abogado.serviciosAbogado.some((servicio) =>
+        servicio.servicio.nombre.toLowerCase().includes(texto)
+      ) ||
+      abogado.industriasAbogado.some((industria) =>
+        industria.industria.nombre.toLowerCase().includes(texto)
       )
     );
     setAbogadosFiltrados(filtrados);
@@ -117,9 +121,9 @@ function BusquedaAbogado(){
   useEffect(() => {
     const searchParam = searchParams.get("query");
     if (searchParam) {
-        filtrarAbogadosPorTexto(searchParam.toLowerCase());
+      filtrarAbogadosPorTexto(searchParam.toLowerCase());
     }
-  }, [searchParams, abogados, state.especialidades]);
+  }, [searchParams, abogados, state.especialidades, state.industrias, state.servicios]);
 
   return(
     <>
@@ -226,8 +230,8 @@ function BusquedaAbogado(){
           )}
           <div className="flex flex-col gap-8 flex-1 mt-12">
           {
-              abogadosFiltrados.map((abogado)=> 
-              <AbogadoResumeCard inviteProyect={inviteProyect} abogado={abogado} />
+              abogadosFiltrados.map((abogado, index)=>
+              <AbogadoResumeCard inviteProyect={inviteProyect} abogado={abogado} key={index} />
               )
           }
           </div>

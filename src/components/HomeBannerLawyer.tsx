@@ -36,6 +36,7 @@ import { useRouter } from "next/navigation";
 const HomeBannerClient = () => {
   const router = useRouter();
   const [isImageOne, setIsImageOne] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -157,9 +158,15 @@ const HomeBannerClient = () => {
     },
   ];
 
-  const searchAbogado = () => {
-    console.log("cambiando de ruta")
-    router.push("/busqueda");
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchQuery(e.target.value); // Actualiza el estado con el valor del input
+    };
+
+  const searchOferta = () => {
+    if (searchQuery.trim() !== "") {
+      // Navega a la ruta con el query param
+      router.push(`/busqueda?query=${encodeURIComponent(searchQuery)}`);
+    }
   };
 
   return (
@@ -174,13 +181,20 @@ const HomeBannerClient = () => {
             <div className="w-full flex gap-4 relative">
               <Input
                 placeholder="Ejemplo Abogado, Minería, etc."
+                value={searchQuery}
+                onChange={handleInputChange}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    searchOferta();
+                  }
+                }}
                 className="rounded-[30px] border border-black px-[30px] py-[12px] focus-visible:border-none h-12"
               />
               <Button
                 variant="outline"
                 size="icon"
                 className="rounded-full bg-black hover:bg-slate-800 w-[62px] lg:w-[53px] h-12"
-                onClick={searchAbogado}
+                onClick={searchOferta}
               >
                 <Search className="h-6 w-6 text-white" />
               </Button>

@@ -108,7 +108,7 @@ function Ofertas() {
       dataIndex: 'cliente',
       key: 'cliente',
       render: (cliente: IClienteBack) => (
-        <p>{cliente.nombres + '-' + cliente.razon_social}</p>
+        <p>{cliente?.nombres + '-' + cliente?.razon_social}</p>
       )
     },
     {
@@ -119,7 +119,7 @@ function Ofertas() {
         <Space>
           {aplicaciones.map((aplicacion, idx) => (
             <Tag color="blue" key={idx}>
-              {aplicacion.abogado.nombres}
+              {aplicacion?.abogado?.nombres}
             </Tag>
           ))}
         </Space>
@@ -156,7 +156,7 @@ function Ofertas() {
       render: (industriasOferta: IIndustriaOferta[]) => (
         <div>
           {industriasOferta.map((industria)=>
-            <p>{industria.industria.nombre}</p>
+            <p key={industria.id}>{industria.industria.nombre}</p>
           )}
         </div>
       ),

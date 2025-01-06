@@ -8,8 +8,11 @@ import { abogadoService, clienteService, ofertaservice } from '@/services';
 import { IClienteBack } from '@/interfaces/Cliente.interface';
 import { IAplicacionBack } from '@/interfaces/Aplicacion.interface';
 import { IOfertaBack } from '@/interfaces/Oferta.interface';
-import { IIndustriaOferta } from '@/interfaces/Industria.interface';
+import { IIndustriaAbogado, IIndustriaOferta } from '@/interfaces/Industria.interface';
 import { IAbogadoBack } from '@/interfaces/Abogado.interface';
+import { IEspecialidadAbogado } from '@/interfaces/Especialidad.interface';
+import { IServicioAbogado } from '@/interfaces/Servicio.interface';
+import Link from 'next/link';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -123,6 +126,58 @@ function Abogados() {
         <p>{telefono}</p>
       )
     },
+    {
+      title: 'Especialidades',
+      dataIndex: 'especialidadesAbogado',
+      key: 'especialidades',
+      render: (especialidades: IEspecialidadAbogado[]) => (
+        <div>
+          {
+            especialidades.map((especialidad)=>
+              <p>{especialidad.especialidad.nombre}</p>
+            )
+          }
+        </div>
+      )
+    },
+    {
+      title: 'Servicios',
+      dataIndex: 'serviciosAbogado',
+      key: 'servicios',
+      render: (servicios: IServicioAbogado[]) => (
+        <div>
+          {
+            servicios.map((servicio)=>
+              <p>{servicio.servicio.nombre}</p>
+            )
+          }
+        </div>
+      )
+    },
+    {
+      title: 'Industrias',
+      dataIndex: 'industriasAbogado',
+      key: 'industrias',
+      render: (industrias: IIndustriaAbogado[]) => (
+        <div>
+          {
+            industrias.map((industria)=>
+              <p>{industria.industria.nombre}</p>
+            )
+          }
+        </div>
+      )
+    },
+    {
+      title: 'Imagen',
+      dataIndex: 'foto_url',
+      key: 'foto_url',
+      render: (foto_url: string) =>  (
+        <Link href={`${process.env.BASE_APP_URL}/public/uploads/33441231-1736132577127.png`} target='_blank'>
+          <Button>Ver</Button>
+        </Link>
+      )
+    }
   ];
 
   return (
@@ -177,7 +232,7 @@ function Abogados() {
         columns={columns}
         dataSource={filteredData}
         rowKey="key"
-        pagination={{ pageSize: 5 }}
+        pagination={{ pageSize: 10 }}
         bordered
       />
     </div>
