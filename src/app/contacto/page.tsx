@@ -52,8 +52,8 @@ const ContactoPage = () => {
     },
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = () => {
+    // console.log(data);
   };
 
   return (
