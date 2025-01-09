@@ -5,7 +5,7 @@ import Link from "next/link";
 import { IOfertaBack } from "@/interfaces/Oferta.interface";
 
 interface ProyectProps {
-  inviteProyect: () => void;
+  inviteProyect: (ofertaId: number) => void;
   oferta: IOfertaBack
 }
 

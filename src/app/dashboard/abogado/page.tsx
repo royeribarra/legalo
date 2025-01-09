@@ -260,6 +260,13 @@ const DashboardLawyerPage = () => {
                 <ResumeProyect />
                 <ResumeProyect /> */}
               </div>
+              <div className="flex flex-col gap-8 flex-1 mt-12">
+                  {
+                    ofertasFiltradas.map((oferta)=>
+                      <ResumeProyect oferta={oferta} inviteProyect={inviteProyect} />
+                    )
+                  }
+                </div>
             </div>
           </div>
         )}

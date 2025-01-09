@@ -173,7 +173,7 @@ function Abogados() {
       dataIndex: 'foto_url',
       key: 'foto_url',
       render: (foto_url: string) =>  (
-        <Link href={`${process.env.BASE_APP_URL}/public/uploads/33441231-1736132577127.png`} target='_blank'>
+        <Link href={`${process.env.S3_FILE_ROUTE}/${foto_url}`} target='_blank'>
           <Button>Ver</Button>
         </Link>
       )
