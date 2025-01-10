@@ -54,7 +54,7 @@ const AbogadoResumeCard = ({ inviteProyect, abogado }: InviteProyectProps) => {
           />
           <div>
             <p className="text-2xl font-bold">{abogado.nombres + '-' + abogado.apellidos}</p>
-            <p>{abogado.industriasAbogado[0]?.industria.nombre}</p>
+            <p>{abogado.serviciosAbogado[0]?.servicio.nombre}</p>
             <p>{abogado.direccion}</p>
           </div>
         </div>

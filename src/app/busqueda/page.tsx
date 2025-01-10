@@ -2,7 +2,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { Search as IcoSearch } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
+import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 
 import { Label as LabelCn } from "@/components/ui/label";
@@ -38,7 +38,7 @@ import BusquedaAbogado from "@/components/busqueda/busquedaAbogado";
 
 const DashboardClientPage = () => {
   const [serviceTipe, setServiceTipe] = useState<string>("client");
-
+  const [searchQuery, setSearchQuery] = useState("");
   const updateServiceTipe = (newType: string) => {
     console.log(newType)
     setServiceTipe(newType);
@@ -95,6 +95,14 @@ const DashboardClientPage = () => {
     fetchAbogados();
   }, []);
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const searchAbogado = () => {
+    console.log(searchQuery)
+  };
+
   return (
     <div>
       <Header serviceTipe={serviceTipe} updateServiceTipe={updateServiceTipe} />
@@ -104,7 +112,29 @@ const DashboardClientPage = () => {
             <p className="pb-2">Búsqueda por palabra clave</p>
             <div className="flex items-center gap-4 border border-black rounded-full h-12 px-4 lg:w-[553px]">
               <IcoSearch size={24} />
-              <input type="text" placeholder="Escribe..." className="" />
+              <input
+                type="text"
+                placeholder="Escribe..."
+                className=""
+                value={searchQuery}
+                onChange={handleInputChange}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    searchAbogado();
+                  }
+                }}
+              />
+              {/* <Input
+                placeholder="Ejemplo Abogado, Minería, etc."
+                value={searchQuery}
+                onChange={handleInputChange}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    searchAbogado();
+                  }
+                }}
+                className="rounded-[30px] border border-black px-[30px] py-[12px] focus-visible:border-none h-12"
+              /> */}
             </div>
           </div>
           {/* <InfoNominations /> */}
@@ -124,7 +154,7 @@ const DashboardClientPage = () => {
           </div>
           <div>
             <Suspense fallback={<div>Loading...</div>}>
-              {menuActive === "talentos" && <BusquedaAbogado />}
+              {menuActive === "talentos" && <BusquedaAbogado searchButton={searchQuery} />}
             </Suspense>
             {menuActive === "oportunidades" && (
               <BusquedaOferta></BusquedaOferta>

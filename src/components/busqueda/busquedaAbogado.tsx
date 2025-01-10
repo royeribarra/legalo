@@ -24,7 +24,7 @@ import AbogadoResumeCard from "@/components/dashboard/AbogadoResumeCard";
 import { abogadoService } from "@/services";
 import { useSearchParams } from "next/navigation";
 
-function BusquedaAbogado(){
+function BusquedaAbogado({searchButton}: {searchButton: string}){
   const { state } = useDashboardCliente();
   const [abogados, setAbogados] = useState<IAbogadoBack[]>([]);
   const [abogadosFiltrados, setAbogadosFiltrados] = useState<IAbogadoBack[]>([]);
@@ -124,6 +124,12 @@ function BusquedaAbogado(){
       filtrarAbogadosPorTexto(searchParam.toLowerCase());
     }
   }, [searchParams, abogados, state.especialidades, state.industrias, state.servicios]);
+
+  useEffect(() => {
+    if (searchButton) {
+      filtrarAbogadosPorTexto(searchButton.toLowerCase());
+    }
+  }, [searchButton]);
 
   return(
     <>
