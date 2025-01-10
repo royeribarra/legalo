@@ -12,12 +12,19 @@ const Header: React.FC<HeaderProps> = ({ serviceTipe, updateServiceTipe }) => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
+    let timer: NodeJS.Timeout;
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50); // Cambia el valor según el umbral de scroll deseado
+      if (timer) clearTimeout(timer); // Limpiar el temporizador previo
+      timer = setTimeout(() => {
+        setIsScrolled(window.scrollY > 50); // Actualizar el estado tras el debounce
+      }, 100); // Ajusta este valor según tus necesidades (en ms)
     };
 
     window.addEventListener("scroll", handleScroll);
+
     return () => {
+      if (timer) clearTimeout(timer);
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
