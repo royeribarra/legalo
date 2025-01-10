@@ -177,6 +177,26 @@ function Abogados() {
           <Button>Ver</Button>
         </Link>
       )
+    },
+    {
+      title: 'CV',
+      dataIndex: 'cv_url',
+      key: 'cv_url',
+      render: (cv_url: string) =>  (
+        <Link href={`${process.env.S3_FILE_ROUTE}/${cv_url}`} target='_blank'>
+          <Button>Ver</Button>
+        </Link>
+      )
+    },
+    {
+      title: 'CUL',
+      dataIndex: 'cul_url',
+      key: 'cul_url',
+      render: (cul_url: string) =>  (
+        <Link href={`${process.env.S3_FILE_ROUTE}/${cul_url}`} target='_blank'>
+          <Button>Ver</Button>
+        </Link>
+      )
     }
   ];
 
