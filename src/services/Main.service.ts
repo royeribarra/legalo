@@ -45,4 +45,17 @@ export class MainService {
     );
     return response.data;
   }
+
+  protected async put<T = unknown>(
+    endpoint: string,
+    data?: Record<string, any>,
+    headers?: Record<string, string>
+  ): Promise<T> {
+    const response = await axios.put<T>(
+      `${this.url}${endpoint}`,
+      data,
+      headers ? { ...this.options, headers } : this.options
+    );
+    return response.data;
+  }
 }

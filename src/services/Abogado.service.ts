@@ -24,4 +24,8 @@ export default class AbogadoService extends MainService {
   public async updateLinkDocumentos(correo: string): Promise<any>{
     return this.post(`/update-archivos`, { correo });
   }
+
+  public async updateStateAdmin(id: number, nuevoEstado: boolean) : Promise<any>{
+    return this.put(`/edit/${id}`, { validado_admin: nuevoEstado });
+  }
 }

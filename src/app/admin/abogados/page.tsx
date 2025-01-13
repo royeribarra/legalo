@@ -89,13 +89,14 @@ function Abogados() {
   };
 
   async function fetchOfertas() {
-      try {
-        const data = await abogadoService.obtenerTodos();
-        setFilteredData(data);
-      } catch (error) {
-        console.error("Error al obtener las ofertas:", error);
-      }
+    try {
+      const params = { validado_admin: true };
+      const data = await abogadoService.obtenerTodos(params);
+      setFilteredData(data);
+    } catch (error) {
+      console.error("Error al obtener las ofertas:", error);
     }
+  }
 
   useEffect(()=> {
     fetchOfertas();
@@ -134,7 +135,7 @@ function Abogados() {
         <div>
           {
             especialidades.map((especialidad)=>
-              <p>{especialidad.especialidad.nombre}</p>
+              <p key={especialidad.id}>{especialidad.especialidad.nombre}</p>
             )
           }
         </div>
@@ -197,7 +198,29 @@ function Abogados() {
           <Button>Ver</Button>
         </Link>
       )
-    }
+    },
+    {
+      title: 'Estado',
+      dataIndex: 'validado_admin',
+      key: 'validado_admin',
+      render: (validado: boolean, record: IAbogadoBack) => (
+        <Button
+          type="primary"
+          danger={!validado}
+          onClick={async () => {
+            try {
+              const nuevoEstado = !validado;
+              await abogadoService.updateStateAdmin(record.id, nuevoEstado);
+              record.validado_admin = nuevoEstado; // Actualiza el estado local si es necesario.
+            } catch (error) {
+              console.error('Error al actualizar el estado:', error);
+            }
+          }}
+        >
+          {validado ? 'Activado' : 'Desactivado'}
+        </Button>
+      ),
+    },
   ];
 
   return (

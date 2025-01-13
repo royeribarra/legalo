@@ -44,7 +44,8 @@ function BusquedaAbogado({searchButton}: {searchButton: string}){
 
   async function fetchAbogados() {
     try {
-      const data = await abogadoService.obtenerTodos();
+      const params = { validado_admin: true };
+      const data = await abogadoService.obtenerTodos(params);
       setAbogados(data);
       setAbogadosFiltrados(data)
     } catch (error) {
@@ -234,12 +235,16 @@ function BusquedaAbogado({searchButton}: {searchButton: string}){
               </div>
           </div>
           )}
-          <div className="flex flex-col gap-8 flex-1 mt-12">
-          {
-              abogadosFiltrados.map((abogado, index)=>
-              <AbogadoResumeCard inviteProyect={inviteProyect} abogado={abogado} key={index} />
-              )
-          }
+           <div className="flex flex-col gap-8 flex-1 mt-12">
+            {abogadosFiltrados.length === 0 ? (
+              <div className="text-center text-lg font-light text-gray-600">
+                No se encontró ningún abogado con el filtro seleccionado.
+              </div>
+            ) : (
+              abogadosFiltrados.map((abogado, index) => (
+                <AbogadoResumeCard inviteProyect={inviteProyect} abogado={abogado} key={index} />
+              ))
+            )}
           </div>
       </div>
     </>

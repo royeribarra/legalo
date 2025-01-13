@@ -21,7 +21,6 @@ export interface IPregunta {
 
 const PublicarPageEight = () => {
   const router = useRouter();
-  console.log(router)
   const { state, updateState } = useOferta();
   const { token } = useAuth();
   const [items, setItems] = useState<IPregunta[]>([]);
@@ -101,7 +100,6 @@ const PublicarPageEight = () => {
 
     if (state.documento && token) {
       const url = `${process.env.BASE_APP_API_URL}/temp-files/upload-oferta-documento`;
-      console.log(token.cliente.id)
       enviarArchivo(state.documento, token.cliente.id, token.correo, "oferta_documento", url);
     }
 
@@ -121,47 +119,6 @@ const PublicarPageEight = () => {
       })
       .catch((err) => console.log(err));
   };
-
-  // const enviarOferta = async () => {
-  //   const formData = new FormData();
-  
-  //   // Agregar las propiedades al FormData.
-  //   formData.append('clienteId', JSON.stringify(token?.id));
-  //   formData.append('descripcion', state.descripcion);
-  //   formData.append('duracion', state.duracion);
-  //   formData.append('nivelExperiencia', state.nivelExperiencia);
-  //   formData.append('titulo', state.titulo);
-  //   formData.append('uso', state.uso);
-  //   formData.append('presupuesto', JSON.stringify(state.presupuesto));
-  
-  //   // Agregar listas como JSON.
-  //   formData.append('servicios', JSON.stringify(state.servicios));
-  //   formData.append('especialidades', JSON.stringify(state.especialidades));
-  //   formData.append('preguntas', JSON.stringify(state.preguntas));
-  
-  //   // Agregar el archivo si existe.
-  //   if (state.documento) {
-  //     const archivoBlob = base64ToBlob(state.documento.contenido, state.documento.tipo);
-  //     formData.append("file", archivoBlob);
-  //   }
-  
-  //   // Enviar la solicitud con fetch o Axios.
-  //   try {
-  //     const response = await fetch(`${process.env.BASE_APP_API_URL}/ofertas/create`, {
-  //       method: 'POST',
-  //       body: formData,
-  //     });
-  
-  //     if (!response.ok) {
-  //       throw new Error('Error al enviar la oferta');
-  //     }
-  
-  //     const resultado = await response.json();
-  //     console.log('Oferta enviada con éxito:', resultado);
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //   }
-  // };
 
   const enviarArchivo = async (
     archivo: IArchivo,
@@ -211,21 +168,22 @@ const PublicarPageEight = () => {
       </div>
       <h1 className="text-[36px] my-4 font-nimbus">Preguntas de selección (opcional)</h1>
       <p>Esto te ayudará a identificar al candidato ideal.</p>
-      <Button
-        variant="outline"
-        className="my-8"
-        onClick={addItem}
-        disabled={items.length >= 5}
-      >
-        <Plus size={16} />
-        Escribe tus preguntas
-      </Button>
-      <Input
-        value={input}
-        onChange={onChangeInput}
-        placeholder="Escribe aquí..."
-        className="w-full"
-      />
+      <div className="flex gap-4 items-center my-8">
+        <Input
+          value={input}
+          onChange={onChangeInput}
+          placeholder="Escribe aquí..."
+          className="flex-grow"
+        />
+        <Button
+          variant="outline"
+          className="flex items-center"
+          onClick={addItem}
+          disabled={items.length >= 5}
+        >
+          <Plus size={16} />
+        </Button>
+      </div>
       <h2 className="text-lg font-bold my-4">Sugerencias</h2>
       {suggestions.map((suggestion) => (
         <div key={suggestion.id} className="flex gap-4 items-center">
@@ -258,16 +216,17 @@ const PublicarPageEight = () => {
         </Link>
 
         <Button
-          className="h-12 px-10 px-text-base rounded-[10px]"
+          className="h-12 px-10 text-base rounded-[10px]"
           onClick={handleSubmit}
         >
           Publicar <ArrowRight className="ml-2" />
         </Button>
       </div>
-      {
-        showModalCrearProyectoOk &&
-          <ModalCrearProyectoOk handleModalCrearProyectoOk={handleModalCrearProyectoOk}></ModalCrearProyectoOk>
-      }
+      {showModalCrearProyectoOk && (
+        <ModalCrearProyectoOk
+          handleModalCrearProyectoOk={handleModalCrearProyectoOk}
+        />
+      )}
     </div>
   );
 };

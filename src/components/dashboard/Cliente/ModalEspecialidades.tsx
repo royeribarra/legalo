@@ -35,7 +35,7 @@ const ModalEspecialidades: React.FC<ModalProps> = ({ isOpen, onClose, title, con
             </div>
           ))}
         </div>
-        <p className="font-semibold">Estamos listos para ayudarte:</p>
+        <p className="font-semibold pt-5">Estamos listos para ayudarte:</p>
         <p className="font-semibold">Si tienes alguna duda o necesitas ayuda, contáctanos por:</p>
         <Link href={`https://wa.me/${whatsappNumber}`} passHref target="_blank">
           <div className="flex items-center space-x-2">
