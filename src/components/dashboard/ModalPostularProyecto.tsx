@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 
 import { X as IconX, User } from "lucide-react";
 import { ChevronRight } from "lucide-react";
@@ -28,22 +28,128 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { abogadoService } from "@/services";
+import { useAuth } from "@/contexts/authContext";
+import { handleFileUpload } from "utils/uploadFile";
+import { Eye, Trash } from "lucide-react"; 
+import { IOfertaBack } from "@/interfaces/Oferta.interface";
 
 interface ModalPostularProyectoProps {
   handleModalPostular: () => void;
   handleModalPostularOk: () => void;
+  proyectoId: number;
+  oferta: IOfertaBack;
 }
+
+const steps = ["step1", "step2", "step3", "step4"];
 
 const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
   handleModalPostular,
   handleModalPostularOk,
+  proyectoId,
+  oferta
 }) => {
+  
+  const { token, userRole } = useAuth();
+  const [step, setStep] = useState("step1");
+  const [precio, setPrecio] = useState<number>(0); // Precio ingresado por el usuario
+  const [comision, setComision] = useState<number>(0); // 20% del precio
+  const [totalRecibido, setTotalRecibido] = useState<number>(0); 
+  const nextStep = async () => {
+    console.log(step)
+    if(step === "step4"){
+      enviarPostulacion();
+      return;
+    }
+
+    const currentIndex = steps.indexOf(step);
+    if (currentIndex < steps.length - 1) {
+      setStep(steps[currentIndex + 1]);
+    }
+  };
+
+  const prevStep = () => {
+    const currentIndex = steps.indexOf(step);
+    if (currentIndex > 0) {
+      setStep(steps[currentIndex - 1]);
+    }
+  };
+
+  const enviarPostulacion = async () => {
+    if(token?.abogado?.id){
+      const postulacion = await abogadoService.postularOferta(token?.abogado?.id, Number(proyectoId));
+      console.log(postulacion)
+    }
+  };
+
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [uploadedFile, setUploadedFile] = useState<{ nombre: string; tipo: string; contenido: string } | null>(null);
+  const [uploadedVideo, setUploadedVideo] = useState<{
+    nombre: string;
+    tipo: string;
+    contenido: string;
+  } | null>(null);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    handleFileUpload(
+      event,
+      (fileData) => {
+        setUploadedFile({
+          nombre: fileData.name,       // Cambié 'name' a 'nombre'
+          tipo: fileData.type,         // Cambié 'type' a 'tipo'
+          contenido: fileData.content, // Cambié 'content' a 'contenido'
+        });
+      },
+      ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"], // DOC, DOCX, PDF
+      2 * 1024 * 1024 // Tamaño máximo: 2 MB
+    );
+  };
+
+  const handleClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleRemoveFile = () => {
+    setUploadedFile(null); // Eliminar el archivo subido
+  };
+
+  const handleVideoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    handleFileUpload(
+      event,
+      (fileData) => {
+        // Guardamos el archivo en el estado con el formato adecuado.
+        setUploadedVideo({
+          nombre: fileData.name,
+          tipo: fileData.type,
+          contenido: fileData.content
+        });
+      },
+      ["video/mp4", "video/avi", "video/mov"], // Tipos permitidos de video
+      10 * 1024 * 1024 // Tamaño máximo: 10 MB
+    );
+  };
+
+  const handlePrecioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newPrecio = parseFloat(event.target.value.replace(/[^0-9.-]+/g, "")); // Eliminar caracteres no numéricos
+    if (!isNaN(newPrecio)) {
+      setPrecio(newPrecio);
+      setComision(newPrecio * 0.2); // Calcular el 20%
+      setTotalRecibido(newPrecio - (newPrecio * 0.2)); // Calcular el total después de la comisión
+    } else {
+      setPrecio(0);
+      setComision(0);
+      setTotalRecibido(0);
+    }
+  };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-20 ">
       <div className="flex flex-col lg:flex-row bg-white lg:rounded-[24px] shadow-lg relative w-full h-full overflow-y-auto lg:w-[1220px] lg:max-w-[84vw] lg:h-[830px] lg:max-h-[90vh] hidde-scrollbar">
         <div className="flex-1 flex flex-col justify-between">
           <div className="px-4 lg:p-9 lg:pt-0">
-            <Tabs defaultValue="step1" className="">
+            <Tabs defaultValue="step1" className="" value={step}>
               <TabsList className="fixed bg-white px-0 pt-20 lg:pt-12 pr-6 lg:pr-2 pb-8 lg:sticky top-0 z-10 w-full justify-start overflow-x-scroll overflow-y-hidden lg:overflow-hidden">
                 <TabsTrigger
                   value="step1"
@@ -88,7 +194,7 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                       <AvatarFallback>JA</AvatarFallback>
                     </Avatar>
                     <div className="flex flex-col gap-1">
-                      <span className="font-bold text-2xl">Juan P.</span>
+                      <span className="font-bold text-2xl">{token?.abogado?.nombres}</span>
                       <span>[Abogado Laboral]</span>
                       <Button
                         variant="link"
@@ -132,55 +238,30 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                   <div className="my-2">
                     <span className="font-bold text-lg">Especialidades</span>
                     <div className="flex gap-4 flex-wrap mt-3">
-                      <Button
-                        variant="outline"
-                        className="border border-black rounded-full h-[43px]"
-                      >
-                        <Image
-                          src="/icos/ico-dash-briefcase.svg"
-                          alt=""
-                          width={24}
-                          height={24}
-                          className="mr-2"
-                        />
-                        <p>Migración laboral</p>
-                      </Button>
-                      <Button
-                        variant="outline"
-                        className="border border-black rounded-full h-[43px]"
-                      >
-                        <Image
-                          src="/icos/ico-dash-briefcase.svg"
-                          alt=""
-                          width={24}
-                          height={24}
-                          className="mr-2"
-                        />
-                        <p>Terminaciones de empleo</p>
-                      </Button>
-                      <Button
-                        variant="outline"
-                        className="border border-black rounded-full h-[43px]"
-                      >
-                        <Image
-                          src="/icos/ico-dash-briefcase.svg"
-                          alt=""
-                          width={24}
-                          height={24}
-                          className="mr-2"
-                        />
-                        <p>Arbitraje y Mediación Laboral</p>
-                      </Button>
+                      {/* {
+                        token?.abogado?.serviciosAbogado.map((servicio)=>
+                          <Button
+                            variant="outline"
+                            className="border border-black rounded-full h-[43px]"
+                          >
+                            <Image
+                              src="/icos/ico-dash-briefcase.svg"
+                              alt=""
+                              width={24}
+                              height={24}
+                              className="mr-2"
+                            />
+                            <p>{servicio.servicio.nombre}</p>
+                          </Button>
+                        )
+                      } */}
                     </div>
                   </div>
 
                   <div className="my-2">
                     <p className="font-bold text-lg mb-2">Descripción:</p>
                     <p>
-                      Experto en asesorar y representar en temas de despidos,
-                      discriminación, negociaciones colectivas y cumplimiento
-                      normativo. Comprometido con la protección de los derechos
-                      laborales y ambientes de trabajo justos.
+                      {token?.abogado?.sobre_ti}
                     </p>
                   </div>
 
@@ -196,21 +277,59 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                   </div>
                   <div className="my-2">
                     <p className="font-bold text-lg mb-4">
-                      Consideras necesario enviar algún documento extra para
-                      potenciar tu postulación?
+                      ¿Consideras necesario enviar algún documento extra para potenciar tu
+                      postulación?
                     </p>
 
-                    <div className="border border-black border-dashed p-2 flex flex-col items-center">
-                      <Image
-                        src="/assets/images/ico-upload.png"
-                        alt="ico-cv"
-                        width={64}
-                        height={64}
-                      ></Image>
-                      <p>Clic aquí o arrastra el documento a adjuntar</p>
-                      <p className="text-xs text-gray-500">
-                        DOC,DOCX,PDF(2 MB)
-                      </p>
+                    <div
+                      className="border border-black border-dashed p-2 flex flex-col items-center cursor-pointer"
+                      onClick={handleClick}
+                    >
+                      <input
+                        type="file"
+                        ref={fileInputRef}
+                        onChange={handleFileChange}
+                        className="hidden"
+                        accept=".pdf, .doc, .docx"
+                      />
+                      {uploadedFile ? (
+                        <div className="flex flex-col items-center">
+                          <Image
+                            src="/assets/images/ico-upload.png"
+                            alt="ico-cv"
+                            width={64}
+                            height={64}
+                          />
+                          <p className="mt-2 text-gray-700">{uploadedFile.nombre}</p>
+                          <div className="flex space-x-4 mt-2">
+                            {/* <button
+                              onClick={handleViewFile}
+                              className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded hover:bg-gray-100"
+                            >
+                              <Eye className="w-4 h-4" />
+                              <span>Ver Archivo</span>
+                            </button> */}
+                            <button
+                              onClick={handleRemoveFile}
+                              className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded hover:bg-gray-100"
+                            >
+                              <Trash className="w-4 h-4 text-red-500" />
+                              <span>Eliminar</span>
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <>
+                          <Image
+                            src="/assets/images/ico-upload.png"
+                            alt="ico-cv"
+                            width={64}
+                            height={64}
+                          />
+                          <p>Clic aquí o arrastra el documento a adjuntar</p>
+                          <p className="text-xs text-gray-500">DOC, DOCX, PDF (2 MB)</p>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -224,16 +343,35 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                     Graba un video de 1 minuto sobre quién eres y por qué eres
                     ideal para el puesto.
                   </p>
-                  <div className="border border-black border-dashed p-2 flex flex-col items-center">
-                    <div className="flex justify-center items-center border border-black w-16 h-16 rounded-full ">
+                  <div
+                    className="border border-black border-dashed p-2 flex flex-col items-center cursor-pointer"
+                    onClick={() => document.getElementById("videoInput")?.click()}
+                  >
+                    <input
+                      type="file"
+                      id="videoInput"
+                      className="hidden"
+                      accept="video/mp4, video/avi, video/mov"
+                      onChange={handleVideoChange}
+                    />
+                    <div className="flex justify-center items-center border border-black w-16 h-16 rounded-full">
                       <PlayIcon />
                     </div>
                     <p>Agregar un video</p>
-                    <p className="text-xs text-gray-500">DOC,DOCX,PDF(2 MB)</p>
-                    <p className="text-xs text-gray-500">
-                      formatos MP4, MOV, AVI.
-                    </p>
+                    <p className="text-xs text-gray-500">MP4, MOV, AVI (10 MB)</p>
                   </div>
+
+                  {uploadedVideo ? (
+                    <div className="mt-4">
+                      <p>{uploadedVideo.nombre}</p>
+                      <video width="300" controls>
+                        <source type={uploadedVideo.tipo} />
+                        Tu navegador no soporta la etiqueta de video.
+                      </video>
+                    </div>
+                  ) : (
+                    <p className="text-sm text-gray-500 mt-2">No se ha subido ningún video.</p>
+                  )}
                   <div>
                     <h3>Recomendaciones:</h3>
                     <ul className="list-disc  list-outside ml-5">
@@ -265,27 +403,17 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                   </h3>
                   <div>
                     <ol className="list-decimal list-inside ">
-                      <li className="my-4">
-                        Pregunta
-                        <Textarea
-                          placeholder="Tu respuesta max 500 caracteres."
-                          className="mt-2 border-black"
-                        ></Textarea>
-                      </li>
-                      <li className="my-4">
-                        Pregunta
-                        <Textarea
-                          placeholder="Tu respuesta max 500 caracteres."
-                          className="mt-2 border-black"
-                        ></Textarea>
-                      </li>
-                      <li className="my-4">
-                        Pregunta
-                        <Textarea
-                          placeholder="Tu respuesta max 500 caracteres."
-                          className="mt-2 border-black"
-                        ></Textarea>
-                      </li>
+                      {
+                        oferta.preguntas_oferta.map((pregunta)=>
+                          <li className="my-4">
+                            {pregunta.pregunta}
+                            <Textarea
+                              placeholder="Tu respuesta max 500 caracteres."
+                              className="mt-2 border-black"
+                            ></Textarea>
+                          </li>
+                        )
+                      }
                     </ol>
                   </div>
                 </div>
@@ -302,18 +430,22 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                       <input
                         type="text"
                         placeholder="1,000.00"
-                        className="flex-1 px-4 text-lg font-bold focus:outline-0 "
+                        className="flex-1 px-4 text-lg font-bold focus:outline-0"
+                        value={precio ? precio.toLocaleString() : ''}
+                        onChange={handlePrecioChange}
                       />
                       <span className="bg-[#E6E6E6] text-[#666666] w-20 h-full border-l border-black flex items-center justify-center">
                         SOLES
                       </span>
                     </div>
+                    
+                    {/* Comisión */}
                     <div className="flex items-center justify-between gap-8 py-6 border-b border-dashed border-black">
                       <div className="border-2 border-black rounded-full w-5 h-5 flex items-center justify-center">
                         <Minus size={16} />
                       </div>
                       <div>
-                        <span className="font-bold">S/200</span>
+                        <span className="font-bold">S/{comision.toLocaleString()}</span>
                       </div>
                       <div className="flex-1">
                         <p className="text-lg text-right">
@@ -321,12 +453,14 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                         </p>
                       </div>
                     </div>
+
+                    {/* Total recibido */}
                     <div className="flex items-center justify-between gap-8 py-6">
                       <div className="border-2 border-black rounded-full w-5 h-5 flex items-center justify-center">
                         <Equal size={16} />
                       </div>
                       <div>
-                        <span className="font-bold">S/800</span>
+                        <span className="font-bold">S/{totalRecibido.toLocaleString()}</span>
                       </div>
                       <div className="flex-1">
                         <p className="text-lg text-right">
@@ -334,6 +468,8 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                         </p>
                       </div>
                     </div>
+
+                    {/* Información adicional */}
                     <div className="text-[#61646B] flex items-center gap-2 text-sm">
                       <IcoInfo size={16} /> La cantidad total de tu cotización
                       la recibirás al finalizar el proyecto.
@@ -394,12 +530,13 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
           <div className="fixed lg:sticky  w-full bg-lg-lawyer h-20 flex justify-between items-center px-4 lg:px-10 bottom-0 flex-none border-t border-black">
             <Button
               variant="outline"
+              onClick={prevStep} 
               className="h-12 px-8 lg:px-16 bg-[#d5f1f0] border border-black rounded-[10px] hover:bg-[#d5f1f0]"
             >
               Atrás
             </Button>
             <Button
-              onClick={handleModalPostularOk}
+              onClick={nextStep} 
               className="h-12 px-8 lg:px-16 gap-2 rounded-[10px]"
             >
               Continuar <ArrowRight />

@@ -1,9 +1,15 @@
 import { IAplicacionBack } from "./Aplicacion.interface";
-import { ICliente } from "./Cliente.interface";
+import { ICliente, IClienteBack } from "./Cliente.interface";
 import { IEspecialidadOferta } from "./Especialidad.interface";
 import { IIndustriaOferta } from "./Industria.interface";
 import { IServicioOferta } from "./Servicio.interface";
 import { ITrabajo } from "./Trabajo.interface";
+
+export interface IPreguntaOfertaBack {
+    id: number;
+    pregunta: string;
+    ofertaId: number;
+}
 
 export interface IOferta {
     id: number;
@@ -30,7 +36,7 @@ export interface IOfertaBack {
     especialidadesOferta: IEspecialidadOferta[];
     serviciosOferta: IServicioOferta[];
     industriasOferta: IIndustriaOferta[];
-    cliente: ICliente;
+    cliente: IClienteBack;
     aplicaciones: IAplicacionBack[];
-    preguntas_oferta: [];
+    preguntas_oferta: IPreguntaOfertaBack[];
 }

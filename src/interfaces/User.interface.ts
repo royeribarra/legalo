@@ -1,5 +1,5 @@
-import { IAbogado } from "./Abogado.interface";
-import { ICliente } from "./Cliente.interface";
+import { IAbogado, IAbogadoBack } from "./Abogado.interface";
+import { ICliente, IClienteBack } from "./Cliente.interface";
 export interface IUser {
     id: number;
     createdAt: string;
@@ -16,6 +16,6 @@ export interface IUser {
     activationCode: string | null;
     activationCodeExpires: string;
     isActive: boolean;
-    cliente: ICliente;
-    abogado: IAbogado | null;
+    cliente: IClienteBack;
+    abogado: IAbogadoBack | null;
 }

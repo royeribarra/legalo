@@ -254,12 +254,12 @@ const DashboardLawyerPage = () => {
                 </div>
               )}
 
-              <div className="flex flex-col gap-8 flex-1">
-                {/* <ResumeProyect />
+              {/* <div className="flex flex-col gap-8 flex-1">
                 <ResumeProyect />
                 <ResumeProyect />
-                <ResumeProyect /> */}
-              </div>
+                <ResumeProyect />
+                <ResumeProyect />
+              </div> */}
               <div className="flex flex-col gap-8 flex-1 mt-12">
                   {
                     ofertasFiltradas.map((oferta)=>

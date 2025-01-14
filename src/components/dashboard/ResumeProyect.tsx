@@ -24,7 +24,7 @@ const ResumeProyect = ({ inviteProyect, oferta }: ProyectProps) => {
           >
             Guardar
           </Button>
-          <Link href="/registro/tipo">
+          <Link href={`/dashboard/abogado/proyecto/${oferta.id}`}>
             <Button className="text-sm lg:text-lg h-9 lg:h-[42px] rounded-full">
               Ver proyecto
             </Button>

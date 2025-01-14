@@ -9,6 +9,10 @@ export default class OfertaService extends MainService {
     return this.post(`/realizar-pago`, pagoData);
   }
 
+  public async getOfertaByID(id: number): Promise<any> {
+    return this.get(`/${id}`);
+  }
+
   public async getVehiculosAll(): Promise<any> {
     return this.get("/vehiculos/all");
   }
