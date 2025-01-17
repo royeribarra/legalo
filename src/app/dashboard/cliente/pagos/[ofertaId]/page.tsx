@@ -31,7 +31,7 @@ const CheckoutPage = () => {
         return;
       }
 
-      if(token?.cliente.id){
+      if(token?.cliente?.id){
         const pagoData = {
           clienteId: Number(clienteId),
           monto: Number(monto),

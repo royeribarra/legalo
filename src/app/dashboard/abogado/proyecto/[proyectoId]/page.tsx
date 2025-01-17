@@ -98,7 +98,7 @@ const ProyectSinglePage = () => {
             </div>
           </div>
           <div className="flex gap-4 flex-wrap">
-            <Button
+            {/* <Button
               variant="outline"
               className="border border-black rounded-full h-[43px]"
             >
@@ -110,7 +110,7 @@ const ProyectSinglePage = () => {
                 className="mr-2"
               />
               <p>Remoto</p>
-            </Button>
+            </Button> */}
             <Button
               variant="outline"
               className="border border-black rounded-full h-[43px]"
@@ -122,22 +122,44 @@ const ProyectSinglePage = () => {
                 height={24}
                 className="mr-2"
               />
-              <p>1-2 semanas</p>
+              <p>{oferta.duracion}</p>
             </Button>
-            <Button
-              variant="outline"
-              className="border border-black rounded-full h-[43px]"
-            >
-              <Image
-                src="/icos/ico-dash-building.svg"
-                alt=""
-                width={24}
-                height={24}
-                className="mr-2"
-              />
-              <p>Retail</p>
-            </Button>
-            <Button
+            {
+              oferta.especialidadesOferta.map((especialidad)=>
+                <Button
+                  variant="outline"
+                  className="border border-black rounded-full h-[43px]"
+                >
+                  <Image
+                    src="/icos/ico-dash-building.svg"
+                    alt=""
+                    width={24}
+                    height={24}
+                    className="mr-2"
+                  />
+                  <p>{especialidad.especialidad.nombre}</p>
+                </Button>
+              )
+            }
+            {
+              oferta.serviciosOferta.map((servicio)=>
+                <Button
+                  variant="outline"
+                  className="border border-black rounded-full h-[43px]"
+                >
+                  <Image
+                    src="/icos/ico-dash-building.svg"
+                    alt=""
+                    width={24}
+                    height={24}
+                    className="mr-2"
+                  />
+                  <p>{servicio.servicio.nombre}</p>
+                </Button>
+              )
+            }
+            
+            {/* <Button
               variant="outline"
               className="border border-black rounded-full h-[43px]"
             >
@@ -149,7 +171,7 @@ const ProyectSinglePage = () => {
                 className="mr-2"
               />
               <p>Asesoría legal</p>
-            </Button>
+            </Button> */}
           </div>
           <div className="flex items-center gap-2 text-slate-500">
             <User size={24} color="#4B5563" /> {oferta.aplicaciones.length} postulaciones

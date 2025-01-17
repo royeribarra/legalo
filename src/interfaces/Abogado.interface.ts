@@ -44,7 +44,8 @@ export interface IAbogadoBack {
     experiencia: string;
     experiencia_anos: string;
     pdf_cv: string;
-    imagen: string;
+    cul_url: string;
+    cv_url: string;
     foto_url: string;
     video_url: string;
     validado_admin: boolean;

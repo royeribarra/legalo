@@ -57,7 +57,7 @@ export default function AbogadoDetalle() {
         <div className="flex flex-col lg:flex-row lg:justify-between">
           <div className="flex gap-4 items-center">
             <img
-              src={abogado.imagen || "/assets/images/face-6.jpeg"}
+              src={abogado.foto_url || "/assets/images/face-6.jpeg"}
               alt="img-abogado"
               className="rounded-full w-24 h-24"
             />

@@ -21,7 +21,6 @@ export type RegistroAbogadoState = {
   cip: string;
   colegio: string;
   sobre_ti: string;
-  // video_url: string;
   archivo_cul: IArchivo | null;
   archivo_imagen: IArchivo | null;
   archivo_cv: IArchivo | null;
@@ -36,7 +35,7 @@ export type RegistroAbogadoState = {
 
 type RegistroAbogadoContextType = {
   stateAbogado: RegistroAbogadoState;
-  updateStateAbogado: (newState: Partial<RegistroAbogadoState>) => void; // Permite actualizar solo propiedades específicas
+  updateStateAbogado: (newState: Partial<RegistroAbogadoState>) => void;
 };
 
 const RegistroAbogadoContext = createContext<RegistroAbogadoContextType | undefined>(undefined);
@@ -45,43 +44,91 @@ type OfertaProviderProps = {
   children: ReactNode;
 };
 
-export const RegistroAbogadoProvider = ({ children }: OfertaProviderProps) => {
-  const [stateAbogado, setStateAbogado] = useState<RegistroAbogadoState>({
-    nombres: "",
-    apellidos: "",
-    email: "",
-    ubicacion: "",
-    contrasena: "",
-    terms: false,
-    dni: "",
-    telefono: "",
-    grado: "",
-    cip: "",
-    colegio: "",
-    sobre_ti: "",
-    habilidades_duras: [],
-    habilidades_blandas: [],
-    experiencias: [],
-    servicios: [],
-    estudios: [],
-    especialidades: [],
-    industrias: [],
-    archivo_cul: null,
-    archivo_imagen: null,
-    archivo_cv: null
-  });
+const defaultState: RegistroAbogadoState & { caducidad?: number } = {
+  nombres: "",
+  apellidos: "",
+  email: "",
+  ubicacion: "",
+  contrasena: "",
+  terms: false,
+  dni: "",
+  telefono: "",
+  grado: "",
+  cip: "",
+  colegio: "",
+  sobre_ti: "",
+  habilidades_duras: [],
+  habilidades_blandas: [],
+  experiencias: [],
+  servicios: [],
+  estudios: [],
+  especialidades: [],
+  industrias: [],
+  archivo_cul: null,
+  archivo_imagen: null,
+  archivo_cv: null,
+  caducidad: Date.now() + 12 * 60 * 60 * 1000, // 12 horas en milisegundos
+};
 
-  // Usamos useEffect para acceder a localStorage solo en el cliente
+const isValidState = (state: any): state is RegistroAbogadoState & { caducidad?: number } => {
+  try {
+    return (
+      typeof state === "object" &&
+      state !== null &&
+      typeof state.caducidad === "number" &&
+      state.caducidad > Date.now() && // Verifica si la caducidad no ha expirado
+      typeof state.nombres === "string" &&
+      typeof state.apellidos === "string" &&
+      typeof state.email === "string" &&
+      typeof state.ubicacion === "string" &&
+      typeof state.contrasena === "string" &&
+      typeof state.terms === "boolean" &&
+      typeof state.dni === "string" &&
+      typeof state.telefono === "string" &&
+      typeof state.grado === "string" &&
+      typeof state.cip === "string" &&
+      typeof state.colegio === "string" &&
+      typeof state.sobre_ti === "string" &&
+      Array.isArray(state.habilidades_duras) &&
+      Array.isArray(state.habilidades_blandas) &&
+      Array.isArray(state.experiencias) &&
+      Array.isArray(state.servicios) &&
+      Array.isArray(state.industrias) &&
+      Array.isArray(state.estudios) &&
+      Array.isArray(state.especialidades) &&
+      (state.archivo_cul === null || typeof state.archivo_cul === "object") &&
+      (state.archivo_imagen === null || typeof state.archivo_imagen === "object") &&
+      (state.archivo_cv === null || typeof state.archivo_cv === "object")
+    );
+  } catch {
+    return false;
+  }
+};
+
+export const RegistroAbogadoProvider = ({ children }: OfertaProviderProps) => {
+  const [stateAbogado, setStateAbogado] = useState<RegistroAbogadoState>(defaultState);
+
   useEffect(() => {
     const savedState = localStorage.getItem("abogadoState");
     if (savedState) {
-      setStateAbogado(JSON.parse(savedState));
+      const parsedState = JSON.parse(savedState);
+      if (isValidState(parsedState)) {
+        setStateAbogado(parsedState);
+      } else {
+        console.warn("Estado inválido o caducado en localStorage. Restableciendo valores por defecto.");
+        localStorage.setItem("abogadoState", JSON.stringify(defaultState));
+        setStateAbogado(defaultState);
+      }
     }
   }, []);
 
   const updateStateAbogado = (newState: Partial<RegistroAbogadoState>) => {
     setStateAbogado((prevState) => {
-      const updatedState = { ...prevState, ...newState };
+      const updatedState = {
+        ...prevState,
+        ...newState,
+        caducidad: Date.now() + 12 * 60 * 60 * 1000, // Renueva la caducidad a 12 horas
+      };
       localStorage.setItem("abogadoState", JSON.stringify(updatedState));
       return updatedState;
     });
@@ -98,7 +145,7 @@ export const RegistroAbogadoProvider = ({ children }: OfertaProviderProps) => {
 export const useRegistroAbogado = (): RegistroAbogadoContextType => {
   const context = useContext(RegistroAbogadoContext);
   if (!context) {
-    throw new Error("useOferta debe usarse dentro de un OfertaProvider");
+    throw new Error("useRegistroAbogado debe usarse dentro de un RegistroAbogadoProvider");
   }
   return context;
 };

@@ -69,9 +69,9 @@ const PublicarPageSix = () => {
             value={state.duracion} // Asegura que el valor seleccionado se refleje
             onValueChange={handleDuracionChange} // Actualiza la duración en el contexto
           >
-            <ToggleGroupItem value="7">1-7 días</ToggleGroupItem>
-            <ToggleGroupItem value="28">1-4 semanas</ToggleGroupItem>
-            <ToggleGroupItem value="31">1+ meses</ToggleGroupItem>
+            <ToggleGroupItem value="1-7 días">1-7 días</ToggleGroupItem>
+            <ToggleGroupItem value="1-4 semanas">1-4 semanas</ToggleGroupItem>
+            <ToggleGroupItem value="1+ meses">1+ meses</ToggleGroupItem>
             <ToggleGroupItem value="indefinido">
               Indefinido <IcoInfo size={16} color="gray" className="mx-2" />
             </ToggleGroupItem>

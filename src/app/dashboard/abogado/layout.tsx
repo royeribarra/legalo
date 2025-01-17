@@ -40,6 +40,7 @@ const LayoutContent = ({ children }: LayoutProps) => {
   const handleLogout = () => {
     localStorage.removeItem("tokenRole");
     localStorage.removeItem("userRole");
+    localStorage.removeItem("token");
     router.push("/login"); // Redirige al usuario a la página de login
   };
 

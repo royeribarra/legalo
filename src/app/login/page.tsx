@@ -6,6 +6,7 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import { abogadoService } from '@/services';
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
@@ -39,13 +40,19 @@ export default function LoginPage() {
 
       if (response.ok) {
         message.success('Login successful');
-        localStorage.setItem('token', JSON.stringify(data.jwt.user));
+        
 
         if (data.jwt?.user?.abogado) {
           localStorage.setItem('userRole', 'abogado');
+          const abogado = await abogadoService.getAbogadoByID(data.jwt?.user?.abogado?.id);
+          console.log(abogado)
+          const data1 = data.jwt.user;
+          data1.abogado = abogado;
+          localStorage.setItem('token', JSON.stringify(data1));
           router.push('/dashboard/abogado');
         } else if (data.jwt?.user?.cliente) {
           localStorage.setItem('userRole', 'cliente');
+          localStorage.setItem('token', JSON.stringify(data.jwt.user));
           router.push('/dashboard/cliente');
         }
       } else {

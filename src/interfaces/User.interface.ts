@@ -16,6 +16,6 @@ export interface IUser {
     activationCode: string | null;
     activationCodeExpires: string;
     isActive: boolean;
-    cliente: IClienteBack;
+    cliente: IClienteBack | null;
     abogado: IAbogadoBack | null;
 }

@@ -100,7 +100,7 @@ const PublicarPageEight = () => {
 
     if (state.documento && token) {
       const url = `${process.env.BASE_APP_API_URL}/temp-files/upload-oferta-documento`;
-      enviarArchivo(state.documento, token.cliente.id, token.correo, "oferta_documento", url);
+      enviarArchivo(state.documento, token?.cliente?.id ?? 0, token.correo, "oferta_documento", url);
     }
 
     fetch(`${process.env.BASE_APP_API_URL}/ofertas/create`, {

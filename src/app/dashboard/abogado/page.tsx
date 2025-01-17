@@ -32,8 +32,11 @@ import ProyectItem from "@/components/dashboard/ProyectItem";
 import { IOfertaBack } from "@/interfaces/Oferta.interface";
 import { ofertaservice } from "@/services";
 import { useDashboardAbogado } from "@/contexts/dashboardAbogadoContext";
+import Postulaciones from "@/components/dashboard/abogado/Postulaciones";
+import { useAuth } from "@/contexts/authContext";
 
 const DashboardLawyerPage = () => {
+  const {token} = useAuth();
   const [openFilter, setOpenFilter] = useState<boolean>(true);
   const { state } = useDashboardAbogado();
   const [menuActive, setMenuActive] = useState("oportunidades");
@@ -290,33 +293,7 @@ const DashboardLawyerPage = () => {
           </div>
         )}
         {menuActive === "postulaciones" && (
-          <div className="flex flex-col gap-8 flex-1 mt-12">
-            <Accordion type="single" collapsible defaultValue="item-1">
-              <AccordionItem value="item-1">
-                <AccordionTriggerBig className="text-2xl font-bold">
-                  Cotización aceptada (1)
-                </AccordionTriggerBig>
-                <AccordionContent className="flex flex-col gap-4">
-                  <ProyectItem tipe="cotizacionAceptada" />
-                  <ProyectItem tipe="cotizacionPorExpirar" />
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-            <Accordion type="single" collapsible defaultValue="item-1">
-              <AccordionItem value="item-1">
-                <AccordionTriggerBig className="text-2xl font-bold">
-                  Cotización enviada (5)
-                </AccordionTriggerBig>
-                <AccordionContent className="flex flex-col gap-4">
-                  <ProyectItem tipe="postulacionEnviada" />
-                  <ProyectItem tipe="postulacionEnviada" />
-                  <ProyectItem tipe="postulacionEnviada" />
-                  <ProyectItem tipe="postulacionEnviada" />
-                  <ProyectItem tipe="postulacionEnviada" />
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </div>
+          <Postulaciones abogado={token?.abogado}></Postulaciones>
         )}
       </div>
     </div>

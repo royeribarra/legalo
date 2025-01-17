@@ -13,12 +13,20 @@ export default class AbogadoService extends MainService {
     return this.get("/vehiculos/all");
   }
 
+  public async getAbogadoByID(id: number): Promise<any> {
+    return this.get(`/${id}`);
+  }
+
   public async obtenerTodos(params?: any): Promise<any> {
     return this.get("/all", params);
   }
 
-  public async postularOferta(abogadoId: number, ofertaId: number): Promise<any> {
-    return this.post(`/postular-oferta`, { abogadoId, ofertaId });
+  public async getAplicacionesByAbogadoId(abogadoId: number): Promise<any> {
+    return this.get(`/all-aplicaciones/${abogadoId}`);
+  }
+
+  public async postularOferta(data: {abogadoId: number, ofertaId: number, salarioEsperado: number}): Promise<any> {
+    return this.post(`/postular-oferta`, { data });
   }
 
   public async rechazarSolicitud(solicitudId: string): Promise<any> {

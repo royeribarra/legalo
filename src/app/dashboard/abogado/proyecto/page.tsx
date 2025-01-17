@@ -263,12 +263,13 @@ const ProyectPage = () => {
         </div>
       </div>
 
-      {showModalPostular && (
+      {/* {showModalPostular && (
         <ModalPostularProyecto
           handleModalPostular={handleModalPostular}
           handleModalPostularOk={handleModalPostularOk}
+          oferta={oferta}
         />
-      )}
+      )} */}
 
       {showModalPostularOk && (
         <ModalPostulacionOk handleModalPostularOk={handleModalPostularOk} />

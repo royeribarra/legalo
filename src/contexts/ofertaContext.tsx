@@ -16,6 +16,7 @@ type OfertaState = {
   nivelExperiencia: string;
   presupuesto: IPresupuesto | null | undefined;
   preguntas: IPregunta[];
+  timestamp: number; // Propiedad adicional para almacenar el tiempo de guardado
 };
 
 type OfertaContextType = {
@@ -30,7 +31,7 @@ type OfertaProviderProps = {
 };
 
 export const OfertaProvider = ({ children }: OfertaProviderProps) => {
-  const [state, setState] = useState<OfertaState>({
+  const initialState: OfertaState = {
     selected: null,
     uso: "1",
     titulo: "",
@@ -42,19 +43,39 @@ export const OfertaProvider = ({ children }: OfertaProviderProps) => {
     nivelExperiencia: "",
     presupuesto: null,
     preguntas: [],
-  });
+    timestamp: Date.now(), // Inicializa el timestamp
+  };
 
-  // Usamos useEffect para acceder a localStorage solo en el cliente
+  const [state, setState] = useState<OfertaState>(initialState);
+
   useEffect(() => {
     const savedState = localStorage.getItem("ofertaState");
+
     if (savedState) {
-      setState(JSON.parse(savedState));
+      const parsedState: OfertaState = JSON.parse(savedState);
+
+      // Verifica si han pasado más de 12 horas
+      const now = Date.now();
+      const twelveHours = 12 * 60 * 60 * 1000; // 12 horas en milisegundos
+
+      if (now - parsedState.timestamp > twelveHours) {
+        // Si el estado ha expirado, restablece el estado inicial
+        localStorage.removeItem("ofertaState");
+        setState(initialState);
+      } else {
+        setState(parsedState);
+      }
     }
   }, []); // Este efecto solo se ejecutará en el cliente, después del montaje
 
   const updateState = (newState: Partial<OfertaState>) => {
     setState((prevState) => {
-      const updatedState = { ...prevState, ...newState };
+      const updatedState = {
+        ...prevState,
+        ...newState,
+        timestamp: Date.now(), // Actualiza el timestamp cada vez que se actualiza el estado
+      };
+
       // Guardar el estado actualizado en localStorage
       localStorage.setItem("ofertaState", JSON.stringify(updatedState));
       return updatedState;

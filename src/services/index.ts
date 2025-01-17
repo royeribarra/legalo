@@ -1,5 +1,6 @@
 // services/index.ts
 import AbogadoService from './Abogado.service';
+import AplicacionService from './Aplicacion.service';
 import ClienteService from './Cliente.service';
 import EspecialidadService from './Especialidad.service';
 import IndustriaService from './Industria.service';
@@ -14,3 +15,4 @@ export const servicioService = new ServicioService();
 export const industriaService = new IndustriaService();
 export const especialidadService = new EspecialidadService();
 export const clienteService = new ClienteService();
+export const aplicacionService = new AplicacionService();

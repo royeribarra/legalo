@@ -33,6 +33,7 @@ import { useAuth } from "@/contexts/authContext";
 import { handleFileUpload } from "utils/uploadFile";
 import { Eye, Trash } from "lucide-react"; 
 import { IOfertaBack } from "@/interfaces/Oferta.interface";
+import { IArchivo } from "@/interfaces/Archivo.interface";
 
 interface ModalPostularProyectoProps {
   handleModalPostular: () => void;
@@ -54,7 +55,16 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
   const [step, setStep] = useState("step1");
   const [precio, setPrecio] = useState<number>(0); // Precio ingresado por el usuario
   const [comision, setComision] = useState<number>(0); // 20% del precio
-  const [totalRecibido, setTotalRecibido] = useState<number>(0); 
+  const [impuesto, setImpuesto] = useState<number>(0); 
+  const [totalRecibido, setTotalRecibido] = useState<number>(0);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [uploadedFile, setUploadedFile] = useState<{ nombre: string; tipo: string; contenido: string } | null>(null);
+  const [uploadedVideo, setUploadedVideo] = useState<{
+    nombre: string;
+    tipo: string;
+    contenido: string;
+  } | null>(null);
+
   const nextStep = async () => {
     console.log(step)
     if(step === "step4"){
@@ -76,19 +86,27 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
   };
 
   const enviarPostulacion = async () => {
+    if (uploadedFile) {
+      const url = `${process.env.BASE_APP_API_URL}/temp-files/upload-documento-aplicacion`;
+      enviarArchivo(uploadedFile, oferta.id, token?.abogado?.id ?? 0, "documento_aplicacion", url);
+    }
+    if (uploadedVideo) {
+      const url = `${process.env.BASE_APP_API_URL}/temp-files/upload-video-aplicacion`;
+      enviarArchivo(uploadedVideo, oferta.id, token?.abogado?.id ?? 0, "video_aplicacion", url);
+    }
     if(token?.abogado?.id){
-      const postulacion = await abogadoService.postularOferta(token?.abogado?.id, Number(proyectoId));
+      const data = {
+        abogadoId: token?.abogado?.id,
+        ofertaId: Number(proyectoId),
+        salarioEsperado: totalRecibido
+      };
+      const postulacion = await abogadoService.postularOferta(data);
+      if(postulacion.state === 'success'){
+        handleModalPostularOk();
+      }
       console.log(postulacion)
     }
   };
-
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [uploadedFile, setUploadedFile] = useState<{ nombre: string; tipo: string; contenido: string } | null>(null);
-  const [uploadedVideo, setUploadedVideo] = useState<{
-    nombre: string;
-    tipo: string;
-    contenido: string;
-  } | null>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     handleFileUpload(
@@ -135,14 +153,56 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
     const newPrecio = parseFloat(event.target.value.replace(/[^0-9.-]+/g, "")); // Eliminar caracteres no numéricos
     if (!isNaN(newPrecio)) {
       setPrecio(newPrecio);
-      setComision(newPrecio * 0.2); // Calcular el 20%
+      setComision(newPrecio * 0.2);
+      setImpuesto(newPrecio * 0.18); // Calcular el 20%
       setTotalRecibido(newPrecio - (newPrecio * 0.2)); // Calcular el total después de la comisión
     } else {
       setPrecio(0);
       setComision(0);
+      setImpuesto(0);
       setTotalRecibido(0);
     }
   };
+
+  const enviarArchivo = async (
+    archivo: IArchivo,
+    ofertaId: number,
+    abogadoId: number,
+    nombreArchivo: string,
+    url: string
+  ) => {
+    const archivoBlob = base64ToBlob(archivo.contenido, archivo.tipo);
+    const formData = new FormData();
+    formData.append("nombreArchivo", nombreArchivo);
+    formData.append("file", archivoBlob, archivo.nombre);
+    formData.append("ofertaId", `${ofertaId}`);
+    formData.append("abogadoId", `${abogadoId}`);
+    formData.append("fileId", JSON.stringify(Date.now()));
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error en la petición: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log("Archivo enviado correctamente", data);
+    } catch (error) {
+      console.error("Error al enviar el archivo", error);
+    }
+  };
+
+  function base64ToBlob(base64: string, mimeType: string): Blob {
+    const byteCharacters = atob(base64.split(",")[1]);
+    const byteNumbers = Array.from(byteCharacters).map((char) =>
+      char.charCodeAt(0)
+    );
+    return new Blob([new Uint8Array(byteNumbers)], { type: mimeType });
+  }
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-20 ">
@@ -207,7 +267,7 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                   </div>
 
                   <div className="flex gap-4 flex-wrap ">
-                    <Button
+                    {/* <Button
                       variant="outline"
                       className="border border-black rounded-full h-[43px]"
                     >
@@ -219,7 +279,7 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                         className="mr-2"
                       />
                       <p>Remoto</p>
-                    </Button>
+                    </Button> */}
                     <Button
                       variant="outline"
                       className="border border-black rounded-full h-[43px]"
@@ -231,15 +291,15 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                         height={24}
                         className="mr-2"
                       />
-                      <p>1-2 semanas</p>
+                      <p>{oferta.duracion}</p>
                     </Button>
                   </div>
 
                   <div className="my-2">
                     <span className="font-bold text-lg">Especialidades</span>
                     <div className="flex gap-4 flex-wrap mt-3">
-                      {/* {
-                        token?.abogado?.serviciosAbogado.map((servicio)=>
+                      {
+                        token?.abogado?.especialidadesAbogado.map((especialidad)=>
                           <Button
                             variant="outline"
                             className="border border-black rounded-full h-[43px]"
@@ -251,10 +311,10 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                               height={24}
                               className="mr-2"
                             />
-                            <p>{servicio.servicio.nombre}</p>
+                            <p>{especialidad.especialidad.nombre}</p>
                           </Button>
                         )
-                      } */}
+                      }
                     </div>
                   </div>
 
@@ -271,8 +331,8 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                     </span>
 
                     <div className="flex flex-col gap-2 mt-3">
-                      <DocsForClients />
-                      <DocsForClients />
+                      <DocsForClients documento={token?.abogado?.cul_url ?? 'url-por-defecto'} nombre="Curriculum Vitae" />
+                      <DocsForClients documento={token?.abogado?.cv_url ?? 'url-por-defecto'} nombre="CUL" />
                     </div>
                   </div>
                   <div className="my-2">
@@ -280,7 +340,6 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                       ¿Consideras necesario enviar algún documento extra para potenciar tu
                       postulación?
                     </p>
-
                     <div
                       className="border border-black border-dashed p-2 flex flex-col items-center cursor-pointer"
                       onClick={handleClick}
@@ -302,13 +361,6 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                           />
                           <p className="mt-2 text-gray-700">{uploadedFile.nombre}</p>
                           <div className="flex space-x-4 mt-2">
-                            {/* <button
-                              onClick={handleViewFile}
-                              className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded hover:bg-gray-100"
-                            >
-                              <Eye className="w-4 h-4" />
-                              <span>Ver Archivo</span>
-                            </button> */}
                             <button
                               onClick={handleRemoveFile}
                               className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded hover:bg-gray-100"
@@ -439,6 +491,21 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                       </span>
                     </div>
                     
+                    {/* IGB */}
+                    <div className="flex items-center justify-between gap-8 py-6 border-b border-dashed border-black">
+                      <div className="border-2 border-black rounded-full w-5 h-5 flex items-center justify-center">
+                        <Minus size={16} />
+                      </div>
+                      <div>
+                        <span className="font-bold">S/{impuesto.toLocaleString()}</span>
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-lg text-right">
+                          Impuesto (18% del precio total)
+                        </p>
+                      </div>
+                    </div>
+
                     {/* Comisión */}
                     <div className="flex items-center justify-between gap-8 py-6 border-b border-dashed border-black">
                       <div className="border-2 border-black rounded-full w-5 h-5 flex items-center justify-center">
@@ -549,7 +616,7 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
               Asesoría para Contrato de Trabajadores Temporales
             </h3>
             <div className="flex gap-4 flex-wrap">
-              <Button
+              {/* <Button
                 variant="outline"
                 className="border border-black rounded-full h-[43px]"
               >
@@ -561,7 +628,7 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                   className="mr-2"
                 />
                 <p>Remoto</p>
-              </Button>
+              </Button> */}
               <Button
                 variant="outline"
                 className="border border-black rounded-full h-[43px]"
@@ -573,34 +640,42 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                   height={24}
                   className="mr-2"
                 />
-                <p>1-2 semanas</p>
+                <p>{oferta.duracion}</p>
               </Button>
-              <Button
-                variant="outline"
-                className="border border-black rounded-full h-[43px]"
-              >
-                <Image
-                  src="/icos/ico-dash-building.svg"
-                  alt=""
-                  width={24}
-                  height={24}
-                  className="mr-2"
-                />
-                <p>Retail</p>
-              </Button>
-              <Button
-                variant="outline"
-                className="border border-black rounded-full h-[43px]"
-              >
-                <Image
-                  src="/icos/ico-dash-briefcase.svg"
-                  alt=""
-                  width={24}
-                  height={24}
-                  className="mr-2"
-                />
-                <p>Asesoría legal</p>
-              </Button>
+              {
+                oferta.especialidadesOferta.map((especialidad)=>
+                  <Button
+                    variant="outline"
+                    className="border border-black rounded-full h-[43px]"
+                  >
+                    <Image
+                      src="/icos/ico-dash-building.svg"
+                      alt=""
+                      width={24}
+                      height={24}
+                      className="mr-2"
+                    />
+                    <p>{especialidad.especialidad.nombre}</p>
+                  </Button>
+                )
+              }
+              {
+                oferta.serviciosOferta.map((servicio)=>
+                  <Button
+                    variant="outline"
+                    className="border border-black rounded-full h-[43px]"
+                  >
+                    <Image
+                      src="/icos/ico-dash-building.svg"
+                      alt=""
+                      width={24}
+                      height={24}
+                      className="mr-2"
+                    />
+                    <p>{servicio.servicio.nombre}</p>
+                  </Button>
+                )
+              }
             </div>
             <div className="flex gap-6  mt-8 flex-col">
               <div className="flex items-start gap-8">

@@ -47,7 +47,7 @@ const ModalInviteProyect: React.FC<ModalInviteProyectProps> = ({
   }, [currentStep, abogadoPrevioInvitado]);
 
   const fetchOfertasDisponibles = async () => {
-    if(token?.cliente.id){
+    if(token?.cliente?.id){
       try {
         const body = {
           abogadoId: abogadoPrevioInvitado,

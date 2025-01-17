@@ -18,7 +18,7 @@ const AplicacionesPorAceptar = () => {
   // Función para obtener las ofertas con aplicaciones
   const fetchOfertasConAplicaciones = async () => {
     try {
-      const response = await fetch(`${process.env.BASE_APP_API_URL}/ofertas/cliente/${token?.cliente.id}/con-aplicaciones`);
+      const response = await fetch(`${process.env.BASE_APP_API_URL}/ofertas/cliente/${token?.cliente?.id}/con-aplicaciones`);
       if (!response.ok) {
         throw new Error("Error al obtener las ofertas");
       }
@@ -39,7 +39,7 @@ const AplicacionesPorAceptar = () => {
   // };
 
   const aceptarOferta = (salario: number, ofertaId: number) => {
-    const clienteId = token?.cliente.id;
+    const clienteId = token?.cliente?.id;
     const url = `/dashboard/cliente/pagos/${ofertaId}?monto=${salario}&clienteId=${clienteId}`;
     router.push(url); 
   };
