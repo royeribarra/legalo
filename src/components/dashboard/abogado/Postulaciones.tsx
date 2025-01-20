@@ -23,8 +23,11 @@ function Postulaciones ()
 
   async function getAplicacionesCreadas(){
     if(token?.abogado?.id){
-      const statusCreado = 1; 
-      const response = await abogadoService.getAplicaciones(token.abogado.id, statusCreado);
+      const data = {
+        abogadoId: token.abogado.id,
+        status: 1
+      }
+      const response = await abogadoService.getAplicaciones(data);
       setAplicacionesCreadas(response.data);
     }
   }
@@ -32,7 +35,11 @@ function Postulaciones ()
   async function getAplicacionesAceptadas(){
     if(token?.abogado?.id){
       const statusAceptado = 2; 
-      const response = await abogadoService.getAplicaciones(token.abogado.id, statusAceptado);
+      const data = {
+        abogadoId: token.abogado.id,
+        status: 2
+      }
+      const response = await abogadoService.getAplicaciones(data);
       setAplicacionesAceptadas(response.data);
     }
   }

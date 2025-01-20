@@ -1,17 +1,40 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { X as IconX } from "lucide-react";
 import { Check as IconCheck } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { aplicacionService } from "@/services";
+import { IOfertaBack } from "@/interfaces/Oferta.interface";
+import { useAuth } from "@/contexts/authContext";
 
 interface ModalPostulacionOkProps {
-  handleModalPostularOk: () => void; // Ajusta el tipo según tu función
+  handleModalPostularOk: () => void;
+  oferta?: IOfertaBack;
+  newAplicacionId?: number;
 }
 
 const ModalPostulacionOk: React.FC<ModalPostulacionOkProps> = ({
   handleModalPostularOk,
+  oferta,
+  newAplicacionId
 }) => {
+  const { token, userRole } = useAuth();
+  async function updateArchivosAplicacion() {
+    if(token?.abogado?.id && oferta){
+      const data = {
+        abogadoId: token?.abogado?.id,
+        ofertaId: oferta.id,
+        aplicacionId: newAplicacionId
+      };
+      const response = await aplicacionService.updateLinkDocumentos(data);
+    }
+  }
+
+  useEffect(()=>{
+    updateArchivosAplicacion();
+  }, []);
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-20 ">
       <div className="flex flex-col lg:flex-row bg-lg-lawyer lg:rounded-[24px] shadow-lg relative w-full h-full overflow-y-auto lg:w-[1220px] lg:max-w-[84vw] lg:h-[830px] lg:max-h-[90vh] hidde-scrollbar">

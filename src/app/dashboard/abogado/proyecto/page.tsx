@@ -272,7 +272,9 @@ const ProyectPage = () => {
       )} */}
 
       {showModalPostularOk && (
-        <ModalPostulacionOk handleModalPostularOk={handleModalPostularOk} />
+        <ModalPostulacionOk 
+          handleModalPostularOk={handleModalPostularOk}
+        />
       )}
 
       {/* <HalloweenAnimation /> */}

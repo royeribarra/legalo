@@ -22,6 +22,7 @@ import ModalPostularProyecto from "@/components/dashboard/ModalPostularProyecto"
 import ModalPostulacionOk from "@/components/dashboard/ModalPostulacionOk";
 import { abogadoService, ofertaservice } from "@/services";
 import { IOfertaBack } from "@/interfaces/Oferta.interface";
+import { number } from "zod";
 
 const ProyectSinglePage = () => {
   const { proyectoId } = useParams();
@@ -29,14 +30,18 @@ const ProyectSinglePage = () => {
   const [diasPublicados, setDiasPublicados] = useState<number>(0);
   const [showModalPostular, setShowModalPostular] = useState(false);
   const [showModalPostularOk, setShowModalPostularOk] = useState(false);
+  const [newAplicacionId, setNewAplicacionId] = useState<number>(0);
 
   const handleModalPostular = () => {
     setShowModalPostular(!showModalPostular);
   };
 
-  const handleModalPostularOk = () => {
+  const handleModalPostularOk = (aplicacionId? : number) => {
     setShowModalPostular(false);
     setShowModalPostularOk(!showModalPostularOk);
+    if(aplicacionId){
+      setNewAplicacionId(aplicacionId);
+    }
   };
 
   async function fetchOferta(proyectoId: number) {
@@ -124,6 +129,8 @@ const ProyectSinglePage = () => {
               />
               <p>{oferta.duracion}</p>
             </Button>
+            <div>
+              <h2>Especialidades</h2>
             {
               oferta.especialidadesOferta.map((especialidad)=>
                 <Button
@@ -141,6 +148,9 @@ const ProyectSinglePage = () => {
                 </Button>
               )
             }
+            </div>
+            <div>
+              <h2>Servicios</h2>
             {
               oferta.serviciosOferta.map((servicio)=>
                 <Button
@@ -158,7 +168,7 @@ const ProyectSinglePage = () => {
                 </Button>
               )
             }
-            
+            </div>
             {/* <Button
               variant="outline"
               className="border border-black rounded-full h-[43px]"
@@ -324,7 +334,11 @@ const ProyectSinglePage = () => {
       )}
 
       {showModalPostularOk && (
-        <ModalPostulacionOk handleModalPostularOk={handleModalPostularOk} />
+        <ModalPostulacionOk 
+          handleModalPostularOk={handleModalPostularOk} 
+          oferta={oferta}
+          newAplicacionId={newAplicacionId}
+        />
       )}
 
       {/* <HalloweenAnimation /> */}
