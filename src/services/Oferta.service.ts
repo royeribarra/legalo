@@ -13,10 +13,6 @@ export default class OfertaService extends MainService {
     return this.get(`/${id}`);
   }
 
-  public async getVehiculosAll(): Promise<any> {
-    return this.get("/vehiculos/all");
-  }
-
   public async obtenerTodos(params?: any): Promise<any> {
     return this.get("/all", params);
   }

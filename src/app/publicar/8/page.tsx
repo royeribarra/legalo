@@ -163,11 +163,11 @@ const PublicarPageEight = () => {
         </div>
       </div>
 
-      {showModalCrearProyectoOk && (
+      {/* {showModalCrearProyectoOk && (
         <ModalCrearProyectoOk
           handleModalCrearProyectoOk={handleModalCrearProyectoOk}
         />
-      )}
+      )} */}
     </div>
   );
 };

@@ -34,6 +34,8 @@ import { ofertaservice } from "@/services";
 import { useDashboardAbogado } from "@/contexts/dashboardAbogadoContext";
 import Postulaciones from "@/components/dashboard/abogado/Postulaciones";
 import { useAuth } from "@/contexts/authContext";
+import PublicacionesRecientes from "@/components/dashboard/abogado/PublicacionesRecientes";
+import InvitacionesOferta from "@/components/dashboard/abogado/InvitacionesOferta";
 
 const DashboardLawyerPage = () => {
   const {token} = useAuth();
@@ -51,9 +53,9 @@ const DashboardLawyerPage = () => {
 
   const menuItems = [
     { id: "oportunidades", texto: "Oportunidades para ti" },
-    { id: "publicadas", texto: "Publicadas recientemente" },
+    { id: "recientes", texto: "Publicadas recientemente" },
     { id: "invitaciones", texto: "Invitaciones" },
-    { id: "guardados", texto: "Guardados" },
+    // { id: "guardados", texto: "Guardados" },
     { id: "postulaciones", texto: "Postulaciones" },
   ];
 
@@ -91,18 +93,21 @@ const DashboardLawyerPage = () => {
   }, []);
 
   const handleServicioChangue = (newValue: string) => {
-    setFiltroServicio(Number(newValue));
-    filtrarAbogados(filtroEspecialidad, Number(newValue), filtroIndustria);
+    const nuevaServicio = newValue === 'todos' ? null : Number(newValue);
+    setFiltroServicio(nuevaServicio);
+    filtrarAbogados(filtroEspecialidad, nuevaServicio, filtroIndustria);
   };
 
   const handleEspecialidadChange = (selectedValue: string) => {
-    setFiltroEspecialidad(Number(selectedValue));
-    filtrarAbogados(Number(selectedValue), filtroServicio, filtroIndustria);
+    const nuevaEspecialidad = selectedValue === 'todos' ? null : Number(selectedValue);
+    setFiltroEspecialidad(nuevaEspecialidad);
+    filtrarAbogados(nuevaEspecialidad, filtroServicio, filtroIndustria);
   };
 
   const handleIndustriaChange = (selectedValue: string) => {
-    setFiltroIndustria(Number(selectedValue));
-    filtrarAbogados(filtroEspecialidad, filtroServicio, Number(selectedValue));
+    const nuevaIndustria = selectedValue === 'todos' ? null : Number(selectedValue);
+    setFiltroIndustria(nuevaIndustria);
+    filtrarAbogados(filtroEspecialidad, filtroServicio, nuevaIndustria);
   };
 
   const filtrarAbogados = (especialidadId: number | null, servicioId: number | null, industriaId: number | null ) => {
@@ -208,6 +213,7 @@ const DashboardLawyerPage = () => {
                               <SelectValue placeholder="Selecciona especialidad" />
                             </SelectTrigger>
                             <SelectContent>
+                              <SelectItem value={`todos`}>Todos</SelectItem>
                               {state.especialidades.map((especialidad) => (
                                 <SelectItem key={especialidad.id} value={`${especialidad.id}`}>
                                   {especialidad.nombre}
@@ -225,6 +231,7 @@ const DashboardLawyerPage = () => {
                               <SelectValue placeholder="Selecciona industria" />
                             </SelectTrigger>
                             <SelectContent>
+                              <SelectItem value={`todos`}>Todos</SelectItem>
                               {
                                 state.industrias.map((industria)=>
                                   <SelectItem value={`${industria.id}`} key={industria.id}>{industria.nombre}</SelectItem>
@@ -238,6 +245,12 @@ const DashboardLawyerPage = () => {
                         <AccordionTrigger>Servicios</AccordionTrigger>
                         <AccordionContent>
                           <RadioGroup defaultValue={`${state.servicios[0]?.id}` || ""} onValueChange={(newValue) => handleServicioChangue(newValue)}>
+                            <div className="flex items-center space-x-2">
+                              <RadioGroupItem value="todos" id="radio-todos" />
+                              <LabelCn htmlFor="radio-todos" className="text-base font-light">
+                                  Todos
+                              </LabelCn>
+                            </div>
                             {state.servicios.map((servicio, index) => {
                               const radioId = `radio-${index}`;
                               return (
@@ -274,26 +287,21 @@ const DashboardLawyerPage = () => {
           </div>
         )}
 
-        {menuActive === "publicadas" && (
-          <div className="flex flex-col gap-8 flex-1 mt-12">
-            <ProyectItem tipe="sinPostular" />
-          </div>
+        {menuActive === "recientes" && (
+          <PublicacionesRecientes></PublicacionesRecientes>
         )}
         {menuActive === "invitaciones" && (
-          <div className="flex flex-col gap-8 flex-1 mt-12">
-            <ProyectItem tipe="sinPostular" />
-            <ProyectItem tipe="sinPostular" />
-          </div>
+          <InvitacionesOferta></InvitacionesOferta>
         )}
-        {menuActive === "guardados" && (
+        {/* {menuActive === "guardados" && (
           <div className="flex flex-col gap-8 flex-1 mt-12">
             <ProyectItem tipe="sinPostular" />
             <ProyectItem tipe="sinPostular" />
             <ProyectItem tipe="sinPostular" />
           </div>
-        )}
+        )} */}
         {menuActive === "postulaciones" && (
-          <Postulaciones abogado={token?.abogado}></Postulaciones>
+          <Postulaciones></Postulaciones>
         )}
       </div>
     </div>

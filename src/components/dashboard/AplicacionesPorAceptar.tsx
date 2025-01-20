@@ -38,9 +38,9 @@ const AplicacionesPorAceptar = () => {
   //   setOpenProyecto(ofertaId);
   // };
 
-  const aceptarOferta = (salario: number, ofertaId: number) => {
+  const aceptarOferta = (salario: number, ofertaId: number, aplicacionId: number) => {
     const clienteId = token?.cliente?.id;
-    const url = `/dashboard/cliente/pagos/${ofertaId}?monto=${salario}&clienteId=${clienteId}`;
+    const url = `/dashboard/cliente/pagos/${ofertaId}?monto=${salario}&clienteId=${clienteId}&aplicacionId=${aplicacionId}`;
     router.push(url); 
   };
 
@@ -81,7 +81,7 @@ const AplicacionesPorAceptar = () => {
                   >
                     <div className="flex gap-4 items-center">
                       <Image
-                        src={"https://www.example.com/foto-carlos.jpg"}
+                        src={`${process.env.S3_FILE_ROUTE}/${aplicacion.abogado.foto_url}`}
                         alt="img-abogado"
                         width={100}
                         height={100}
@@ -107,7 +107,7 @@ const AplicacionesPorAceptar = () => {
                           Ver perfil completo
                         </Button>
                       </Link>
-                      <Button onClick={() => aceptarOferta(aplicacion.salarioEsperado, oferta.id)}>Aceptar oferta</Button>
+                      <Button onClick={() => aceptarOferta(aplicacion.salarioEsperado, oferta.id, aplicacion.id)}>Aceptar oferta</Button>
                     </div>
                   </div>
                 ))}

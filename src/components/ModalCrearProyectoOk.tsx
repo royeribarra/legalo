@@ -7,10 +7,12 @@ import Image from "next/image";
 
 interface ModalPostulacionOkProps {
   handleModalCrearProyectoOk: () => void;
+  cerrarModalCrearProyecto: () => void;
 }
 
 const ModalCrearProyectoOk: React.FC<ModalPostulacionOkProps> = ({
   handleModalCrearProyectoOk,
+  cerrarModalCrearProyecto
 }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-20 ">
@@ -42,7 +44,7 @@ const ModalCrearProyectoOk: React.FC<ModalPostulacionOkProps> = ({
         </div>
 
         <div
-          onClick={handleModalCrearProyectoOk}
+          onClick={cerrarModalCrearProyecto}
           className="flex-none fixed lg:absolute top-4 right-4 lg:top-8 lg:right-8 w-5 h-5 bg-black flex  justify-center items-center rounded-full cursor-pointer z-20"
         >
           <IconX className="text-white w-4 h-4" />

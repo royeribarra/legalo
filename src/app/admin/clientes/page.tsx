@@ -9,6 +9,7 @@ import { IClienteBack } from '@/interfaces/Cliente.interface';
 import { IAplicacionBack } from '@/interfaces/Aplicacion.interface';
 import { IOfertaBack } from '@/interfaces/Oferta.interface';
 import { IIndustriaOferta } from '@/interfaces/Industria.interface';
+import { useToast } from '@/contexts/toastContext';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -57,6 +58,7 @@ const estados: ('Activo' | 'Inactivo')[] = ['Activo', 'Inactivo'];
 const industrias: string[] = ['Tecnología', 'Recursos Humanos', 'Derecho Penal'];
 
 function Clientes() {
+  const { showToast } = useToast();
   const [filteredData, setFilteredData] = useState<IClienteBack[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [estadoFilter, setEstadoFilter] = useState<'Activo' | 'Inactivo' | null>(null);
@@ -122,6 +124,64 @@ function Clientes() {
         <p>{telefono}</p>
       )
     },
+    {
+      title: 'Tipo Persona',
+      dataIndex: 'tipo_persona',
+      key: 'tipo_persona',
+      render: (tipo_persona: string) => (
+        <p>{tipo_persona}</p>
+      )
+    },
+    {
+      title: 'Documento',
+      dataIndex: 'documento',
+      key: 'documento',
+      render: (documento: string) => (
+        <p>{documento}</p>
+      )
+    },
+    {
+      title: 'Red Social',
+      dataIndex: 'opinion',
+      key: 'opinion',
+      render: (opinion: string) => (
+        <p>{opinion}</p>
+      )
+    },
+    {
+      title: 'Estado',
+      dataIndex: 'validado_admin',
+      key: 'validado_admin',
+      render: (validado: boolean, record: IClienteBack) => (
+        <Button
+          type="primary"
+          danger={!record.validado_admin} // Usamos el estado actualizado
+          onClick={async () => {
+            try {
+              const nuevoEstado = !record.validado_admin; // Alternar el estado
+              const data = { validado_admin: nuevoEstado };
+              const response = await clienteService.updateCliente(record.id, data); // Realizar la petición
+              
+              if(response.state){
+                record.validado_admin = nuevoEstado;
+                showToast("success", response.message, "");
+                setFilteredData((prevDataSource) =>
+                  prevDataSource.map((item) =>
+                    item.id === record.id ? { ...item, validado_admin: nuevoEstado } : item
+                  )
+                );
+              }
+              // Actualizar el estado local para reflejar el cambio en la tabla
+            } catch (error) {
+              showToast("error", "Error al actualizar el estado", "");
+              console.error('Error al actualizar el estado:', error);
+            }
+          }}
+        >
+          {record.validado_admin ? 'Activado' : 'Desactivado'}
+        </Button>
+      ),
+    }
   ];
 
   return (

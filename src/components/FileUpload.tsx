@@ -110,9 +110,9 @@ function FileUpload({ campo, stateAbogado, updateStateAbogado }: CvUploadProps) 
             </div>
           </div>
           <div className="flex items-center">
-            <Button variant="link" onClick={handleViewFile}>
+            {/* <Button variant="link" onClick={handleViewFile}>
               <Eye size={24} />
-            </Button>
+            </Button> */}
             <Button variant="link" onClick={handleRemoveFile} className="ml-2">
               <Trash size={24} />
             </Button>

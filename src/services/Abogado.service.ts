@@ -1,3 +1,4 @@
+import { AbogadoUpdateDTO } from "@/interfaces/Abogado.interface";
 import { MainService } from "./Main.service";
 
 export default class AbogadoService extends MainService {
@@ -25,6 +26,10 @@ export default class AbogadoService extends MainService {
     return this.get(`/all-aplicaciones/${abogadoId}`);
   }
 
+  public async getAplicaciones(abogadoId: number, status: number): Promise<any> {
+    return this.get(`/get-aplicaciones?abogadoId=${abogadoId}&status=${status}`);
+  }
+
   public async postularOferta(data: {abogadoId: number, ofertaId: number, salarioEsperado: number}): Promise<any> {
     return this.post(`/postular-oferta`, { data });
   }
@@ -37,7 +42,11 @@ export default class AbogadoService extends MainService {
     return this.post(`/update-archivos`, { correo });
   }
 
-  public async updateStateAdmin(id: number, nuevoEstado: boolean) : Promise<any>{
-    return this.put(`/edit/${id}`, { validado_admin: nuevoEstado });
+  public async updateAbogado(id: number, fieldsToUpdate: Partial<AbogadoUpdateDTO>) : Promise<any>{
+    return this.put(`/edit/${id}`, fieldsToUpdate);
+  }
+
+  public async getInvitacionesAOfertas(data: { abogadoId: number }): Promise<any> {
+    return this.post("/invitacion-a-ofertas", data);
   }
 }

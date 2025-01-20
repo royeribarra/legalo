@@ -8,14 +8,14 @@ import { useAuth } from "@/contexts/authContext";
 import { AxiosError } from "axios";
 import { IOfertaBack } from "@/interfaces/Oferta.interface";
 import Link from "next/link";
+import { Table } from "antd"; // Importar la tabla de Ant Design
+import { ColumnsType } from "antd/es/table"; // Para tipado de las columnas
 
 const OfertasActivas = () => {
-  const [expandedProyectoId, setExpandedProyectoId] = useState<number | null>(
-    null
-  );
   const [proyectos, setProyectos] = useState<IOfertaBack[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1); // Para controlar la página actual
   const { token } = useAuth();
 
   useEffect(() => {
@@ -50,51 +50,55 @@ const OfertasActivas = () => {
   if (loading) return <p>Cargando proyectos...</p>;
   if (error) return <p>Error: {error}</p>;
 
+  // Definir las columnas de la tabla
+  const columns: ColumnsType<IOfertaBack> = [
+    {
+      title: "Título del proyecto",
+      dataIndex: "titulo",
+      key: "titulo",
+      render: (text) => <span>{text}</span>,
+    },
+    {
+      title: "Tipo de servicio",
+      dataIndex: "tipo_servicio", // Asegúrate de que este campo esté disponible en tus datos
+      key: "tipo_servicio",
+      render: (text) => <span>{text}</span>,
+    },
+    {
+      title: "Documento URL",
+      dataIndex: "documento_url",
+      key: "documento_url",
+      render: (url) => (
+        <Link href={`${process.env.S3_FILE_ROUTE}/${url}`} target="_blank">
+          <Button>Ver documento</Button>
+        </Link>
+      ),
+    },
+    {
+      title: "Descripción",
+      dataIndex: "descripcion",
+      key: "descripcion",
+      render: (text) => <span>{text}</span>,
+    },
+  ];
+
+  // Paginación de la tabla (10 elementos por página)
+  const pagination = {
+    current: currentPage,
+    pageSize: 10,
+    total: proyectos.length,
+    onChange: (page: number) => setCurrentPage(page),
+  };
+
   return (
     <div className="space-y-8 overflow-x-auto">
-      {/* Cabecera de tabla */}
-      <div className="grid grid-cols-5 bg-gray-200 p-4 font-bold text-center">
-        <div>Título del proyecto</div>
-        <div>Tipo de servicio</div>
-        <div>Documento URL</div>
-        <div>Descripción</div>
-        <div>Acciones</div>
-      </div>
-
-      {proyectos.map((proyecto) => (
-        <div
-          key={proyecto.id}
-          className="border border-black p-4 flex flex-nowrap justify-between my-8"
-        >
-          <div className="grid grid-cols-4 min-w-[720px] max-w-[720px] gap-2">
-            <div className="flex items-center">
-              <span>{proyecto.titulo}</span>
-            </div>
-            <div className="flex items-center">
-              <span>{proyecto.titulo}</span>
-            </div>
-            <div className="flex items-center">
-              <Link href={`${process.env.BASE_APP_API_URL}${proyecto.documento_url}`} target="_blank"><Button>Ver documento</Button></Link>
-            </div>
-            <div className="flex items-center">
-              <span>{proyecto.descripcion}</span>
-            </div>
-          </div>
-          <div className="flex flex-nowrap gap-2">
-            <Button
-              onClick={() =>
-                setExpandedProyectoId(
-                  expandedProyectoId === proyecto.id ? null : proyecto.id
-                )
-              }
-            >
-              {expandedProyectoId === proyecto.id ? "Ocultar" : "Ver más"}{" "}
-              <ChevronDown />
-            </Button>
-            {/* <Button variant={"outline"}>Pago realizado</Button> */}
-          </div>
-        </div>
-      ))}
+      {/* Tabla de proyectos */}
+      <Table
+        columns={columns}
+        dataSource={proyectos}
+        rowKey="id"
+        pagination={pagination} // Agregar la paginación
+      />
     </div>
   );
 };

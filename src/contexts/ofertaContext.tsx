@@ -21,7 +21,8 @@ type OfertaState = {
 
 type OfertaContextType = {
   state: OfertaState;
-  updateState: (newState: Partial<OfertaState>) => void; // Permite actualizar solo propiedades específicas
+  updateState: (newState: Partial<OfertaState>) => void;
+  setDefaultValues: () => void;
 };
 
 const OfertaContext = createContext<OfertaContextType | undefined>(undefined);
@@ -82,8 +83,13 @@ export const OfertaProvider = ({ children }: OfertaProviderProps) => {
     });
   };
 
+  const setDefaultValues = () => {
+    setState(initialState);
+    localStorage.setItem("ofertaState", JSON.stringify(initialState)); // Opcional: también puedes borrar el item de localStorage si lo prefieres
+  };
+
   return (
-    <OfertaContext.Provider value={{ state, updateState }}>
+    <OfertaContext.Provider value={{ state, updateState, setDefaultValues }}>
       {children}
     </OfertaContext.Provider>
   );

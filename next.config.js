@@ -10,7 +10,10 @@ const nextConfig = {
         S3_FILE_ROUTE: process.env.S3_FILE_ROUTE
     },
     images: {
-        domains: ['http.example.com', 'localhost', 'images.example.net', 'www.example.com', 'legalo.pe'],
+        domains: [
+            'http.example.com', 'localhost', 'images.example.net', 'www.example.com', 'legalo.pe',
+            'legalo.s3.us-east-1.amazonaws.com'
+        ],
     },
 };
 

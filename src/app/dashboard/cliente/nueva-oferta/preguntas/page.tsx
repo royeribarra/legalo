@@ -13,6 +13,8 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/authContext";
 import { IArchivo } from "@/interfaces/Archivo.interface";
 import Link from "next/link";
+import { base64ToBlob } from "utils/file";
+import { fileService } from "@/services";
 
 export interface IPregunta {
   id?: number;
@@ -21,7 +23,7 @@ export interface IPregunta {
 
 const PublicarPageEight = () => {
   const router = useRouter();
-  const { state, updateState } = useOferta();
+  const { state, updateState, setDefaultValues } = useOferta();
   const { token } = useAuth();
   const [items, setItems] = useState<IPregunta[]>([]);
   const [input, setInput] = useState<string>("");
@@ -29,7 +31,12 @@ const PublicarPageEight = () => {
   const [showModalCrearProyectoOk, setModalCrearProyectoOk] = useState(false);
 
   const handleModalCrearProyectoOk = () => {
-    setModalCrearProyectoOk(!showModalCrearProyectoOk);
+    setModalCrearProyectoOk(true);
+  };
+  
+  const cerrarModalCrearProyecto = () => {
+    setModalCrearProyectoOk(false);
+    router.push("/dashboard/cliente");
   };
 
   const [suggestions, setSuggestions] = useState<IPregunta[]>([
@@ -114,6 +121,7 @@ const PublicarPageEight = () => {
       .then((data) => {
         if (data.state) {
           localStorage.removeItem("ofertaState");
+          setDefaultValues();
           setModalCrearProyectoOk(true);
         }
       })
@@ -136,29 +144,22 @@ const PublicarPageEight = () => {
     formData.append("fileId", JSON.stringify(Date.now()));
 
     try {
-      const response = await fetch(url, {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fileService.uploadDocumentoOferta(formData);
+      console.log(response)
+      // const response = await fetch(url, {
+      //   method: "POST",
+      //   body: formData,
+      // });
 
-      if (!response.ok) {
-        throw new Error(`Error en la petición: ${response.statusText}`);
-      }
+      // if (!response.ok) {
+      //   throw new Error(`Error en la petición: ${response.statusText}`);
+      // }
 
-      const data = await response.json();
-      console.log("Archivo enviado correctamente", data);
+      // const data = await response.json();
     } catch (error) {
       console.error("Error al enviar el archivo", error);
     }
   };
-
-  function base64ToBlob(base64: string, mimeType: string): Blob {
-    const byteCharacters = atob(base64.split(",")[1]);
-    const byteNumbers = Array.from(byteCharacters).map((char) =>
-      char.charCodeAt(0)
-    );
-    return new Blob([new Uint8Array(byteNumbers)], { type: mimeType });
-  }
 
   return (
     <div className="container mx-auto p-4 lg:p-8 m-8 lg:w-[600px]">
@@ -225,6 +226,7 @@ const PublicarPageEight = () => {
       {showModalCrearProyectoOk && (
         <ModalCrearProyectoOk
           handleModalCrearProyectoOk={handleModalCrearProyectoOk}
+          cerrarModalCrearProyecto={cerrarModalCrearProyecto}
         />
       )}
     </div>

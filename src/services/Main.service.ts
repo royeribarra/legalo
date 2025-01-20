@@ -16,10 +16,20 @@ export class MainService {
   private addOptions(params?: Record<string, any>): AxiosRequestConfig {
     return {
       headers: {
-        Accept: "application/json",
+        Accept: "application/json", // Cabecera por defecto
       },
       params,
     };
+  }
+
+  private getContentType(headers?: Record<string, string>) {
+    // Si se pasa FormData, Axios se encarga automáticamente de asignar la cabecera 'Content-Type'.
+    if (headers && headers['Content-Type'] === 'multipart/form-data') {
+      return 'multipart/form-data';
+    }
+
+    // Si no se pasa Content-Type, se usa application/json por defecto
+    return 'application/json';
   }
 
   protected async get<T = unknown>(
@@ -35,26 +45,46 @@ export class MainService {
 
   protected async post<T = unknown>(
     endpoint: string,
-    data?: Record<string, any>,
+    data?: Record<string, any> | FormData, // Soporta tanto datos JSON como FormData
     headers?: Record<string, string>
   ): Promise<T> {
+    // Verifica el tipo de contenido, si no se pasa 'Content-Type', lo define según el tipo de datos.
+    const contentType = this.getContentType(headers);
+
     const response = await axios.post<T>(
       `${this.url}${endpoint}`,
       data,
-      headers ? { ...this.options, headers } : this.options
+      {
+        ...this.options,
+        headers: {
+          ...this.options.headers,
+          'Content-Type': contentType,
+          ...headers,  // Si se pasa cabecera personalizada, se combinará
+        },
+      }
     );
     return response.data;
   }
 
   protected async put<T = unknown>(
     endpoint: string,
-    data?: Record<string, any>,
+    data?: Record<string, any> | FormData, // Soporta tanto datos JSON como FormData
     headers?: Record<string, string>
   ): Promise<T> {
+    // Verifica el tipo de contenido, si no se pasa 'Content-Type', lo define según el tipo de datos.
+    const contentType = this.getContentType(headers);
+
     const response = await axios.put<T>(
       `${this.url}${endpoint}`,
       data,
-      headers ? { ...this.options, headers } : this.options
+      {
+        ...this.options,
+        headers: {
+          ...this.options.headers,
+          'Content-Type': contentType,
+          ...headers,  // Si se pasa cabecera personalizada, se combinará
+        },
+      }
     );
     return response.data;
   }

@@ -22,6 +22,7 @@ const CheckoutPage = () => {
   // Parámetros de consulta (query strings)
   const monto = searchParams.get("monto");
   const clienteId = searchParams.get("clienteId");
+  const aplicacionId = searchParams.get("aplicacionId");
 
   async function fetchPagarOferta() {
     try {

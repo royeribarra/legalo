@@ -88,8 +88,14 @@ export default function AbogadoDetalle() {
         </div>
 
         {/* Tabs */}
-        <Tabs.Root defaultValue="habilidades" className="mt-8" onValueChange={handleTabChange}>
+        <Tabs.Root defaultValue="documentos" className="mt-8" onValueChange={handleTabChange}>
           <Tabs.List className="flex space-x-4 border-b border-gray-300 pb-2">
+            <Tabs.Trigger 
+              value="documentos" 
+              className={`tab ${selectedTab === "documentos" ? "bg-blue-600 text-white" : "bg-transparent text-black"}`}
+            >
+              Documentos
+            </Tabs.Trigger>
             <Tabs.Trigger 
               value="habilidades" 
               className={`tab ${selectedTab === "habilidades" ? "bg-blue-600 text-white" : "bg-transparent text-black"}`}
@@ -105,11 +111,20 @@ export default function AbogadoDetalle() {
             <Tabs.Trigger value="experiencias" className={`tab ${selectedTab === "experiencias" ? "bg-blue-600 text-white" : "bg-transparent text-black"}`}>
               Experiencias
             </Tabs.Trigger>
-            <Tabs.Trigger value="video" className={`tab ${selectedTab === "experiencias" ? "bg-blue-600 text-white" : "bg-transparent text-black"}`}>
+            <Tabs.Trigger value="video" className={`tab ${selectedTab === "video" ? "bg-blue-600 text-white" : "bg-transparent text-black"}`}>
               Video
             </Tabs.Trigger>
           </Tabs.List>
-
+          <Tabs.Content value="documentos" className="mt-4">
+            <div className="p-2">
+              <Link href={`${process.env.S3_FILE_ROUTE}/${abogado.cv_url}`}>
+                <Button>Curriculum Vitae</Button>
+              </Link>
+            </div>
+            <div className="p-2">
+              <Link href={`${process.env.S3_FILE_ROUTE}/${abogado.cul_url}`}><Button>CUL</Button></Link>
+            </div>
+          </Tabs.Content>
           {/* Contenido de las pestañas */}
           <Tabs.Content value="habilidades" className="mt-4">
             <h2 className="font-bold">Habilidades Blandas</h2>
@@ -159,7 +174,7 @@ export default function AbogadoDetalle() {
             <h2 className="font-bold">Video</h2>
             <div>
               <video
-                src={`${process.env.BASE_APP_API_URL}${abogado.video_url}` }
+                src={`${process.env.S3_FILE_ROUTE}/${abogado.video_url}` }
                 controls
                 width="600"
                 style={{ border: '1px solid black', borderRadius: '8px' }}

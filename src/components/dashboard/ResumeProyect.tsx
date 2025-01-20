@@ -18,12 +18,12 @@ const ResumeProyect = ({ inviteProyect, oferta }: ProyectProps) => {
         </h2>
 
         <div className="flex gap-4 justify-end mb-4 lg:mb-0">
-          <Button
+          {/* <Button
             variant="outline"
             className="text-sm lg:text-lg h-9 lg:h-[42px] rounded-full"
           >
             Guardar
-          </Button>
+          </Button> */}
           <Link href={`/dashboard/abogado/proyecto/${oferta.id}`}>
             <Button className="text-sm lg:text-lg h-9 lg:h-[42px] rounded-full">
               Ver proyecto
@@ -33,9 +33,11 @@ const ResumeProyect = ({ inviteProyect, oferta }: ProyectProps) => {
       </div>
       <div className="text-sx lg:text-base">
         <p>Descripción de proyecto: </p>
-        <p>
-        {oferta.descripcion}
-        </p>
+        <p className="line-clamp-2">{oferta.descripcion}</p>
+      </div>
+      <div className="text-sx lg:text-base">
+        <p>Presupuesto: </p>
+        <p>{oferta.salario_maximo}</p>
       </div>
       <div className="flex gap-4 flex-wrap">
         {/* <Button

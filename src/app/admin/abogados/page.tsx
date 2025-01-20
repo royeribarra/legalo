@@ -13,6 +13,7 @@ import { IAbogadoBack } from '@/interfaces/Abogado.interface';
 import { IEspecialidadAbogado } from '@/interfaces/Especialidad.interface';
 import { IServicioAbogado } from '@/interfaces/Servicio.interface';
 import Link from 'next/link';
+import { useToast } from '@/contexts/toastContext';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -61,6 +62,7 @@ const estados: ('Activo' | 'Inactivo')[] = ['Activo', 'Inactivo'];
 const industrias: string[] = ['Tecnología', 'Recursos Humanos', 'Derecho Penal'];
 
 function Abogados() {
+  const { showToast } = useToast();
   const [filteredData, setFilteredData] = useState<IAbogadoBack[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [estadoFilter, setEstadoFilter] = useState<'Activo' | 'Inactivo' | null>(null);
@@ -90,8 +92,7 @@ function Abogados() {
 
   async function fetchOfertas() {
     try {
-      const params = { validado_admin: true };
-      const data = await abogadoService.obtenerTodos(params);
+      const data = await abogadoService.obtenerTodos();
       setFilteredData(data);
     } catch (error) {
       console.error("Error al obtener las ofertas:", error);
@@ -133,11 +134,13 @@ function Abogados() {
       key: 'especialidades',
       render: (especialidades: IEspecialidadAbogado[]) => (
         <div>
+          <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}>
           {
             especialidades.map((especialidad)=>
-              <p key={especialidad.id}>{especialidad.especialidad.nombre}</p>
+              <li key={especialidad.id}>{especialidad.especialidad.nombre}</li>
             )
           }
+          </ul>
         </div>
       )
     },
@@ -147,11 +150,13 @@ function Abogados() {
       key: 'servicios',
       render: (servicios: IServicioAbogado[]) => (
         <div>
+          <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}>
           {
             servicios.map((servicio)=>
-              <p>{servicio.servicio.nombre}</p>
+              <li>{servicio.servicio.nombre}</li>
             )
           }
+          </ul>
         </div>
       )
     },
@@ -161,11 +166,13 @@ function Abogados() {
       key: 'industrias',
       render: (industrias: IIndustriaAbogado[]) => (
         <div>
+          <ul style={{ listStyleType: 'disc', paddingLeft: '20px' }}>
           {
             industrias.map((industria)=>
-              <p>{industria.industria.nombre}</p>
+              <li>{industria.industria.nombre}</li>
             )
           }
+          </ul>
         </div>
       )
     },
@@ -206,21 +213,33 @@ function Abogados() {
       render: (validado: boolean, record: IAbogadoBack) => (
         <Button
           type="primary"
-          danger={!validado}
+          danger={!record.validado_admin} // Usamos el estado actualizado
           onClick={async () => {
             try {
-              const nuevoEstado = !validado;
-              await abogadoService.updateStateAdmin(record.id, nuevoEstado);
-              record.validado_admin = nuevoEstado; // Actualiza el estado local si es necesario.
+              const nuevoEstado = !record.validado_admin;
+              const data = { validado_admin: nuevoEstado };
+              const response = await abogadoService.updateAbogado(record.id, data); // Realizar la petición
+              
+              if(response.state){
+                record.validado_admin = nuevoEstado;
+                showToast("success", response.message, "");
+                setFilteredData((prevDataSource) =>
+                  prevDataSource.map((item) =>
+                    item.id === record.id ? { ...item, validado_admin: nuevoEstado } : item
+                  )
+                );
+              }
+              // Actualizar el estado local para reflejar el cambio en la tabla
             } catch (error) {
+              showToast("error", "Error al actualizar el estado", "");
               console.error('Error al actualizar el estado:', error);
             }
           }}
         >
-          {validado ? 'Activado' : 'Desactivado'}
+          {record.validado_admin ? 'Activado' : 'Desactivado'}
         </Button>
       ),
-    },
+    }
   ];
 
   return (

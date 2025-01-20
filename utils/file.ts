@@ -39,7 +39,6 @@ export const handleFileUpload = (
   reader.readAsDataURL(selectedFile);
 };
 
-
 export function base64ToBlob(base64: string, mimeType: string): Blob {
   const byteCharacters = atob(base64.split(",")[1]);
   const byteNumbers = Array.from(byteCharacters).map((char) =>
