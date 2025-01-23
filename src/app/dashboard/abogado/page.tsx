@@ -36,6 +36,7 @@ import Postulaciones from "@/components/dashboard/abogado/Postulaciones";
 import { useAuth } from "@/contexts/authContext";
 import PublicacionesRecientes from "@/components/dashboard/abogado/PublicacionesRecientes";
 import InvitacionesOferta from "@/components/dashboard/abogado/InvitacionesOferta";
+import TrabajosAbogado from "@/components/dashboard/abogado/Trabajos";
 
 const DashboardLawyerPage = () => {
   const {token} = useAuth();
@@ -57,6 +58,7 @@ const DashboardLawyerPage = () => {
     { id: "invitaciones", texto: "Invitaciones" },
     // { id: "guardados", texto: "Guardados" },
     { id: "postulaciones", texto: "Postulaciones" },
+    { id: "trabajos", texto: "Trabajos" },
   ];
 
   const handleFilter = () => {
@@ -302,6 +304,9 @@ const DashboardLawyerPage = () => {
         )} */}
         {menuActive === "postulaciones" && (
           <Postulaciones></Postulaciones>
+        )}
+        {menuActive === "trabajos" && (
+          <TrabajosAbogado></TrabajosAbogado>
         )}
       </div>
     </div>

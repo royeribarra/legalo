@@ -12,9 +12,6 @@ import { IAbogadoBack } from "@/interfaces/Abogado.interface";
 import { useAuth } from "@/contexts/authContext";
 import { IAplicacionBack } from "@/interfaces/Aplicacion.interface";
 
-
-
-
 function Postulaciones ()
 {
   const { token } = useAuth();

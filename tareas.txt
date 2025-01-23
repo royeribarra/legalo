@@ -1,12 +1,35 @@
-1. Busqueda, debe actuar sobre las industrias, especialidades y servicios.
-1.1. Similitud de 70%
-1.2. Si no encuentra, que lo redirija y le muestre "o opciones encontradas", "por favor use el filtro"
-2. Debe marcar el filtro en la seleccion
-3. Boton para quitar filtros o mostrar todos
-4. cuando te mueves desde "descubre tu salario o monto", el div  selecionado centrar mejor
+## revisar el guardado de prespeusto desde la aplicacion
+## actualizar es estado de la aplicacion, cuando se acepte la aplicacion
+## En oportunidades para ti: que sean solo respecto a servicios y especialiades (el abogado debe tener almenos una de esas para que le salga el filtro)
+## en publicadas recientemente: 
+## en tabla de trabajos modificacion fechas: fecha inicio y fecha fin, aplicaciones, 
+## revisar imagenes de usuarios, clientes, abogados
+## libro de reclamaciones con FORMULARIO
+
+##Te paso el listado de bancos incluyendo cajas, por sugerencia de una abogada que no es de Lima: Interbank
+BCP (Banco de Crédito del Perú)
+BBVA (Banco Bilbao Vizcaya Argentaria)
+Scotiabank
+Banco Pichincha
+Banco de la Nación
+BanBif
+Banco GNB Perú
+Banco Ripley
+Banco Falabella
+Mibanco
+Caja Arequipa
+Caja Trujillo
+Caja Piura
+Caja Huancayo
+Caja Cusco
+Caja Tacna
+Caja Sullana
+Caja Ica
+Caja Centro
+Caja Metropolitana
+Caja Los Andes
 
 
-
-### FORMULARIO DE REGISTRO DE PROGRESO DE TRABAJO
-1. Campos: fecha de registro, porcentaje, comentario, documento adjunto
-2. Listar en la lista de admin
+1. Un abogado puede aplicar a una oferta.
+2. Un abogado puede recibir una invitacion a una oferta.
+3. Cuando el abogado acepta una invitacion, se genera automaticamente la aplicacion.
