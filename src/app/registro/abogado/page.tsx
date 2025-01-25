@@ -229,12 +229,13 @@ function RegisterLawyer() {
               <Progress value={33} className="mx-auto mb-4 h-2" />
               <p className="text-left">Paso 1/3</p>
             </div>
-            <h2 className="font-bold text-3xl lg:text-5xl font-nimbus">
-              Bienvenido a <span className="italic">Legalo</span>
+            <h2 className="text-3xl lg:text-5xl font-nimbus mt-4 text-center">
+              Bienvenido a Legalo 👋
             </h2>
-            <h3 className="lg:text-lg lg:mb-8">
+            <p className="text-center">
               Conecta con clientes y haz crecer tu práctica legal.
-            </h3>
+            </p>
+            <h3 className="lg:text-[16px] font-b">Datos personales</h3>
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -279,8 +280,9 @@ function RegisterLawyer() {
                       <FormItem>
                         <FormLabel>Apellidos</FormLabel>
                         <FormControl>
-                          <Input 
-                            placeholder="Apellidos" {...field}
+                          <Input
+                            placeholder="Apellidos"
+                            {...field}
                             onKeyDown={(e) => {
                               if (!/^[a-zA-Z\s]*$/.test(e.key)) {
                                 e.preventDefault();
@@ -302,10 +304,7 @@ function RegisterLawyer() {
                       <FormItem>
                         <FormLabel>DNI</FormLabel>
                         <FormControl>
-                          <Input
-                            maxLength={8}
-                            placeholder="DNI" {...field} 
-                          />
+                          <Input maxLength={8} placeholder="DNI" {...field} />
                         </FormControl>
                         <FormDescription></FormDescription>
                         <FormMessage />
@@ -336,7 +335,7 @@ function RegisterLawyer() {
                   name="location"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Selecciona tu departamento</FormLabel>
+                      <FormLabel>Ciudad</FormLabel>
                       <FormControl>
                         <Select
                           value={field.value} // Conecta el valor actual al formulario
@@ -346,11 +345,16 @@ function RegisterLawyer() {
                             {field.value ? (
                               <span>
                                 {
-                                  departamentosPeru.find((departamento) => departamento.nombre === field.value)?.nombre
+                                  departamentosPeru.find(
+                                    (departamento) =>
+                                      departamento.nombre === field.value
+                                  )?.nombre
                                 }
                               </span>
                             ) : (
-                              <span className="text-gray-400">Selecciona una opción</span>
+                              <span className="text-gray-400">
+                                Ingresa tu ciudad
+                              </span>
                             )}
                           </SelectTrigger>
                           <SelectContent>
