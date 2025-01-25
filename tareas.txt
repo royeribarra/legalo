@@ -31,5 +31,30 @@ Caja Los Andes
 
 
 1. Un abogado puede aplicar a una oferta.
+    Estados Oferta:
+        - creado
+        - asignada
+        - cerrada
+        - cancelada
+    Estados Invitacion:
+        - pendiente (aquí el abogado tendría que llenar todo el flujo de enviar postulacion para que pase a aceptada?)
+        - aceptada
+        - rechazada
+    Estados trabajos
+        - creada
+        - progreso
+        - completado
+        - cancelado
+    Estados aplicacion
+        - pendiente
+        - rechazada
+        - aceptada
+        - cerrada
+
 2. Un abogado puede recibir una invitacion a una oferta.
 3. Cuando el abogado acepta una invitacion, se genera automaticamente la aplicacion.
+4. Cuando el cliente acepta una aplicacion:
+    -el resto de aplicaciones se cancelan
+    -la oferta se cancela o se marca en un estado cerrado
+
+## Si el abogado tiene el grado bachiller  y estudiante solo puede ver ofertas con servicio: "practicas profesionales"

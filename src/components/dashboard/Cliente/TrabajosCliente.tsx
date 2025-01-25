@@ -7,24 +7,24 @@ import {
   } from "@/components/ui/accordion";
   import ProyectItem from "@/components/dashboard/ProyectItem";
   import { useEffect, useState } from "react";
-  import { abogadoService, aplicacionService } from "@/services";
+  import { abogadoService, aplicacionService, clienteService, ofertaservice } from "@/services";
   import { IAbogadoBack } from "@/interfaces/Abogado.interface";
   import { useAuth } from "@/contexts/authContext";
   import { IAplicacionBack } from "@/interfaces/Aplicacion.interface";
 import { ITrabajoBack } from "@/interfaces/Trabajo.interface";
 import TrabajoItem from "../TrabajoItem";
   
-  function TrabajosAbogado ()
+  function TrabajosCliente()
   {
     const { token } = useAuth();
     const [trabajos, setTrabajos] = useState<ITrabajoBack[]>([]);
   
     async function getTrabajos(){
-      if(token?.abogado?.id){
+      if(token?.cliente?.id){
         const data = {
-          abogadoId: token.abogado.id
+          clienteId: token.cliente.id
         }
-        const response = await abogadoService.getTrabajos(data);
+        const response = await clienteService.getTrabajos(data);
         setTrabajos(response.data);
       }
     }
@@ -53,4 +53,4 @@ import TrabajoItem from "../TrabajoItem";
     )
   }
   
-  export default TrabajosAbogado;
+  export default TrabajosCliente;

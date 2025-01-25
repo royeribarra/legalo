@@ -44,7 +44,7 @@ const DashboardLawyerPage = () => {
   const { state } = useDashboardAbogado();
   const [menuActive, setMenuActive] = useState("oportunidades");
   const [ofertas, setOfertas] = useState<IOfertaBack[]>([]);
-  const [ofertasFiltradas, setAbogadosFiltrados] = useState<IOfertaBack[]>([]);
+  const [ofertasFiltradas, setOfertasFiltradas] = useState<IOfertaBack[]>([]);
   const [ofertaPrevioInvitado, setOfertaPrevioInvitado] = useState<number>(0);
   const [inviteProyectModal, setInviteProyectModal] = useState(false);
 
@@ -71,7 +71,6 @@ const DashboardLawyerPage = () => {
   };
 
   useEffect(() => {
-    // Fitro contraido por defecto en mobile
     const mediaQuery = window.matchMedia("(min-width: 1024px)");
     setOpenFilter(mediaQuery.matches);
     const handleChange = (e: MediaQueryListEvent) => setOpenFilter(e.matches);
@@ -79,19 +78,21 @@ const DashboardLawyerPage = () => {
     return () => mediaQuery.removeEventListener("change", handleChange);
   }, []);
 
-  async function fetchAbogados() {
+  async function fetchOfertas() {
     try {
-      const data = await ofertaservice.obtenerTodos();
-      setOfertas(data);
-      setAbogadosFiltrados(data);
-      console.log(data)
+      const data = {
+        estado: 'creada'
+      };
+      const response = await ofertaservice.obtenerTodos(data);
+      setOfertas(response);
+      setOfertasFiltradas(response);
     } catch (error) {
       console.error("Error al obtener el detalle:", error);
     }
   }
 
   useEffect(()=> {
-    fetchAbogados();
+    fetchOfertas();
   }, []);
 
   const handleServicioChangue = (newValue: string) => {
@@ -137,7 +138,7 @@ const DashboardLawyerPage = () => {
         )
       );
     }
-    setAbogadosFiltrados(filtrados);
+    setOfertasFiltradas(filtrados);
   };
 
   return (
@@ -271,13 +272,6 @@ const DashboardLawyerPage = () => {
                   </div>
                 </div>
               )}
-
-              {/* <div className="flex flex-col gap-8 flex-1">
-                <ResumeProyect />
-                <ResumeProyect />
-                <ResumeProyect />
-                <ResumeProyect />
-              </div> */}
               <div className="flex flex-col gap-8 flex-1 mt-12">
                   {
                     ofertasFiltradas.map((oferta)=>
@@ -295,13 +289,6 @@ const DashboardLawyerPage = () => {
         {menuActive === "invitaciones" && (
           <InvitacionesOferta></InvitacionesOferta>
         )}
-        {/* {menuActive === "guardados" && (
-          <div className="flex flex-col gap-8 flex-1 mt-12">
-            <ProyectItem tipe="sinPostular" />
-            <ProyectItem tipe="sinPostular" />
-            <ProyectItem tipe="sinPostular" />
-          </div>
-        )} */}
         {menuActive === "postulaciones" && (
           <Postulaciones></Postulaciones>
         )}

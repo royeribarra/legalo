@@ -8,6 +8,7 @@ import { IOfertaBack } from "@/interfaces/Oferta.interface";
 import { useAuth } from "@/contexts/authContext";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { clienteService } from "@/services";
 
 const AplicacionesPorAceptar = () => {
   const { token } = useAuth();
@@ -18,12 +19,19 @@ const AplicacionesPorAceptar = () => {
   // Función para obtener las ofertas con aplicaciones
   const fetchOfertasConAplicaciones = async () => {
     try {
-      const response = await fetch(`${process.env.BASE_APP_API_URL}/ofertas/cliente/${token?.cliente?.id}/con-aplicaciones`);
-      if (!response.ok) {
-        throw new Error("Error al obtener las ofertas");
+      if(token?.cliente?.id)
+      {
+        const data = {
+          clienteId: token?.cliente?.id
+        };
+        const response = await clienteService.getOfertasConAplicaciones(data);
+        // const response = await fetch(`${process.env.BASE_APP_API_URL}/ofertas/cliente/${token?.cliente?.id}/con-aplicaciones`);
+        // if (!response.ok) {
+        //   throw new Error("Error al obtener las ofertas");
+        // }
+        // const data = await response.json();
+        setOfertasConAplicaciones(response);
       }
-      const data = await response.json();
-      setOfertasConAplicaciones(data);
     } catch (error) {
       console.error("Error al obtener las ofertas con aplicaciones:", error);
     }

@@ -46,7 +46,7 @@ const AbogadoResumeCard = ({ inviteProyect, abogado }: InviteProyectProps) => {
       <div className="flex flex-col-reverse lg:flex-row lg:justify-between">
         <div className="flex gap-4 items-center">
           <Image
-            src="/assets/images/face-6.jpeg"
+            src={`${process.env.S3_FILE_ROUTE}/${abogado.foto_url}`}
             alt="img-abogado"
             width={100}
             height={100}

@@ -26,11 +26,11 @@ export default class AbogadoService extends MainService {
     return this.get(`/all-aplicaciones/${abogadoId}`);
   }
 
-  public async getAplicaciones(data: {abogadoId: number, status: number}): Promise<any> {
+  public async getAplicaciones(data: {abogadoId: number, estado: string}): Promise<any> {
     return this.post(`/aplicaciones`, data);
   }
 
-  public async getTrabajos(data: {abogadoId: number}): Promise<any> {
+  public async getTrabajos(data: {abogadoId: number, estado?: string}): Promise<any> {
     return this.post(`/trabajos`, data);
   }
 
