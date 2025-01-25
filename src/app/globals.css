@@ -192,3 +192,11 @@ body {
   background-color: black;
   color: white;
 }
+
+.btn-info {
+  display: none;
+}
+
+[data-state="active"].perfil-info .btn-info {
+  display: block;
+}

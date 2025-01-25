@@ -174,12 +174,12 @@ const RegisterClient = () => {
       documento: "",
       password: "",
       rsocial: "natural",
-      howDiscover: "facebook"
+      howDiscover: "facebook",
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
+    console.log(values);
     const data = {
       nombres: values.names,
       apellidos: values.lastNames,
@@ -204,19 +204,18 @@ const RegisterClient = () => {
         if (data.state) {
           localStorage.clear();
           router.push("/registro/cliente/email-verify");
-        }else {
+        } else {
           showToast("error", "Error", data.message || "Ocurrió un error.");
         }
       })
-      .catch((err) => 
-        {
-          console.log(err);
-          showToast("error",
-            "Error",
-            "Ocurrió un error al momento del registro."
-          );
-        }
-      );
+      .catch((err) => {
+        console.log(err);
+        showToast(
+          "error",
+          "Error",
+          "Ocurrió un error al momento del registro."
+        );
+      });
   }
 
   function onError(errors: FieldValues) {
@@ -250,10 +249,12 @@ const RegisterClient = () => {
               <Progress value={50} className="mx-auto mb-4 h-2" />
               <p className="text-left">Paso 1/2</p>
             </div>
-            <h2 className="text-3xl lg:text-5xl font-nimbus mt-4">
-              Bienvenido a <span className="italic">Legalo</span> 👋
+            <h2 className="text-3xl lg:text-5xl font-nimbus mt-4 text-center">
+              Bienvenido a Legalo 👋
             </h2>
-            <h3 className=" lg:text-[28px]">Datos personales</h3>
+            <p className="text-center">
+              Conecta con clientes y haz crecer tu práctica legal.
+            </p>
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit, onError)}
@@ -471,12 +472,18 @@ const RegisterClient = () => {
                     <FormItem>
                       <FormLabel>¿Cómo oíste de nosotros? (OPCIONAL)</FormLabel>
                       <FormControl>
-                        <Select 
-                          value={field.value} 
+                        <Select
+                          value={field.value}
                           onValueChange={field.onChange}
                         >
                           <SelectTrigger>
-                            {field.value ? <span>{field.value}</span> : <span className="text-gray-400">Selecciona una opción</span>}
+                            {field.value ? (
+                              <span>{field.value}</span>
+                            ) : (
+                              <span className="text-gray-400">
+                                Selecciona una opción
+                              </span>
+                            )}
                           </SelectTrigger>
                           <SelectContent>
                             <SelectItem value="facebook">Facebook</SelectItem>

@@ -60,8 +60,10 @@ const CompleteProfileLawyerPage: React.FC = () => {
   };
 
   const eliminarExperiencia = (experiencia: IExperiencia) => {
-    const newLista = stateAbogado.experiencias.filter((item: IExperiencia) => item.id !== experiencia.id);
-    updateStateAbogado({experiencias: newLista })
+    const newLista = stateAbogado.experiencias.filter(
+      (item: IExperiencia) => item.id !== experiencia.id
+    );
+    updateStateAbogado({ experiencias: newLista });
   };
 
   const editarEducacion = (educacion: IEstudio) => {
@@ -70,54 +72,36 @@ const CompleteProfileLawyerPage: React.FC = () => {
   };
 
   const eliminarEducacion = (educacion: IEstudio) => {
-    const newLista = stateAbogado.estudios.filter((item: Educacion) => item.id !== educacion.id);
-    updateStateAbogado({estudios: newLista })
+    const newLista = stateAbogado.estudios.filter(
+      (item: Educacion) => item.id !== educacion.id
+    );
+    updateStateAbogado({ estudios: newLista });
   };
 
-  const nextStep = async() => {
+  const nextStep = async () => {
     if (stepNumber === 4) {
-      if(!stateAbogado.archivo_imagen) {
-        showToast(
-          "error",
-          "Archivo Imagen",
-          "Sube una imagen"
-        );
+      if (!stateAbogado.archivo_imagen) {
+        showToast("error", "Archivo Imagen", "Sube una imagen");
         return;
       }
-      if(!stateAbogado.archivo_cv) {
-        showToast(
-          "error",
-          "Archivo CV",
-          "Sube un archivo"
-        );
+      if (!stateAbogado.archivo_cv) {
+        showToast("error", "Archivo CV", "Sube un archivo");
         return;
       }
-      if(!stateAbogado.archivo_cul) {
-        showToast(
-          "error",
-          "Archivo CUL",
-          "Sube un archivo"
-        );
+      if (!stateAbogado.archivo_cul) {
+        showToast("error", "Archivo CUL", "Sube un archivo");
         return;
       }
-      if(!stateAbogado.servicios.length) {
-        showToast(
-          "error",
-          "Servicios",
-          "Selecciona una opción como mínimo."
-        );
+      if (!stateAbogado.servicios.length) {
+        showToast("error", "Servicios", "Selecciona una opción como mínimo.");
         return;
       }
-      if(!stateAbogado.industrias.length) {
-        showToast(
-          "error",
-          "Industrias",
-          "Selecciona una opción como mínimo."
-        );
+      if (!stateAbogado.industrias.length) {
+        showToast("error", "Industrias", "Selecciona una opción como mínimo.");
         return;
       }
 
-      if(!stateAbogado.habilidades_blandas.length) {
+      if (!stateAbogado.habilidades_blandas.length) {
         showToast(
           "error",
           "Habilidades Blandas",
@@ -126,7 +110,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
         return;
       }
 
-      if(!stateAbogado.habilidades_duras.length) {
+      if (!stateAbogado.habilidades_duras.length) {
         showToast(
           "error",
           "Habilidades Duras",
@@ -137,34 +121,54 @@ const CompleteProfileLawyerPage: React.FC = () => {
 
       if (stateAbogado.archivo_cv) {
         const url = `${process.env.BASE_APP_API_URL}/temp-files/upload-abogado-cv`;
-        enviarArchivo(stateAbogado.archivo_cv, stateAbogado.dni, stateAbogado.email, 'archivo_cv', url);
+        enviarArchivo(
+          stateAbogado.archivo_cv,
+          stateAbogado.dni,
+          stateAbogado.email,
+          "archivo_cv",
+          url
+        );
       }
 
       if (stateAbogado.archivo_cul) {
         const url = `${process.env.BASE_APP_API_URL}/temp-files/upload-abogado-cul`;
-        enviarArchivo(stateAbogado.archivo_cul, stateAbogado.dni, stateAbogado.email, 'archivo_cul', url);
+        enviarArchivo(
+          stateAbogado.archivo_cul,
+          stateAbogado.dni,
+          stateAbogado.email,
+          "archivo_cul",
+          url
+        );
       }
 
       if (stateAbogado.archivo_imagen) {
         const url = `${process.env.BASE_APP_API_URL}/temp-files/upload-abogado-imagen`;
-        enviarArchivo(stateAbogado.archivo_imagen, stateAbogado.dni, stateAbogado.email, 'archivo_imagen', url);
+        enviarArchivo(
+          stateAbogado.archivo_imagen,
+          stateAbogado.dni,
+          stateAbogado.email,
+          "archivo_imagen",
+          url
+        );
       }
 
       if (true) {
-        const experiencias = stateAbogado.experiencias.map((experiencia: IExperiencia) => ({
-          institucion: experiencia.empresa,
-          fecha_fin: experiencia.hasta_fecha,
-          fecha_inicio: experiencia.desde_fecha,
-          descripcion: experiencia.descripcion,
-          titulo: experiencia.titulo
-        }));
+        const experiencias = stateAbogado.experiencias.map(
+          (experiencia: IExperiencia) => ({
+            institucion: experiencia.empresa,
+            fecha_fin: experiencia.hasta_fecha,
+            fecha_inicio: experiencia.desde_fecha,
+            descripcion: experiencia.descripcion,
+            titulo: experiencia.titulo,
+          })
+        );
         const educaciones = stateAbogado.estudios.map((estudio: IEstudio) => ({
           institucion: estudio.institucion,
           fecha_fin: estudio.hasta_fecha,
           fecha_inicio: estudio.desde_fecha,
           descripcion: estudio.descripcion,
           titulo: estudio.titulo,
-          ubicacion: estudio.ubicacion
+          ubicacion: estudio.ubicacion,
         }));
         const data = {
           nombres: stateAbogado.nombres,
@@ -184,73 +188,63 @@ const CompleteProfileLawyerPage: React.FC = () => {
           servicios: stateAbogado.servicios,
           experiencias: experiencias,
           educaciones: educaciones,
-          especialidades: stateAbogado.especialidades
+          especialidades: stateAbogado.especialidades,
         };
 
         fetch(`${process.env.BASE_APP_API_URL}/abogados/create`, {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(data)
+          body: JSON.stringify(data),
         })
-          .then(response => response.json())
-          .then(data => {
-            if(data.state){
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.state) {
               localStorage.clear();
-              router.push(`/registro/abogado/email-verify?correo=${encodeURIComponent(stateAbogado.email)}`);
-              // router.push("/registro/abogado/email-verify")
-            }else{
-              showToast(
-                "error",
-                "Registro existente",
-                ""
+              router.push(
+                `/registro/abogado/email-verify?correo=${encodeURIComponent(stateAbogado.email)}`
               );
+              // router.push("/registro/abogado/email-verify")
+            } else {
+              showToast("error", "Registro existente", "");
             }
           })
-          .catch(err=>console.log(err));
+          .catch((err) => console.log(err));
       }
-        return;
+      return;
     }
     switch (stepNumber) {
       case 1:
-        if(!stateAbogado.experiencias.length && !noExperiencia){
-          showToast(
-            "error",
-            "Falta:",
-            "Seleccionar experiencia."
-          )
-        }else if(!stateAbogado.archivo_cv) {
-          showToast(
-            "error",
-            "Falta:",
-            "Sube un CV"
-          )
-        }else{
+        if (!stateAbogado.experiencias.length && !noExperiencia) {
+          showToast("error", "Falta:", "Seleccionar experiencia.");
+        } else if (!stateAbogado.archivo_cv) {
+          showToast("error", "Falta:", "Sube un CV");
+        } else {
           setTriger("tab2");
           setStepNumber(stepNumber + 1);
         }
         break;
       case 2:
-        if(!stateAbogado.estudios.length){
-          showToast(
-            "error",
-            "Falta:",
-            "Seleccionar educación."
-          )
-        }else{
+        if (!stateAbogado.estudios.length) {
+          showToast("error", "Falta:", "Seleccionar educación.");
+        } else {
           setTriger("tab3");
           setStepNumber(stepNumber + 1);
         }
         break;
       case 3:
-        if(!stateAbogado.grado || !stateAbogado.especialidades.length || !stateAbogado.sobre_ti){
+        if (
+          !stateAbogado.grado ||
+          !stateAbogado.especialidades.length ||
+          !stateAbogado.sobre_ti
+        ) {
           showToast(
             "error",
             "Falta:",
             "Rellenar todos los campos de la especialidad."
-          )
-        }else{
+          );
+        } else {
           setTriger("tab4");
           setStepNumber(stepNumber + 1);
         }
@@ -285,7 +279,13 @@ const CompleteProfileLawyerPage: React.FC = () => {
     }
   }
 
-  const enviarArchivo = async (archivo: IArchivo, dni: string, correo: string, nombreArchivo: string, url: string) => {
+  const enviarArchivo = async (
+    archivo: IArchivo,
+    dni: string,
+    correo: string,
+    nombreArchivo: string,
+    url: string
+  ) => {
     const archivoBlob = base64ToBlob(archivo.contenido, archivo.tipo);
     const formData = new FormData();
     formData.append("nombreArchivo", nombreArchivo);
@@ -337,24 +337,32 @@ const CompleteProfileLawyerPage: React.FC = () => {
         <Progress value={100} className="mb-2 h-2" />
         <p className="text-left">Paso 3/3</p>
       </div>
-      <div>
-        <p>Campos obligatorios(*)</p>
+      <div className="my-8">
+        <h2 className="text-3xl lg:text-5xl font-nimbus mt-4">
+          Personaliza tu perfil profesional
+        </h2>
+        <p className="">
+          Esta información ayudará a los clientes a conocerte y confiar en tus
+          servicios.
+        </p>
       </div>
       <div className="border border-black p-5 my-4 rounded-xl flex flex-col md:flex-row gap-4">
-        <ImageUpload 
+        <ImageUpload
           updateStateAbogado={updateStateAbogado}
           stateAbogado={stateAbogado}
           campo={"archivo_imagen"}
         />
 
         <div className="w-full lg:w-4/6 flex flex-col justify-center">
-          <p className="font-bold">{stateAbogado.nombres + ' ' + stateAbogado.apellidos[0]+ '.'}</p>
+          <p className="font-bold">
+            {stateAbogado.nombres + " " + stateAbogado.apellidos[0] + "."}
+          </p>
           <div className="w-full flex flex-col md:flex-row gap-4">
-            <ServiceSelectAbogado 
+            <ServiceSelectAbogado
               stateAbogado={stateAbogado}
               updateStateAbogado={updateStateAbogado}
             />
-            <IndustrySelectAbogado 
+            <IndustrySelectAbogado
               stateAbogado={stateAbogado}
               updateStateAbogado={updateStateAbogado}
             />
@@ -363,7 +371,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
         <VideoUpload></VideoUpload>
       </div>
 
-      <FileUpload 
+      <FileUpload
         updateStateAbogado={updateStateAbogado}
         stateAbogado={stateAbogado}
         campo={"archivo_cul"}
@@ -378,39 +386,67 @@ const CompleteProfileLawyerPage: React.FC = () => {
           <TabsList className="flex flex-row justify-start overflow-auto lg:flex-col lg:w-1/4 h-full p-4 gap-2 bg-white pl-0 lg:items-start lg:overflow-hidden">
             <TabsTrigger
               value="tab1"
-              className="text-[#D1D1D6] w-full justify-start py-4 lg:text-lg font-bold data-[state=active]:bg-[#D9D9D9] data-[state=active]:text-black rounded-[10px]"
+              className="perfil-info text-[#D1D1D6] w-full flex-col items-start py-4 lg:text-lg font-bold data-[state=active]:bg-black data-[state=active]:text-white rounded-[10px]"
               disabled={stepNumber != 1 ? true : false}
             >
-              Experiencia laboral
+              <p className="text-[18px] mb-2 text-bold">Experiencia Laboral</p>
+              <div className="btn-info font-light">
+                <p className="text-xs text-left">Detalla tus experiencias</p>
+                <p className="text-xs text-left">laborales relevantes.</p>
+              </div>
             </TabsTrigger>
             <TabsTrigger
               value="tab2"
-              className="text-[#D1D1D6] w-full justify-start py-4 lg:text-lg font-bold data-[state=active]:bg-[#D9D9D9] data-[state=active]:text-black rounded-[10px]"
+              className="perfil-info text-[#D1D1D6] w-full flex-col items-start py-4 lg:text-lg font-bold data-[state=active]:bg-black data-[state=active]:text-white rounded-[10px]"
               disabled={stepNumber != 2 ? true : false}
             >
-              Educación
+              <p className="text-[18px] mb-2 text-bold">Educación</p>
+              <div className="btn-info font-light">
+                <p className="text-xs text-left">Añade tus títulos y</p>
+                <p className="text-xs text-left">
+                  certificaciones para destacar
+                </p>
+                <p className="text-xs text-left">tu formación académica.</p>
+              </div>
             </TabsTrigger>
             <TabsTrigger
               value="tab3"
-              className=" text-[#D1D1D6] w-full justify-start py-4 lg:text-lg font-bold data-[state=active]:bg-[#D9D9D9] data-[state=active]:text-black rounded-[10px]"
+              className="perfil-info text-[#D1D1D6] w-full flex-col items-start py-4 lg:text-lg font-bold data-[state=active]:bg-black data-[state=active]:text-white rounded-[10px]"
               disabled={stepNumber != 3 ? true : false}
             >
-              Perfil profesional
+              <p className="text-[18px] mb-2 text-bold">Perfil Profesional</p>
+              <div className="btn-info font-light">
+                <p className="text-xs text-left">Añade tus especialidades,</p>
+                <p className="text-xs text-left">
+                  nivel profesional y una breve
+                </p>
+                <p className="text-xs text-left">descripción sobre ti.</p>
+              </div>
             </TabsTrigger>
             <TabsTrigger
               value="tab4"
-              className=" text-[#D1D1D6] w-full justify-start py-4 lg:text-lg font-bold data-[state=active]:bg-[#D9D9D9] data-[state=active]:text-black rounded-[10px]"
+              className="perfil-info text-[#D1D1D6] w-full flex-col items-start py-4 lg:text-lg font-bold data-[state=active]:bg-black data-[state=active]:text-white rounded-[10px]"
               disabled={stepNumber != 4 ? true : false}
             >
-              Skills
+              <p className="text-[18px] mb-2 text-bold">Skills</p>
+              <div className="btn-info font-light">
+                <p className="text-xs text-left">Añade tus habilidades para</p>
+                <p className="text-xs text-left">complementar tu perfil</p>
+                <p className="text-xs text-left">profesional.</p>
+              </div>
             </TabsTrigger>
-            {/* <TabsTrigger
+            <TabsTrigger
               value="tab5"
-              className=" text-[#D1D1D6] w-full justify-start py-4 lg:text-lg font-bold data-[state=active]:bg-[#D9D9D9] data-[state=active]:text-black rounded-[10px]"
+              className="perfil-info text-[#D1D1D6] w-full flex-col items-start py-4 lg:text-lg font-bold data-[state=active]:bg-black data-[state=active]:text-white rounded-[10px]"
               disabled={stepNumber != 5 ? true : false}
             >
-              Documentación extra
-            </TabsTrigger> */}
+              <p className="text-[18px] mb-2 text-bold">Documentación Extra</p>
+              <div className="btn-info font-light">
+                <p className="text-xs text-left">Añade documentación</p>
+                <p className="text-xs text-left">adicional necesaria para</p>
+                <p className="text-xs text-left">completar tu perfil.</p>
+              </div>
+            </TabsTrigger>
             <p className="hidden lg:block lg:my-8 text-black text-sm">
               Campos obligatorios(*)
             </p>
@@ -433,41 +469,49 @@ const CompleteProfileLawyerPage: React.FC = () => {
                     experiencia
                   </Button>
                 </div>
-                <p>Detalla tus experiencias laborales relevantes para resaltar tu trayectoria profesional</p>
-                {stateAbogado.experiencias.map((experiencia: IExperiencia, index) => (
-                  <div className="flex gap-4 p-4" key={index}>
-                    <div className="w-1/4 flex gap-1">
-                      <p>{experiencia.desde_fecha}</p>
-                      <span>-</span>
-                      <p>{experiencia.hasta_fecha}</p>
-                    </div>
-                    <div className="w-3/4">
-                      <p>{experiencia.titulo}</p>
-                      <p>{experiencia.empresa}</p>
-                      <div className="flex gap-2 border-b border-black py-4">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="w-[120px] rounded-2xl border-black"
-                          id="editar-experiencia"
-                          onClick={() => editarExperiencia(experiencia)}
-                        >
-                          Editar
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="w-[120px] rounded-2xl border-black"
-                          onClick={() => eliminarExperiencia(experiencia)}
-                        >
-                          Eliminar
-                        </Button>
+                <p>
+                  Detalla tus experiencias laborales relevantes para resaltar tu
+                  trayectoria profesional
+                </p>
+                {stateAbogado.experiencias.map(
+                  (experiencia: IExperiencia, index) => (
+                    <div className="flex gap-4 p-4" key={index}>
+                      <div className="w-1/4 flex gap-1">
+                        <p>{experiencia.desde_fecha}</p>
+                        <span>-</span>
+                        <p>{experiencia.hasta_fecha}</p>
+                      </div>
+                      <div className="w-3/4">
+                        <p>{experiencia.titulo}</p>
+                        <p>{experiencia.empresa}</p>
+                        <div className="flex gap-2 border-b border-black py-4">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="w-[120px] rounded-2xl border-black"
+                            id="editar-experiencia"
+                            onClick={() => editarExperiencia(experiencia)}
+                          >
+                            Editar
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="w-[120px] rounded-2xl border-black"
+                            onClick={() => eliminarExperiencia(experiencia)}
+                          >
+                            Eliminar
+                          </Button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  )
+                )}
                 <div className="flex items-center space-x-2 my-4">
-                  <Checkbox id="terms" onClick={()=>setNoExperiencia(!noExperiencia)} />
+                  <Checkbox
+                    id="terms"
+                    onClick={() => setNoExperiencia(!noExperiencia)}
+                  />
                   <label
                     htmlFor="terms"
                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -476,7 +520,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
                   </label>
                 </div>
 
-                <CvUpload 
+                <CvUpload
                   updateStateAbogado={updateStateAbogado}
                   stateAbogado={stateAbogado}
                   campo={"archivo_cv"}
@@ -496,7 +540,10 @@ const CompleteProfileLawyerPage: React.FC = () => {
                   estudio
                 </Button>
               </div>
-              <p>Añade tus títulos y certificaciones para destacar tu formación académica.</p>
+              <p>
+                Añade tus títulos y certificaciones para destacar tu formación
+                académica.
+              </p>
               <div>
                 {stateAbogado.estudios.map((educacion: IEstudio, index) => (
                   <div className="flex gap-4 p-4" key={index}>
@@ -533,13 +580,13 @@ const CompleteProfileLawyerPage: React.FC = () => {
               </div>
             </TabsContent>
             <TabsContent value="tab3">
-              <AboutSection 
+              <AboutSection
                 stateAbogado={stateAbogado}
                 updateStateAbogado={updateStateAbogado}
               />
             </TabsContent>
             <TabsContent value="tab4">
-              <SkillSection 
+              <SkillSection
                 stateAbogado={stateAbogado}
                 updateStateAbogado={updateStateAbogado}
               />

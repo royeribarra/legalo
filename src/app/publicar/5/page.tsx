@@ -15,7 +15,7 @@ const PublicarPageFour = () => {
     { id: "serv-3", name: "Consultoría" },
     { id: "serv-4", name: "Patrocinio en poder judicial" },
     { id: "serv-5", name: "Patrocinio en procedimiento administrativo" },
-    { id: "serv-6", name: "Redacción de Documentos Legales" },
+    { id: "serv-6", name: "Redacción de Documentos Legales " },
     { id: "serv-7", name: "Cumplimiento Regulatorio" },
     { id: "serv-8", name: "Mediación" },
     { id: "serv-9", name: "Prácticas pre-profesionales" },

@@ -41,11 +41,11 @@ const RegisterPage = () => {
       )} */}
 
       <h2 className=" text-3xl lg:text-5xl text-left font-nimbus">
-        Únete como <span className="italic">cliente,</span>&nbsp;
-        <span className="italic">abogado</span>&nbsp;o&nbsp;estudiante
+        Únete como cliente, abogado o estudiante
       </h2>
       <p className="lg:text-lg ">
-        Únete a LEGALO: encuentra abogados especializados, futuros abogados o clientes que necesitan tu ayuda legal.
+        Únete a LEGALO: Encuentra abogados especializados, futuros abogados o
+        clientes que necesitan tu ayuda legal.
       </p>
 
       <div className="grid grid-cols-2 gap-5 lg:my-10">
@@ -65,7 +65,7 @@ const RegisterPage = () => {
             className={`${cardSelected == "client" ? "invert-100" : ""}`}
           />
           <p className="text-sm lg:text-2xl lg:mt-3">
-            Soy un cliente, buscando contratar abogados
+            Soy un cliente, buscando contratar abogados.
           </p>
           <div
             className={`absolute right-4 top-4 rounded-full w-[20px] h-[20px] flex justify-center items-center ${cardSelected == "client" ? "bg-[#007AFF]" : "border border-black"}`}
@@ -90,7 +90,7 @@ const RegisterPage = () => {
             className={`${cardSelected == "lawyer" ? "invert-100" : ""}`}
           />
           <p className="text-sm lg:text-2xl lg:mt-3">
-            Soy abogado o estudiante, buscando oportunidades
+            Soy abogado o estudiante, buscando oportunidades.
           </p>
           <div
             className={`absolute right-4 top-4 rounded-full w-[20px] h-[20px] flex justify-center items-center ${cardSelected == "lawyer" ? "bg-[#007AFF]" : "border border-black"}`}
