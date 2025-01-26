@@ -58,3 +58,11 @@ Caja Los Andes
     -la oferta se cancela o se marca en un estado cerrado
 
 ## Si el abogado tiene el grado bachiller  y estudiante solo puede ver ofertas con servicio: "practicas profesionales"
+
+
+
+
+
+1. Probar registro cliente
+2. Probar registro abogado
+3. Postular oferta - el valor esperado

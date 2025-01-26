@@ -1,19 +1,42 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { X as IconX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
+import { clienteService } from "@/services";
+import { useAuth } from "@/contexts/authContext";
 
 interface ModalPostulacionOkProps {
   handleModalCrearProyectoOk: () => void;
   cerrarModalCrearProyecto: () => void;
+  newOfertaId: number;
 }
 
 const ModalCrearProyectoOk: React.FC<ModalPostulacionOkProps> = ({
   handleModalCrearProyectoOk,
-  cerrarModalCrearProyecto
+  cerrarModalCrearProyecto,
+  newOfertaId
 }) => {
+  const { token } = useAuth();
+  async function updateDocumentoOferta() {
+    try {
+      if(token?.cliente?.id){
+        const body = {
+          clienteId: token.cliente.id,
+          ofertaId: newOfertaId
+        }
+        const response = await clienteService.updateDocumentoOferta(body);
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(()=> {
+    updateDocumentoOferta();
+  }, []);
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-20 ">
       <div className="flex flex-col lg:flex-row bg-white lg:rounded-[24px] shadow-lg relative w-full h-full overflow-y-auto lg:w-[1220px] lg:max-w-[84vw] lg:h-[830px] lg:max-h-[90vh] hidde-scrollbar">

@@ -21,4 +21,8 @@ export default class ClienteService extends MainService {
   public async getOfertasConAplicaciones(data: {clienteId: number, estado?: string}): Promise<any> {
     return this.post(`/ofertas/con-aplicaciones`, data);
   }
+
+  public async updateDocumentoOferta(data: {clienteId: number, ofertaId?: number}): Promise<any> {
+    return this.post(`/update-documento-oferta`, data);
+  }
 }

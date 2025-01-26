@@ -27,6 +27,7 @@ const PublicarPageEight = () => {
   const { token } = useAuth();
   const [items, setItems] = useState<IPregunta[]>([]);
   const [input, setInput] = useState<string>("");
+  const [newOferta, setNewOferta] = useState<number>(0);
 
   const [showModalCrearProyectoOk, setModalCrearProyectoOk] = useState(false);
 
@@ -120,6 +121,7 @@ const PublicarPageEight = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.state) {
+          setNewOferta(data.oferta.id)
           localStorage.removeItem("ofertaState");
           setDefaultValues();
           setModalCrearProyectoOk(true);
@@ -227,6 +229,7 @@ const PublicarPageEight = () => {
         <ModalCrearProyectoOk
           handleModalCrearProyectoOk={handleModalCrearProyectoOk}
           cerrarModalCrearProyecto={cerrarModalCrearProyecto}
+          newOfertaId={newOferta}
         />
       )}
     </div>
