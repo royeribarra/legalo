@@ -102,9 +102,9 @@ const PublicarPageSeven = () => {
               <Label htmlFor="r1">Rango</Label>
             </div>
             <div
-              className={`flex flex-col justify-between w-1/2 h-[90px] border rounded-lg p-4 cursor-pointer ${
+              className={`relative flex flex-col justify-between w-1/2 h-[90px] border rounded-lg p-4 cursor-pointer ${
                 selected === "monto-fijo"
-                  ? "bg-[#F6F8F7] border-black"
+                  ? "bg-[#D9D9D9] border-black"
                   : "bg-white"
               }`}
               onClick={() => setSelected("monto-fijo")}
@@ -113,52 +113,85 @@ const PublicarPageSeven = () => {
                 <RadioGroupItem value="monto-fijo" id="r2" />
               </div>
               <Label htmlFor="r2">Monto fijo</Label>
+              <div
+                className={`absolute top-[-50px] right-[25px] lg:top-[-55px] lg:right-[-100px] w-[120px] bg-white text-[#666666] gap-2 p-2 border border-[#666666] rounded-tl-[10px] rounded-tr-[10px] rounded-bl-none rounded-br-[10px] ${
+                  selected === "monto-fijo" ? "flex" : "hidden"
+                }`}
+              >
+                <IcoInfo size={14} color="#61646B" className="w-[36px]" />
+                <p className="text-xs">Se añadirá el IGV al monto ingresado</p>
+              </div>
             </div>
           </RadioGroup>
         </div>
 
         {selected === "rango" && (
-          <div className="flex gap-2">
-            <div className="w-1/2">
-              <p className="mb-2 font-bold">Desde</p>
-              <Input
-                type="text"
-                className="border-black rounded-none h-10 focus-visible:border-none"
-                value={rangoDesde}
-                onChange={(e) => setRangoDesde(e.target.value)}
-              />
+          <>
+            <div className="flex gap-2">
+              <div className="w-1/2">
+                <p className="mb-2 font-bold">Desde</p>
+                <Input
+                  type="text"
+                  className="border-black rounded-none h-10 focus-visible:border-none"
+                  value={rangoDesde}
+                  onChange={(e) => setRangoDesde(e.target.value)}
+                />
+              </div>
+              <div className="w-1/2">
+                <p className="mb-2 font-bold">Hasta</p>
+                <Input
+                  type="text"
+                  className="border-black rounded-none h-10 focus-visible:border-none"
+                  value={rangoHasta}
+                  onChange={(e) => setRangoHasta(e.target.value)}
+                />
+              </div>
             </div>
-            <div className="w-1/2">
-              <p className="mb-2 font-bold">Hasta</p>
-              <Input
-                type="text"
-                className="border-black rounded-none h-10 focus-visible:border-none"
-                value={rangoHasta}
-                onChange={(e) => setRangoHasta(e.target.value)}
-              />
+            <div className="flex items-center gap-2 my-4">
+              <IcoInfo size={16} color="#666666" />
+              <p className="text-[#666666]">
+                Te mostraremos abogados acorde al rango ingresado.
+              </p>
             </div>
-          </div>
+          </>
         )}
         {selected === "monto-fijo" && (
-          <div className="w-full">
-            <p className="mb-2 font-bold">Ingrese el monto fijo</p>
-            <Input
-              type="text"
-              className="border-black rounded-none h-10 focus-visible:border-none"
-              value={montoFijo}
-              onChange={(e) => setMontoFijo(e.target.value)}
-            />
-          </div>
+          <>
+            <div className="w-full">
+              <p className="mb-2 font-bold">Ingrese el monto fijo</p>
+              <Input
+                type="text"
+                className="border-black rounded-none h-10 focus-visible:border-none"
+                value={montoFijo}
+                onChange={(e) => setMontoFijo(e.target.value)}
+              />
+            </div>
+            <div className="flex items-center gap-2 my-4">
+              <IcoInfo size={16} color="#666666" />
+              <p className="text-[#666666]">
+                Precio incluido IGV (18%) del total.
+              </p>
+            </div>
+          </>
         )}
 
-        <div className="flex items-center gap-2 my-4">
-          <IcoInfo size={16} color="#61646B" />
-          <p>Te mostraremos abogados acorde al rango ingresado.</p>
+        <div className="flex items-center gap-2 mt-4">
+          <input
+            type="checkbox"
+            id="include-igv"
+            className="w-4 h-4 rounded border-gray-300 focus:ring-blue-500"
+          />
+          <label htmlFor="include-igv" className="text-base font-bold">
+            Prefiero que el abogado cotice
+          </label>
         </div>
 
         <div className="flex justify-between mt-16">
           <Link href="/dashboard/cliente/nueva-oferta/alcance">
-            <Button variant="outline" className="h-12 px-10 text-base rounded-[10px]">
+            <Button
+              variant="outline"
+              className="h-12 px-10 text-base rounded-[10px]"
+            >
               <ArrowLeft className="mr-2" /> Volver
             </Button>
           </Link>

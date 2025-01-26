@@ -49,8 +49,8 @@ const PublicarPageSix = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 lg:p-8 m-8 lg:w-[600px]">
-      <div className="w-full max-w-[480px] mx-auto mb-8">
+    <div className="mx-auto p-4 lg:p-8 m-8 lg:w-[800px]">
+      <div className="w-full  mb-8">
         <Progress value={100} className="mx-auto mb-4 h-2" />
         <p className="text-left">Paso 6/8</p>
       </div>
@@ -59,12 +59,12 @@ const PublicarPageSix = () => {
           Estimemos el alcance de tu trabajo
         </h1>
         <p className="mb-6">Consideremos el tamaño de tu proyecto.</p>
-        <p className="mb-4">¿Cuánto durará el trabajo?</p>
+        <p className="mb-4 font-bold">¿Cuánto durará el trabajo?</p>
 
         <div className="flex overflow-x-auto mb-4">
           <ToggleGroup
             type="single"
-            variant="squares"
+            variant="chips"
             className="gap-2"
             value={state.duracion} // Asegura que el valor seleccionado se refleje
             onValueChange={handleDuracionChange} // Actualiza la duración en el contexto
@@ -80,7 +80,7 @@ const PublicarPageSix = () => {
 
         <div className="flex items-center gap-2 mb-4">
           <IcoInfo size={16} color="#61646B" />
-          <p>
+          <p className="text-[#666666]">
             Aplicable para Patrocinio en poder judicial y procedimientos admin.
           </p>
         </div>
@@ -90,11 +90,13 @@ const PublicarPageSix = () => {
           <p>No estoy seguro de cuanto tiempo durará</p>
         </div>
 
-        <p className="mb-4">¿Qué nivel de experiencia necesitas?</p>
+        <p className="mb-4 font-bold mt-8">
+          ¿Qué nivel de experiencia necesitas?
+        </p>
         <div className="flex overflow-x-auto mb-4">
           <ToggleGroup
             type="single"
-            variant="squares"
+            variant="chips"
             className="gap-2"
             value={state.nivelExperiencia}
             onValueChange={handleNivelExperienciaChange}
@@ -109,7 +111,10 @@ const PublicarPageSix = () => {
 
       <div className="flex justify-between mt-16">
         <Link href="/dashboard/cliente/nueva-oferta/servicio">
-          <Button variant="outline" className="h-12 px-10 text-base rounded-[10px]">
+          <Button
+            variant="outline"
+            className="h-12 px-10 text-base rounded-[10px]"
+          >
             <ArrowLeft className="mr-2" /> Volver
           </Button>
         </Link>

@@ -10,6 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ChangeEvent, useState } from "react";
 import { pagoService } from "@/services";
 import { useAuth } from "@/contexts/authContext";
+import { Input } from "@/components/ui/input";
 
 const CheckoutPage = () => {
   const searchParams = useSearchParams();
@@ -18,6 +19,12 @@ const CheckoutPage = () => {
   const { token, userRole } = useAuth();
   const [payoutState, setPayoutState] = useState("not-paid");
   const [valueOperation, setValueOperation] = useState<string>("");
+
+  const [selectedOption, setSelectedOption] = useState("");
+
+  const handlePayout = (e) => {
+    setSelectedOption(e.target.value); // Actualiza el estado con la opción seleccionada
+  };
 
   // Parámetros de consulta (query strings)
   const monto = searchParams.get("monto");
@@ -32,18 +39,18 @@ const CheckoutPage = () => {
         return;
       }
 
-      if(token?.cliente?.id){
+      if (token?.cliente?.id) {
         const pagoData = {
           clienteId: Number(clienteId),
           monto: Number(monto),
           ofertaId: Number(ofertaId),
-          operacion: valueOperation
+          operacion: valueOperation,
         };
         const response = await pagoService.realizarPago(pagoData);
-        if(response.state){
-          setPayoutState("paid")
+        if (response.state) {
+          setPayoutState("paid");
         }
-        console.log(response)
+        console.log(response);
       }
     } catch (error) {
       console.error("Error al pagar la oferta:", error);
@@ -55,7 +62,7 @@ const CheckoutPage = () => {
   };
 
   const cerrarPago = () => {
-    router.push("/dashboard/cliente")
+    router.push("/dashboard/cliente");
   };
 
   return (
@@ -75,9 +82,11 @@ const CheckoutPage = () => {
                   Datos de operación
                 </p>
                 <div className="flex flex-nowrap gap-2 items-center mb-4">
-                  <Textarea className="text-[#666666] border-black" onChange={handleChange} value={valueOperation}>
-                   
-                  </Textarea>
+                  <Textarea
+                    className="text-[#666666] border-black"
+                    onChange={handleChange}
+                    value={valueOperation}
+                  ></Textarea>
                   <Button className="h-12 w-36 rounded-none">Copiar</Button>
                 </div>
                 <p className="text-sm text-[#61646B] mb-2">
@@ -102,6 +111,77 @@ const CheckoutPage = () => {
                   <Checkbox />
                   <p>Confirmo haber realizado la transferencia</p>
                 </div>
+                <p className="mb-4 font-bold mt-8">¿Que tipo de comprobante?</p>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      id="boleta"
+                      name="comprobante"
+                      value="boleta"
+                      checked={selectedOption === "boleta"}
+                      onChange={handlePayout}
+                      className="w-4 h-4 text-blue-500 border-gray-300 focus:ring-blue-500"
+                    />
+                    <label htmlFor="boleta" className="text-sm">
+                      Boleta
+                    </label>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      id="factura"
+                      name="comprobante"
+                      value="factura"
+                      checked={selectedOption === "factura"}
+                      onChange={handlePayout}
+                      className="w-4 h-4 text-blue-500 border-gray-300 focus:ring-blue-500"
+                    />
+                    <label htmlFor="factura" className="text-sm">
+                      Factura
+                    </label>
+                  </div>
+                </div>
+                {selectedOption === "factura" && (
+                  <div className="my-4">
+                    <div className="grid grid-cols-2 w-full gap-4">
+                      <div>
+                        <label htmlFor="ruc" className="font-bold">
+                          RUC
+                        </label>
+                        <Input
+                          type="text"
+                          name="ruc"
+                          value=""
+                          className="border-black"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="razons" className="font-bold">
+                          Razon Social
+                        </label>
+                        <Input
+                          type="text"
+                          name="razons"
+                          value=""
+                          className="border-black"
+                        />
+                      </div>
+                    </div>
+                    <div className="mt-2">
+                      <label htmlFor="direccion" className="font-bold">
+                        Dirección
+                      </label>
+                      <Input
+                        type="text"
+                        name="direccion"
+                        value=""
+                        className="border-black"
+                      />
+                    </div>
+                  </div>
+                )}
+
                 <div className="mt-8 flex justify-between gap-2">
                   <Button
                     variant={"outline"}
@@ -147,7 +227,10 @@ const CheckoutPage = () => {
                   </span>
                 </div>
                 <div className="mt-8 flex justify-between gap-2">
-                  <Button className="w-full rounded-none bg-[#5E5E5E]" onClick={cerrarPago}>
+                  <Button
+                    className="w-full rounded-none bg-[#5E5E5E]"
+                    onClick={cerrarPago}
+                  >
                     Cerrar
                   </Button>
                   <Button className="w-full rounded-none bg-[#5E5E5E]">
@@ -157,6 +240,9 @@ const CheckoutPage = () => {
               </div>
             )}
           </div>
+          <p className="text-[#666666] text-sm my-4">
+            🚨 Importante: Legalo establece una comisión del 20%.
+          </p>
         </main>
       </div>
       <div className="lg:col-span-1 overflow-hidden hidden lg:block degrade-client"></div>
