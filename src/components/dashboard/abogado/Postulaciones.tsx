@@ -22,7 +22,7 @@ function Postulaciones ()
     if(token?.abogado?.id){
       const data = {
         abogadoId: token.abogado.id,
-        status: 1
+        estado: 'aceptada'
       }
       const response = await abogadoService.getAplicaciones(data);
       setAplicacionesCreadas(response.data);
@@ -34,7 +34,7 @@ function Postulaciones ()
       const statusAceptado = 2; 
       const data = {
         abogadoId: token.abogado.id,
-        status: 2
+        estado: 'pendiente'
       }
       const response = await abogadoService.getAplicaciones(data);
       setAplicacionesAceptadas(response.data);

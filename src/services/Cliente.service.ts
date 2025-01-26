@@ -13,4 +13,12 @@ export default class ClienteService extends MainService {
   public async updateCliente(id: number, fieldsToUpdate: Partial<IClienteUpdateBack>) : Promise<any>{
     return this.put(`/edit/${id}`, fieldsToUpdate);
   }
+
+  public async getTrabajos(data: {clienteId: number, estado?: string}): Promise<any> {
+    return this.post(`/trabajos`, data);
+  }
+
+  public async getOfertasConAplicaciones(data: {clienteId: number, estado?: string}): Promise<any> {
+    return this.post(`/ofertas/con-aplicaciones`, data);
+  }
 }

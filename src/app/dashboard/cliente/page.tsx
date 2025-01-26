@@ -2,12 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { Search as IcoSearch } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
 import { Checkbox } from "@/components/ui/checkbox";
-
 import { Label as LabelCn } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-
 import { ChevronsLeft } from "lucide-react";
 import { ChevronsRight } from "lucide-react";
 
@@ -34,6 +31,7 @@ import Link from "next/link";
 import { useDashboardCliente } from "@/contexts/dashboardClienteContext";
 import { abogadoService } from "@/services";
 import { IAbogadoBack } from "@/interfaces/Abogado.interface";
+import TrabajosCliente from "@/components/dashboard/Cliente/TrabajosCliente";
 
 const DashboardClientPage = () => {
   const [openFilter, setOpenFilter] = useState(true);
@@ -52,6 +50,7 @@ const DashboardClientPage = () => {
   const menuItems = [
     { id: "abogados", texto: "Abogados" },
     { id: "proyectos", texto: "Encargos" },
+    { id: "trabajos", texto: "Trabajos" },
   ];
 
   const subMenuItems = [
@@ -80,10 +79,12 @@ const DashboardClientPage = () => {
 
   async function fetchAbogados() {
     try {
-      const data = await abogadoService.obtenerTodos();
-      setAbogados(data);
-      setAbogadosFiltrados(data);
-      console.log(data)
+      const data = {
+        validadoAdmin: true
+      };
+      const response = await abogadoService.obtenerTodos(data);
+      setAbogados(response);
+      setAbogadosFiltrados(response);
     } catch (error) {
       console.error("Error al obtener el detalle:", error);
     }
@@ -138,18 +139,6 @@ const DashboardClientPage = () => {
 
   return (
     <div className="px-4 py-4 lg:px-16 lg:py-8 max-w-[1920px] mx-auto">
-      {/* <div className="flex justify-between flex-col-reverse lg:flex-row gap-4 ">
-        <div>
-          <p className="pb-2">Búsqueda por palabra clave</p>
-          <div className="flex items-center gap-4 border border-black rounded-full h-12 px-4 lg:w-[553px]">
-            <IcoSearch size={24} />
-            <input type="text" placeholder="Escribe..." className="" />
-          </div>
-        </div>
-        <InfoNominations />
-      </div> */}
-
-      {/* Dashboard */}
       <div className="mt-8">
         <Link href={"/dashboard/cliente/nueva-oferta"}>
           <Button>
@@ -245,44 +234,6 @@ const DashboardClientPage = () => {
                             </Select>
                           </AccordionContent>
                         </AccordionItem>
-                        {/* <AccordionItem value="item-3">
-                          <AccordionTrigger>
-                            Ubicación del cliente
-                          </AccordionTrigger>
-                          <AccordionContent>
-                            <Select>
-                              <SelectTrigger className="focus-visible:ring-0 border border-black rounded-[10px] focus:ring-0 outline-none">
-                                <SelectValue placeholder="Selecciona ubicación" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="a">Light</SelectItem>
-                                <SelectItem value="b">Dark</SelectItem>
-                                <SelectItem value="c">System</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </AccordionContent>
-                        </AccordionItem> */}
-                        {/* <AccordionItem value="item-4">
-                          <AccordionTrigger>Experiencia</AccordionTrigger>
-                          <AccordionContent className="flex flex-col gap-2">
-                            <div className="flex items-center space-x-2 text-base">
-                              <Checkbox id="check1" />
-                              <label htmlFor="check1">Senior (+10 años)</label>
-                            </div>
-                            <div className="flex items-center space-x-2 text-base">
-                              <Checkbox id="check1" />
-                              <label htmlFor="check1">
-                                Intermedio (5-10 años)
-                              </label>
-                            </div>
-                            <div className="flex items-center space-x-2 text-base">
-                              <Checkbox id="check1" />
-                              <label htmlFor="check1">
-                                Junior (&lt; 5 años)
-                              </label>
-                            </div>
-                          </AccordionContent>
-                        </AccordionItem> */}
                         <AccordionItem value="item-5">
                           <AccordionTrigger>Servicios</AccordionTrigger>
                           <AccordionContent>
@@ -371,6 +322,9 @@ const DashboardClientPage = () => {
                 <ProyectosFinalizados></ProyectosFinalizados>
               )}
             </div>
+          )}
+          {menuActive === "trabajos" && (
+            <TrabajosCliente></TrabajosCliente>
           )}
         </div>
       </div>
