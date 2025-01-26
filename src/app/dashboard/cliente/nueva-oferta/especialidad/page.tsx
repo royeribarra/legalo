@@ -21,7 +21,9 @@ const PublicarPageThree = () => {
   const { showToast } = useToast();
   const route = useRouter();
   const { state, updateState } = useOferta();
-  const [selectServices, setSelectServices] = useState<number[]>(state.especialidades);
+  const [selectServices, setSelectServices] = useState<number[]>(
+    state.especialidades
+  );
   const [serviceList, setServiceList] = useState<Especialidad[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar la visibilidad del modal
 
@@ -42,7 +44,7 @@ const PublicarPageThree = () => {
     const selectedId = item.id;
 
     if (selectServices.includes(selectedId)) {
-      const filteredServices = selectServices.filter(id => id !== selectedId);
+      const filteredServices = selectServices.filter((id) => id !== selectedId);
       setSelectServices(filteredServices);
       updateState({ especialidades: filteredServices });
     } else {
@@ -74,77 +76,95 @@ const PublicarPageThree = () => {
 
   const modalContent = [
     {
-      title: 'Derecho Civil',
-      descripcion: '¿Necesitas ayuda para revisar o firmar un contrato, asegurar la compra o alquiler de una propiedad o con el trámite de una herencia familiar?'
+      title: "Derecho Civil",
+      descripcion:
+        "¿Necesitas ayuda para revisar o firmar un contrato, asegurar la compra o alquiler de una propiedad o con el trámite de una herencia familiar?",
     },
     {
-      title: 'Derecho Penalista',
-      descripcion: '¿Te enfrentas a un juicio penal, necesitas asesoría en una investigación policial o quieres conocer tus derechos ante una detención?'
+      title: "Derecho Penalista",
+      descripcion:
+        "¿Te enfrentas a un juicio penal, necesitas asesoría en una investigación policial o quieres conocer tus derechos ante una detención?",
     },
     {
-      title: 'Derecho Laboral',
-      descripcion: '¿Tienes problemas con un contrato de trabajo, fuiste despedido injustamente, necesitas asesoría en una inspección de SUNAFIL o sobre derechos laborales, como maternidad o acoso?'
+      title: "Derecho Laboral",
+      descripcion:
+        "¿Tienes problemas con un contrato de trabajo, fuiste despedido injustamente, necesitas asesoría en una inspección de SUNAFIL o sobre derechos laborales, como maternidad o acoso?",
     },
     {
-      title: 'Derecho Procesal',
-      descripcion: '¿Quieres presentar una demanda, necesitas ayuda para defenderte en un proceso judicial, o necesitas orientación en el seguimiento de tu caso judicial?'
+      title: "Derecho Procesal",
+      descripcion:
+        "¿Quieres presentar una demanda, necesitas ayuda para defenderte en un proceso judicial, o necesitas orientación en el seguimiento de tu caso judicial?",
     },
     {
-      title: 'Derecho Administrativo',
-      descripcion: '¿Necesitas apoyo para gestionar trámites con entidades públicas, defenderte de una sanción o multa o resolver problemas con permisos y licencias?'
+      title: "Derecho Administrativo",
+      descripcion:
+        "¿Necesitas apoyo para gestionar trámites con entidades públicas, defenderte de una sanción o multa o resolver problemas con permisos y licencias?",
     },
     {
-      title: 'Derecho de Familia',
-      descripcion: 'Estás atravesando un divorcio, buscas custodia compartida, o necesitas asesoría sobre pensiones alimenticias y acuerdos familiares?'
+      title: "Derecho de Familia",
+      descripcion:
+        "Estás atravesando un divorcio, buscas custodia compartida, o necesitas asesoría sobre pensiones alimenticias y acuerdos familiares?",
     },
     {
-      title: 'Derecho Tributario',
-      descripcion: '¿Necesitas ayuda con la declaración de impuestos, o defensa en fiscalización de SUNAT o en un litigio tributario?'
+      title: "Derecho Tributario",
+      descripcion:
+        "¿Necesitas ayuda con la declaración de impuestos, o defensa en fiscalización de SUNAT o en un litigio tributario?",
     },
     {
-      title: 'Derecho Migratorio',
-      descripcion: '¿Necesitas ayuda con trámites de residencia, permisos de trabajo, o enfrentas problemas de inmigración?'
+      title: "Derecho Migratorio",
+      descripcion:
+        "¿Necesitas ayuda con trámites de residencia, permisos de trabajo, o enfrentas problemas de inmigración?",
     },
     {
-      title: 'Derecho de Protección al Consumidor',
-      descripcion: '¿Te vendieron un producto defectuoso, no cumplieron con la garantía o te han hecho cobros indebidos?'
+      title: "Derecho de Protección al Consumidor",
+      descripcion:
+        "¿Te vendieron un producto defectuoso, no cumplieron con la garantía o te han hecho cobros indebidos?",
     },
     {
-      title: 'Derecho Empresarial',
-      descripcion: '¿Planeas constituir una empresa, necesitas revisar contratos comerciales o estás involucrado en una fusión o disputa entre socios?'
+      title: "Derecho Empresarial",
+      descripcion:
+        "¿Planeas constituir una empresa, necesitas revisar contratos comerciales o estás involucrado en una fusión o disputa entre socios?",
     },
     {
-      title: 'Derecho Ambiental',
-      descripcion: '¿Necesitas asesoría sobre normativa ambiental, enfrentas problemas de permisos, o necesitas defensa '
+      title: "Derecho Ambiental",
+      descripcion:
+        "¿Necesitas asesoría sobre normativa ambiental, enfrentas problemas de permisos, o necesitas defensa ",
     },
     {
-      title: 'Derecho de Arbitraje y Resolución de Conflicto',
-      descripcion: '¿Tu contrato requiere resolver un conflicto ante un árbitro o tribunal arbitral o estás considerando iniciar una mediación o demanda arbitral?'
+      title: "Derecho de Arbitraje y Resolución de Conflicto",
+      descripcion:
+        "¿Tu contrato requiere resolver un conflicto ante un árbitro o tribunal arbitral o estás considerando iniciar una mediación o demanda arbitral?",
     },
     {
-      title: 'Derecho de la Competencia',
-      descripcion: '¿Te han denunciado por prácticas anticompetitivas, o buscas cumplir con las normativas de competencia y evitar sanciones?'
+      title: "Derecho de la Competencia",
+      descripcion:
+        "¿Te han denunciado por prácticas anticompetitivas, o buscas cumplir con las normativas de competencia y evitar sanciones?",
     },
     {
-      title: 'Derecho de la Competencia Desleal',
-      descripcion: '¿Necesitas proteger tu marca de publicidad engañosa o tu negocio enfrenta prácticas desleales?'
+      title: "Derecho de la Competencia Desleal",
+      descripcion:
+        "¿Necesitas proteger tu marca de publicidad engañosa o tu negocio enfrenta prácticas desleales?",
     },
     {
-      title: 'Derecho de Compliance',
-      descripcion: '¿Necesitas asesoría para cumplir con normativas legales, prevenir riesgos empresariales o implementar políticas de ética en tu organización?'
+      title: "Derecho de Compliance",
+      descripcion:
+        "¿Necesitas asesoría para cumplir con normativas legales, prevenir riesgos empresariales o implementar políticas de ética en tu organización?",
     },
     {
-      title: 'Derecho de Propiedad Intelectual',
-      descripcion: '¿Quieres registrar una marca, proteger una invención o necesitas ayuda para defenderte de infracciones a tus derechos de autor?'
+      title: "Derecho de Propiedad Intelectual",
+      descripcion:
+        "¿Quieres registrar una marca, proteger una invención o necesitas ayuda para defenderte de infracciones a tus derechos de autor?",
     },
     {
-      title: 'Derecho de Tecnología y Datos',
-      descripcion: '¿Necesitas asesoría para proteger datos personales, negociar contratos de software, o resolver problemas de ciberseguridad?'
+      title: "Derecho de Tecnología y Datos",
+      descripcion:
+        "¿Necesitas asesoría para proteger datos personales, negociar contratos de software, o resolver problemas de ciberseguridad?",
     },
     {
-      title: 'Derecho de Salud',
-      descripcion: '¿Enfrentas un conflicto de mala praxis médica, necesitas asesoría en seguros de salud, o buscas defender tus derechos como paciente?'
-    }
+      title: "Derecho de Salud",
+      descripcion:
+        "¿Enfrentas un conflicto de mala praxis médica, necesitas asesoría en seguros de salud, o buscas defender tus derechos como paciente?",
+    },
   ];
 
   return (
@@ -198,7 +218,9 @@ const PublicarPageThree = () => {
                       : "border border-black"
                   }`}
                 >
-                  {selectServices.includes(item.id) && <CheckIcon className="text-white w-4 h-4" />}
+                  {selectServices.includes(item.id) && (
+                    <CheckIcon className="text-white w-4 h-4" />
+                  )}
                 </div>
               </div>
             ))}
@@ -208,7 +230,10 @@ const PublicarPageThree = () => {
 
       <div className="flex justify-between mt-16">
         <Link href="/dashboard/cliente/nueva-oferta/titulo">
-          <Button variant="outline" className="h-12 px-10 text-base rounded-[10px]">
+          <Button
+            variant="outline"
+            className="h-12 px-10 text-base rounded-[10px]"
+          >
             <ArrowLeft className="mr-2" /> Volver
           </Button>
         </Link>
@@ -220,7 +245,12 @@ const PublicarPageThree = () => {
         </Button>
       </div>
 
-      <ModalEspecialidades isOpen={isModalOpen} onClose={closeModal} title="Especialidades de Derecho" content={modalContent} />
+      <ModalEspecialidades
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        title="Especialidades de Derecho"
+        content={modalContent}
+      />
     </div>
   );
 };
