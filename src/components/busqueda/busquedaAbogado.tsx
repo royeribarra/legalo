@@ -38,8 +38,8 @@ function BusquedaAbogado({searchButton}: {searchButton: string}){
       setOpenFilter(!openFilter);
   };
 
-  const inviteProyect = (abogadoId: number = 0) => {
-      console.log(abogadoId)
+  const inviteProyect = (abogado: IAbogadoBack) => {
+      console.log(abogado)
   };
 
   async function fetchAbogados() {

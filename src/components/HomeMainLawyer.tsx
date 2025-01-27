@@ -56,7 +56,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
     setTotalPaid(!totalPaid);
   };
 
-  const getPrice = (value, isTotalPaid) => {
+  const getPrice = (value: any, isTotalPaid: any) => {
     if (isTotalPaid) {
       if (value === 0) return "S/1,300";
       if (value === 50) return "S/2,000";
