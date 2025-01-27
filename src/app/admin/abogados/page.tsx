@@ -15,6 +15,7 @@ import { IServicioAbogado } from '@/interfaces/Servicio.interface';
 import Link from 'next/link';
 import { useToast } from '@/contexts/toastContext';
 import { IFileBack } from '@/interfaces/File.interface';
+import { useLoader } from '@/contexts/loaderContext';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -63,6 +64,7 @@ const estados: ('Activo' | 'Inactivo')[] = ['Activo', 'Inactivo'];
 const industrias: string[] = ['Tecnología', 'Recursos Humanos', 'Derecho Penal'];
 
 function Abogados() {
+  const { setLoading } = useLoader();
   const { showToast } = useToast();
   const [filteredData, setFilteredData] = useState<IAbogadoBack[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -92,10 +94,13 @@ function Abogados() {
   };
 
   async function fetchOfertas() {
+    setLoading(true);
     try {
       const data = await abogadoService.obtenerTodos();
       setFilteredData(data);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.error("Error al obtener las ofertas:", error);
     }
   }

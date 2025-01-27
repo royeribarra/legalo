@@ -15,9 +15,9 @@ import { ofertaservice } from "@/services";
 import { useAuth } from "@/contexts/authContext";
 
 interface ModalInviteProyectProps {
-  inviteProyect: (abogadoId: number, ofertaId: number) => void; // Ahora incluye ofertaId
+  inviteProyect: (abogado: IAbogadoBack, ofertaId: number) => void; // Ahora incluye ofertaId
   abogados: IAbogadoBack[];
-  abogadoPrevioInvitado: number;
+  abogadoPrevioInvitado?: IAbogadoBack;
   isOpen: boolean;
   onModalClosed?: () => void;
 }
@@ -47,10 +47,10 @@ const ModalInviteProyect: React.FC<ModalInviteProyectProps> = ({
   }, [currentStep, abogadoPrevioInvitado]);
 
   const fetchOfertasDisponibles = async () => {
-    if(token?.cliente?.id){
+    if(token?.cliente?.id && abogadoPrevioInvitado?.id){
       try {
         const body = {
-          abogadoId: abogadoPrevioInvitado,
+          abogadoId: abogadoPrevioInvitado.id,
           clienteId: token?.cliente.id
         };
         const data = await ofertaservice.getOfertasSinAplicacionesPorAbogado(body);
@@ -62,9 +62,9 @@ const ModalInviteProyect: React.FC<ModalInviteProyectProps> = ({
   };
 
   const handleNextStep = async () => {
-    if (selectedOferta) {
+    if (selectedOferta && abogadoPrevioInvitado?.id) {
       const body = {
-        abogadoId: abogadoPrevioInvitado,
+        abogadoId: abogadoPrevioInvitado?.id,
         ofertaId: selectedOferta
       };
       const data = await ofertaservice.invitarAbogado(body);
@@ -125,7 +125,7 @@ const ModalInviteProyect: React.FC<ModalInviteProyectProps> = ({
           <div className="w-full lg:border border-black overflow-hidden overflow-y-scroll relative">
             <div className="mt-10 my-8">
               <h2 className="mb-4 font-nimbus text-2xl lg:text-[44px] text-center">
-                ¡Invitaste a Omar a tu proyecto!
+                ¡Invitaste a {abogadoPrevioInvitado?.nombres} a tu proyecto!
               </h2>
               <p className="text-sm lg:text-base text-center">
                 Te notificaremos cuando tu proyecto sea aceptado. Mientras tanto,
@@ -135,11 +135,11 @@ const ModalInviteProyect: React.FC<ModalInviteProyectProps> = ({
             <Carousel>
               <CarouselContent className="">
                 {abogados
-                  .filter((abogado) => abogado.id !== abogadoPrevioInvitado)
+                  .filter((abogado) => abogado.id !== abogadoPrevioInvitado?.id)
                   .map((abogado) => (
                     <CarouselItem className="lg:pl-8 lg:basis-[80%]" key={abogado.id}>
                       <AbogadoResumeCard
-                        inviteProyect={() => inviteProyect(abogado.id, selectedOferta!)}
+                        inviteProyect={() => inviteProyect(abogado, selectedOferta!)}
                         abogado={abogado}
                       />
                     </CarouselItem>

@@ -18,25 +18,6 @@ const ModalCrearProyectoOk: React.FC<ModalPostulacionOkProps> = ({
   cerrarModalCrearProyecto,
   newOfertaId
 }) => {
-  const { token } = useAuth();
-  async function updateDocumentoOferta() {
-    try {
-      if(token?.cliente?.id){
-        const body = {
-          clienteId: token.cliente.id,
-          ofertaId: newOfertaId
-        }
-        const response = await clienteService.updateDocumentoOferta(body);
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  useEffect(()=> {
-    updateDocumentoOferta();
-  }, []);
-
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-20 ">
       <div className="flex flex-col lg:flex-row bg-white lg:rounded-[24px] shadow-lg relative w-full h-full overflow-y-auto lg:w-[1220px] lg:max-w-[84vw] lg:h-[830px] lg:max-h-[90vh] hidde-scrollbar">

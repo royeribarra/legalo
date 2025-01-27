@@ -4,6 +4,8 @@ export const metadata = {
 };
 
 import "@/app/globals.css";
+import LoaderComponent from "@/components/LoaderComponent";
+import { LoaderProvider } from "@/contexts/loaderContext";
 import { ToastProvider } from "@/contexts/toastContext";
 // import "antd/dist/antd.css";
 // import "../../public/assets/styles/main.css";
@@ -18,7 +20,10 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ToastProvider>
-        {children}
+          <LoaderProvider>
+            <LoaderComponent />
+            {children}
+          </LoaderProvider>
         </ToastProvider>
       </body>
     </html>

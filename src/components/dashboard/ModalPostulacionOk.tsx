@@ -53,12 +53,14 @@ const ModalPostulacionOk: React.FC<ModalPostulacionOkProps> = ({
               el proyecto.
             </p>
             <div className="flex gap-4">
-              <Button
-                onClick={handleModalPostularOk}
-                className="rounded-[10px]"
-              >
-                Ver candidatura
-              </Button>
+              <Link href="/dashboard/abogado/postulaciones">
+                <Button
+                  onClick={handleModalPostularOk}
+                  className="rounded-[10px]"
+                >
+                  Ver candidatura
+                </Button>
+              </Link>
               <Link href="/dashboard/abogado">
                 <Button
                   variant="outline"

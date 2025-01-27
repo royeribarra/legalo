@@ -39,7 +39,7 @@ export default class AbogadoService extends MainService {
   }
 
   public async postularOferta(data: {abogadoId: number, ofertaId: number, salarioEsperado: number}): Promise<any> {
-    return this.post(`/postular-oferta`, { data });
+    return this.post(`/postular-oferta`, data);
   }
 
   public async rechazarSolicitud(solicitudId: string): Promise<any> {

@@ -7,6 +7,7 @@ import { ReactNode } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { Search as IcoSearch } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 import {
@@ -16,7 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { AuthProvider, useAuth } from "@/contexts/authContext";
 import { DashboardAbogadoProvider } from "@/contexts/dashboardAbogadoContext";
 interface LayoutProps {
@@ -32,10 +33,19 @@ const DashboardAbogadoLayout = ({ children }: LayoutProps) => {
 };
 
 const LayoutContent = ({ children }: LayoutProps) => {
+  const router = useRouter();
+  const pathname = usePathname();
   const whatsappNumber = "51939784580";
   const { token, userRole } = useAuth();
-  const router = useRouter();
   const [loading, setLoading] = useState(true);
+
+  const menuItems = [
+    { id: "oportunidades", texto: "Oportunidades para ti", url: "/dashboard/abogado" },
+    { id: "recientes", texto: "Publicadas recientemente", url: "/dashboard/abogado/publicaciones-recientes" },
+    { id: "invitaciones", texto: "Invitaciones", url: "/dashboard/abogado/invitaciones" },
+    { id: "postulaciones", texto: "Postulaciones", url: "/dashboard/abogado/postulaciones" },
+    { id: "trabajos", texto: "Trabajos", url: "/dashboard/abogado/trabajos" },
+  ];
 
   const handleLogout = () => {
     localStorage.removeItem("tokenRole");
@@ -91,7 +101,27 @@ const LayoutContent = ({ children }: LayoutProps) => {
           </DropdownMenu>
         </div>
       </header>
-      <main><DashboardAbogadoProvider>{children}</DashboardAbogadoProvider></main>
+      <main>
+        <DashboardAbogadoProvider>
+          <div className="px-4 py-4 lg:px-16 lg:py-8 max-w-[1920px] mx-auto">
+            <div className="mt-8">
+              <div className="border-b-2 border-[#808080] flex w-full overflow-auto lg:overflow-auto">
+                {menuItems.map((boton) => (
+                  <Link href={boton.url}>
+                    <Button
+                      key={boton.id}
+                      variant={boton.url === pathname ? "dashActive" : "dashInActive"}
+                    >
+                      {boton.texto}
+                    </Button>
+                  </Link>
+                ))}
+              </div>
+              {children}
+            </div>
+          </div>
+        </DashboardAbogadoProvider>
+      </main>
     </div>
   );
 };

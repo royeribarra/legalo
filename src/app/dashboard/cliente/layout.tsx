@@ -8,6 +8,7 @@ import { AuthProvider, useAuth } from "@/contexts/authContext";
 import Image from "next/image";
 import Link from "next/link";
 import { DashboardClienteProvider } from "@/contexts/dashboardClienteContext";
+import { useLoader } from "@/contexts/loaderContext";
 
 interface LayoutProps {
   children: ReactNode;
@@ -25,7 +26,7 @@ const LayoutContent = ({ children }: { children: ReactNode }) => {
   const whatsappNumber = "51939784580";
   const { token, userRole } = useAuth();
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
+  const {setLoading} = useLoader();
 
   useEffect(() => {
     if (token && userRole) {
@@ -43,10 +44,6 @@ const LayoutContent = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem("token");
     router.push("/login"); // Redirige al usuario a la página de login
   };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="">

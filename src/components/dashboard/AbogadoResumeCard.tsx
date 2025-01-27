@@ -30,13 +30,13 @@ const CarruselDeIndustrias = ({ abogado } : {abogado: IAbogadoBack}) => {
 };
 
 interface InviteProyectProps {
-  inviteProyect: (abogadoId: number) => void;
+  inviteProyect: (abogado: IAbogadoBack) => void;
   abogado: IAbogadoBack
 }
 
 const AbogadoResumeCard = ({ inviteProyect, abogado }: InviteProyectProps) => {
   const invitarALaOferta = () => {
-    inviteProyect(abogado.id);
+    inviteProyect(abogado);
   };
 
   return (

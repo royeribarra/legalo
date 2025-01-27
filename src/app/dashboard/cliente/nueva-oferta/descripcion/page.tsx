@@ -37,7 +37,7 @@ const PublicarPageFour = () => {
 
       const fileSizeLimit = 4 * 1024 * 1024; // 5 MB
       if (selectedFile.size > fileSizeLimit) {
-        setFileError("El archivo debe pesar menos de 5 MB.");
+        setFileError("El archivo debe pesar menos de 4 MB.");
         return;
       }
 
@@ -137,7 +137,7 @@ const PublicarPageFour = () => {
             />
             {fileError && <p className="text-red-500 text-sm">{fileError}</p>}
             {uploadSuccess && <p className="text-green-500 text-sm">¡Archivo subido exitosamente!</p>}
-            <p className="text-xs text-gray-500">PDF, JPG, PNG (máx. 5 MB)</p>
+            <p className="text-xs text-gray-500">PDF, Txt, .doc (máx. 4 MB)</p>
           </div>
           <p>Adjunta todo documento que creas que pueda ayudar en tu caso.</p>
         </div>

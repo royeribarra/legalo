@@ -9,26 +9,26 @@ import { abogadoService } from "@/services";
 
 const EmailVerify = () => {
   const [showStep, setShowStep] = useState(true);
-  const searchParams = useSearchParams(); // Accede a los parámetros de búsqueda
-  const correo = searchParams.get("correo"); // Obtén el valor de "correo"
+  const searchParams = useSearchParams();
+  const correo = searchParams.get("correo");
 
-  const checkDocumentos = async () => {
-    if (correo) {
-      try {
-        const response = await abogadoService.updateLinkDocumentos(correo);
-        console.log("Respuesta del servidor:", response);
-        // Maneja la respuesta según sea necesario
-      } catch (error) {
-        console.error("Error al verificar el correo:", error);
-      }
-    } else {
-      console.error("No se proporcionó un correo en los parámetros de la URL.");
-    }
-  };
+  // const checkDocumentos = async () => {
+  //   if (correo) {
+  //     try {
+  //       const response = await abogadoService.updateLinkDocumentos(correo);
+  //       console.log("Respuesta del servidor:", response);
+  //       // Maneja la respuesta según sea necesario
+  //     } catch (error) {
+  //       console.error("Error al verificar el correo:", error);
+  //     }
+  //   } else {
+  //     console.error("No se proporcionó un correo en los parámetros de la URL.");
+  //   }
+  // };
 
-  useEffect(() => {
-    checkDocumentos();
-  }, []);
+  // useEffect(() => {
+  //   checkDocumentos();
+  // }, []);
 
   return (
     <div
@@ -63,7 +63,6 @@ const EmailVerify = () => {
           </p>
           <Button
             onClick={() => {
-              checkDocumentos(); // Llama a la función al hacer clic
               setShowStep(false);
             }}
             className="mt-4 rounded-[10px] h-12 px-6 text-base"

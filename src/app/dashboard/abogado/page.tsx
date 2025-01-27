@@ -142,159 +142,118 @@ const DashboardLawyerPage = () => {
   };
 
   return (
-    <div className="px-4 py-4 lg:px-16 lg:py-8 max-w-[1920px] mx-auto">
-      {/* <div className="flex justify-between flex-col-reverse lg:flex-row gap-4 ">
-        <div>
-          <p className="pb-2">Búsqueda por palabra clave</p>
-          <div className="flex items-center gap-4 border border-black rounded-full h-12 px-4 lg:w-[553px]">
-            <IcoSearch size={24} />
-            <input type="text" placeholder="Escribe..." className="" />
-          </div>
+    <div>
+      <div>
+        <div className="mt-6 h-6">
+          <Button
+            variant="link"
+            onClick={handleFilter}
+            className="text-base px-0 font-light gap-2 flex items-center"
+          >
+            {openFilter ? <ChevronsLeft /> : <ChevronsRight />}
+            <span>{openFilter ? "Ocultar Filtros" : "Ver Filtros"}</span>
+          </Button>
         </div>
-        <InfoNominations />
-      </div> */}
-
-      {/* Dashboard */}
-      <div className="mt-8">
-        <div className="border-b-2 border-[#808080] flex w-full overflow-auto lg:overflow-auto">
-          {menuItems.map((boton) => (
-            <Button
-              key={boton.id}
-              variant={menuActive === boton.id ? "dashActive" : "dashInActive"}
-              onClick={() => setMenuActive(boton.id)}
-            >
-              {boton.texto}
-            </Button>
-          ))}
-        </div>
-
-        {menuActive === "oportunidades" && (
-          <div>
-            <div className="mt-6 h-6">
-              <Button
-                variant="link"
-                onClick={handleFilter}
-                className="text-base px-0 font-light gap-2 flex items-center"
-              >
-                {openFilter ? <ChevronsLeft /> : <ChevronsRight />}
-                <span>{openFilter ? "Ocultar Filtros" : "Ver Filtros"}</span>
-              </Button>
-            </div>
-            <div className="mt-8 flex overflow-hidden">
-              {/* filtros */}
-              {openFilter && (
-                <div className="lg:block w-[288px] mr-16 flex-none">
-                  <div className="border-b border-black flex justify-between items-center pb-6">
-                    <h3 className="text-2xl">Filtros</h3>
-                    <Button
-                      onClick={handleFilter}
-                      variant="link"
-                      className="hidden underline px-0"
-                    >
-                      Ocultar todo
-                    </Button>
-                  </div>
-                  <div>
-                    <Accordion
-                      type="multiple"
-                      defaultValue={[
-                        "item-1",
-                        "item-2",
-                        "item-3",
-                        "item-4",
-                        "item-5",
-                        "item-6",
-                      ]}
-                    >
-                      <AccordionItem value="item-1">
-                        <AccordionTrigger>Especialidad</AccordionTrigger>
-                        <AccordionContent>
-                          <Select
-                            onValueChange={(selectedValue) => handleEspecialidadChange(selectedValue)}
-                          >
-                            <SelectTrigger className="focus-visible:ring-0 border border-black rounded-[10px] focus:ring-0 outline-none">
-                              <SelectValue placeholder="Selecciona especialidad" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value={`todos`}>Todos</SelectItem>
-                              {state.especialidades.map((especialidad) => (
-                                <SelectItem key={especialidad.id} value={`${especialidad.id}`}>
-                                  {especialidad.nombre}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="item-2">
-                        <AccordionTrigger>Industria</AccordionTrigger>
-                        <AccordionContent>
-                          <Select onValueChange={(selectedValue) => handleIndustriaChange(selectedValue)}>
-                            <SelectTrigger className="focus-visible:ring-0 border border-black rounded-[10px] focus:ring-0 outline-none">
-                              <SelectValue placeholder="Selecciona industria" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value={`todos`}>Todos</SelectItem>
-                              {
-                                state.industrias.map((industria)=>
-                                  <SelectItem value={`${industria.id}`} key={industria.id}>{industria.nombre}</SelectItem>
-                                )
-                              }
-                            </SelectContent>
-                          </Select>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="item-5">
-                        <AccordionTrigger>Servicios</AccordionTrigger>
-                        <AccordionContent>
-                          <RadioGroup defaultValue={`${state.servicios[0]?.id}` || ""} onValueChange={(newValue) => handleServicioChangue(newValue)}>
-                            <div className="flex items-center space-x-2">
-                              <RadioGroupItem value="todos" id="radio-todos" />
-                              <LabelCn htmlFor="radio-todos" className="text-base font-light">
-                                  Todos
+        <div className="mt-8 flex overflow-hidden">
+          {/* filtros */}
+          {openFilter && (
+            <div className="lg:block w-[288px] mr-16 flex-none">
+              <div className="border-b border-black flex justify-between items-center pb-6">
+                <h3 className="text-2xl">Filtros</h3>
+                <Button
+                  onClick={handleFilter}
+                  variant="link"
+                  className="hidden underline px-0"
+                >
+                  Ocultar todo
+                </Button>
+              </div>
+              <div>
+                <Accordion
+                  type="multiple"
+                  defaultValue={[
+                    "item-1",
+                    "item-2",
+                    "item-3",
+                    "item-4",
+                    "item-5",
+                    "item-6",
+                  ]}
+                >
+                  <AccordionItem value="item-1">
+                    <AccordionTrigger>Especialidad</AccordionTrigger>
+                    <AccordionContent>
+                      <Select
+                        onValueChange={(selectedValue) => handleEspecialidadChange(selectedValue)}
+                      >
+                        <SelectTrigger className="focus-visible:ring-0 border border-black rounded-[10px] focus:ring-0 outline-none">
+                          <SelectValue placeholder="Selecciona especialidad" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value={`todos`}>Todos</SelectItem>
+                          {state.especialidades.map((especialidad) => (
+                            <SelectItem key={especialidad.id} value={`${especialidad.id}`}>
+                              {especialidad.nombre}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="item-2">
+                    <AccordionTrigger>Industria</AccordionTrigger>
+                    <AccordionContent>
+                      <Select onValueChange={(selectedValue) => handleIndustriaChange(selectedValue)}>
+                        <SelectTrigger className="focus-visible:ring-0 border border-black rounded-[10px] focus:ring-0 outline-none">
+                          <SelectValue placeholder="Selecciona industria" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value={`todos`}>Todos</SelectItem>
+                          {
+                            state.industrias.map((industria)=>
+                              <SelectItem value={`${industria.id}`} key={industria.id}>{industria.nombre}</SelectItem>
+                            )
+                          }
+                        </SelectContent>
+                      </Select>
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="item-5">
+                    <AccordionTrigger>Servicios</AccordionTrigger>
+                    <AccordionContent>
+                      <RadioGroup defaultValue={`${state.servicios[0]?.id}` || ""} onValueChange={(newValue) => handleServicioChangue(newValue)}>
+                        <div className="flex items-center space-x-2">
+                          <RadioGroupItem value="todos" id="radio-todos" />
+                          <LabelCn htmlFor="radio-todos" className="text-base font-light">
+                              Todos
+                          </LabelCn>
+                        </div>
+                        {state.servicios.map((servicio, index) => {
+                          const radioId = `radio-${index}`;
+                          return (
+                            <div className="flex items-center space-x-2" key={servicio.id || index}>
+                              <RadioGroupItem value={`${servicio.id}`} id={radioId} />
+                              <LabelCn htmlFor={radioId} className="text-base font-light">
+                                {servicio.nombre}
                               </LabelCn>
                             </div>
-                            {state.servicios.map((servicio, index) => {
-                              const radioId = `radio-${index}`;
-                              return (
-                                <div className="flex items-center space-x-2" key={servicio.id || index}>
-                                  <RadioGroupItem value={`${servicio.id}`} id={radioId} />
-                                  <LabelCn htmlFor={radioId} className="text-base font-light">
-                                    {servicio.nombre}
-                                  </LabelCn>
-                                </div>
-                              );
-                            })}
-                          </RadioGroup>
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
-                  </div>
-                </div>
-              )}
-              <div className="flex flex-col gap-8 flex-1 mt-12">
-                  {
-                    ofertasFiltradas.map((oferta)=>
-                      <ResumeProyect oferta={oferta} inviteProyect={inviteProyect} />
-                    )
-                  }
-                </div>
+                          );
+                        })}
+                      </RadioGroup>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
             </div>
-          </div>
-        )}
-
-        {menuActive === "recientes" && (
-          <PublicacionesRecientes></PublicacionesRecientes>
-        )}
-        {menuActive === "invitaciones" && (
-          <InvitacionesOferta></InvitacionesOferta>
-        )}
-        {menuActive === "postulaciones" && (
-          <Postulaciones></Postulaciones>
-        )}
-        {menuActive === "trabajos" && (
-          <TrabajosAbogado></TrabajosAbogado>
-        )}
+          )}
+          <div className="flex flex-col gap-8 flex-1 mt-12">
+              {
+                ofertasFiltradas.map((oferta)=>
+                  <ResumeProyect oferta={oferta} inviteProyect={inviteProyect} />
+                )
+              }
+            </div>
+        </div>
       </div>
     </div>
   );

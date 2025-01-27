@@ -16,6 +16,7 @@ import Link from "next/link";
 import { base64ToBlob } from "utils/file";
 import { clienteService, fileService, ofertaservice } from "@/services";
 import { base64ToFile } from "utils/uploadFile";
+import { useLoader } from "@/contexts/loaderContext";
 
 export interface IPregunta {
   id?: number;
@@ -24,6 +25,7 @@ export interface IPregunta {
 
 const PublicarPageEight = () => {
   const router = useRouter();
+  const { setLoading } = useLoader();
   const { state, updateState, setDefaultValues } = useOferta();
   const { token } = useAuth();
   const [items, setItems] = useState<IPregunta[]>([]);
@@ -101,6 +103,7 @@ const PublicarPageEight = () => {
   };
 
   const handleSubmit = async () => {
+    setLoading(true);
     const data = {
       ...state,
       clienteId: token?.cliente?.id,
@@ -113,12 +116,15 @@ const PublicarPageEight = () => {
         if (state.documento && token) {
           enviarArchivo(state.documento, response.oferta.id, "oferta_documento");
         }
+        setModalCrearProyectoOk(true);
         localStorage.removeItem("ofertaState");
         setDefaultValues();
+        setLoading(false);
       }
       
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      setLoading(false);
     }
   };
 
@@ -134,12 +140,8 @@ const PublicarPageEight = () => {
       file: archivoBlob,
       folder: "ofertas"
     };
-
     try {
       const response = await fileService.uploadFile(body);
-      if(response.state){
-        setModalCrearProyectoOk(true);
-      }
     } catch (error) {
       console.error("Error al enviar el archivo", error);
     }

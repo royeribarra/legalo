@@ -32,15 +32,17 @@ import { useDashboardCliente } from "@/contexts/dashboardClienteContext";
 import { abogadoService } from "@/services";
 import { IAbogadoBack } from "@/interfaces/Abogado.interface";
 import TrabajosCliente from "@/components/dashboard/Cliente/TrabajosCliente";
+import { useLoader } from "@/contexts/loaderContext";
 
 const DashboardClientPage = () => {
+  const { setLoading } = useLoader();
   const [openFilter, setOpenFilter] = useState(true);
   const [menuActive, setMenuActive] = useState("abogados");
   const { state } = useDashboardCliente();
   const [subMenuActive, setSubMenuActive] = useState("ofertas-activas");
   const [abogados, setAbogados] = useState<IAbogadoBack[]>([]);
   const [abogadosFiltrados, setAbogadosFiltrados] = useState<IAbogadoBack[]>([]);
-  const [abogadoPrevioInvitado, setAbogadoPrevioInvitado] = useState<number>(0);
+  const [abogadoPrevioInvitado, setAbogadoPrevioInvitado] = useState<IAbogadoBack>();
   const [inviteProyectModal, setInviteProyectModal] = useState(false);
 
   const [filtroServicio, setFiltroServicio] = useState<number | null>(null);
@@ -64,8 +66,8 @@ const DashboardClientPage = () => {
     setOpenFilter(!openFilter);
   };
 
-  const inviteProyect = (abogadoId: number) => {
-    setAbogadoPrevioInvitado(abogadoId);
+  const inviteProyect = (abogado: IAbogadoBack) => {
+    setAbogadoPrevioInvitado(abogado);
     setInviteProyectModal(true);
   };
 
@@ -78,6 +80,7 @@ const DashboardClientPage = () => {
   }, []);
 
   async function fetchAbogados() {
+    setLoading(true);
     try {
       const data = {
         validadoAdmin: true
@@ -85,8 +88,10 @@ const DashboardClientPage = () => {
       const response = await abogadoService.obtenerTodos(data);
       setAbogados(response);
       setAbogadosFiltrados(response);
+      setLoading(false);
     } catch (error) {
       console.error("Error al obtener el detalle:", error);
+      setLoading(false);
     }
   }
 

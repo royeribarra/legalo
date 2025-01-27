@@ -7,23 +7,24 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { abogadoService } from '@/services';
+import { useLoader } from '@/contexts/loaderContext';
 
 export default function LoginPage() {
-  const [loading, setLoading] = useState(false);
+   const { loading, setLoading } = useLoader();
   const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
   const whatsappNumber = "51939784580";
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     setIsScrolled(window.scrollY > 50);
+  //   };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  //   window.addEventListener('scroll', handleScroll);
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScroll);
+  //   };
+  // }, []);
 
   const onFinish = async (values: { correo: string; contrasena: string }) => {
     setLoading(true);
@@ -37,38 +38,38 @@ export default function LoginPage() {
       });
 
       const data = await response.json();
-
-      if (response.ok) {
+      if (response.ok && data.status == 200) {
         message.success('Login successful');
         
-
         if (data.jwt?.user?.abogado) {
           localStorage.setItem('userRole', 'abogado');
           const abogado = await abogadoService.getAbogadoByID(data.jwt?.user?.abogado?.id);
-          console.log(abogado)
           const data1 = data.jwt.user;
           data1.abogado = abogado;
           localStorage.setItem('token', JSON.stringify(data1));
           router.push('/dashboard/abogado');
+          setLoading(false);
+
         } else if (data.jwt?.user?.cliente) {
           localStorage.setItem('userRole', 'cliente');
           localStorage.setItem('token', JSON.stringify(data.jwt.user));
           router.push('/dashboard/cliente');
+          setLoading(false);
         }
+       
       } else {
         message.error(data.message || 'Credenciales inválidas');
+        setLoading(false);
       }
     } catch (error) {
       console.error('Login error:', error);
-      message.error('Ocurrió un error en el intento de login.');
-    } finally {
       setLoading(false);
+      message.error('Ocurrió un error en el intento de login.');
     }
   };
 
   return (
     <div>
-      {/* Header */}
       <header
         className={`bg-black lg:sticky lg:top-0 lg:z-20 transition-all duration-300 ${
           isScrolled ? 'h-[60px] lg:h-[100px]' : 'h-[80px] lg:h-[160px]'

@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/contexts/toastContext";
 import { especialidadService } from "@/services";
 import ModalEspecialidades from "@/components/dashboard/Cliente/ModalEspecialidades"; // Importamos el modal
+import { useLoader } from "@/contexts/loaderContext";
 
 interface Especialidad {
   id: number;
@@ -18,6 +19,7 @@ interface Especialidad {
 }
 
 const PublicarPageThree = () => {
+  const { setLoading } = useLoader();
   const { showToast } = useToast();
   const route = useRouter();
   const { state, updateState } = useOferta();
@@ -27,16 +29,19 @@ const PublicarPageThree = () => {
   const [serviceList, setServiceList] = useState<Especialidad[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar la visibilidad del modal
 
-  useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        const response = await especialidadService.obtenerTodos();
-        setServiceList(response);
-      } catch (error) {
-        console.error("Error fetching services", error);
-      }
-    };
+  const fetchServices = async () => {
+    setLoading(true);
+    try {
+      const response = await especialidadService.obtenerTodos();
+      setServiceList(response);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching services", error);
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchServices();
   }, []);
 

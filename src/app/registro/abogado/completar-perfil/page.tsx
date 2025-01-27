@@ -28,6 +28,7 @@ import { useRegistroAbogado } from "@/contexts/registroAbogadoContext";
 import { IArchivo } from "@/interfaces/Archivo.interface";
 import { abogadoService, fileService } from "@/services";
 import { base64ToFile } from "utils/uploadFile";
+import { useLoader } from "@/contexts/loaderContext";
 
 interface Educacion {
   id: number;
@@ -40,6 +41,7 @@ interface Educacion {
 }
 
 const CompleteProfileLawyerPage: React.FC = () => {
+  const { setLoading } = useLoader();
   const router = useRouter();
   const { showToast } = useToast();
   const { stateAbogado, updateStateAbogado } = useRegistroAbogado();
@@ -82,6 +84,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
 
   const nextStep = async () => {
     if (stepNumber === 4) {
+      setLoading(true);
       if (!stateAbogado.archivo_imagen) {
         showToast("error", "Archivo Imagen", "Sube una imagen");
         return;
@@ -196,6 +199,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
           router.push(
             `/registro/abogado/email-verify?correo=${encodeURIComponent(stateAbogado.email)}`
           );
+          setLoading(false);
         }
         showToast("error", response.message, "");
       } catch (error) {
