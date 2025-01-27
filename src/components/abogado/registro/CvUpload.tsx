@@ -94,13 +94,13 @@ function CvUpload({ campo, stateAbogado, updateStateAbogado }: CvUploadProps) {
           <>
             <p className="text-gray-500">{archivo.nombre}</p>
             <div className="flex space-x-4 mt-2">
-              <button
+              {/* <button
                 onClick={handleViewFile}
                 className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded hover:bg-gray-100"
               >
                 <Eye className="w-4 h-4" />
                 <span>Ver Archivo</span>
-              </button>
+              </button> */}
               <button
                 onClick={handleRemoveFile}
                 className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded hover:bg-gray-100"

@@ -112,16 +112,16 @@ function ModalAgregarEspecialidad({
         </div>
         <div className="flex justify-end gap-6 pt-4 mt-4">
           <Button
-            className="w-[190px] h-12 rounded-[10px]"
-            onClick={guardarEspecialidad}
-          >
-            Aceptar
-          </Button>
-          <Button
             className="w-[190px] h-12 rounded-[10px] border border-gray-300"
             onClick={() => setShowModal(false)}
           >
             Cancelar
+          </Button>
+          <Button
+            className="w-[190px] h-12 rounded-[10px]"
+            onClick={guardarEspecialidad}
+          >
+            Aceptar
           </Button>
         </div>
       </div>

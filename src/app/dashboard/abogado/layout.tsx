@@ -20,6 +20,7 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import { AuthProvider, useAuth } from "@/contexts/authContext";
 import { DashboardAbogadoProvider } from "@/contexts/dashboardAbogadoContext";
+import { useLoader } from "@/contexts/loaderContext";
 interface LayoutProps {
   children: ReactNode;
 }
@@ -37,7 +38,7 @@ const LayoutContent = ({ children }: LayoutProps) => {
   const pathname = usePathname();
   const whatsappNumber = "51939784580";
   const { token, userRole } = useAuth();
-  const [loading, setLoading] = useState(true);
+  const {setLoading } = useLoader();
 
   const menuItems = [
     { id: "oportunidades", texto: "Oportunidades para ti", url: "/dashboard/abogado" },
@@ -63,10 +64,6 @@ const LayoutContent = ({ children }: LayoutProps) => {
       }
     }
   }, [token, userRole, router]);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="">
