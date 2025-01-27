@@ -1,0 +1,52 @@
+
+Estados de la Oferta
+Te quedarías con:
+
+Creada: La oferta existe pero aún no se ha asignado a ningún abogado.
+Asignada: Se seleccionó un abogado (se aceptó una aplicación o invitación), y ya se generó un registro en la tabla Trabajos.
+Cerrada: La oferta completó su ciclo (no acepta más aplicaciones ni genera más trabajos).
+Cancelada: La oferta fue retirada antes de llegar a asignar un abogado.
+
+Flujo de trabajo
+Oferta creada:
+
+El cliente crea una oferta que comienza en el estado Creada.
+Postulación o invitación:
+
+Los abogados pueden postular directamente.
+El cliente puede enviar invitaciones directas a abogados específicos, gestionadas en la tabla Invitaciones.
+Aceptación de la aplicación o invitación:
+
+Si el cliente acepta una aplicación, o el abogado acepta una invitación, se genera un registro en la tabla Trabajos.
+La oferta pasa al estado Asignada.
+Cierre o cancelación:
+
+La oferta pasa a Cerrada cuando ya no tiene más actividad.
+Si el cliente decide no continuar con la oferta, se marca como Cancelada.
+
+Estados de la Tabla Trabajos
+Para la gestión de los trabajos derivados de la oferta, los estados podrían ser:
+
+En progreso: El abogado está trabajando en la tarea asignada.
+En revisión (opcional): El cliente está revisando el trabajo entregado.
+Completado: El trabajo fue finalizado y aprobado por el cliente.
+Cancelado: El trabajo fue interrumpido antes de completarse.
+
+Estados de la Aplicación
+Pendiente:
+
+El abogado ha aplicado a la oferta, pero el cliente aún no revisa ni toma una decisión sobre esta aplicación.
+Rechazada:
+
+El cliente revisó la aplicación y decidió no seleccionarla. Esto puede ser por varias razones, como no cumplir con los requisitos.
+Aceptada:
+
+El cliente aceptó la aplicación del abogado. A partir de este momento:
+La oferta pasa a estado Asignada.
+Se genera un registro en la tabla Trabajos.
+Cerrada:
+
+La aplicación queda inactiva porque la oferta ya no acepta más postulaciones, ya sea porque:
+La oferta fue Asignada a otro abogado.
+La oferta fue Cerrada o Cancelada.
+

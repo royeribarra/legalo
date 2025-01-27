@@ -67,3 +67,9 @@ Caja Los Andes
 1. Probar registro cliente
 2. Probar registro abogado
 3. Postular oferta - el valor esperado
+4. corregir el envio de correos para el abogado
+
+
+1, cuando postulas a una oferta como abogado, te guarda oferta1 y abogado1, para todos los casos
+
+1. cuando aplicas a una oferta, debes actualizar la oferta "estado"
