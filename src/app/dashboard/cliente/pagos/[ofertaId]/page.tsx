@@ -22,7 +22,7 @@ const CheckoutPage = () => {
 
   const [selectedOption, setSelectedOption] = useState("");
 
-  const handlePayout = (e) => {
+  const handlePayout = (e: any) => {
     setSelectedOption(e.target.value); // Actualiza el estado con la opción seleccionada
   };
 
