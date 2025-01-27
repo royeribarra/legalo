@@ -121,8 +121,6 @@ const CompleteProfileLawyerPage: React.FC = () => {
         return;
       }
 
-      
-
       const experiencias = stateAbogado.experiencias.map(
         (experiencia: IExperiencia) => ({
           institucion: experiencia.empresa,
@@ -163,7 +161,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
 
       try {
         const response = await abogadoService.createAbogado(data);
-        if(response.state){
+        if (response.state) {
           if (stateAbogado.archivo_cv) {
             enviarArchivo(
               stateAbogado.archivo_cv,
@@ -171,7 +169,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
               "archivo_cv"
             );
           }
-    
+
           if (stateAbogado.archivo_cul) {
             enviarArchivo(
               stateAbogado.archivo_cul,
@@ -179,7 +177,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
               "archivo_cul"
             );
           }
-    
+
           if (stateAbogado.archivo_imagen) {
             enviarArchivo(
               stateAbogado.archivo_imagen,
@@ -250,12 +248,16 @@ const CompleteProfileLawyerPage: React.FC = () => {
     abogadoId: number,
     nombreArchivo: string
   ) => {
-    const archivoBlob = base64ToFile(archivo.contenido, archivo.tipo, archivo.nombre);
+    const archivoBlob = base64ToFile(
+      archivo.contenido,
+      archivo.tipo,
+      archivo.nombre
+    );
     const body = {
       nombreArchivo,
       abogadoId,
       file: archivoBlob,
-      folder: "abogados"
+      folder: "abogados",
     };
 
     try {
@@ -288,7 +290,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4 lg:py-8 lg:px-0 w-full lg:max-w-[960px]">
-      <div className="max-w-[680px] mb-4 mx-auto">
+      <div className="w-full mb-4 ">
         <Progress value={100} className="mb-2 h-2" />
         <p className="text-left">Paso 3/3</p>
       </div>
@@ -301,7 +303,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
           servicios.
         </p>
       </div>
-      <div className="border border-black p-5 my-4 rounded-xl flex flex-col md:flex-row gap-4">
+      <div className="border  p-5 my-4 rounded-xl flex flex-col md:flex-row gap-4 bg-lg-lawyer">
         <ImageUpload
           updateStateAbogado={updateStateAbogado}
           stateAbogado={stateAbogado}
@@ -573,7 +575,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
           stateAbogado={stateAbogado}
         />
       )}
-      <div className="flex fixed left-0 bottom-0 w-screen h-[115px] bg-[#D5F1F0] ">
+      <div className="flex fixed left-0 bottom-0 w-screen h-[115px] bg-lg-lawyer border border-t-black">
         <div className="flex justify-center lg:justify-between items-center container mx-auto px-4 lg:px-8 max-w-[1000px]">
           <div className="w-[30%] ">
             <Button

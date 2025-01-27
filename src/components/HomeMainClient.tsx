@@ -1,8 +1,12 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 // import { Star } from "lucide-react";
+
+import { useState } from "react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { SliderB } from "@/components/ui/slider";
 
 import {
   Card,
@@ -43,6 +47,26 @@ const HomeMain: React.FC<HomeMainProps> = ({
   // serviceTipe,
   updateServiceTipe,
 }) => {
+  const [totalPaid, setTotalPaid] = useState(false);
+  const [sliderValue, setSliderValue] = useState([50]);
+
+  const handlePaidChange = () => {
+    setTotalPaid(!totalPaid);
+  };
+
+  const getPrice = (value, isTotalPaid) => {
+    if (isTotalPaid) {
+      if (value === 0) return "S/1,300";
+      if (value === 50) return "S/2,000";
+      if (value === 100) return "S/10,000";
+    } else {
+      if (value === 0) return "S/100";
+      if (value === 50) return "S/300";
+      if (value === 100) return "S/500";
+    }
+    return "";
+  };
+
   const reviewsItems = [
     {
       name: "Luisa Sanchez",
@@ -246,8 +270,8 @@ const HomeMain: React.FC<HomeMainProps> = ({
           </Card>
         </div>
       </div>
-      <div className="[background:linear-gradient(to_right,_#1E1E1E_50%,_#D5F1F0_50%)] border-t border-b border-black" id="calculo-ahorros">
-        <div className="max-w-[1920px] mx-auto lg:h-[620px] 3xl:h-[740px] grid grid-cols-1 lg:grid-cols-2">
+      <div className="border-t border-b border-black" id="calculo-ahorros">
+        <div className="max-w-[1920px] mx-auto grid grid-cols-1 lg:grid-cols-[4fr_6fr]">
           <div className="bg-black flex flex-col  gap-4 py-8 justify-center">
             <div className="flex  flex-col justify-center gap-8 3xl:gap-16 p-4 lg:p-16">
               <div className="grid grid-cols-[40px_auto]  gap-4 ">
@@ -260,8 +284,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 />
                 <div className="text-white">
                   <h3 className="text-lg lg:text-2xl font-nimbus mb-2 ">
-                    Profesionalismo y{" "}
-                    <span className="italic font-light">Experiencia</span>
+                    Profesionalismo y Experiencia
                   </h3>
                   <p className="text-base">
                     Todos nuestros abogados han sido verificados y cuentan con
@@ -329,37 +352,67 @@ const HomeMain: React.FC<HomeMainProps> = ({
               </div>
             </div>
           </div>
-          <div className=" bg-lg-client flex flex-col items-center justify-center gap-4 3xl:gap-8 p-8">
-            <h3 className="text-[40px] text-center max-w-[416px] 3xl:max-w-[700px] font-nimbus 3xl:text-6xl">
-              Con Legalo <span className="italic">ahorra</span> hasta
+          <div className="flex flex-col items-center justify-center gap-4 3xl:gap-8 p-8">
+            <h3 className="text-[40px] text-center max-w-[416px] font-nimbus 3xl:max-w-[700px] 3xl:text-6xl">
+              Calcula tus ganancias potenciales
             </h3>
-            <h2 className="text-6xl italic font-nimbus 3xl:text-7xl">
-              S/ 2160
-            </h2>
-            <p className="text-base max-w-[264px] 3xl:max-w-[400px] text-center 3xl:text-xl">
-              En comparación a 6 horas al día a un precio estimado de S/12 por
-              día
+            <p className="text-lg text-center">
+              Encuentra la referencia perfecta para tu caso.
             </p>
-            <Link href="#" className="underline 3xl:text-xl">
+            <p className="text-lg text-center font-bold">
+              Costo promedio desde:
+            </p>
+            <h2 className="text-6xl font-bold 3xl:text-7xl mb-4">
+              {getPrice(sliderValue[0], totalPaid)}
+            </h2>
+
+            <div className="w-full max-w-[620px] px-4 py-8 border border-x-0 border-y-black">
+              <p className="mb-8">Complejidad del proyecto:</p>
+              <SliderB
+                defaultValue={sliderValue}
+                onValueChange={(value) => setSliderValue(value)}
+                step={50}
+                min={0}
+                max={100}
+                className="cursor-pointer"
+              />
+              <div className="flex justify-between mt-4">
+                <span>Baja</span>
+                <span>Media</span>
+                <span>Alta</span>
+              </div>
+            </div>
+            <div className="w-full max-w-[620px] px-4 pt-2 pb-8 border border-x-0 border-t-0 border-b-black">
+              <p className="mb-8">Modalidad de cobro:</p>
+
+              {totalPaid === false ? (
+                <div className="w-full rounded-full flex border border-black bg-white p-[1px]">
+                  <Button
+                    variant={"link"}
+                    className="w-1/2 border-none hover-none"
+                    onClick={handlePaidChange}
+                  >
+                    Costo Total
+                  </Button>
+                  <Button className="w-1/2 rounded-full">Por Hora</Button>
+                </div>
+              ) : (
+                <div className="w-full rounded-full flex border border-black bg-white p-[1px]">
+                  <Button className="w-1/2 rounded-full">Costo Total</Button>
+                  <Button
+                    variant={"link"}
+                    className="w-1/2 border-none hover-none"
+                    onClick={handlePaidChange}
+                  >
+                    Por Hora
+                  </Button>
+                </div>
+              )}
+            </div>
+
+            <Link href="#" className="underline 3xl:text-xl text-[#666666]">
               ¿Cómo calculamos?
             </Link>
-            <Select>
-              <SelectTrigger className="w-[320px] border border-black">
-                <SelectValue placeholder="Seleccionar especialidad" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Especialidades</SelectLabel>
-                  <SelectItem value="penalista">Abogado Penalista</SelectItem>
-                  <SelectItem value="laboral">Abogado Laboral</SelectItem>
-                  <SelectItem value="familia">Abogado Familiar</SelectItem>
-                  <SelectItem value="empresarial">
-                    Abogado Empresarial
-                  </SelectItem>
-                  <SelectItem value="ambiental">Abogado Ambiental</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
           </div>
         </div>
       </div>
@@ -386,7 +439,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
             con confianza y rapidez.
           </p>
           <Link href={"/registro/tipo"}>
-            <Button className="w-fit" >Cuéntanos tu caso</Button>
+            <Button className="w-fit">Cuéntanos tu caso</Button>
           </Link>
         </div>
       </div>

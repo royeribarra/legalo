@@ -1,8 +1,13 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 // import { Star } from "lucide-react";
+
+import { useState } from "react";
+
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { SliderY } from "@/components/ui/slider";
 
 import {
   Card,
@@ -44,6 +49,26 @@ const HomeMain: React.FC<HomeMainProps> = ({
   // serviceTipe,
   updateServiceTipe,
 }) => {
+  const [totalPaid, setTotalPaid] = useState(false);
+  const [sliderValue, setSliderValue] = useState([50]);
+
+  const handlePaidChange = () => {
+    setTotalPaid(!totalPaid);
+  };
+
+  const getPrice = (value, isTotalPaid) => {
+    if (isTotalPaid) {
+      if (value === 0) return "S/1,300";
+      if (value === 50) return "S/2,000";
+      if (value === 100) return "S/10,000";
+    } else {
+      if (value === 0) return "S/100";
+      if (value === 50) return "S/300";
+      if (value === 100) return "S/500";
+    }
+    return "";
+  };
+
   const reviewsItems = [
     {
       name: "Luisa Sanchez",
@@ -247,16 +272,16 @@ const HomeMain: React.FC<HomeMainProps> = ({
           </Card>
         </div>
       </div>
-      <div className="[background:linear-gradient(to_right,_#1E1E1E_50%,_#EEF79C_50%)]">
-        <div className="max-w-[1920px] mx-auto 2xl:h-[584px] 3xl:h-[700px] grid grid-cols-1 lg:grid-cols-2">
-          <div className="bg-[#1E1E1E] flex flex-col justify-center gap-4 py-8">
+      <div className="border border-y-black border-x-0">
+        <div className="max-w-[1920px] mx-auto  grid grid-cols-1 lg:grid-cols-[4fr_6fr]">
+          <div className="bg-black flex flex-col justify-center gap-4 py-8">
             <div className="flex  flex-col justify-center gap-8 3xl:gap-16 p-4 lg:p-16">
               <div className="grid grid-cols-[40px_auto]  gap-4 ">
                 <Image
-                  src="/icos/ico-megaphone-w.png"
+                  src="/icos/award.svg"
                   alt="ico"
-                  width={27}
-                  height={24}
+                  width={36}
+                  height={36}
                   className="mx-auto"
                 />
                 <div className="text-white">
@@ -271,10 +296,10 @@ const HomeMain: React.FC<HomeMainProps> = ({
               </div>
               <div className="grid grid-cols-[40px_auto] gap-4 ">
                 <Image
-                  src="/icos/ico-credit-card-w.png"
+                  src="/icos/ico-lock-w.png"
                   alt="ico"
-                  width={30}
-                  height={23}
+                  width={26}
+                  height={34}
                   className="mx-auto"
                 />
                 <div className="text-white">
@@ -291,8 +316,8 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 <Image
                   src="/icos/ico-like-w.png"
                   alt="ico"
-                  width={24}
-                  height={30}
+                  width={34}
+                  height={34}
                   className="mx-auto"
                 />
                 <div className="text-white">
@@ -307,10 +332,10 @@ const HomeMain: React.FC<HomeMainProps> = ({
               </div>
               <div className="grid grid-cols-[40px_auto]  gap-4 ">
                 <Image
-                  src="/icos/ico-like-w.png"
+                  src="/icos/ico-star-w.png"
                   alt="ico"
-                  width={24}
-                  height={30}
+                  width={34}
+                  height={32}
                   className="mx-auto"
                 />
                 <div className="text-white">
@@ -325,38 +350,67 @@ const HomeMain: React.FC<HomeMainProps> = ({
               </div>
             </div>
           </div>
-          <div className=" bg-lg-lawyer flex flex-col items-center justify-center gap-4 3xl:gap-8 p-8">
+          <div className="flex flex-col items-center justify-center gap-4 3xl:gap-8 p-8">
             <h3 className="text-[40px] text-center max-w-[416px] font-nimbus 3xl:max-w-[700px] 3xl:text-6xl">
-              Calcula tus <span className="italic">ganancias,</span> podrías
-              ganar
+              Calcula tus ganancias potenciales
             </h3>
-            <h2 className="text-6xl italic font-nimbus 3xl:text-7xl">
-              S/ 2160
-            </h2>
-            <p className="text-base max-w-[264px] text-center 3xl:max-w-[400px] 3xl:text-xl">
-              En comparación a 6 horas al día a un precio estimado de S/12 por
-              día
+            <p className="text-lg text-center">
+              Encuentra la referencia perfecta para tus servicios
             </p>
-            <Link href="#" className="underline 3xl:text-xl">
+            <p className="text-lg text-center font-bold">
+              Podrías ganar desde:
+            </p>
+            <h2 className="text-6xl font-bold 3xl:text-7xl mb-4">
+              {getPrice(sliderValue[0], totalPaid)}
+            </h2>
+
+            <div className="w-full max-w-[620px] px-4 py-8 border border-x-0 border-y-black">
+              <p className="mb-8">Complejidad del proyecto:</p>
+              <SliderY
+                defaultValue={sliderValue}
+                onValueChange={(value) => setSliderValue(value)}
+                step={50}
+                min={0}
+                max={100}
+                className="cursor-pointer bg-yellow-200"
+              />
+              <div className="flex justify-between mt-4">
+                <span>Baja</span>
+                <span>Media</span>
+                <span>Alta</span>
+              </div>
+            </div>
+            <div className="w-full max-w-[620px] px-4 pt-2 pb-8 border border-x-0 border-t-0 border-b-black">
+              <p className="mb-8">Modalidad de cobro:</p>
+
+              {totalPaid === false ? (
+                <div className="w-full rounded-full flex border border-black bg-white p-[1px]">
+                  <Button
+                    variant={"link"}
+                    className="w-1/2 border-none hover-none"
+                    onClick={handlePaidChange}
+                  >
+                    Costo Total
+                  </Button>
+                  <Button className="w-1/2 rounded-full">Por Hora</Button>
+                </div>
+              ) : (
+                <div className="w-full rounded-full flex border border-black bg-white p-[1px]">
+                  <Button className="w-1/2 rounded-full">Costo Total</Button>
+                  <Button
+                    variant={"link"}
+                    className="w-1/2 border-none hover-none"
+                    onClick={handlePaidChange}
+                  >
+                    Por Hora
+                  </Button>
+                </div>
+              )}
+            </div>
+
+            <Link href="#" className="underline 3xl:text-xl text-[#666666]">
               ¿Cómo calculamos?
             </Link>
-            <Select>
-              <SelectTrigger className="w-[320px] border border-black">
-                <SelectValue placeholder="Seleccionar especialidad" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Especialidades</SelectLabel>
-                  <SelectItem value="penalista">Abogado Penalista</SelectItem>
-                  <SelectItem value="laboral">Abogado Laboral</SelectItem>
-                  <SelectItem value="familia">Abogado Familiar</SelectItem>
-                  <SelectItem value="empresarial">
-                    Abogado Empresarial
-                  </SelectItem>
-                  <SelectItem value="ambiental">Abogado Ambiental</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
           </div>
         </div>
       </div>
