@@ -1,6 +1,7 @@
 import { IAplicacionBack } from "./Aplicacion.interface";
 import { ICliente, IClienteBack } from "./Cliente.interface";
 import { IEspecialidadOferta } from "./Especialidad.interface";
+import { IFileBack } from "./File.interface";
 import { IIndustriaOferta } from "./Industria.interface";
 import { IServicioOferta } from "./Servicio.interface";
 import { ITrabajo } from "./Trabajo.interface";
@@ -39,4 +40,5 @@ export interface IOfertaBack {
     cliente: IClienteBack;
     aplicaciones: IAplicacionBack[];
     preguntas_oferta: IPreguntaOfertaBack[];
+    files: IFileBack[];
 }

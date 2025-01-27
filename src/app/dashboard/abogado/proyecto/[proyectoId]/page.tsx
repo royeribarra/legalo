@@ -199,7 +199,7 @@ const ProyectSinglePage = () => {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <Link href={`${process.env.S3_FILE_ROUTE}/${oferta.documento_url}`} target="_blank">Ver documento</Link>
+                  <Link href={`${process.env.S3_FILE_ROUTE}/${oferta?.files.find((file)=>file.nombreArchivo==='oferta_documento')?.filePath}`} target="_blank">Ver documento</Link>
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
