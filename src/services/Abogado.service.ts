@@ -6,6 +6,10 @@ export default class AbogadoService extends MainService {
     super(url);
   }
 
+  public async createAbogado(data: any): Promise<any>{
+    return this.post(`/create`, data);
+  }
+
   public async getDetalleAbogado(id: number): Promise<any> {
     return this.get(`/${id}`);
   }

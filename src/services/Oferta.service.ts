@@ -5,6 +5,10 @@ export default class OfertaService extends MainService {
     super(url);
   }
 
+  public async createOferta(body: any): Promise<any> {
+    return this.post(`/create`, body);
+  }
+
   public async realizarPago(pagoData: { clienteId: number; monto: number }): Promise<any> {
     return this.post(`/realizar-pago`, pagoData);
   }

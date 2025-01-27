@@ -10,7 +10,6 @@ type CvUploadProps = {
 
 function CvUpload({ campo, stateAbogado, updateStateAbogado }: CvUploadProps) {
   const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);
-  console.log(uploadSuccess)
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -18,11 +18,19 @@ export default class ClienteService extends MainService {
     return this.post(`/trabajos`, data);
   }
 
+  public async getOfertas(params?: any): Promise<any> {
+    return this.post("/get-ofertas", params);
+  }
+
   public async getOfertasConAplicaciones(data: {clienteId: number, estado?: string}): Promise<any> {
     return this.post(`/ofertas/con-aplicaciones`, data);
   }
 
   public async updateDocumentoOferta(data: {clienteId: number, ofertaId?: number}): Promise<any> {
     return this.post(`/update-documento-oferta`, data);
+  }
+
+  public async createOferta(data: any): Promise<any> {
+    return this.post(`/create-oferta`, data);
   }
 }

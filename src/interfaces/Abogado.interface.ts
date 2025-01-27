@@ -1,5 +1,6 @@
 import { IEspecialidadAbogado } from "./Especialidad.interface";
 import { IExperiencia } from "./Experiencia.interface";
+import { IFileBack } from "./File.interface";
 import { IHabilidad } from "./Habilidad.interface";
 import { IIndustriaAbogado } from "./Industria.interface";
 import { IServicioAbogado } from "./Servicio.interface";
@@ -57,6 +58,7 @@ export interface IAbogadoBack {
   especialidadesAbogado: IEspecialidadAbogado[];
   habilidades: IHabilidad[];
   trabajos: ITrabajo[];
+  files: IFileBack[];
 }
 
 export interface AbogadoUpdateDTO {

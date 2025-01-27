@@ -22,13 +22,17 @@ export class MainService {
     };
   }
 
-  private getContentType(headers?: Record<string, string>) {
-    // Si se pasa FormData, Axios se encarga automáticamente de asignar la cabecera 'Content-Type'.
-    if (headers && headers['Content-Type'] === 'multipart/form-data') {
+  private getContentType(data?: Record<string, any> | FormData, headers?: Record<string, string>) {
+    // Si los datos son FormData, Axios se encarga automáticamente de asignar 'multipart/form-data'
+    if (data instanceof FormData) {
       return 'multipart/form-data';
     }
 
-    // Si no se pasa Content-Type, se usa application/json por defecto
+    // Si no se pasa Content-Type, se usa 'application/json' por defecto
+    if (headers && headers['Content-Type']) {
+      return headers['Content-Type'];
+    }
+
     return 'application/json';
   }
 
@@ -48,8 +52,7 @@ export class MainService {
     data?: Record<string, any> | FormData, // Soporta tanto datos JSON como FormData
     headers?: Record<string, string>
   ): Promise<T> {
-    // Verifica el tipo de contenido, si no se pasa 'Content-Type', lo define según el tipo de datos.
-    const contentType = this.getContentType(headers);
+    const contentType = this.getContentType(data, headers);
 
     const response = await axios.post<T>(
       `${this.url}${endpoint}`,
@@ -58,8 +61,8 @@ export class MainService {
         ...this.options,
         headers: {
           ...this.options.headers,
-          'Content-Type': contentType,
-          ...headers,  // Si se pasa cabecera personalizada, se combinará
+          'Content-Type': contentType, // Se ajusta automáticamente
+          ...headers, // Si se pasa cabecera personalizada, se combinará
         },
       }
     );
@@ -71,8 +74,7 @@ export class MainService {
     data?: Record<string, any> | FormData, // Soporta tanto datos JSON como FormData
     headers?: Record<string, string>
   ): Promise<T> {
-    // Verifica el tipo de contenido, si no se pasa 'Content-Type', lo define según el tipo de datos.
-    const contentType = this.getContentType(headers);
+    const contentType = this.getContentType(data, headers);
 
     const response = await axios.put<T>(
       `${this.url}${endpoint}`,
@@ -81,8 +83,8 @@ export class MainService {
         ...this.options,
         headers: {
           ...this.options.headers,
-          'Content-Type': contentType,
-          ...headers,  // Si se pasa cabecera personalizada, se combinará
+          'Content-Type': contentType, // Se ajusta automáticamente
+          ...headers, // Si se pasa cabecera personalizada, se combinará
         },
       }
     );

@@ -14,7 +14,8 @@ import { useAuth } from "@/contexts/authContext";
 import { IArchivo } from "@/interfaces/Archivo.interface";
 import Link from "next/link";
 import { base64ToBlob } from "utils/file";
-import { fileService } from "@/services";
+import { clienteService, fileService, ofertaservice } from "@/services";
+import { base64ToFile } from "utils/uploadFile";
 
 export interface IPregunta {
   id?: number;
@@ -99,65 +100,46 @@ const PublicarPageEight = () => {
     setInput(e.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const data = {
       ...state,
       clienteId: token?.cliente?.id,
       documento: "",
     };
 
-    if (state.documento && token) {
-      const url = `${process.env.BASE_APP_API_URL}/temp-files/upload-oferta-documento`;
-      enviarArchivo(state.documento, token?.cliente?.id ?? 0, token.correo, "oferta_documento", url);
-    }
-
-    fetch(`${process.env.BASE_APP_API_URL}/ofertas/create`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.state) {
-          setNewOferta(data.oferta.id)
-          localStorage.removeItem("ofertaState");
-          setDefaultValues();
-          setModalCrearProyectoOk(true);
+    try {
+      const response = await ofertaservice.createOferta(data);
+      if (response.state) {
+        if (state.documento && token) {
+          enviarArchivo(state.documento, response.oferta.id, "oferta_documento");
         }
-      })
-      .catch((err) => console.log(err));
+        localStorage.removeItem("ofertaState");
+        setDefaultValues();
+      }
+      
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   const enviarArchivo = async (
     archivo: IArchivo,
-    id: number,
-    correo: string,
-    nombreArchivo: string,
-    url: string
+    ofertaId: number,
+    nombreArchivo: string
   ) => {
-    const archivoBlob = base64ToBlob(archivo.contenido, archivo.tipo);
-    const formData = new FormData();
-    formData.append("nombreArchivo", nombreArchivo);
-    formData.append("file", archivoBlob, archivo.nombre);
-    formData.append("clienteId", `${id}`);
-    formData.append("correo", correo);
-    formData.append("fileId", JSON.stringify(Date.now()));
+    const archivoBlob = base64ToFile(archivo.contenido, archivo.tipo, archivo.nombre);
+    const body = {
+      nombreArchivo,
+      ofertaId,
+      file: archivoBlob,
+      folder: "ofertas"
+    };
 
     try {
-      const response = await fileService.uploadDocumentoOferta(formData);
-      console.log(response)
-      // const response = await fetch(url, {
-      //   method: "POST",
-      //   body: formData,
-      // });
-
-      // if (!response.ok) {
-      //   throw new Error(`Error en la petición: ${response.statusText}`);
-      // }
-
-      // const data = await response.json();
+      const response = await fileService.uploadFile(body);
+      if(response.state){
+        setModalCrearProyectoOk(true);
+      }
     } catch (error) {
       console.error("Error al enviar el archivo", error);
     }

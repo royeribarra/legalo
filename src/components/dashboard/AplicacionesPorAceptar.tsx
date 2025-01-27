@@ -22,14 +22,11 @@ const AplicacionesPorAceptar = () => {
       if(token?.cliente?.id)
       {
         const data = {
-          clienteId: token?.cliente?.id
+          clienteId: token?.cliente?.id,
+          estado: 'verificar_postulaciones'
         };
-        const response = await clienteService.getOfertasConAplicaciones(data);
-        // const response = await fetch(`${process.env.BASE_APP_API_URL}/ofertas/cliente/${token?.cliente?.id}/con-aplicaciones`);
-        // if (!response.ok) {
-        //   throw new Error("Error al obtener las ofertas");
-        // }
-        // const data = await response.json();
+        // const response1 = await clienteService.getOfertasConAplicaciones(data);
+        const response = await clienteService.getOfertas(data);
         setOfertasConAplicaciones(response);
       }
     } catch (error) {

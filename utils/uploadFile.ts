@@ -47,3 +47,31 @@ export function base64ToBlob(base64: string, mimeType: string): Blob {
   );
   return new Blob([new Uint8Array(byteNumbers)], { type: mimeType });
 }
+
+export function base64ToFile(base64: string, mimeType: string, filename: string): File {
+  try {
+    // Verificar si la cadena tiene el prefijo esperado
+    if (!base64.includes(",")) {
+      throw new Error("La cadena base64 no tiene el formato esperado.");
+    }
+
+    const base64Content = base64.split(",")[1];
+    if (!base64Content) {
+      throw new Error("Contenido base64 no encontrado después de ','");
+    }
+
+    const byteCharacters = atob(base64Content);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+
+    // Crear un archivo (File) a partir del Blob generado
+    return new File([new Blob([byteArray], { type: mimeType })], filename, { type: mimeType });
+  } catch (error) {
+    console.error("Error al convertir base64 a File:", error);
+    throw error; // Opcional: lanzar el error para manejarlo en la llamada
+  }
+}

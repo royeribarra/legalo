@@ -41,7 +41,7 @@ const PublicarPageFour = () => {
         return;
       }
 
-      setFileError(null); // Limpiar errores previos
+      setFileError(null);
       const reader = new FileReader();
       reader.onload = () => {
         const base64File = reader.result?.toString();

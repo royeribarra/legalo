@@ -26,6 +26,8 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/contexts/toastContext";
 import { useRegistroAbogado } from "@/contexts/registroAbogadoContext";
 import { IArchivo } from "@/interfaces/Archivo.interface";
+import { abogadoService, fileService } from "@/services";
+import { base64ToFile } from "utils/uploadFile";
 
 interface Educacion {
   id: number;
@@ -119,98 +121,82 @@ const CompleteProfileLawyerPage: React.FC = () => {
         return;
       }
 
-      if (stateAbogado.archivo_cv) {
-        const url = `${process.env.BASE_APP_API_URL}/temp-files/upload-abogado-cv`;
-        enviarArchivo(
-          stateAbogado.archivo_cv,
-          stateAbogado.dni,
-          stateAbogado.email,
-          "archivo_cv",
-          url
-        );
-      }
+      
 
-      if (stateAbogado.archivo_cul) {
-        const url = `${process.env.BASE_APP_API_URL}/temp-files/upload-abogado-cul`;
-        enviarArchivo(
-          stateAbogado.archivo_cul,
-          stateAbogado.dni,
-          stateAbogado.email,
-          "archivo_cul",
-          url
-        );
-      }
-
-      if (stateAbogado.archivo_imagen) {
-        const url = `${process.env.BASE_APP_API_URL}/temp-files/upload-abogado-imagen`;
-        enviarArchivo(
-          stateAbogado.archivo_imagen,
-          stateAbogado.dni,
-          stateAbogado.email,
-          "archivo_imagen",
-          url
-        );
-      }
-
-      if (true) {
-        const experiencias = stateAbogado.experiencias.map(
-          (experiencia: IExperiencia) => ({
-            institucion: experiencia.empresa,
-            fecha_fin: experiencia.hasta_fecha,
-            fecha_inicio: experiencia.desde_fecha,
-            descripcion: experiencia.descripcion,
-            titulo: experiencia.titulo,
-          })
-        );
-        const educaciones = stateAbogado.estudios.map((estudio: IEstudio) => ({
-          institucion: estudio.institucion,
-          fecha_fin: estudio.hasta_fecha,
-          fecha_inicio: estudio.desde_fecha,
-          descripcion: estudio.descripcion,
-          titulo: estudio.titulo,
-          ubicacion: estudio.ubicacion,
-        }));
-        const data = {
-          nombres: stateAbogado.nombres,
-          apellidos: stateAbogado.apellidos,
-          direccion: stateAbogado.ubicacion,
-          correo: stateAbogado.email,
-          dni: stateAbogado.dni,
-          telefono: stateAbogado.telefono,
-          contrasena: stateAbogado.contrasena,
-          sobre_ti: stateAbogado.sobre_ti,
-          grado_academico: stateAbogado.grado,
-          cip: stateAbogado.cip,
-          colegio: stateAbogado.colegio,
-          habilidadesBlandas: stateAbogado.habilidades_blandas,
-          habilidadesDuras: stateAbogado.habilidades_duras,
-          industrias: stateAbogado.industrias,
-          servicios: stateAbogado.servicios,
-          experiencias: experiencias,
-          educaciones: educaciones,
-          especialidades: stateAbogado.especialidades,
-        };
-
-        fetch(`${process.env.BASE_APP_API_URL}/abogados/create`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
+      const experiencias = stateAbogado.experiencias.map(
+        (experiencia: IExperiencia) => ({
+          institucion: experiencia.empresa,
+          fecha_fin: experiencia.hasta_fecha,
+          fecha_inicio: experiencia.desde_fecha,
+          descripcion: experiencia.descripcion,
+          titulo: experiencia.titulo,
         })
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.state) {
-              localStorage.clear();
-              router.push(
-                `/registro/abogado/email-verify?correo=${encodeURIComponent(stateAbogado.email)}`
-              );
-              // router.push("/registro/abogado/email-verify")
-            } else {
-              showToast("error", "Registro existente", "");
-            }
-          })
-          .catch((err) => console.log(err));
+      );
+      const educaciones = stateAbogado.estudios.map((estudio: IEstudio) => ({
+        institucion: estudio.institucion,
+        fecha_fin: estudio.hasta_fecha,
+        fecha_inicio: estudio.desde_fecha,
+        descripcion: estudio.descripcion,
+        titulo: estudio.titulo,
+        ubicacion: estudio.ubicacion,
+      }));
+      const data = {
+        nombres: stateAbogado.nombres,
+        apellidos: stateAbogado.apellidos,
+        direccion: stateAbogado.ubicacion,
+        correo: stateAbogado.email,
+        dni: stateAbogado.dni,
+        telefono: stateAbogado.telefono,
+        contrasena: stateAbogado.contrasena,
+        sobre_ti: stateAbogado.sobre_ti,
+        grado_academico: stateAbogado.grado,
+        cip: stateAbogado.cip,
+        colegio: stateAbogado.colegio,
+        habilidadesBlandas: stateAbogado.habilidades_blandas,
+        habilidadesDuras: stateAbogado.habilidades_duras,
+        industrias: stateAbogado.industrias,
+        servicios: stateAbogado.servicios,
+        experiencias: experiencias,
+        educaciones: educaciones,
+        especialidades: stateAbogado.especialidades,
+      };
+
+      try {
+        const response = await abogadoService.createAbogado(data);
+        if(response.state){
+          if (stateAbogado.archivo_cv) {
+            enviarArchivo(
+              stateAbogado.archivo_cv,
+              response.abogado.id,
+              "archivo_cv"
+            );
+          }
+    
+          if (stateAbogado.archivo_cul) {
+            const url = `${process.env.BASE_APP_API_URL}/temp-files/upload-abogado-cul`;
+            enviarArchivo(
+              stateAbogado.archivo_cul,
+              response.abogado.id,
+              "archivo_cul"
+            );
+          }
+    
+          if (stateAbogado.archivo_imagen) {
+            const url = `${process.env.BASE_APP_API_URL}/temp-files/upload-abogado-imagen`;
+            enviarArchivo(
+              stateAbogado.archivo_imagen,
+              response.abogado.id,
+              "archivo_imagen"
+            );
+          }
+          localStorage.clear();
+          router.push(
+            `/registro/abogado/email-verify?correo=${encodeURIComponent(stateAbogado.email)}`
+          );
+        }
+        showToast("error", response.message, "");
+      } catch (error) {
+        showToast("error", "Ocurrió un error", "");
       }
       return;
     }
@@ -254,57 +240,21 @@ const CompleteProfileLawyerPage: React.FC = () => {
     }
   };
 
-  function base64ToBlob(base64: string, mimeType: string): Blob {
-    try {
-      // Verificar si la cadena tiene el prefijo esperado
-      if (!base64.includes(",")) {
-        throw new Error("La cadena base64 no tiene el formato esperado.");
-      }
-
-      const base64Content = base64.split(",")[1];
-      if (!base64Content) {
-        throw new Error("Contenido base64 no encontrado después de ','");
-      }
-
-      const byteCharacters = atob(base64Content);
-      const byteNumbers = new Array(byteCharacters.length);
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
-      }
-      const byteArray = new Uint8Array(byteNumbers);
-      return new Blob([byteArray], { type: mimeType });
-    } catch (error) {
-      console.error("Error al convertir base64 a Blob:", error);
-      throw error; // Opcional: lanzar el error para manejarlo en la llamada
-    }
-  }
-
   const enviarArchivo = async (
     archivo: IArchivo,
-    dni: string,
-    correo: string,
-    nombreArchivo: string,
-    url: string
+    abogadoId: number,
+    nombreArchivo: string
   ) => {
-    const archivoBlob = base64ToBlob(archivo.contenido, archivo.tipo);
-    const formData = new FormData();
-    formData.append("nombreArchivo", nombreArchivo);
-    formData.append("file", archivoBlob, archivo.nombre);
-    formData.append("dni", dni);
-    formData.append("correo", correo);
+    const archivoBlob = base64ToFile(archivo.contenido, archivo.tipo, archivo.nombre);
+    const body = {
+      nombreArchivo,
+      abogadoId,
+      file: archivoBlob,
+      folder: "abogados"
+    };
 
     try {
-      const response = await fetch(url, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error(`Error en la petición: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      console.log("Archivo enviado correctamente", data);
+      const response = await fileService.uploadFile(body);
     } catch (error) {
       console.error("Error al enviar el archivo", error);
     }

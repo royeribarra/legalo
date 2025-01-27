@@ -10,6 +10,9 @@ import { IOfertaBack } from "@/interfaces/Oferta.interface";
 import Link from "next/link";
 import { Table } from "antd"; // Importar la tabla de Ant Design
 import { ColumnsType } from "antd/es/table"; // Para tipado de las columnas
+import { clienteService } from "@/services";
+import { IFileBack } from "@/interfaces/File.interface";
+import { IServicioOferta } from "@/interfaces/Servicio.interface";
 
 const OfertasActivas = () => {
   const [proyectos, setProyectos] = useState<IOfertaBack[]>([]);
@@ -18,34 +21,28 @@ const OfertasActivas = () => {
   const [currentPage, setCurrentPage] = useState(1); // Para controlar la página actual
   const { token } = useAuth();
 
-  useEffect(() => {
-    const fetchProyectos = async () => {
-      setLoading(true);
-      try {
-        const apiUrl = process.env.BASE_APP_API_URL;
-        const clienteId = token?.cliente?.id;
-        const response = await axios.get(
-          `${apiUrl}/clientes/${clienteId}/ofertas`
-        );
-        setProyectos(response.data);
-      } catch (err) {
-        const error = err as AxiosError;
-        if (error.response) {
-          setError(
-            `Error al cargar los proyectos: ${error.response.status} - ${error.response.data}`
-          );
-        } else if (error.request) {
-          setError("Error de conexión: No se pudo contactar al servidor");
-        } else {
-          setError(error.message || "Error desconocido");
-        }
-      } finally {
+
+  const fetchProyectos = async () => {
+    setLoading(true);
+    try {
+      if(token?.cliente?.id){
+        const filter = {
+          clienteId: token?.cliente?.id,
+          estado: 'creado'
+        };
+        const response = await clienteService.getOfertas(filter);
+        setProyectos(response);
         setLoading(false);
       }
-    };
+      
+    } catch (err) {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchProyectos();
-  }, [token?.cliente?.id]);
+  }, []);
 
   if (loading) return <p>Cargando proyectos...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -60,18 +57,34 @@ const OfertasActivas = () => {
     },
     {
       title: "Tipo de servicio",
-      dataIndex: "tipo_servicio", // Asegúrate de que este campo esté disponible en tus datos
-      key: "tipo_servicio",
-      render: (text) => <span>{text}</span>,
+      dataIndex: "serviciosOferta", // Asegúrate de que este campo esté disponible en tus datos
+      key: "serviciosOferta",
+      render: (serviciosOferta: IServicioOferta[]) => (
+        <div>
+          <ul>
+          {
+            serviciosOferta.map((servicio)=>
+              <li>{servicio.servicio.nombre}</li>
+            )
+          }
+          </ul>
+        </div>
+      ),
     },
     {
       title: "Documento URL",
-      dataIndex: "documento_url",
-      key: "documento_url",
-      render: (url) => (
-        <Link href={`${process.env.S3_FILE_ROUTE}/${url}`} target="_blank">
-          <Button>Ver documento</Button>
-        </Link>
+      dataIndex: "files",
+      key: "files",
+      render: (files: IFileBack[]) => (
+        <div>
+          {
+            files.map((file)=>
+              <Link href={`${process.env.S3_FILE_ROUTE}/${file.filePath}`} target="_blank">
+                <Button>Ver documento</Button>
+              </Link>
+            )
+          }
+        </div>
       ),
     },
     {

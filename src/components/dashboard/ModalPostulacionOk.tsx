@@ -19,21 +19,21 @@ const ModalPostulacionOk: React.FC<ModalPostulacionOkProps> = ({
   oferta,
   newAplicacionId
 }) => {
-  const { token, userRole } = useAuth();
-  async function updateArchivosAplicacion() {
-    if(token?.abogado?.id && oferta){
-      const data = {
-        abogadoId: token?.abogado?.id,
-        ofertaId: oferta.id,
-        aplicacionId: newAplicacionId
-      };
-      const response = await aplicacionService.updateLinkDocumentos(data);
-    }
-  }
+  // const { token, userRole } = useAuth();
+  // async function updateArchivosAplicacion() {
+  //   if(token?.abogado?.id && oferta){
+  //     const data = {
+  //       abogadoId: token?.abogado?.id,
+  //       ofertaId: oferta.id,
+  //       aplicacionId: newAplicacionId
+  //     };
+  //     const response = await aplicacionService.updateLinkDocumentos(data);
+  //   }
+  // }
 
-  useEffect(()=>{
-    updateArchivosAplicacion();
-  }, []);
+  // useEffect(()=>{
+  //   updateArchivosAplicacion();
+  // }, []);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-20 ">

@@ -28,9 +28,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { abogadoService } from "@/services";
+import { abogadoService, fileService } from "@/services";
 import { useAuth } from "@/contexts/authContext";
-import { handleFileUpload } from "utils/uploadFile";
+import { base64ToFile, handleFileUpload } from "utils/uploadFile";
 import { Eye, Trash } from "lucide-react"; 
 import { IOfertaBack } from "@/interfaces/Oferta.interface";
 import { IArchivo } from "@/interfaces/Archivo.interface";
@@ -86,25 +86,23 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
   };
 
   const enviarPostulacion = async () => {
-    if (uploadedFile) {
-      const url = `${process.env.BASE_APP_API_URL}/temp-files/upload-documento-aplicacion`;
-      enviarArchivo(uploadedFile, oferta.id, token?.abogado?.id ?? 0, "documento_aplicacion", url);
-    }
-    if (uploadedVideo) {
-      const url = `${process.env.BASE_APP_API_URL}/temp-files/upload-video-aplicacion`;
-      enviarArchivo(uploadedVideo, oferta.id, token?.abogado?.id ?? 0, "video_aplicacion", url);
-    }
     if(token?.abogado?.id){
       const data = {
         abogadoId: token?.abogado?.id,
         ofertaId: Number(proyectoId),
         salarioEsperado: totalRecibido
       };
-      const postulacion = await abogadoService.postularOferta(data);
-      if(postulacion.state === 'success'){
+      const response = await abogadoService.postularOferta(data);
+      if(response.state){
+        if (uploadedFile) {
+          enviarArchivo(uploadedFile, response.aplicacionId,  "aplicacion_documento");
+        }
+        if (uploadedVideo) {
+          enviarArchivo(uploadedVideo, response.aplicacionId, "aplicacion_video");
+        }
         handleModalPostularOk();
       }
-      console.log(postulacion)
+      console.log(response)
     }
   };
 
@@ -166,43 +164,23 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
 
   const enviarArchivo = async (
     archivo: IArchivo,
-    ofertaId: number,
-    abogadoId: number,
-    nombreArchivo: string,
-    url: string
+    aplicacionId: number,
+    nombreArchivo: string
   ) => {
-    const archivoBlob = base64ToBlob(archivo.contenido, archivo.tipo);
-    const formData = new FormData();
-    formData.append("nombreArchivo", nombreArchivo);
-    formData.append("file", archivoBlob, archivo.nombre);
-    formData.append("ofertaId", `${ofertaId}`);
-    formData.append("abogadoId", `${abogadoId}`);
-    formData.append("fileId", JSON.stringify(Date.now()));
+    const archivoBlob = base64ToFile(archivo.contenido, archivo.tipo, archivo.nombre);
+    const body = {
+      nombreArchivo,
+      aplicacionId,
+      file: archivoBlob,
+      folder: "aplicaciones"
+    };
 
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error(`Error en la petición: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      console.log("Archivo enviado correctamente", data);
+     try {
+      const response = await fileService.uploadFile(body);
     } catch (error) {
       console.error("Error al enviar el archivo", error);
     }
   };
-
-  function base64ToBlob(base64: string, mimeType: string): Blob {
-    const byteCharacters = atob(base64.split(",")[1]);
-    const byteNumbers = Array.from(byteCharacters).map((char) =>
-      char.charCodeAt(0)
-    );
-    return new Blob([new Uint8Array(byteNumbers)], { type: mimeType });
-  }
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-20 ">
@@ -251,7 +229,13 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                   <div className="flex gap-8 items-center">
                     <Avatar className="w-24 h-24">
                       <AvatarImage src="" alt="user-img" />
-                      <AvatarFallback>JA</AvatarFallback>
+                      <AvatarFallback>
+                        <img 
+                        src={`${process.env.S3_FILE_ROUTE}/${token?.abogado?.files.find((file)=>file.nombreArchivo==='archivo_imagen')}`}
+                        alt="default-img" 
+                        className="w-full h-full object-cover" 
+                      />
+                      </AvatarFallback>
                     </Avatar>
                     <div className="flex flex-col gap-1">
                       <span className="font-bold text-2xl">{token?.abogado?.nombres}</span>
