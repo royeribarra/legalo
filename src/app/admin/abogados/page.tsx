@@ -14,6 +14,7 @@ import { IEspecialidadAbogado } from '@/interfaces/Especialidad.interface';
 import { IServicioAbogado } from '@/interfaces/Servicio.interface';
 import Link from 'next/link';
 import { useToast } from '@/contexts/toastContext';
+import { IFileBack } from '@/interfaces/File.interface';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -178,33 +179,55 @@ function Abogados() {
     },
     {
       title: 'Imagen',
-      dataIndex: 'foto_url',
-      key: 'foto_url',
-      render: (foto_url: string) =>  (
-        <Link href={`${process.env.S3_FILE_ROUTE}/${foto_url}`} target='_blank'>
-          <Button>Ver</Button>
-        </Link>
-      )
+      dataIndex: 'files',
+      key: 'files',
+      render: (files: IFileBack[]) =>  {
+        const file = files.find((file)=>file.nombreArchivo === 'archivo_imagen')
+        return(
+          <Link href={`${process.env.S3_FILE_ROUTE}/${file?.filePath}`} target='_blank'>
+            <Button>Ver</Button>
+          </Link>
+        )
+      }
     },
     {
       title: 'CV',
-      dataIndex: 'cv_url',
-      key: 'cv_url',
-      render: (cv_url: string) =>  (
-        <Link href={`${process.env.S3_FILE_ROUTE}/${cv_url}`} target='_blank'>
-          <Button>Ver</Button>
-        </Link>
-      )
+      dataIndex: 'files',
+      key: 'files',
+      render: (files: IFileBack[]) =>  {
+        const file = files.find((file)=>file.nombreArchivo === 'archivo_cv')
+        return(
+          <Link href={`${process.env.S3_FILE_ROUTE}/${file?.filePath}`} target='_blank'>
+            <Button>Ver</Button>
+          </Link>
+        )
+      }
     },
     {
       title: 'CUL',
-      dataIndex: 'cul_url',
-      key: 'cul_url',
-      render: (cul_url: string) =>  (
-        <Link href={`${process.env.S3_FILE_ROUTE}/${cul_url}`} target='_blank'>
-          <Button>Ver</Button>
-        </Link>
-      )
+      dataIndex: 'files',
+      key: 'files',
+      render: (files: IFileBack[]) =>  {
+        const file = files.find((file)=>file.nombreArchivo === 'archivo_cul')
+        return(
+          <Link href={`${process.env.S3_FILE_ROUTE}/${file?.filePath}`} target='_blank'>
+            <Button>Ver</Button>
+          </Link>
+        )
+      }
+    },
+    {
+      title: 'Video',
+      dataIndex: 'files',
+      key: 'files',
+      render: (files: IFileBack[]) =>  {
+        const file = files.find((file)=>file.nombreArchivo === 'archivo_video')
+        return(
+          <Link href={`${process.env.S3_FILE_ROUTE}/${file?.filePath}`} target='_blank'>
+            <Button>Ver</Button>
+          </Link>
+        )
+      }
     },
     {
       title: 'Estado',
@@ -213,12 +236,12 @@ function Abogados() {
       render: (validado: boolean, record: IAbogadoBack) => (
         <Button
           type="primary"
-          danger={!record.validado_admin} // Usamos el estado actualizado
+          danger={!record.validado_admin}
           onClick={async () => {
             try {
               const nuevoEstado = !record.validado_admin;
               const data = { validado_admin: nuevoEstado };
-              const response = await abogadoService.updateAbogado(record.id, data); // Realizar la petición
+              const response = await abogadoService.updateAbogado(record.id, data);
               
               if(response.state){
                 record.validado_admin = nuevoEstado;

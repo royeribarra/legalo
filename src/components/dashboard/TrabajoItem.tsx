@@ -11,6 +11,7 @@ interface TrabajoItemProps {
 }
 
 const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo }) => {
+  const whatsappNumber = "51939784580";
   return (
     <div
       className={`p-4 lg:p-8 border border-black rounded-[20px] flex flex-col gap-4 ${tipe === "cotizacionAceptada" && "bg-[#EEF79C]"} ${tipe === "cotizacionPorExpirar" && "bg-[#EDEDED]"}`}
@@ -51,16 +52,18 @@ const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo }) => {
         )}
         {(tipe === "cotizacionAceptada" || tipe === "cotizacionPorExpirar") && (
           <div className="flex gap-4 justify-end mb-4 lg:mb-0">
-            <Button className="text-xs lg:text-base h-9 lg:h-[42px] rounded-full w-[200px]">
-              <Image
-                src="/assets/ico-whatsapp.svg"
-                alt="ico-whastapp"
-                width={24}
-                height={24}
-                className="mr-2"
-              />
-              Contactar al cliente
-            </Button>
+            <Link href={`https://wa.me/${whatsappNumber}`} target="_blank">
+              <Button className="text-xs lg:text-base h-9 lg:h-[42px] rounded-full w-[200px]">
+                <Image
+                  src="/assets/ico-whatsapp.svg"
+                  alt="ico-whastapp"
+                  width={24}
+                  height={24}
+                  className="mr-2"
+                />
+                Contactar al abogado
+              </Button>
+            </Link>
           </div>
         )}
       </div>

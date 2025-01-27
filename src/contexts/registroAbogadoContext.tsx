@@ -24,6 +24,7 @@ export type RegistroAbogadoState = {
   archivo_cul: IArchivo | null;
   archivo_imagen: IArchivo | null;
   archivo_cv: IArchivo | null;
+  archivo_video: IArchivo | null;
   habilidades_duras: IHabilidad[];
   habilidades_blandas: IHabilidad[];
   experiencias: IExperiencia[];
@@ -67,6 +68,7 @@ const defaultState: RegistroAbogadoState & { caducidad?: number } = {
   archivo_cul: null,
   archivo_imagen: null,
   archivo_cv: null,
+  archivo_video: null,
   caducidad: Date.now() + 12 * 60 * 60 * 1000, // 12 horas en milisegundos
 };
 

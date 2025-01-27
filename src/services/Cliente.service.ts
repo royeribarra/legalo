@@ -15,7 +15,7 @@ export default class ClienteService extends MainService {
   }
 
   public async getTrabajos(data: {clienteId: number, estado?: string}): Promise<any> {
-    return this.post(`/trabajos`, data);
+    return this.post(`/get-trabajos`, data);
   }
 
   public async getOfertas(params?: any): Promise<any> {

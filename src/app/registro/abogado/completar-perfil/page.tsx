@@ -173,7 +173,6 @@ const CompleteProfileLawyerPage: React.FC = () => {
           }
     
           if (stateAbogado.archivo_cul) {
-            const url = `${process.env.BASE_APP_API_URL}/temp-files/upload-abogado-cul`;
             enviarArchivo(
               stateAbogado.archivo_cul,
               response.abogado.id,
@@ -182,11 +181,17 @@ const CompleteProfileLawyerPage: React.FC = () => {
           }
     
           if (stateAbogado.archivo_imagen) {
-            const url = `${process.env.BASE_APP_API_URL}/temp-files/upload-abogado-imagen`;
             enviarArchivo(
               stateAbogado.archivo_imagen,
               response.abogado.id,
               "archivo_imagen"
+            );
+          }
+          if (stateAbogado.archivo_video) {
+            enviarArchivo(
+              stateAbogado.archivo_imagen,
+              response.abogado.id,
+              "archivo_video"
             );
           }
           localStorage.clear();

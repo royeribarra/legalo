@@ -31,7 +31,7 @@ const OfertasActivas = () => {
           estado: 'creado'
         };
         const response = await clienteService.getOfertas(filter);
-        setProyectos(response);
+        setProyectos(response.data);
         setLoading(false);
       }
       

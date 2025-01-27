@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { IOfertaBack } from "@/interfaces/Oferta.interface";
+import { getFriendlyStateName, getStateColor } from "utils/oferta";
 
 interface ProyectItemProps {
   tipe: string;
@@ -15,9 +16,19 @@ const ProyectItem: React.FC<ProyectItemProps> = ({ tipe, oferta }) => {
       className={`p-4 lg:p-8 border border-black rounded-[20px] flex flex-col gap-4 ${tipe === "cotizacionAceptada" && "bg-[#EEF79C]"} ${tipe === "cotizacionPorExpirar" && "bg-[#EDEDED]"}`}
     >
       <div className="flex justify-between flex-col-reverse lg:flex-row">
-        <h2 className="font-nimbus text-xl lg:text-2xl font-light">
-          {oferta.titulo}
-        </h2>
+        <div className="flex flex-col gap-2">
+          <h2 className="font-nimbus text-xl lg:text-2xl font-light">
+            {oferta.titulo}
+          </h2>
+          <span
+            className={`px-3 py-1 rounded-full text-xs lg:text-sm ${getStateColor(
+              oferta.estado
+            )}`}
+            style={{ width: "150px", display: "inline-block", textAlign: "center" }}
+          >
+            {getFriendlyStateName(oferta.estado)}
+          </span>
+        </div>
         {(tipe === "cotizacionAceptada" || tipe === "cotizacionPorExpirar") && (
           <h3 className="text-[22px] px-4 ml-4 border-l border-black flex-none leading-normal">
             Expira en <b> 24hrs</b>
@@ -25,12 +36,6 @@ const ProyectItem: React.FC<ProyectItemProps> = ({ tipe, oferta }) => {
         )}
         {tipe === "sinPostular" && (
           <div className="flex gap-4 justify-end mb-4 lg:mb-0">
-            {/* <Button
-              variant="outline"
-              className="text-sm lg:text-lg h-9 lg:h-[42px] rounded-full border-black flex-none"
-            >
-              Guardar
-            </Button> */}
             <Link href={`/dashboard/abogado/proyecto/${oferta.id}`}>
               <Button className="text-sm lg:text-lg h-9 lg:h-[42px] rounded-full flex-none">
                 Ver proyecto
@@ -44,7 +49,7 @@ const ProyectItem: React.FC<ProyectItemProps> = ({ tipe, oferta }) => {
               variant="outline"
               className="text-xs lg:text-base h-9 lg:h-[42px] rounded-full border-black flex-none"
             >
-              Postuilación envidada
+              Postulación enviada
             </Button>
           </div>
         )}

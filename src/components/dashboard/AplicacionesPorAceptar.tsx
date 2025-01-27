@@ -27,7 +27,7 @@ const AplicacionesPorAceptar = () => {
         };
         // const response1 = await clienteService.getOfertasConAplicaciones(data);
         const response = await clienteService.getOfertas(data);
-        setOfertasConAplicaciones(response);
+        setOfertasConAplicaciones(response.data);
       }
     } catch (error) {
       console.error("Error al obtener las ofertas con aplicaciones:", error);

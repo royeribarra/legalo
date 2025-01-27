@@ -35,7 +35,7 @@ export default class AbogadoService extends MainService {
   }
 
   public async getTrabajos(data: {abogadoId: number, estado?: string}): Promise<any> {
-    return this.post(`/trabajos`, data);
+    return this.post(`/get-trabajos`, data);
   }
 
   public async postularOferta(data: {abogadoId: number, ofertaId: number, salarioEsperado: number}): Promise<any> {

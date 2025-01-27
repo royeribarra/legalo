@@ -3,28 +3,39 @@ import ProyectItem from "../ProyectItem";
 import { ofertaservice } from "@/services";
 import { IOfertaBack } from "@/interfaces/Oferta.interface";
 
-function PublicacionesRecientes(){
+function PublicacionesRecientes() {
   const [ofertas, setOfertas] = useState<IOfertaBack[]>([]);
+  const [loading, setLoading] = useState(true); // Estado de carga opcional
 
   async function getOfertas() {
     const params = {
-      daysAgo: 5
+      daysAgo: 5,
     };
-    const response = await ofertaservice.obtenerTodos(params);
-    setOfertas(response);
+    try {
+      const response = await ofertaservice.obtenerTodos(params);
+      setOfertas(response);
+    } catch (error) {
+      console.error("Error al obtener publicaciones recientes:", error);
+    } finally {
+      setLoading(false); // Cambiamos el estado de carga
+    }
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     getOfertas();
   }, []);
 
-  return(
+  return (
     <div className="flex flex-col gap-8 flex-1 mt-12">
-      {
-        ofertas.map((oferta)=>
-          <ProyectItem tipe="sinPostular" oferta={oferta} />
-        )
-      }
+      {loading ? (
+        <p className="text-center text-gray-500">Cargando publicaciones...</p>
+      ) : ofertas.length > 0 ? (
+        ofertas.map((oferta) => (
+          <ProyectItem key={oferta.id} tipe="sinPostular" oferta={oferta} />
+        ))
+      ) : (
+        <p className="text-center text-gray-500">No hay publicaciones recientes.</p>
+      )}
     </div>
   );
 }

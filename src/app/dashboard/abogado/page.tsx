@@ -81,7 +81,7 @@ const DashboardLawyerPage = () => {
   async function fetchOfertas() {
     try {
       const data = {
-        estado: 'creada'
+        estado: 'creado'
       };
       const response = await ofertaservice.obtenerTodos(data);
       setOfertas(response);

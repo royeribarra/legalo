@@ -44,29 +44,26 @@ const ProyectSinglePage = () => {
     }
   };
 
-  async function fetchOferta(proyectoId: number) {
+  async function fetchOferta() {
     try {
-      const data = await ofertaservice.getOfertaByID(proyectoId);
-      setOferta(data);
+      if (proyectoId) {
+        const data = await ofertaservice.getOfertaByID(Number(proyectoId));
+        setOferta(data);
+      }
     } catch (error) {
       console.error("Error al obtener el detalle:", error);
     }
   }
   useEffect(() => {
-    if (proyectoId) {
-      console.log("ID del proyecto:", proyectoId);
-      fetchOferta(Number(proyectoId))
-    }
-  }, [proyectoId]);
+    fetchOferta()
+  }, []);
 
   function calculateDaysSinceCreation(createdAt: string): number {
-    const createdDate = new Date(createdAt); // Convierte la fecha a un objeto Date
-    const currentDate = new Date(); // Obtén la fecha actual
+    const createdDate = new Date(createdAt);
+    const currentDate = new Date();
     
-    // Calcula la diferencia en milisegundos
     const differenceInMilliseconds = currentDate.getTime() - createdDate.getTime();
     
-    // Convierte la diferencia de milisegundos a días (1 día = 24 * 60 * 60 * 1000 ms)
     const daysDifference = Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
     setDiasPublicados(daysDifference);
     return daysDifference;
@@ -97,25 +94,33 @@ const ProyectSinglePage = () => {
               <p className="text-slate-500">{!diasPublicados ? "Publicado Hoy" : `Publicado hace ${diasPublicados} días`} </p>
             </div>
             <div className="mt-4 lg:mt-auto">
-              <Button className="w-[300px] h-12" onClick={handleModalPostular}>
+            {
+              (oferta.estado === 'creado' || oferta.estado === 'verificar_postulaciones') && 
+              <Button className="w-[300px] h-12 bg-blue-500 hover:bg-blue-700 text-white" onClick={handleModalPostular}>
                 Enviar Postulación
               </Button>
-            </div>
+            }
+            {
+              oferta.estado === 'asignado' && 
+              <Button className="w-[300px] h-12 bg-yellow-500 hover:bg-yellow-700 text-white">
+                Asignado
+              </Button>
+            }
+            {
+              oferta.estado === 'cerrado' && 
+              <Button className="w-[300px] h-12 bg-gray-500 hover:bg-gray-700 text-white">
+                Cerrado
+              </Button>
+            }
+            {
+              oferta.estado === 'cancelado' && 
+              <Button className="w-[300px] h-12 bg-red-500 hover:bg-red-700 text-white">
+                Cancelado
+              </Button>
+            }
+          </div>
           </div>
           <div className="flex gap-4 flex-wrap">
-            {/* <Button
-              variant="outline"
-              className="border border-black rounded-full h-[43px]"
-            >
-              <Image
-                src="/icos/ico-dash-pin-map.svg"
-                alt=""
-                width={24}
-                height={24}
-                className="mr-2"
-              />
-              <p>Remoto</p>
-            </Button> */}
             <Button
               variant="outline"
               className="border border-black rounded-full h-[43px]"
@@ -169,19 +174,6 @@ const ProyectSinglePage = () => {
               )
             }
             </div>
-            {/* <Button
-              variant="outline"
-              className="border border-black rounded-full h-[43px]"
-            >
-              <Image
-                src="/icos/ico-dash-briefcase.svg"
-                alt=""
-                width={24}
-                height={24}
-                className="mr-2"
-              />
-              <p>Asesoría legal</p>
-            </Button> */}
           </div>
           <div className="flex items-center gap-2 text-slate-500">
             <User size={24} color="#4B5563" /> {oferta.aplicaciones.length} postulaciones

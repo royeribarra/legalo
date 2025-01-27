@@ -45,6 +45,7 @@ const CheckoutPage = () => {
           monto: Number(monto),
           ofertaId: Number(ofertaId),
           operacion: valueOperation,
+          aplicacionId: Number(aplicacionId)
         };
         const response = await pagoService.realizarPago(pagoData);
         if (response.state) {
