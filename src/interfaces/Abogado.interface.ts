@@ -1,5 +1,5 @@
 import { IEspecialidadAbogado } from "./Especialidad.interface";
-import { IExperiencia } from "./Experiencia.interface";
+import { IExperiencia, IExperienciaBack } from "./Experiencia.interface";
 import { IFileBack } from "./File.interface";
 import { IHabilidad } from "./Habilidad.interface";
 import { IIndustriaAbogado } from "./Industria.interface";
@@ -41,7 +41,6 @@ export interface IAbogadoBack {
   telefono: string;
   direccion: string;
   especializacion: string;
-  industria: string;
   experiencia: string;
   experiencia_anos: string;
   pdf_cv: string;
@@ -50,7 +49,7 @@ export interface IAbogadoBack {
   foto_url: string;
   video_url: string;
   validado_admin: boolean;
-  experiencias: IExperiencia[];
+  experiencias: IExperienciaBack[];
   habilidadesBlandas: IHabilidad[];
   habilidadesDuras: IHabilidad[];
   industriasAbogado: IIndustriaAbogado[];

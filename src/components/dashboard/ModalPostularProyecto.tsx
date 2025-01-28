@@ -231,7 +231,7 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                       <AvatarImage src="" alt="user-img" />
                       <AvatarFallback>
                         <img 
-                        src={`${process.env.S3_FILE_ROUTE}/${token?.abogado?.files.find((file)=>file.nombreArchivo==='archivo_imagen')}`}
+                        src={`${process.env.S3_FILE_ROUTE}/${token?.abogado?.files.find((file)=>file.nombreArchivo==='archivo_imagen')?.filePath}`}
                         alt="default-img" 
                         className="w-full h-full object-cover" 
                       />
@@ -251,19 +251,6 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                   </div>
 
                   <div className="flex gap-4 flex-wrap ">
-                    {/* <Button
-                      variant="outline"
-                      className="border border-black rounded-full h-[43px]"
-                    >
-                      <Image
-                        src="/icos/ico-dash-pin-map.svg"
-                        alt=""
-                        width={24}
-                        height={24}
-                        className="mr-2"
-                      />
-                      <p>Remoto</p>
-                    </Button> */}
                     <Button
                       variant="outline"
                       className="border border-black rounded-full h-[43px]"
@@ -315,8 +302,11 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                     </span>
 
                     <div className="flex flex-col gap-2 mt-3">
-                      <DocsForClients documento={token?.abogado?.cul_url ?? 'url-por-defecto'} nombre="Curriculum Vitae" />
-                      <DocsForClients documento={token?.abogado?.cv_url ?? 'url-por-defecto'} nombre="CUL" />
+                      <DocsForClients 
+                        documento={token?.abogado?.files.find((file)=>file.nombreArchivo === 'archivo_cv')?.filePath ?? 'url-por-defecto'} 
+                        nombre="Curriculum Vitae" 
+                      />
+                      <DocsForClients documento={token?.abogado?.files.find((file)=>file.nombreArchivo === 'archivo_cul')?.filePath ?? 'url-por-defecto'} nombre="CUL" />
                     </div>
                   </div>
                   <div className="my-2">

@@ -267,7 +267,18 @@ function Abogados() {
           {record.validado_admin ? 'Activado' : 'Desactivado'}
         </Button>
       ),
-    }
+    },
+    {
+      title: 'Editar',
+      key: 'editar',
+      render: (_: unknown, record: IAbogadoBack) => {
+        return(
+        <Link href={`/dashboard/abogado/${record.id}`}>
+          <Button type="primary">Editar</Button>
+        </Link>)
+      }
+      ,
+    },
   ];
 
   return (

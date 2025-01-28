@@ -144,7 +144,7 @@ const ProyectPage = () => {
                       width={24}
                       height={24}
                     />
-                    Ver documentos adjuntos
+                    Ver documentos adjuntosss
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>- Documentos adjuntos -</AccordionContent>

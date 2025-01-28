@@ -8,3 +8,15 @@ export interface IExperiencia {
     hasta_fecha: string;
     titulo: string;
 }
+
+export interface IExperienciaBack{
+    id: number;
+    createdAt: string;
+    updatedAt: string;
+    deletedAt: string;
+    fecha_fin: string
+    fecha_inicio: string;
+    descripcion: string;
+    institucion: string;
+    titulo: string;
+}

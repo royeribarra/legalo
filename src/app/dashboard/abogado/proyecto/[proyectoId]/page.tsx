@@ -23,8 +23,10 @@ import ModalPostulacionOk from "@/components/dashboard/ModalPostulacionOk";
 import { abogadoService, ofertaservice } from "@/services";
 import { IOfertaBack } from "@/interfaces/Oferta.interface";
 import { number } from "zod";
+import { useLoader } from "@/contexts/loaderContext";
 
 const ProyectSinglePage = () => {
+  const { setLoading } = useLoader();
   const { proyectoId } = useParams();
   const [oferta, setOferta] = useState<IOfertaBack>();
   const [diasPublicados, setDiasPublicados] = useState<number>(0);
@@ -45,18 +47,21 @@ const ProyectSinglePage = () => {
   };
 
   async function fetchOferta() {
+    setLoading(true);
     try {
       if (proyectoId) {
         const data = await ofertaservice.getOfertaByID(Number(proyectoId));
         setOferta(data);
+        setLoading(false);
       }
     } catch (error) {
       console.error("Error al obtener el detalle:", error);
+      setLoading(false);
     }
   }
   useEffect(() => {
     fetchOferta()
-  }, []);
+  }, [proyectoId]);
 
   function calculateDaysSinceCreation(createdAt: string): number {
     const createdDate = new Date(createdAt);
@@ -75,12 +80,10 @@ const ProyectSinglePage = () => {
     }
   }, [oferta]);
 
-  if(!oferta){
-    return <>No existe la oferta</>
-  }
-
   return (
     <div>
+      {
+        oferta &&
       <div className="p-4 lg:px-16 lg:pt-12 flex gap-16 2xl:gap-32 flex-col lg:flex-row">
         <div className="flex-1 lg:p-8 flex flex-col gap-6">
           <Link href="/dashboard/abogado">
@@ -199,7 +202,7 @@ const ProyectSinglePage = () => {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <Link href={`${process.env.S3_FILE_ROUTE}/${oferta.documento_url}`} target="_blank">Ver documento</Link>
+                  <Link href={`${process.env.S3_FILE_ROUTE}/${oferta?.files.find((file)=>file.nombreArchivo==='oferta_documento')?.filePath}`} target="_blank">Ver documento</Link>
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
@@ -264,6 +267,7 @@ const ProyectSinglePage = () => {
           </div>
         </div>
       </div>
+      }
       <div className="pl-4 lg:pl-16 lg:pb-16 pr-0 overflow-hidden">
         <h3 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-8">
           Oportunidades similares:
@@ -316,7 +320,7 @@ const ProyectSinglePage = () => {
         </div>
       </div>
 
-      {showModalPostular && (
+      {showModalPostular && oferta && (
         <ModalPostularProyecto
           proyectoId={Number(proyectoId)}
           handleModalPostular={handleModalPostular}
