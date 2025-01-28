@@ -273,7 +273,7 @@ function Abogados() {
       key: 'editar',
       render: (_: unknown, record: IAbogadoBack) => {
         return(
-        <Link href={`/dashboard/abogado/${record.id}`}>
+        <Link href={`/admin/abogados/${record.id}`}>
           <Button type="primary">Editar</Button>
         </Link>)
       }
