@@ -242,6 +242,7 @@ const ProyectSinglePage = () => {
             <h3 className="text-center font-nimbus">Sobre el cliente:</h3>
             <p>Nombre y apellido: {oferta.cliente.nombres}</p>
             <p>Miembro desde 2021</p>
+            
             <p>Para uso {oferta.uso}</p>
           </div>
           {/* <div className="bg-[#FEF7FF] p-3 flex flex-wrap justify-center lg:justify-between max-w-[474px] border border-[#CAC4D0] rounded-xl gap-2">
