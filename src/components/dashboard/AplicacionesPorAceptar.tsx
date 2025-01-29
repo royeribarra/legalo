@@ -9,15 +9,33 @@ import { useAuth } from "@/contexts/authContext";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { clienteService } from "@/services";
+import { useLoader } from "@/contexts/loaderContext";
+import { IAbogadoBack } from "@/interfaces/Abogado.interface";
+import ModalAbogadoDetalle from "./Cliente/ModalAbogadoDetalle";
 
 const AplicacionesPorAceptar = () => {
   const { token } = useAuth();
   const router = useRouter();
+  const { setLoading } = useLoader();
   const [openProyecto, setOpenProyecto] = useState<number | null>(null);
   const [ofertasConAplicaciones, setOfertasConAplicaciones] = useState<IOfertaBack[]>([]);
+  const [openModalAbogado, setOpenModalAbogado] = useState(false);
+  const [abogadoSeleccionado, setAbogadoSeleccionado] = useState<IAbogadoBack | null>(null);
 
   // Función para obtener las ofertas con aplicaciones
+
+  const showModalAbogadoDetalle = (abogado: IAbogadoBack) => {
+    setOpenModalAbogado(true);
+    setAbogadoSeleccionado(abogado);
+  };
+
+  const hideModalAbogadoDetalle = () => {
+    setOpenModalAbogado(false);
+    setAbogadoSeleccionado(null);
+  };
+
   const fetchOfertasConAplicaciones = async () => {
+    setLoading(true);
     try {
       if(token?.cliente?.id)
       {
@@ -31,6 +49,8 @@ const AplicacionesPorAceptar = () => {
       }
     } catch (error) {
       console.error("Error al obtener las ofertas con aplicaciones:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -46,7 +66,7 @@ const AplicacionesPorAceptar = () => {
   const aceptarOferta = (salario: number, ofertaId: number, aplicacionId: number) => {
     const clienteId = token?.cliente?.id;
     const url = `/dashboard/cliente/pagos/${ofertaId}?monto=${salario}&clienteId=${clienteId}&aplicacionId=${aplicacionId}`;
-    router.push(url); 
+    router.push(url);
   };
 
   return (
@@ -68,7 +88,7 @@ const AplicacionesPorAceptar = () => {
                   >
                     Ver aplicaciones<ChevronDown />
                   </Button>
-                ) : 
+                ) :
                 <div>
                   <Button onClick={() => setOpenProyecto(null)}>
                     Ver menos
@@ -107,11 +127,12 @@ const AplicacionesPorAceptar = () => {
                     </div>
 
                     <div className="flex flex-nowrap gap-2">
-                      <Link href={`/dashboard/cliente/abogado/${aplicacion.abogado.id}`}>
-                        <Button variant={"outline"} className="border-black">
+                        <Button
+                          variant={"outline"}
+                          className="border-black"
+                          onClick={()=> showModalAbogadoDetalle(aplicacion.abogado)}>
                           Ver perfil completo
                         </Button>
-                      </Link>
                       <Button onClick={() => aceptarOferta(aplicacion.salarioEsperado, oferta.id, aplicacion.id)}>Aceptar oferta</Button>
                     </div>
                   </div>
@@ -121,6 +142,13 @@ const AplicacionesPorAceptar = () => {
           </div>
         ))}
       </div>
+      {openModalAbogado && abogadoSeleccionado && (
+        <ModalAbogadoDetalle
+          open={openModalAbogado}
+          onClose={hideModalAbogadoDetalle}
+          abogadoId={abogadoSeleccionado.id}
+        />
+      )}
     </div>
   );
 };

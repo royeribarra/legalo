@@ -244,7 +244,7 @@ const ProyectSinglePage = () => {
             <p>Miembro desde 2021</p>
             <p>Para uso {oferta.uso}</p>
           </div>
-          <div className="bg-[#FEF7FF] p-3 flex flex-wrap justify-center lg:justify-between max-w-[474px] border border-[#CAC4D0] rounded-xl gap-2">
+          {/* <div className="bg-[#FEF7FF] p-3 flex flex-wrap justify-center lg:justify-between max-w-[474px] border border-[#CAC4D0] rounded-xl gap-2">
             <div className="w-full flex-none flex items-center justify-center">
               <IcoInfo size={24} />
             </div>
@@ -264,19 +264,21 @@ const ProyectSinglePage = () => {
                 Aumenta tus chances
               </Link>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       }
       <div className="pl-4 lg:pl-16 lg:pb-16 pr-0 overflow-hidden">
-        <h3 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-8">
-          Oportunidades similares:
-        </h3>
-        <div className="flex gap-4 overflow-x-auto  scroll-smooth">
-          <SimilarProyect />
-          <SimilarProyect />
-          <SimilarProyect />
-        </div>
+        {/* <div>
+          <h3 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-8">
+            Oportunidades similares:
+          </h3>
+          <div className="flex gap-4 overflow-x-auto  scroll-smooth">
+            <SimilarProyect />
+            <SimilarProyect />
+            <SimilarProyect />
+          </div>
+        </div> */}
         <h3 className="text-xl lg:text-2xl font-bold my-8 ">
           Pasos para postular a un proyecto:
         </h3>

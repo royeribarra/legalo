@@ -49,12 +49,6 @@ const DashboardClientPage = () => {
   const [filtroEspecialidad, setFiltroEspecialidad] = useState<number | null>(null);
   const [filtroIndustria, setFiltroIndustria] = useState<number | null>(null);
 
-  const menuItems = [
-    { id: "abogados", texto: "Abogados" },
-    { id: "proyectos", texto: "Encargos" },
-    { id: "trabajos", texto: "Trabajos" },
-  ];
-
   const subMenuItems = [
     { id: "ofertas-activas", texto: "Ofertas Activas" },
     { id: "ofertas-por-aceptar", texto: "Ofertas con aplicación" },
@@ -145,24 +139,6 @@ const DashboardClientPage = () => {
   return (
     <div className="px-4 py-4 lg:px-16 lg:py-8 max-w-[1920px] mx-auto">
       <div className="mt-8">
-        <Link href={"/dashboard/cliente/nueva-oferta"}>
-          <Button>
-            Crear Proyecto
-          </Button>
-        </Link>
-      </div>
-      <div className="mt-8">
-        <div className="border-b-2 border-[#808080] flex w-full overflow-auto lg:overflow-auto">
-          {menuItems.map((boton) => (
-            <Button
-              key={boton.id}
-              variant={menuActive === boton.id ? "dashActive" : "dashInActive"}
-              onClick={() => setMenuActive(boton.id)}
-            >
-              {boton.texto}
-            </Button>
-          ))}
-        </div>
         <div>
           {menuActive === "abogados" && (
             <>
@@ -293,43 +269,6 @@ const DashboardClientPage = () => {
                 </div>
               </div>
             </>
-          )}
-          {menuActive === "proyectos" && (
-            <div className="mt-8 overflow-hidden">
-              <div className="flex items-center justify-between mb-8">
-                <div className="flex w-full overflow-auto lg:overflow-auto">
-                  {subMenuItems.map((boton) => (
-                    <Button
-                      key={boton.id}
-                      variant={
-                        subMenuActive === boton.id
-                          ? "dashActive"
-                          : "dashInActive"
-                      }
-                      onClick={() => setSubMenuActive(boton.id)}
-                    >
-                      {boton.texto}
-                    </Button>
-                  ))}
-                </div>
-                <Link href="/dashboard/cliente/nueva-oferta">
-                  <Button>Publicar proyecto</Button>
-                </Link>
-              </div>
-
-              {subMenuActive === "ofertas-activas" && (
-                <ProyectosActivos></ProyectosActivos>
-              )}
-              {subMenuActive === "ofertas-por-aceptar" && (
-                <ProyectosPorAceptar></ProyectosPorAceptar>
-              )}
-              {subMenuActive === "trabajos-activos" && (
-                <ProyectosFinalizados></ProyectosFinalizados>
-              )}
-            </div>
-          )}
-          {menuActive === "trabajos" && (
-            <TrabajosCliente></TrabajosCliente>
           )}
         </div>
       </div>

@@ -175,7 +175,7 @@ const PublicarPageThree = () => {
   return (
     <div className="container mx-auto p-4 lg:p-8 m-8 lg:w-[900px]">
       <div className="w-full max-w-[480px] mx-auto mb-8">
-        <Progress value={50} className="mx-auto mb-4 h-2" />
+        <Progress value={100/8*3} className="mx-auto mb-4 h-2" />
         <p className="text-left">Paso 3/8</p>
       </div>
 

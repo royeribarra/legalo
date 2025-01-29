@@ -87,7 +87,7 @@ const PublicarPageFour = () => {
   return (
     <div className="mx-auto p-4 lg:p-8 max-w-[900px]">
       <div className="w-full my-8">
-        <Progress value={84} className="mx-auto mb-4 h-2" />
+        <Progress value={100/8*5} className="mx-auto mb-4 h-2" />
         <p className="text-left">Paso 5/8</p>
       </div>
       <div>

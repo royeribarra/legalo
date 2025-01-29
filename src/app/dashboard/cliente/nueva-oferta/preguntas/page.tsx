@@ -114,16 +114,20 @@ const PublicarPageEight = () => {
       const response = await ofertaservice.createOferta(data);
       if (response.state) {
         if (state.documento && token) {
-          enviarArchivo(state.documento, response.oferta.id, "oferta_documento");
+          try {
+            await enviarArchivo(state.documento, response.oferta.id, "oferta_documento");
+          } catch (error) {
+            console.error("Error al enviar el archivo", error);
+            // No hacer return aquí, para que las siguientes líneas se ejecuten
+          }
         }
         setModalCrearProyectoOk(true);
         localStorage.removeItem("ofertaState");
         setDefaultValues();
-        setLoading(false);
       }
-      
     } catch (error) {
       console.log(error);
+    } finally {
       setLoading(false);
     }
   };
@@ -150,7 +154,7 @@ const PublicarPageEight = () => {
   return (
     <div className="container mx-auto p-4 lg:p-8 m-8 lg:w-[600px]">
       <div className="w-full max-w-[480px] mx-auto mb-8">
-        <Progress value={100} className="mx-auto mb-4 h-2" />
+        <Progress value={100/8*8} className="mx-auto mb-4 h-2" />
         <p className="text-left">Paso 8/8</p>
       </div>
       <h1 className="text-[36px] my-4 font-nimbus">Preguntas de selección (opcional)</h1>

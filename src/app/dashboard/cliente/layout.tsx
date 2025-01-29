@@ -3,12 +3,13 @@ import React, { useEffect, useState } from "react";
 import { ReactNode } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { AuthProvider, useAuth } from "@/contexts/authContext";
 import Image from "next/image";
 import Link from "next/link";
 import { DashboardClienteProvider } from "@/contexts/dashboardClienteContext";
 import { useLoader } from "@/contexts/loaderContext";
+import { Button } from "@/components/ui/button";
 
 interface LayoutProps {
   children: ReactNode;
@@ -24,6 +25,7 @@ const DashboardClientLayout = ({ children }: LayoutProps) => {
 
 const LayoutContent = ({ children }: { children: ReactNode }) => {
   const whatsappNumber = "51939784580";
+  const pathname = usePathname();
   const { token, userRole } = useAuth();
   const router = useRouter();
   const {setLoading} = useLoader();
@@ -42,8 +44,14 @@ const LayoutContent = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem("tokenRole");
     localStorage.removeItem("userRole");
     localStorage.removeItem("token");
-    router.push("/login"); // Redirige al usuario a la página de login
+    router.push("/login");
   };
+
+  const menuItems = [
+    { id: "abogados", texto: "Abogados", url: "/dashboard/cliente/" },
+    { id: "proyectos", texto: "Encargos", url: "/dashboard/cliente/encargos" },
+    { id: "trabajos", texto: "Trabajos", url: "/dashboard/cliente/trabajos" },
+  ];
 
   return (
     <div className="">
@@ -79,7 +87,32 @@ const LayoutContent = ({ children }: { children: ReactNode }) => {
         </div>
       </header>
       <main>
-        <DashboardClienteProvider>{children}</DashboardClienteProvider>
+        <DashboardClienteProvider>
+          <div className="px-4 py-4 lg:px-16 lg:py-8 max-w-[1920px] mx-auto">
+            <div className="mt-8">
+              <Link href={"/dashboard/cliente/nueva-oferta"}>
+                <Button>
+                  Crear Proyecto
+                </Button>
+              </Link>
+            </div>
+            <div className="mt-8">
+              <div className="border-b-2 border-[#808080] flex w-full overflow-auto lg:overflow-auto">
+                {menuItems.map((boton) => (
+                  <Link href={boton.url}>
+                    <Button
+                      key={boton.id}
+                      variant={boton.url === pathname ? "dashActive" : "dashInActive"}
+                    >
+                      {boton.texto}
+                    </Button>
+                  </Link>
+                ))}
+              </div>
+              {children}
+            </div>
+          </div>
+        </DashboardClienteProvider>
       </main>
     </div>
   );

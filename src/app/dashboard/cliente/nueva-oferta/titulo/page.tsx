@@ -37,7 +37,7 @@ const PublicarPageTwo = () => {
   return (
     <div className="container mx-auto p-4 lg:p-8 m-8 lg:w-[600px]">
       <div className="w-full max-w-[480px] mx-auto mb-8">
-        <Progress value={33} className="mx-auto mb-4 h-2" />
+        <Progress value={100/8*2} className="mx-auto mb-4 h-2" />
         <p className="text-left">Paso 2/8</p>
       </div>
       <div>

@@ -13,10 +13,11 @@ import { ColumnsType } from "antd/es/table"; // Para tipado de las columnas
 import { clienteService } from "@/services";
 import { IFileBack } from "@/interfaces/File.interface";
 import { IServicioOferta } from "@/interfaces/Servicio.interface";
+import { useLoader } from "@/contexts/loaderContext";
 
 const OfertasActivas = () => {
   const [proyectos, setProyectos] = useState<IOfertaBack[]>([]);
-  const [loading, setLoading] = useState(false);
+  const { setLoading } = useLoader();
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1); // Para controlar la página actual
   const { token } = useAuth();
@@ -34,7 +35,6 @@ const OfertasActivas = () => {
         setProyectos(response.data);
         setLoading(false);
       }
-      
     } catch (err) {
       setLoading(false);
     }
@@ -44,7 +44,7 @@ const OfertasActivas = () => {
     fetchProyectos();
   }, []);
 
-  if (loading) return <p>Cargando proyectos...</p>;
+  // if (loading) return <p>Cargando proyectos...</p>;
   if (error) return <p>Error: {error}</p>;
 
   // Definir las columnas de la tabla
@@ -64,7 +64,7 @@ const OfertasActivas = () => {
           <ul>
           {
             serviciosOferta.map((servicio)=>
-              <li>{servicio.servicio.nombre}</li>
+              <li key={servicio.id}>{servicio.servicio.nombre}</li>
             )
           }
           </ul>

@@ -199,11 +199,12 @@ const CompleteProfileLawyerPage: React.FC = () => {
           router.push(
             `/registro/abogado/email-verify?correo=${encodeURIComponent(stateAbogado.email)}`
           );
-          setLoading(false);
         }
-        showToast("error", response.message, "");
+        showToast("info", response.message, "");
       } catch (error) {
         showToast("error", "Ocurrió un error", "");
+      } finally {
+        setLoading(false);
       }
       return;
     }
