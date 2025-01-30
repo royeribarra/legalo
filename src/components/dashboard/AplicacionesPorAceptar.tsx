@@ -12,6 +12,8 @@ import { clienteService } from "@/services";
 import { useLoader } from "@/contexts/loaderContext";
 import { IAbogadoBack } from "@/interfaces/Abogado.interface";
 import ModalAbogadoDetalle from "./Cliente/ModalAbogadoDetalle";
+import { IAplicacionBack } from "@/interfaces/Aplicacion.interface";
+import ModalPagoOferta from "./abogado/ModalPagoOferta";
 
 const AplicacionesPorAceptar = () => {
   const { token } = useAuth();
@@ -21,6 +23,9 @@ const AplicacionesPorAceptar = () => {
   const [ofertasConAplicaciones, setOfertasConAplicaciones] = useState<IOfertaBack[]>([]);
   const [openModalAbogado, setOpenModalAbogado] = useState(false);
   const [abogadoSeleccionado, setAbogadoSeleccionado] = useState<IAbogadoBack | null>(null);
+  const [openModalPago, setOpenModalPago] = useState(false);
+  const [ofertaSeleccionada, setOfertaSeleccionada] = useState<IOfertaBack | null>(null);
+  const [aplicacionSeleccionada, setAplicacionSeleccionada] = useState<IAplicacionBack | null>(null);
 
   // Función para obtener las ofertas con aplicaciones
 
@@ -32,6 +37,18 @@ const AplicacionesPorAceptar = () => {
   const hideModalAbogadoDetalle = () => {
     setOpenModalAbogado(false);
     setAbogadoSeleccionado(null);
+  };
+
+  const showModalPagoDetalle = (salarioEsperado: number, oferta: IOfertaBack, aplicacion: IAplicacionBack) => {
+    setOpenModalPago(true);
+    setOfertaSeleccionada(oferta);
+    setAplicacionSeleccionada(aplicacion);
+  };
+
+  const hideModalPagoDetalle = () => {
+    setOpenModalPago(false);
+    setOfertaSeleccionada(null);
+    setAplicacionSeleccionada(null);
   };
 
   const fetchOfertasConAplicaciones = async () => {
@@ -127,13 +144,13 @@ const AplicacionesPorAceptar = () => {
                     </div>
 
                     <div className="flex flex-nowrap gap-2">
-                        <Button
-                          variant={"outline"}
-                          className="border-black"
-                          onClick={()=> showModalAbogadoDetalle(aplicacion.abogado)}>
-                          Ver perfil completo
-                        </Button>
-                      <Button onClick={() => aceptarOferta(aplicacion.salarioEsperado, oferta.id, aplicacion.id)}>Aceptar oferta</Button>
+                      <Button
+                        variant={"outline"}
+                        className="border-black"
+                        onClick={()=> showModalAbogadoDetalle(aplicacion.abogado)}>
+                        Ver perfil completo
+                      </Button>
+                      <Button onClick={() => showModalPagoDetalle(aplicacion.salarioEsperado, oferta, aplicacion)}>Aceptar ofertas</Button>
                     </div>
                   </div>
                 ))}
@@ -149,6 +166,16 @@ const AplicacionesPorAceptar = () => {
           abogadoId={abogadoSeleccionado.id}
         />
       )}
+      {
+        openModalPago && ofertaSeleccionada && aplicacionSeleccionada &&
+        <ModalPagoOferta
+          isOpen={openModalPago}
+          onClose={hideModalPagoDetalle}
+          ofertaId={ofertaSeleccionada.id}
+          monto={aplicacionSeleccionada?.salarioEsperado}
+          aplicacionId={aplicacionSeleccionada.id}
+        />
+      }
     </div>
   );
 };

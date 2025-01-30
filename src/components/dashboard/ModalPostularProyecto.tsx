@@ -42,6 +42,30 @@ interface ModalPostularProyectoProps {
   oferta: IOfertaBack;
 }
 
+const bancos = [
+  {nombre: "Interbank"},
+  {nombre: "BCP (Banco de Crédito del Perú)"},
+  {nombre: "BBVA (Banco Bilbao Vizcaya Argentaria)"},
+  {nombre: "Scotiabank"},
+  {nombre: "Banco Pichincha"},
+  {nombre: "Banco de la Nación"},
+  {nombre: "BanBif"},
+  {nombre: "Banco GNB Perú"},
+  {nombre: "Banco Ripley"},
+  {nombre: "Banco Falabella"},
+  {nombre: "Mibanco"},
+  {nombre: "Caja Arequipa"},
+  {nombre: "Caja Trujillo"},
+  {nombre: "Caja Piura"},
+  {nombre: "Caja Huancayo"},
+  {nombre: "Caja Cusco"},
+  {nombre: "Caja Tacna"},
+  {nombre: "Caja Sullana"},
+  {nombre: "Caja Ica"},
+  {nombre: "Caja Centro"},
+  {nombre: "Caja Metropolitana"},
+  {nombre: "Caja Los Andes"}
+]
 const steps = ["step1", "step2", "step3", "step4"];
 
 const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
@@ -544,9 +568,11 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                         <SelectContent>
                           <SelectGroup>
                             <SelectLabel>Bancos</SelectLabel>
-                            <SelectItem value="b1">INTERBANK</SelectItem>
-                            <SelectItem value="b2">BCP</SelectItem>
-                            <SelectItem value="b3">BBVA</SelectItem>
+                            {
+                              bancos.map((banco, length)=>
+                                <SelectItem key={length} value={banco.nombre}>{banco.nombre}</SelectItem>
+                              )
+                            }
                           </SelectGroup>
                         </SelectContent>
                       </Select>
