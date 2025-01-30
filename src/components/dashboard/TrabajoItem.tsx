@@ -1,161 +1,117 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import { IOfertaBack } from "@/interfaces/Oferta.interface";
 import { ITrabajoBack } from "@/interfaces/Trabajo.interface";
 
 interface TrabajoItemProps {
   tipe: string;
-  trabajo: ITrabajoBack;
+  trabajo: any;
 }
 
 const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newProgress, setNewProgress] = useState<number>(trabajo.progreso);
   const whatsappNumber = "51939784580";
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSaveProgress = () => {
+    // Aquí iría la lógica para guardar el progreso
+    console.log("Nuevo progreso guardado:", newProgress);
+    setIsModalOpen(false);
+  };
+
   return (
-    <div
-      className={`p-4 lg:p-8 border border-black rounded-[20px] flex flex-col gap-4 ${tipe === "cotizacionAceptada" && "bg-[#EEF79C]"} ${tipe === "cotizacionPorExpirar" && "bg-[#EDEDED]"}`}
-    >
-      <div className="flex justify-between flex-col-reverse lg:flex-row">
-        <h2 className="font-nimbus text-xl lg:text-2xl font-light">
-          {trabajo.aplicacion.oferta.titulo}
-        </h2>
-        {(tipe === "cotizacionAceptada" || tipe === "cotizacionPorExpirar") && (
-          <h3 className="text-[22px] px-4 ml-4 border-l border-black flex-none leading-normal">
-            Expira en <b> 24hrs</b>
-          </h3>
-        )}
-        {tipe === "sinPostular" && (
-          <div className="flex gap-4 justify-end mb-4 lg:mb-0">
-            {/* <Button
-              variant="outline"
-              className="text-sm lg:text-lg h-9 lg:h-[42px] rounded-full border-black flex-none"
-            >
-              Guardar
-            </Button> */}
-            <Link href={`/dashboard/abogado/proyecto/${trabajo.aplicacion.oferta.id}`}>
-              <Button className="text-sm lg:text-lg h-9 lg:h-[42px] rounded-full flex-none">
-                Ver proyecto
-              </Button>
-            </Link>
-          </div>
-        )}
-        {tipe === "postulacionEnviada" && (
-          <div className="flex gap-4 justify-end mb-4 lg:mb-0">
-            <Button
-              variant="outline"
-              className="text-xs lg:text-base h-9 lg:h-[42px] rounded-full border-black flex-none"
-            >
-              Postuilación envidada
-            </Button>
-          </div>
-        )}
-        {(tipe === "cotizacionAceptada" || tipe === "cotizacionPorExpirar") && (
-          <div className="flex gap-4 justify-end mb-4 lg:mb-0">
-            <Link href={`https://wa.me/${whatsappNumber}`} target="_blank">
-              <Button className="text-xs lg:text-base h-9 lg:h-[42px] rounded-full w-[200px]">
-                <Image
-                  src="/assets/ico-whatsapp.svg"
-                  alt="ico-whastapp"
-                  width={24}
-                  height={24}
-                  className="mr-2"
-                />
-                Contactar al abogado
-              </Button>
-            </Link>
-          </div>
-        )}
+    <div className="p-4 lg:p-8 border border-black rounded-[20px] flex flex-col gap-4">
+      {/* Sección Cliente y Abogado */}
+      <div className="border p-4 rounded-md bg-gray-100">
+        <h3 className="text-lg font-bold">Información del Cliente</h3>
+        <p>{trabajo.cliente.nombres} {trabajo.cliente.apellidos}</p>
+        <h3 className="text-lg font-bold mt-2">Información del Abogado</h3>
+        <p>{trabajo.abogado.nombres} {trabajo.abogado.apellidos}</p>
       </div>
-      <div className="text-sx lg:text-base">
-        <p>Descripción de proyecto: </p>
-        <p>{trabajo.aplicacion.oferta.descripcion}</p>
+      
+      {/* Detalles de la Aplicación */}
+      <div className="border p-4 rounded-md bg-gray-100">
+        <h3 className="text-lg font-bold">Detalles de la Aplicación</h3>
+        <p><strong>Fecha Aplicación:</strong> {trabajo.aplicacion.fecha_aplicacion}</p>
+        <p><strong>Estado:</strong> {trabajo.aplicacion.status}</p>
+        <p><strong>Salario Esperado:</strong> ${trabajo.aplicacion.salarioEsperado}</p>
       </div>
-      <div className="flex gap-4 flex-wrap">
-        <Button
-          variant="outline"
-          className="border border-black rounded-full h-[43px]"
-        >
-          <Image
-            src="/icos/ico-dash-pin-map.svg"
-            alt=""
-            width={24}
-            height={24}
-            className="mr-2"
-          />
-          <p>Remoto</p>
-        </Button>
-        <Button
-          variant="outline"
-          className="border border-black rounded-full h-[43px]"
-        >
-          <Image
-            src="/icos/ico-dash-alarm.svg"
-            alt=""
-            width={24}
-            height={24}
-            className="mr-2"
-          />
-          <p>1-2 semanas</p>
-        
-        </Button>
-        <div>
-        <h2>Especialidades</h2>
-        {
-          trabajo.aplicacion.oferta.especialidadesOferta.map((especialidadesOferta)=> 
-            <Button
-              variant="outline"
-              className="border border-black rounded-full h-[43px]"
-            >
-              <Image
-                src="/icos/ico-dash-building.svg"
-                alt=""
-                width={24}
-                height={24}
-                className="mr-2"
-              />
-              <p>{especialidadesOferta.especialidad.nombre}</p>
-            </Button>
-          )
-        }
+      
+      {/* Barra de progreso */}
+      <div className="border p-4 rounded-md bg-gray-100">
+        <h3 className="text-lg font-bold">Progreso</h3>
+        <div className="w-full bg-gray-300 rounded-full h-4 overflow-hidden">
+          <div className="bg-green-500 h-4" style={{ width: `${trabajo.progreso}%` }}></div>
         </div>
-        <div>
-        <h2>Servicios</h2>
-        {
-          trabajo.aplicacion.oferta.serviciosOferta.map((serviciosOferta)=> 
-            <Button
-              variant="outline"
-              className="border border-black rounded-full h-[43px]"
-            >
-              <Image
-                src="/icos/ico-dash-building.svg"
-                alt=""
-                width={24}
-                height={24}
-                className="mr-2"
-              />
-              <p>{serviciosOferta.servicio.nombre}</p>
-            </Button>
-          )
-        }
-        </div>
+        <p>{trabajo.progreso}% Completado</p>
+        <Button onClick={handleOpenModal}>Registrar Progreso</Button>
       </div>
-      {tipe === "cotizacionPorExpirar" && (
-        <div className="px-[28px] py-[18px] border border-[#B3261E] bg-[#F9DEDC] rounded-[20px] mt-4">
-          <p className="flex items-center gap-2 text-[#B3261E] font-bold lg:text-[22px]">
-            <Image
-              src="/icos/emoji-neutral.svg"
-              alt="emogi"
-              width={24}
-              height={24}
-            ></Image>
-            Tu cotización está por expirar
-          </p>
-          <p className="lg:text-[22px] text-[#B3261E] mt-3">
-            Contacta al cliente en las próximas 6 hrs o perderás la postulación
-          </p>
+      
+      {/* Tabla de Pagos */}
+      {trabajo.pagos && trabajo.pagos.length > 0 && (
+        <div className="border p-4 rounded-md bg-gray-100">
+          <h3 className="text-lg font-bold">Pagos</h3>
+          <table className="w-full border-collapse border border-gray-200">
+            <thead>
+              <tr className="bg-gray-200">
+                <th className="border border-gray-300 px-4 py-2">Operación</th>
+                <th className="border border-gray-300 px-4 py-2">Monto</th>
+              </tr>
+            </thead>
+            <tbody>
+              {trabajo.pagos.map((pago: any, index: number) => (
+                <tr key={index}>
+                  <td className="border border-gray-300 px-4 py-2">{pago.operacion}</td>
+                  <td className="border border-gray-300 px-4 py-2">${pago.monto}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
+
+      {/* Modal para registrar progreso */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg w-96">
+            <h3 className="text-xl font-bold">Registrar Progreso de Trabajo</h3>
+            <p className="mt-4">Ingrese el nuevo porcentaje de progreso del trabajo.</p>
+
+            {/* Campo para el porcentaje de progreso */}
+            <input
+              type="number"
+              className="mt-2 p-2 border rounded w-full"
+              value={newProgress}
+              onChange={(e) => setNewProgress(Number(e.target.value))}
+              min={0}
+              max={100}
+            />
+            
+            {/* Campo para la descripción */}
+            <textarea
+              className="mt-4 p-2 border rounded w-full"
+              placeholder="Ingrese una descripción del progreso..."
+              rows={4}
+              // Aquí puedes manejar el cambio de la descripción si es necesario
+            />
+
+            <div className="mt-4 flex justify-end gap-2">
+              <Button onClick={handleCloseModal} variant="outline">Cancelar</Button>
+              <Button onClick={handleSaveProgress}>Aceptar</Button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };
