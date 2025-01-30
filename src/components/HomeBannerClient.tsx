@@ -148,7 +148,7 @@ const HomeBannerClient = () => {
   };
 
   const searchAbogado = () => {
-    console.log(searchQuery)
+    console.log(searchQuery);
     if (searchQuery.trim() !== "") {
       // Navega a la ruta con el query param
       router.push(`/busqueda?query=${encodeURIComponent(searchQuery)}`);
@@ -186,11 +186,13 @@ const HomeBannerClient = () => {
               </Button>
             </div>
             <div className="underline text-lg lg:text-2xl">
-              <Link href="#calculo-ahorros">Descubre cuanto puedes llegar a ahorrar</Link>
+              <Link href="#calculo-ahorros">
+                Descubre cuanto puedes llegar a ahorrar
+              </Link>
             </div>
           </div>
         </div>
-        <div className="bg-[url('/assets/images/image-banner-clients.jpg')] bg-top bg-cover bg-no-repeat h-full lg:block border-l border-l-black lg:w-[56%] w-full min-h-[140px] lg:min-h-[inherit]"></div>
+        <div className="bg-[url('/assets/images/img-banner-lawyer-hd.webp')] bg-top bg-cover bg-no-repeat h-full lg:block border-l border-l-black lg:w-[56%] w-full min-h-[140px] lg:min-h-[inherit]"></div>
       </div>
       <div className="bg-white border-t border-b border-black">
         <div className="max-w-[1920px] mx-auto w-[full]  overflow-hidden min-h-[118px]">
@@ -220,8 +222,8 @@ const HomeBannerClient = () => {
                         <Image
                           src={item.ImageSrc}
                           alt="icon"
-                          width={48}
-                          height={48}
+                          width={60}
+                          height={60}
                         />
                       </div>
                       <CardHeader className="p-0 space-y-0">

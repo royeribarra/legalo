@@ -159,8 +159,8 @@ const HomeBannerClient = () => {
   ];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setSearchQuery(e.target.value); // Actualiza el estado con el valor del input
-    };
+    setSearchQuery(e.target.value); // Actualiza el estado con el valor del input
+  };
 
   const searchOferta = () => {
     if (searchQuery.trim() !== "") {
@@ -248,8 +248,8 @@ const HomeBannerClient = () => {
                         <Image
                           src={item.ImageSrc}
                           alt="icon"
-                          width={48}
-                          height={48}
+                          width={60}
+                          height={60}
                         />
                       </div>
                       <CardHeader className="p-0 space-y-0">

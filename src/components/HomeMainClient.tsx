@@ -132,7 +132,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
               </div>
               <div className="w-full h-auto flex justify-center ">
                 <Image
-                  src="/assets/img-register.webp"
+                  src="/assets/img-1-register.webp"
                   alt="Regístrate"
                   width={107}
                   height={107}
@@ -156,7 +156,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
               </div>
               <div className="w-full h-auto flex justify-center ">
                 <Image
-                  src="/assets/img-create.webp"
+                  src="/assets/img-2-publicar.webp"
                   alt="Regístrate"
                   width={107}
                   height={107}
@@ -180,7 +180,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
               </div>
               <div className="w-full h-auto flex justify-center ">
                 <Image
-                  src="/assets/img-explore.webp"
+                  src="/assets/img-3-export.webp"
                   alt="Regístrate"
                   width={107}
                   height={107}
@@ -204,7 +204,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
               </div>
               <div className="w-full h-auto flex justify-center ">
                 <Image
-                  src="/assets/img-contact.webp"
+                  src="/assets/img-4-contrata.webp"
                   alt="Regístrate"
                   width={107}
                   height={107}
@@ -228,7 +228,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
               </div>
               <div className="w-full h-auto flex justify-center ">
                 <Image
-                  src="/assets/img-resolv.webp"
+                  src="/assets/img-5-resuelve.webp"
                   alt="Regístrate"
                   width={107}
                   height={107}
@@ -252,7 +252,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
               </div>
               <div className="w-full h-auto flex justify-center ">
                 <Image
-                  src="/assets/img-resolv.webp"
+                  src="/assets/img-6-recibe.webp"
                   alt="Regístrate"
                   width={107}
                   height={107}
@@ -272,18 +272,18 @@ const HomeMain: React.FC<HomeMainProps> = ({
       </div>
       <div className="border-t border-b border-black" id="calculo-ahorros">
         <div className="max-w-[1920px] mx-auto grid grid-cols-1 lg:grid-cols-[4fr_6fr]">
-          <div className="bg-black flex flex-col  gap-4 py-8 justify-center">
-            <div className="flex  flex-col justify-center gap-8 3xl:gap-16 p-4 lg:p-16">
-              <div className="grid grid-cols-[40px_auto]  gap-4 ">
+          <div className="bg-black flex flex-col  gap-4 py-8 justify-center items-center">
+            <div className="flex  flex-col justify-center gap-8 3xl:gap-16 p-4 max-w-[380px] ">
+              <div className="grid grid-cols-[40px_auto]  gap-6 ">
                 <Image
                   src="/icos/award.svg"
                   alt="ico"
-                  width={36}
-                  height={36}
+                  width={40}
+                  height={40}
                   className="mx-auto"
                 />
                 <div className="text-white">
-                  <h3 className="text-lg lg:text-2xl font-nimbus mb-2 ">
+                  <h3 className="text-lg lg:text-[28px] font-nimbus mb-2 ">
                     Profesionalismo y Experiencia
                   </h3>
                   <p className="text-base">
@@ -293,16 +293,16 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 </div>
               </div>
 
-              <div className="grid grid-cols-[40px_auto] gap-4 ">
+              <div className="grid grid-cols-[40px_auto] gap-6 ">
                 <Image
                   src="/icos/ico-users-w.png"
                   alt="ico"
-                  width={36}
-                  height={27}
+                  width={40}
+                  height={40}
                   className="mx-auto"
                 />
                 <div className="text-white">
-                  <h3 className="text-lg lg:text-2xl font-nimbus mb-2">
+                  <h3 className="text-lg lg:text-[28px] font-nimbus mb-2">
                     Atención{" "}
                     <span className="italic font-light">Personalizada</span>
                   </h3>
@@ -312,16 +312,16 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   </p>
                 </div>
               </div>
-              <div className="grid grid-cols-[40px_auto] gap-4 ">
+              <div className="grid grid-cols-[40px_auto] gap-6 ">
                 <Image
                   src="/icos/ico-lock-w.png"
                   alt="ico"
-                  width={26}
-                  height={34}
+                  width={30}
+                  height={40}
                   className="mx-auto"
                 />
                 <div className="text-white">
-                  <h3 className="text-lg lg:text-2xl font-nimbus mb-2">
+                  <h3 className="text-lg lg:text-[28px] font-nimbus mb-2">
                     Seguridad y{" "}
                     <span className="italic font-light">Confidencialidad</span>
                   </h3>
@@ -331,16 +331,16 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   </p>
                 </div>
               </div>
-              <div className="grid grid-cols-[40px_auto]  gap-4 ">
+              <div className="grid grid-cols-[40px_auto]  gap-6 ">
                 <Image
                   src="/icos/ico-star-w.png"
                   alt="ico"
-                  width={34}
-                  height={32}
+                  width={40}
+                  height={40}
                   className="mx-auto"
                 />
                 <div className="text-white">
-                  <h3 className="text-lg lg:text-2xl font-nimbus mb-2">
+                  <h3 className="text-lg lg:text-[28px] font-nimbus mb-2">
                     Opiniones y{" "}
                     <span className="italic font-light">Valoraciones</span>{" "}
                   </h3>
@@ -352,19 +352,13 @@ const HomeMain: React.FC<HomeMainProps> = ({
               </div>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-center gap-4 3xl:gap-8 p-8">
+          <div className="flex flex-col items-center justify-center gap-4 3xl:gap-8 p-8 lg:py-20">
             <h3 className="text-[40px] text-center max-w-[416px] font-nimbus 3xl:max-w-[700px] 3xl:text-6xl">
               Calcula tus ganancias potenciales
             </h3>
             <p className="text-lg text-center">
               Encuentra la referencia perfecta para tu caso.
             </p>
-            <p className="text-lg text-center font-bold">
-              Costo promedio desde:
-            </p>
-            <h2 className="text-6xl font-bold 3xl:text-7xl mb-4">
-              {getPrice(sliderValue[0], totalPaid)}
-            </h2>
 
             <div className="w-full max-w-[620px] px-4 py-8 border border-x-0 border-y-black">
               <p className="mb-8">Complejidad del proyecto:</p>
@@ -409,7 +403,12 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 </div>
               )}
             </div>
-
+            <p className="text-lg text-center font-bold">
+              Costo promedio desde:
+            </p>
+            <h2 className="text-6xl font-bold 3xl:text-7xl mb-4">
+              {getPrice(sliderValue[0], totalPaid)}
+            </h2>
             <Link href="#" className="underline 3xl:text-xl text-[#666666]">
               ¿Cómo calculamos?
             </Link>

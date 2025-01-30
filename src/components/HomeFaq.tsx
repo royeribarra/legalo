@@ -12,10 +12,10 @@ const HomeFaq = () => {
   return (
     <div className="max-w-[1920px] mx-auto p-4 lg:px-16  flex gap-4  items-center lg:py-28 3xl:py-36 w-full flex-col lg:flex-row">
       <div className="w-full lg:w-[40%] flex flex-col gap-4 items-center lg:items-start my-8 lg:my-auto">
-        <h2 className="text-3xl lg:text-5xl max-w-[400px] text-center lg:text-left font-nimbus">
+        <h2 className="text-4xl lg:text-6xl max-w-[400px] text-center lg:text-left font-nimbus mb-4">
           Respondemos a tus <span className="italic">preguntas</span>
         </h2>
-        <p className="text-[18px]">¿Tienes más preguntas?</p>
+        <p className="text-[18px] mb-4">¿Tienes más preguntas?</p>
         <Link href={"/contacto"}>
           <Button className="w-fit border border-black rounded-[10px] text-base px-6 h-11">
             Contáctanos

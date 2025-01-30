@@ -5,7 +5,7 @@ import Link from "next/link";
 const Footer = () => {
   const whatsappNumber = "51939784580";
   return (
-    <footer className="bg-[#1E1E1E]">
+    <footer className="bg-black">
       <div className="max-w-[1920px] mx-auto flex flex-col justify-center overflow-hidden lg:pb-10 p-4 lg:px-16">
         <div className="w-full  flex flex-col lg:flex-row items-start lg:justify-between lg:items-center border-b border-white mx-auto lg:h-[180px] gap-4">
           <Image
@@ -18,7 +18,11 @@ const Footer = () => {
           <div className="text-white flex gap-8 flex-col lg:flex-row ">
             <Link href="/nosotros">Nosotros</Link>
             <Link href="/contacto">Contacto</Link>
-            <Link href={`https://wa.me/${whatsappNumber}`} passHref target="_blank">
+            <Link
+              href={`https://wa.me/${whatsappNumber}`}
+              passHref
+              target="_blank"
+            >
               Ayuda Online
             </Link>
           </div>
