@@ -1,4 +1,5 @@
 const nextConfig = {
+    productionBrowserSourceMaps: true,
     env: {
         DB_HOST: process.env.DB_HOST,
         DB_PORT: process.env.DB_PORT,
@@ -15,6 +16,7 @@ const nextConfig = {
             'legalo.s3.us-east-1.amazonaws.com'
         ],
     },
+    
 };
 
 module.exports = nextConfig;
