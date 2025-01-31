@@ -8,6 +8,7 @@ import IndustriaService from './Industria.service';
 import OfertaService from './Oferta.service';
 import PagoService from './Pago.service';
 import ServicioService from './Servicio.service';
+import UsuarioService from './Usuario.service';
 
 export const abogadoService = new AbogadoService();
 export const ofertaservice = new OfertaService();
@@ -18,3 +19,4 @@ export const especialidadService = new EspecialidadService();
 export const clienteService = new ClienteService();
 export const aplicacionService = new AplicacionService();
 export const fileService = new FileService();
+export const usuarioService = new UsuarioService();

@@ -18,8 +18,8 @@ import ModalAgregarEducacion from "@/components/abogado/MoodalAgregarEducacion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import ImageUpload from "@/components/ImageUpload";
 import VideoUpload from "@/components/VideoUpload";
-import FileUpload from "@/components/FileUpload";
-import CvUpload from "@/components/abogado/registro/CvUpload";
+import UploadFileCUL from "@/components/abogado/registro/UploadFileCUL";
+import UploadFileCV from "@/components/abogado/registro/UploadFileCV";
 import { IExperiencia } from "@/interfaces/Experiencia.interface";
 import { IEstudio } from "@/interfaces/Estudio.interface";
 import { useRouter } from "next/navigation";
@@ -57,6 +57,8 @@ const CompleteProfileLawyerPage: React.FC = () => {
   );
   const [stepNumber, setStepNumber] = useState(1);
   const [triger, setTriger] = useState("tab1");
+  const [archivoCv, setArchivoCv] = useState<IArchivo | null>(null);
+  const [archivoCul, setArchivoCul] = useState<IArchivo | null>(null);
 
   const editarExperiencia = (experiencia: IExperiencia) => {
     setExperienciaSelected(experiencia);
@@ -83,17 +85,24 @@ const CompleteProfileLawyerPage: React.FC = () => {
   };
 
   const nextStep = async () => {
+    
+    // if(stepNumber === 4){
+    //   console.log(archivoCul)
+    // console.log(archivoCv)
+    // return;
+    // }
     if (stepNumber === 4) {
+      
       setLoading(true);
       if (!stateAbogado.archivo_imagen) {
         showToast("error", "Archivo Imagen", "Sube una imagen");
         return;
       }
-      if (!stateAbogado.archivo_cv) {
+      if (!archivoCv) {
         showToast("error", "Archivo CV", "Sube un archivo");
         return;
       }
-      if (!stateAbogado.archivo_cul) {
+      if (!archivoCul) {
         showToast("error", "Archivo CUL", "Sube un archivo");
         return;
       }
@@ -165,17 +174,17 @@ const CompleteProfileLawyerPage: React.FC = () => {
       try {
         const response = await abogadoService.createAbogado(data);
         if (response.state) {
-          if (stateAbogado.archivo_cv) {
+          if (archivoCv) {
             enviarArchivo(
-              stateAbogado.archivo_cv,
+              archivoCv,
               response.abogado.id,
               "archivo_cv"
             );
           }
 
-          if (stateAbogado.archivo_cul) {
+          if (archivoCul) {
             enviarArchivo(
-              stateAbogado.archivo_cul,
+              archivoCul,
               response.abogado.id,
               "archivo_cul"
             );
@@ -212,7 +221,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
       case 1:
         if (!stateAbogado.experiencias.length && !noExperiencia) {
           showToast("error", "Falta:", "Seleccionar experiencia.");
-        } else if (!stateAbogado.archivo_cv) {
+        } else if (!archivoCv) {
           showToast("error", "Falta:", "Sube un CV");
         } else {
           setTriger("tab2");
@@ -293,6 +302,22 @@ const CompleteProfileLawyerPage: React.FC = () => {
     setStepNumber(stepNumber - 1);
   };
 
+  const handleFileCUL = (fileData: { nombre: string; tipo: string; contenido: string }) => {
+    setArchivoCul(fileData);
+  };
+
+  const handleFileCV = async (fileData: { nombre: string; tipo: string; contenido: string }) => {
+    setArchivoCv(fileData);
+  };
+
+  const removeFileCv = () => {
+    setArchivoCv(null);
+  };
+
+  const removeFileCul = () => {
+    setArchivoCul(null);
+  };
+
   return (
     <div className="container mx-auto p-4 lg:py-8 lg:px-0 w-full lg:max-w-[960px]">
       <div className="w-full mb-4 ">
@@ -333,10 +358,11 @@ const CompleteProfileLawyerPage: React.FC = () => {
         <VideoUpload></VideoUpload>
       </div>
 
-      <FileUpload
-        updateStateAbogado={updateStateAbogado}
-        stateAbogado={stateAbogado}
+      <UploadFileCUL
+        uploadFileCUL={handleFileCUL}
         campo={"archivo_cul"}
+        archivoCul={archivoCul}
+        removeFileCul={removeFileCul}
       />
       {/* lateral menu  */}
       <div className="my-4 pb-32">
@@ -397,7 +423,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
                 <p className="text-xs text-left">profesional.</p>
               </div>
             </TabsTrigger>
-            <TabsTrigger
+            {/* <TabsTrigger
               value="tab5"
               className="perfil-info text-[#D1D1D6] w-full flex-col items-start py-4 lg:text-lg font-bold data-[state=active]:bg-black data-[state=active]:text-white rounded-[10px]"
               disabled={stepNumber != 5 ? true : false}
@@ -408,7 +434,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
                 <p className="text-xs text-left">adicional necesaria para</p>
                 <p className="text-xs text-left">completar tu perfil.</p>
               </div>
-            </TabsTrigger>
+            </TabsTrigger> */}
             <p className="hidden lg:block lg:my-8 text-black text-sm">
               Campos obligatorios(*)
             </p>
@@ -482,10 +508,11 @@ const CompleteProfileLawyerPage: React.FC = () => {
                   </label>
                 </div>
 
-                <CvUpload
-                  updateStateAbogado={updateStateAbogado}
-                  stateAbogado={stateAbogado}
+                <UploadFileCV
+                  uploadFileCV={handleFileCV}
                   campo={"archivo_cv"}
+                  archivoCv={archivoCv}
+                  removeFileCv={removeFileCv}
                 />
               </div>
             </TabsContent>

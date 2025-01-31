@@ -264,6 +264,7 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                     <div className="flex flex-col gap-1">
                       <span className="font-bold text-2xl">{token?.abogado?.nombres}</span>
                       <span>[Abogado Laboral]</span>
+                       // leer los servicios propios
                       <Button
                         variant="link"
                         className="text-[#007AFF] flex items-center gap-2 px-0 justify-start"
@@ -702,6 +703,7 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                 </span>
                 <div className="flex flex-col gap-4">
                   <p>Presupuesto</p>
+                  // corregir preterminado
                   <p>S/ 0.00</p>
                 </div>
               </div>

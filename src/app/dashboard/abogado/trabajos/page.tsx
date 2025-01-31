@@ -127,11 +127,11 @@ import { useLoader } from "@/contexts/loaderContext";
               Trabajos ({trabajos.length})
             </AccordionTriggerBig>
             <AccordionContent className="flex flex-col gap-4">
-              {
+              {/* {
                 trabajos.map((trabajo)=>
                   <TrabajoItem tipe="cotizacionAceptada" trabajo={trabajo} />
                 )
-              }
+              } */}
               <TrabajoItem tipe="cotizacionAceptada" trabajo={ejemploTrabajo} />
             </AccordionContent>
           </AccordionItem>

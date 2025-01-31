@@ -38,6 +38,7 @@ const ModalCrearProyectoOk: React.FC<ModalPostulacionOkProps> = ({
           </p>
 
           <div className="flex gap-4">
+            // te tiene que llevar a encargos
             <Button>Editar proyecto</Button>
             <Link href={"/dashboard/cliente"}>
               <Button variant={"outline"} className="border-black">
