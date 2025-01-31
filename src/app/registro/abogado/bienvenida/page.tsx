@@ -6,7 +6,7 @@ import { usuarioService } from "@/services";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 
 const WelcomeLawyerPage = () => {
   const { setLoading, loading } = useLoader();
@@ -110,4 +110,10 @@ const WelcomeLawyerPage = () => {
   );
 };
 
-export default WelcomeLawyerPage;
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <WelcomeLawyerPage />
+    </Suspense>
+  );
+}

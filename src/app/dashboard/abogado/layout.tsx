@@ -46,6 +46,7 @@ const LayoutContent = ({ children }: LayoutProps) => {
     { id: "invitaciones", texto: "Invitaciones", url: "/dashboard/abogado/invitaciones" },
     { id: "postulaciones", texto: "Postulaciones", url: "/dashboard/abogado/postulaciones" },
     { id: "trabajos", texto: "Trabajos", url: "/dashboard/abogado/trabajos" },
+    { id: "perfil", texto: "Perfil", url: "/dashboard/abogado/perfil" },
   ];
 
   const handleLogout = () => {

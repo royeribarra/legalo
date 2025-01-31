@@ -44,8 +44,8 @@ interface ModalPostularProyectoProps {
 
 const bancos = [
   {nombre: "Interbank"},
-  {nombre: "BCP (Banco de Crédito del Perú)"},
-  {nombre: "BBVA (Banco Bilbao Vizcaya Argentaria)"},
+  {nombre: "BCP"},
+  {nombre: "BBVA"},
   {nombre: "Scotiabank"},
   {nombre: "Banco Pichincha"},
   {nombre: "Banco de la Nación"},
@@ -76,6 +76,7 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
 }) => {
   
   const { token, userRole } = useAuth();
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const [step, setStep] = useState("step1");
   const [precio, setPrecio] = useState<number>(0); // Precio ingresado por el usuario
   const [comision, setComision] = useState<number>(0); // 20% del precio
@@ -100,12 +101,18 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
     if (currentIndex < steps.length - 1) {
       setStep(steps[currentIndex + 1]);
     }
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const prevStep = () => {
     const currentIndex = steps.indexOf(step);
     if (currentIndex > 0) {
       setStep(steps[currentIndex - 1]);
+    }
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -208,10 +215,10 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-20 ">
-      <div className="flex flex-col lg:flex-row bg-white lg:rounded-[24px] shadow-lg relative w-full h-full overflow-y-auto lg:w-[1220px] lg:max-w-[84vw] lg:h-[830px] lg:max-h-[90vh] hidde-scrollbar">
+      <div className="flex flex-col lg:flex-row bg-white lg:rounded-[24px] shadow-lg relative w-full h-full overflow-y-auto lg:w-[1220px] lg:max-w-[84vw] lg:h-[830px] lg:max-h-[90vh] hidde-scrollbar" ref={scrollContainerRef}>
         <div className="flex-1 flex flex-col justify-between">
-          <div className="px-4 lg:p-9 lg:pt-0">
-            <Tabs defaultValue="step1" className="" value={step}>
+          <div className="px-4 lg:p-9 lg:pt-0" >
+            <Tabs defaultValue="step1" className="" value={step} >
               <TabsList className="fixed bg-white px-0 pt-20 lg:pt-12 pr-6 lg:pr-2 pb-8 lg:sticky top-0 z-10 w-full justify-start overflow-x-scroll overflow-y-hidden lg:overflow-hidden">
                 <TabsTrigger
                   value="step1"
@@ -261,11 +268,10 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                       />
                       </AvatarFallback>
                     </Avatar>
-                    <div className="flex flex-col gap-1">
+                    
+                    <div className="flex flex-row gap-1 items-center">
                       <span className="font-bold text-2xl">{token?.abogado?.nombres}</span>
-                      <span>[Abogado Laboral]</span>
-                       // leer los servicios propios
-                      <Button
+                        <Button
                         variant="link"
                         className="text-[#007AFF] flex items-center gap-2 px-0 justify-start"
                       >
@@ -290,7 +296,17 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                       <p>{oferta.duracion}</p>
                     </Button>
                   </div>
-
+                  <div className="my-2">
+                    <span className="font-bold text-lg">Servicios</span>
+                    <div className="flex gap-4 flex-wrap mt-3">
+                      {
+                        token?.abogado?.serviciosAbogado.map((servicio)=>
+                          <span>{servicio.servicio.nombre}</span>
+                        )
+                      }
+                    </div>
+                  </div>
+                  
                   <div className="my-2">
                     <span className="font-bold text-lg">Especialidades</span>
                     <div className="flex gap-4 flex-wrap mt-3">
@@ -552,10 +568,9 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                         </h3>
                       </div>
                       <Input
-                        type="text"
+                        type="number"
                         placeholder="83983479837899487934"
-                        disabled
-                        className="disabled:opacity-90 placeholder:text-[#666666] h-12 border rounded-[10px] border-black text-black bg-[#E6E6E6]  focus-visible:ring-0"
+                        className="placeholder:text-[#666666] h-12 border rounded-[10px] border-black text-black  focus-visible:ring-0"
                       />
                     </div>
                     <div className="min-w-32">
@@ -563,7 +578,7 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                         <h3 className="text-sm text-[#61646B] mb-2">Banco</h3>
                       </div>
                       <Select defaultValue="b2">
-                        <SelectTrigger className="rounded-[10px] border-black focus-visible:ring-0 focus:outline-none focus:border-0  bg-[#E6E6E6] h-12">
+                        <SelectTrigger className="rounded-[10px] border-black focus-visible:ring-0 focus:outline-none focus:border-0  h-12">
                           <SelectValue placeholder="Selecciona tu banco" />
                         </SelectTrigger>
                         <SelectContent>
@@ -578,14 +593,14 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                         </SelectContent>
                       </Select>
                     </div>
-                    <div>
+                    {/* <div>
                       <Button
                         variant="outline"
                         className="rounded-[10px] border-black h-12 w-36"
                       >
                         Cambiar
                       </Button>
-                    </div>
+                    </div> */}
                   </div>
                   <div className="text-[#61646B] flex items-center gap-2 text-sm">
                     <IcoInfo size={16} /> Al realizar la transferencia me
