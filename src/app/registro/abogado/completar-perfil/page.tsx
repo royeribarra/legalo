@@ -9,15 +9,14 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 // form
-import ServiceSelectAbogado from "@/components/abogado/ServiceSelectAbogado";
-import IndustrySelectAbogado from "@/components/abogado/IndustrySelectAbogado";
+import ServiceSelectAbogado from "@/components/abogado/registro/ServiceSelectAbogado";
+import IndustrySelectAbogado from "@/components/abogado/registro/IndustrySelectAbogado";
 import ModalAgregarExperiencia from "@/components/abogado/ModalAgregarExperiencia";
 import SkillSection from "@/components/abogado/registro/SkillSection";
 import AboutSection from "@/components/abogado/registro/AboutSection";
 import ModalAgregarEducacion from "@/components/abogado/MoodalAgregarEducacion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import ImageUpload from "@/components/ImageUpload";
-import VideoUpload from "@/components/VideoUpload";
+import UploadVideo from "@/components/abogado/registro/UploadVideo";
 import UploadFileCUL from "@/components/abogado/registro/UploadFileCUL";
 import UploadFileCV from "@/components/abogado/registro/UploadFileCV";
 import { IExperiencia } from "@/interfaces/Experiencia.interface";
@@ -25,10 +24,12 @@ import { IEstudio } from "@/interfaces/Estudio.interface";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/contexts/toastContext";
 import { useRegistroAbogado } from "@/contexts/registroAbogadoContext";
-import { IArchivo } from "@/interfaces/Archivo.interface";
+// import { IArchivo } from "@/interfaces/Archivo.interface";
 import { abogadoService, fileService } from "@/services";
 import { base64ToFile } from "utils/uploadFile";
 import { useLoader } from "@/contexts/loaderContext";
+import UploadImagen from "@/components/abogado/registro/UploadImagen";
+import { IArchivo } from "@/interfaces/Archivo.interface";
 
 interface Educacion {
   id: number;
@@ -39,6 +40,8 @@ interface Educacion {
   ubicacion: string;
   descripcion: string;
 }
+
+
 
 const CompleteProfileLawyerPage: React.FC = () => {
   const { setLoading } = useLoader();
@@ -59,6 +62,8 @@ const CompleteProfileLawyerPage: React.FC = () => {
   const [triger, setTriger] = useState("tab1");
   const [archivoCv, setArchivoCv] = useState<IArchivo | null>(null);
   const [archivoCul, setArchivoCul] = useState<IArchivo | null>(null);
+  const [archivoImagen, setArchivoImagen] = useState<IArchivo | null>(null);
+  const [archivoVideo, setArchivoVideo] = useState<IArchivo | null>(null);
 
   const editarExperiencia = (experiencia: IExperiencia) => {
     setExperienciaSelected(experiencia);
@@ -94,8 +99,12 @@ const CompleteProfileLawyerPage: React.FC = () => {
     if (stepNumber === 4) {
       
       setLoading(true);
-      if (!stateAbogado.archivo_imagen) {
+      if (!archivoImagen) {
         showToast("error", "Archivo Imagen", "Sube una imagen");
+        return;
+      }
+      if (!archivoVideo) {
+        showToast("error", "Archivo Video", "Sube un video");
         return;
       }
       if (!archivoCv) {
@@ -190,16 +199,16 @@ const CompleteProfileLawyerPage: React.FC = () => {
             );
           }
 
-          if (stateAbogado.archivo_imagen) {
+          if (archivoImagen) {
             enviarArchivo(
-              stateAbogado.archivo_imagen,
+              archivoImagen,
               response.abogado.id,
               "archivo_imagen"
             );
           }
-          if (stateAbogado.archivo_video) {
+          if (archivoVideo) {
             enviarArchivo(
-              stateAbogado.archivo_imagen,
+              archivoVideo,
               response.abogado.id,
               "archivo_video"
             );
@@ -262,15 +271,15 @@ const CompleteProfileLawyerPage: React.FC = () => {
     abogadoId: number,
     nombreArchivo: string
   ) => {
-    const archivoBlob = base64ToFile(
-      archivo.contenido,
-      archivo.tipo,
-      archivo.nombre
-    );
+    // const archivoBlob = base64ToFile(
+    //   archivo.contenido,
+    //   archivo.tipo,
+    //   archivo.nombre
+    // );
     const body = {
       nombreArchivo,
       abogadoId,
-      file: archivoBlob,
+      file: archivo.contenido,
       folder: "abogados",
     };
 
@@ -283,7 +292,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
 
   const prevStep = () => {
     if (stepNumber === 1) {
-      window.location.href = `${process.env.BASE_APP_URL}/registro/abogado/objetivos`;
+      window.location.href = `/registro/abogado/objetivos`;
     }
 
     switch (stepNumber) {
@@ -302,11 +311,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
     setStepNumber(stepNumber - 1);
   };
 
-  const handleFileCUL = (fileData: { nombre: string; tipo: string; contenido: string }) => {
-    setArchivoCul(fileData);
-  };
-
-  const handleFileCV = async (fileData: { nombre: string; tipo: string; contenido: string }) => {
+  const handleFileCV = async (fileData: { nombre: string; tipo: string; contenido: File }) => {
     setArchivoCv(fileData);
   };
 
@@ -314,8 +319,30 @@ const CompleteProfileLawyerPage: React.FC = () => {
     setArchivoCv(null);
   };
 
+  const handleFileCUL = (fileData: { nombre: string; tipo: string; contenido: File }) => {
+    setArchivoCul(fileData);
+  };
+
   const removeFileCul = () => {
     setArchivoCul(null);
+  };
+
+  const handleFileVideo = async (fileData: { nombre: string; tipo: string; contenido: File }) => {
+    console.log(fileData)
+    setArchivoVideo(fileData);
+  };
+
+  const removeFileVideo = () => {
+    setArchivoVideo(null);
+  };
+
+  const handleFileImagen = async (fileData: { nombre: string; tipo: string; contenido: File }) => {
+    console.log(fileData)
+    setArchivoImagen(fileData);
+  };
+
+  const removeFileImagen = () => {
+    setArchivoImagen(null);
   };
 
   return (
@@ -334,10 +361,11 @@ const CompleteProfileLawyerPage: React.FC = () => {
         </p>
       </div>
       <div className="border  p-5 my-4 rounded-xl flex flex-col md:flex-row gap-4 bg-lg-lawyer">
-        <ImageUpload
-          updateStateAbogado={updateStateAbogado}
-          stateAbogado={stateAbogado}
+        <UploadImagen
+          uploadFileImagen={handleFileImagen}
           campo={"archivo_imagen"}
+          archivoImagen={archivoImagen}
+          removeFileImagen={removeFileImagen}
         />
 
         <div className="w-full lg:w-4/6 flex flex-col justify-center">
@@ -355,7 +383,12 @@ const CompleteProfileLawyerPage: React.FC = () => {
             />
           </div>
         </div>
-        <VideoUpload></VideoUpload>
+        <UploadVideo 
+          uploadFileVideo={handleFileVideo}
+          campo={"archivo_cul"}
+          archivoVideo={archivoCul}
+          removeFileVideo={removeFileVideo}
+        />
       </div>
 
       <UploadFileCUL

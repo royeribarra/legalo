@@ -1,49 +1,64 @@
 import { useRef, useState } from "react";
 import { Trash } from "lucide-react";
-import { handleFileUpload } from "utils/uploadFile";
 
 type CvUploadProps = {
-  uploadFileCV: (fileData: { nombre: string; tipo: string; contenido: string }) => void;
+  uploadFileCV: (fileData: { nombre: string; tipo: string; contenido: File }) => void;
   campo: "archivo_cul" | "archivo_cv" | "archivo_imagen";
-  archivoCv?: { nombre: string; tipo: string; contenido: string } | null;
+  archivoCv?: { nombre: string; tipo: string; contenido: File } | null;
   removeFileCv: () => void;
 };
 
 function UploadFileCV({ uploadFileCV, campo, archivoCv, removeFileCv }: CvUploadProps) {
-  const [file, setFile] = useState<{ nombre: string; tipo: string; contenido: string } | null>(archivoCv || null);
+  const [file, setFile] = useState<{ nombre: string; tipo: string; contenido: File } | null>(archivoCv || null);
   const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0];
     const validTypes = [
-          "application/pdf",
-          "application/msword",
-          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        ];
-
+      "application/pdf",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ];
     const fileSizeLimit = 5 * 1024 * 1024; // 5 MB
 
-    handleFileUpload(event, (fileData) => {
-      // Guardamos el archivo en el estado local
-      setFile({
-        nombre: fileData.name,
-        tipo: fileData.type,
-        contenido: fileData.content,
-      });
-      // Enviar el archivo al componente padre
-      uploadFileCV({
-        nombre: fileData.name,
-        tipo: fileData.type,
-        contenido: fileData.content,
-      });
-      setUploadSuccess(true);
-    }, validTypes, fileSizeLimit);
+    if (!selectedFile) return;
+
+    // Validar tipo y tamaño del archivo
+    if (!validTypes.includes(selectedFile.type)) {
+      alert(`Formato de archivo no válido. Solo se permiten: ${validTypes.join(", ")}.`);
+      return;
+    }
+
+    if (selectedFile.size > fileSizeLimit) {
+      alert(`El archivo debe pesar menos de ${(fileSizeLimit / 1024 / 1024).toFixed(2)} MB.`);
+      return;
+    }
+
+    // Guardamos el archivo en el estado
+    setFile({
+      nombre: selectedFile.name,
+      tipo: selectedFile.type,
+      contenido: selectedFile, // Guardamos el archivo directamente en 'contenido'
+    });
+
+    // Enviar el archivo al componente padre
+    uploadFileCV({
+      nombre: selectedFile.name,
+      tipo: selectedFile.type,
+      contenido: selectedFile, // Pasamos el archivo como 'contenido'
+    });
+
+    setUploadSuccess(true);
   };
 
   const handleRemoveFile = () => {
     setFile(null); // Limpiar el archivo en el estado
     setUploadSuccess(false); // Limpiar el estado de éxito
     removeFileCv();
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''; // Resetear el valor del input
+    }
   };
 
   const handleClick = () => {

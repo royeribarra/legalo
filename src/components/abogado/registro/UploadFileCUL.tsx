@@ -1,19 +1,20 @@
 import { useRef, useState } from "react";
 import { Button } from "../../ui/button";
 import { Upload, Trash, Check } from "lucide-react";
-import { handleFileUpload } from "utils/uploadFile"; // Asegúrate de que esta función esté importada
 
 // El tipo de props cambia para incluir la función de subir archivo
 type FileUploadProps = {
-  uploadFileCUL: (fileData: { nombre: string; tipo: string; contenido: string }) => void;
+  uploadFileCUL: (fileData: { nombre: string; tipo: string; contenido: File }) => void;
   campo: "archivo_cul" | "archivo_cv" | "archivo_imagen";
-  archivoCul?: { nombre: string; tipo: string; contenido: string } | null;
+  archivoCul?: { nombre: string; tipo: string; contenido: File } | null;
   removeFileCul: () => void;
 };
 
 const UploadFileCUL = ({ campo, uploadFileCUL, archivoCul, removeFileCul }: FileUploadProps) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [file, setFile] = useState<{ nombre: string; tipo: string; contenido: string } | null>(archivoCul || null);
+  const [file, setFile] = useState<{ nombre: string; tipo: string; contenido: File } | null>(
+    archivoCul || null
+  );
   const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);
 
   const validTypes = [
@@ -23,29 +24,44 @@ const UploadFileCUL = ({ campo, uploadFileCUL, archivoCul, removeFileCul }: File
   ];
   const fileSizeLimit = 5 * 1024 * 1024; // 5MB
 
-  // Usamos la función handleFileUpload para manejar la carga de archivos
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    handleFileUpload(event, (fileData) => {
-      // Guardamos el archivo en el estado local
-      setFile({
-        nombre: fileData.name,
-        tipo: fileData.type,
-        contenido: fileData.content,
-      });
-      // Enviar el archivo al componente padre
-      uploadFileCUL({
-        nombre: fileData.name,
-        tipo: fileData.type,
-        contenido: fileData.content,
-      });
-      setUploadSuccess(true);
-    }, validTypes, fileSizeLimit);
+    const selectedFile = event.target.files?.[0];
+
+    if (!selectedFile) return;
+
+    // Validar tipo y tamaño del archivo
+    if (!validTypes.includes(selectedFile.type)) {
+      alert(`Formato de archivo no válido. Solo se permiten: ${validTypes.join(", ")}.`);
+      return;
+    }
+
+    if (selectedFile.size > fileSizeLimit) {
+      alert(`El archivo debe pesar menos de ${(fileSizeLimit / 1024 / 1024).toFixed(2)} MB.`);
+      return;
+    }
+
+    // Guardamos el archivo en el estado local con la estructura correcta
+    const fileData = {
+      nombre: selectedFile.name,
+      tipo: selectedFile.type,
+      contenido: selectedFile,
+    };
+
+    setFile(fileData);
+
+    // Enviar el archivo al componente padre
+    uploadFileCUL(fileData);
+
+    setUploadSuccess(true);
   };
 
   const handleRemoveFile = () => {
     setFile(null);
     setUploadSuccess(false);
     removeFileCul();
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''; // Resetear el valor del input
+    }
   };
 
   const handleClick = () => {
@@ -101,3 +117,21 @@ const UploadFileCUL = ({ campo, uploadFileCUL, archivoCul, removeFileCul }: File
 };
 
 export default UploadFileCUL;
+
+
+// const handleFileChange1 = (event: React.ChangeEvent<HTMLInputElement>) => {
+//   handleFileUpload(event, (fileData) => {
+//     setFile({
+//       nombre: fileData.name,
+//       tipo: fileData.type,
+//       contenido: fileData.content,
+//     });
+//     // Enviar el archivo al componente padre
+//     uploadFileCUL({
+//       nombre: fileData.name,
+//       tipo: fileData.type,
+//       contenido: fileData.content,
+//     });
+//     setUploadSuccess(true);
+//   }, validTypes, fileSizeLimit);
+// };

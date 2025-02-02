@@ -64,7 +64,10 @@ export const OfertaProvider = ({ children }: OfertaProviderProps) => {
         localStorage.removeItem("ofertaState");
         setState(initialState);
       } else {
-        setState(parsedState);
+        setState({
+          ...parsedState,
+          documento: null, // Evita que se intente cargar un archivo desde localStorage
+        });
       }
     }
   }, []); // Este efecto solo se ejecutará en el cliente, después del montaje
@@ -78,7 +81,8 @@ export const OfertaProvider = ({ children }: OfertaProviderProps) => {
       };
 
       // Guardar el estado actualizado en localStorage
-      localStorage.setItem("ofertaState", JSON.stringify(updatedState));
+      const { documento, ...stateToSave } = updatedState;
+      localStorage.setItem("ofertaState", JSON.stringify(stateToSave));
       return updatedState;
     });
   };

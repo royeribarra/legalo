@@ -17,23 +17,34 @@ import { base64ToBlob } from "utils/file";
 import { clienteService, fileService, ofertaservice } from "@/services";
 import { base64ToFile } from "utils/uploadFile";
 import { useLoader } from "@/contexts/loaderContext";
+import { useToast } from "@/contexts/toastContext";
+import ModalAgregarDocumentoOferta from "@/components/dashboard/Cliente/ModalAgregarDocumentoOferta";
 
 export interface IPregunta {
   id?: number;
   nombre: string;
 }
 
+const initialSuggestions: IPregunta[] = [
+  { id: 1, nombre: "¿Cuántos años de experiencia en puestos similares tienes?" },
+  { id: 2, nombre: "¿En cuánto tiempo podrías iniciar el proyecto?" },
+  { id: 3, nombre: "¿Estás de acuerdo con pagos trimestrales?" },
+];
+
 const PublicarPageEight = () => {
   const router = useRouter();
+  const { showToast } = useToast();
   const { setLoading } = useLoader();
   const { state, updateState, setDefaultValues } = useOferta();
+  const { preguntas } = state;
   const { token } = useAuth();
-  const [items, setItems] = useState<IPregunta[]>([]);
   const [input, setInput] = useState<string>("");
   const [newOferta, setNewOferta] = useState<number>(0);
+  const [suggestions, setSuggestions] = useState<IPregunta[]>([...initialSuggestions]);
 
   const [showModalCrearProyectoOk, setModalCrearProyectoOk] = useState(false);
-
+  const [showModalDocumentoOferta, setShowModalDocumentoOferta] = useState(false);
+  
   const handleModalCrearProyectoOk = () => {
     setModalCrearProyectoOk(true);
   };
@@ -43,25 +54,8 @@ const PublicarPageEight = () => {
     router.push("/dashboard/cliente");
   };
 
-  const [suggestions, setSuggestions] = useState<IPregunta[]>([
-    { id: 1, nombre: "¿Cuántos años de experiencia en puestos similares tienes?" },
-    { id: 2, nombre: "¿En cuánto tiempo podrías iniciar el proyecto?" },
-    { id: 3, nombre: "¿Estás de acuerdo con pagos trimestrales?" },
-  ]);
-
-  useEffect(() => {
-    const savedItems = localStorage.getItem("items");
-    const parsedItems: IPregunta[] = savedItems ? JSON.parse(savedItems) : [];
-    setItems(parsedItems);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("items", JSON.stringify(items));
-    updateState({ preguntas: items }); // Actualizamos el contexto cada vez que cambien las preguntas.
-  }, [items]);
-
   const addItem = () => {
-    if (items.length >= 5) {
+    if (preguntas.length >= 5) {
       alert("Has alcanzado el límite de 5 preguntas.");
       return;
     }
@@ -70,39 +64,53 @@ const PublicarPageEight = () => {
       return;
     }
     const newItem: IPregunta = { id: Date.now(), nombre: input };
-    setItems([...items, newItem]);
+    updateState({
+      preguntas: [...preguntas, newItem]
+    });
     setInput("");
   };
 
   const addFromSuggestion = (suggestion: IPregunta) => {
-    if (items.length >= 5) {
+    if (preguntas.length >= 5) {
       alert("Has alcanzado el límite de 5 preguntas.");
       return;
     }
-    setItems([...items, suggestion]);
-    setSuggestions(suggestions.filter((item) => item.id !== suggestion.id)); // Quitamos de las sugerencias
+    
+    updateState({
+      preguntas: [...preguntas, suggestion]
+    });
+  
+    setSuggestions((prev) => prev.filter((item) => item.id !== suggestion.id));
   };
 
   const deleteItem = (id: number) => {
-    const filteredItems = items.filter((item) => item.id !== id);
-
-    // Si la pregunta eliminada estaba originalmente en la lista de sugerencias, la volvemos a agregar.
-    const deletedItem = items.find((item) => item.id === id);
+    const filteredItems = preguntas.filter((item) => item.id !== id);
+    const deletedItem = preguntas.find((item) => item.id === id);
+  
     if (deletedItem) {
-      const wasInSuggestions = suggestions.every((s) => s.id !== deletedItem.id);
-      if (wasInSuggestions) {
-        setSuggestions([...suggestions, deletedItem]);
+      // Solo agregar a `suggestions` si pertenece a `initialSuggestions`
+      const wasInInitialSuggestions = initialSuggestions.some((s) => s.id === deletedItem.id);
+      if (wasInInitialSuggestions) {
+        setSuggestions((prev) => [...prev, deletedItem]);
       }
     }
-
-    setItems(filteredItems);
+  
+    updateState({
+      preguntas: filteredItems
+    });
   };
+  
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
 
   const handleSubmit = async () => {
+    if (!state.documento) {
+      // showToast("error", "Falta documento", "Sube un documento por favor.");
+      setShowModalDocumentoOferta(true);
+      return;
+    }
     setLoading(true);
     const data = {
       ...state,
@@ -137,11 +145,10 @@ const PublicarPageEight = () => {
     ofertaId: number,
     nombreArchivo: string
   ) => {
-    const archivoBlob = base64ToFile(archivo.contenido, archivo.tipo, archivo.nombre);
     const body = {
       nombreArchivo,
       ofertaId,
-      file: archivoBlob,
+      file: archivo.contenido,
       folder: "ofertas"
     };
     try {
@@ -170,7 +177,7 @@ const PublicarPageEight = () => {
           variant="outline"
           className="flex items-center"
           onClick={addItem}
-          disabled={items.length >= 5}
+          disabled={preguntas.length >= 5}
         >
           <Plus size={16} />
         </Button>
@@ -186,7 +193,7 @@ const PublicarPageEight = () => {
         </div>
       ))}
       <ul className="my-8">
-        {items.map((item) => (
+        {preguntas.map((item) => (
           <li key={item.id} className="flex gap-4 my-2">
             <Input value={item.nombre} disabled />
             <Button
@@ -220,6 +227,13 @@ const PublicarPageEight = () => {
           newOfertaId={newOferta}
         />
       )}
+      {
+        showModalDocumentoOferta &&
+        <ModalAgregarDocumentoOferta
+          open={showModalDocumentoOferta}
+          onClose={()=>setShowModalDocumentoOferta(false)}
+        />
+      }
     </div>
   );
 };

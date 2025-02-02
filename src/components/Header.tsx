@@ -73,7 +73,7 @@ const Header: React.FC<HeaderProps> = ({ serviceTipe, updateServiceTipe }) => {
                 onClick={() => updateServiceTipe("lawyer")}
                 className={`h-10 lg:text-base ${
                   serviceTipe === "lawyer"
-                    ? "bg-lg-client text-black"
+                    ? "bg-lg-lawyer text-black"
                     : "bg-black text-white"
                 }`}
               >
@@ -108,7 +108,7 @@ const Header: React.FC<HeaderProps> = ({ serviceTipe, updateServiceTipe }) => {
             <Button
               variant="switch"
               onClick={() => updateServiceTipe("lawyer")}
-              className="text-white bg-black"
+              className="text-white bg-black bg-lg-lawyer"
             >
               ¿Quieres trabajar?
             </Button>

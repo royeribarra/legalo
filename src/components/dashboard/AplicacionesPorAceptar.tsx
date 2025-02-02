@@ -123,7 +123,7 @@ const AplicacionesPorAceptar = () => {
                   >
                     <div className="flex gap-4 items-center">
                       <Image
-                        src={`${process.env.S3_FILE_ROUTE}/${aplicacion.abogado.foto_url}`}
+                        src={`${process.env.S3_FILE_ROUTE}/${aplicacion.abogado?.files.find((file)=>file.nombreArchivo==='archivo_imagen')?.filePath}`}
                         alt="img-abogado"
                         width={100}
                         height={100}

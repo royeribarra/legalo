@@ -3,10 +3,8 @@
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import Link from "next/link";
-import React, { useState } from "react";
-
+import React, { useState, useRef, useEffect } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
 import { useOferta } from "@/contexts/ofertaContext";
@@ -18,45 +16,51 @@ const PublicarPageFour = () => {
   const { showToast } = useToast();
   const { state, updateState } = useOferta();
   const [fileError, setFileError] = useState<string | null>(null);
-  const [uploadSuccess, setUploadSuccess] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (state.documento) {
+      setFileError(null);
+    }
+  }, [state.documento]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
 
     if (selectedFile) {
       const validTypes = [
-        "application/pdf", 
-        "application/msword", 
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
-        "text/plain" // TXT
+        "application/pdf",
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "text/plain", // TXT
       ];
+
       if (!validTypes.includes(selectedFile.type)) {
-        alert("Formato de archivo no válido. Solo se aceptan PDF, DOC, DOCX y TXT.");
+        setFileError("Formato de archivo no válido. Solo se aceptan PDF, DOC, DOCX y TXT.");
         return;
       }
 
-      const fileSizeLimit = 4 * 1024 * 1024; // 5 MB
+      const fileSizeLimit = 4 * 1024 * 1024; // 4 MB
       if (selectedFile.size > fileSizeLimit) {
         setFileError("El archivo debe pesar menos de 4 MB.");
         return;
       }
 
       setFileError(null);
-      const reader = new FileReader();
-      reader.onload = () => {
-        const base64File = reader.result?.toString();
-        if (base64File) {
-          updateState({
-            documento: {
-              nombre: selectedFile.name,
-              tipo: selectedFile.type,
-              contenido: base64File,
-            },
-          });
-          setUploadSuccess(true);
-        }
-      };
-      reader.readAsDataURL(selectedFile);
+      updateState({
+        documento: {
+          nombre: selectedFile.name,
+          tipo: selectedFile.type,
+          contenido: selectedFile, // Guardamos el archivo como File
+        },
+      });
+    }
+  };
+
+  const removeFile = () => {
+    updateState({ documento: null });
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
   };
 
@@ -79,7 +83,7 @@ const PublicarPageFour = () => {
   return (
     <div className="container mx-auto p-4 lg:p-8 lg:px-20 m-8">
       <div className="w-full max-w-[480px] mx-auto mb-8">
-        <Progress value={100/8*4} className="mx-auto mb-4 h-2" />
+        <Progress value={(100 / 8) * 4} className="mx-auto mb-4 h-2" />
         <p className="text-left">Paso 4/8</p>
       </div>
       <div className="flex flex-wrap lg:flex-nowrap gap-16">
@@ -91,22 +95,11 @@ const PublicarPageFour = () => {
             Nuestros abogados necesitan saber:
           </p>
           <ul className="lg:text-xl space-y-6">
-            <li>
-              ✅ Naturaleza del problema: Civil, penal, laboral, comercial, etc.
-            </li>
-            <li>
-              ✅ Partes involucradas: Personas u organizaciones implicadas.
-            </li>
-            <li>
-              ✅ Contexto y antecedentes: Breve historia y acciones previas.
-            </li>
-            <li>
-              ✅ Objetivos: Qué esperas lograr (resolución amistosa, litigio,
-              negociación, etc.)
-            </li>
-            <li>
-              ✅ Urgencia: Si hay aspectos que requieran atención inmediata.
-            </li>
+            <li>✅ Naturaleza del problema: Civil, penal, laboral, comercial, etc.</li>
+            <li>✅ Partes involucradas: Personas u organizaciones implicadas.</li>
+            <li>✅ Contexto y antecedentes: Breve historia y acciones previas.</li>
+            <li>✅ Objetivos: Qué esperas lograr (resolución amistosa, litigio, negociación, etc.)</li>
+            <li>✅ Urgencia: Si hay aspectos que requieran atención inmediata.</li>
           </ul>
         </div>
         <div>
@@ -123,20 +116,27 @@ const PublicarPageFour = () => {
           </Link>
           <p className="lg:text-lg">Documentación</p>
           <div className="border border-black border-dashed p-2 flex flex-col items-center">
-            <Image
-              src="/assets/images/ico-upload.png"
-              alt="ico-cv"
-              width={64}
-              height={64}
-            />
+            <Image src="/assets/images/ico-upload.png" alt="ico-cv" width={64} height={64} />
             <input
               type="file"
               accept=".pdf,.doc,.docx,.txt"
+              ref={fileInputRef}
               onChange={handleFileChange}
               className="mb-2"
             />
             {fileError && <p className="text-red-500 text-sm">{fileError}</p>}
-            {uploadSuccess && <p className="text-green-500 text-sm">¡Archivo subido exitosamente!</p>}
+            {state.documento && (
+              <div className="text-center mt-2">
+                <p className="text-green-500 text-sm">¡Archivo subido exitosamente!</p>
+                <p className="text-xs text-gray-500">{state.documento.nombre}</p>
+                <button
+                  onClick={removeFile}
+                  className="text-red-500 text-xs underline mt-1"
+                >
+                  Eliminar archivo
+                </button>
+              </div>
+            )}
             <p className="text-xs text-gray-500">PDF, Txt, .doc (máx. 4 MB)</p>
           </div>
           <p>Adjunta todo documento que creas que pueda ayudar en tu caso.</p>
@@ -149,10 +149,7 @@ const PublicarPageFour = () => {
             <ArrowLeft className="mr-2" /> Volver
           </Button>
         </Link>
-        <Button
-          className="h-12 px-10 px-text-base rounded-[10px]"
-          onClick={nextStep}
-        >
+        <Button className="h-12 px-10 px-text-base rounded-[10px]" onClick={nextStep}>
           Confirmar <ArrowRight className="ml-2" />
         </Button>
       </div>

@@ -27,7 +27,7 @@ const WelcomeLawyerPage = () => {
       const response = await usuarioService.validarcuenta({ code: activationCode });
       if (response.success) {
         setIsVerified(true);
-        setTimeout(() => router.push("/dashboard"), 2000); // Redirigir tras 2s
+        // setTimeout(() => router.push("/dashboard"), 2000);
       }
     } catch (error) {
       console.error("Error en la verificación:", error);
