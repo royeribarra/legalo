@@ -3,8 +3,10 @@ import React from "react";
 import { FaWhatsapp } from "react-icons/fa"; // Importamos el ícono de WhatsApp
 
 interface ContentProps {
-  title: string;
+  id: number;
+  nombre: string;
   descripcion: string;
+  imagen: string;
 }
 
 interface ModalProps {
@@ -30,7 +32,7 @@ const ModalEspecialidades: React.FC<ModalProps> = ({ isOpen, onClose, title, con
         <div className="mt-4 max-h-[400px] overflow-y-auto bg-gray-100 rounded-lg p-4">
           {content.map((item, index) => (
             <div key={index} className="mb-4">
-              <h3 className="font-semibold">{item.title}</h3>
+              <h3 className="font-semibold">{item.nombre}</h3>
               <p>{item.descripcion}</p>
             </div>
           ))}
