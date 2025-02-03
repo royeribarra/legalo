@@ -10,6 +10,7 @@ import Image from "next/image";
 import { useOferta } from "@/contexts/ofertaContext";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/contexts/toastContext";
+import * as Popover from '@radix-ui/react-popover';
 
 const PublicarPageFour = () => {
   const route = useRouter();
@@ -111,9 +112,32 @@ const PublicarPageFour = () => {
             value={state.descripcion}
             onChange={handleChange}
           />
-          <Link href="#" className="font-bold lg:text-lg block mb-4 underline">
+          {/* <Link href="#" className="font-bold lg:text-lg block mb-4 underline">
             Ver ejemplos descripciones efectivas
-          </Link>
+          </Link> */}
+          <Popover.Root>
+            <Popover.Trigger asChild>
+              <Button variant={"link"} className="font-bold lg:text-lg block mb-4 underline">
+              Ver ejemplos descripciones efectivas
+              </Button>
+            </Popover.Trigger>
+            
+            <Popover.Portal>
+              <Popover.Content 
+                className="bg-white text-sm text-gray-700 p-4 rounded-lg shadow-lg w-96"
+                side="top" // Puedes ajustar la posición
+                align="center"
+              >
+                Ejemplo de caso: Tengo un problema con un inquilino que lleva tres
+                meses sin pagar el alquiler y se niega a desalojar la propiedad. El
+                contrato de arrendamiento sigue vigente. Mi objetivo principal es
+                recuperar el inmueble lo antes posible y cobrar las rentas atrasadas.
+                Necesito asesoría para entender las opciones legales disponibles y
+                como iniciar un proceso de desalojo.
+                <Popover.Arrow className="fill-white" />
+              </Popover.Content>
+            </Popover.Portal>
+          </Popover.Root>
           <p className="lg:text-lg">Documentación</p>
           <div className="border border-black border-dashed p-2 flex flex-col items-center">
             <Image src="/assets/images/ico-upload.png" alt="ico-cv" width={64} height={64} />

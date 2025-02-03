@@ -5,7 +5,7 @@ import Link from "next/link";
 // import { Star } from "lucide-react";
 
 import { useState } from "react";
-
+import * as Popover from '@radix-ui/react-popover';
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { SliderY } from "@/components/ui/slider";
 
@@ -122,7 +122,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
           </h1>
           <p className="mx-auto my-6 text-center text-lg max-w-[580px]">
             Crea una cuenta en pocos pasos y accede a casos legales que se
-            ajustan a  tu experiencia y áreas de interés. Protegemos tu pago.
+            ajustan a tu experiencia y áreas de interés. Protegemos tu pago.
           </p>
         </div>
 
@@ -286,7 +286,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 />
                 <div className="text-white">
                   <h3 className="text-lg lg:text-[28px] font-nimbus mb-2 font-light">
-                    Oportunidades Exclusivas
+                    Oportunidades <span className="italic font-light">Exclusivas</span>
                   </h3>
                   <p className="text-base">
                     Accede a encargos legales publicados, alineados con tu
@@ -304,7 +304,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 />
                 <div className="text-white">
                   <h3 className="text-lg lg:text-[28px] font-nimbus mb-2">
-                    Pagos seguros y protegidos
+                    Pagos seguros y <span className="italic font-light">protegidos</span>
                   </h3>
                   <p className="text-base">
                     Tu pago está garantizado y se libera de forma puntual una
@@ -322,7 +322,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 />
                 <div className="text-white">
                   <h3 className="text-lg lg:text-[28px] font-nimbus mb-2">
-                    Flexibilidad profesional
+                    Flexibilidad <span className="italic font-light">profesional</span>
                   </h3>
                   <p className="text-base">
                     Selecciona los casos que más te interesen y trabaja bajo tus
@@ -340,7 +340,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 />
                 <div className="text-white">
                   <h3 className="text-lg lg:text-[28px] font-nimbus mb-2">
-                    Crecimiento profesional
+                    Crecimiento <span className="italic font-light">profesional</span>
                   </h3>
                   <p className="text-base">
                     Amplía tu red de contactos y accede a encargos que impulsan
@@ -407,9 +407,24 @@ const HomeMain: React.FC<HomeMainProps> = ({
             <h2 className="text-6xl font-bold 3xl:text-7xl mb-4">
               {getPrice(sliderValue[0], totalPaid)}
             </h2>
-            <Link href="#" className="underline 3xl:text-xl text-[#666666]">
-              ¿Cómo calculamos?
-            </Link>
+            <Popover.Root>
+              <Popover.Trigger asChild>
+                <Button variant={"link"} className="underline 3xl:text-xl text-[#666666]">
+                  ¿Cómo calculamos?
+                </Button>
+              </Popover.Trigger>
+              
+              <Popover.Portal>
+                <Popover.Content 
+                  className="bg-white text-sm text-gray-700 p-4 rounded-lg shadow-lg w-96"
+                  side="top" // Puedes ajustar la posición
+                  align="center"
+                >
+                  Las tarifas promedio presentadas se basan en una encuesta anónima realizada a abogados del Perú y están diseñadas para brindarte una referencia sobre los ingresos potenciales en el mercado legal. Los ingresos reales pueden variar según las particularidades de cada caso, tu experiencia profesional y tus clientes. Según esta encuesta, los factores que podrían incrementar las tarifas son: Urgencia del caso, especialización requerida y volumen de trabajo estimado.
+                  <Popover.Arrow className="fill-white" />
+                </Popover.Content>
+              </Popover.Portal>
+            </Popover.Root>
           </div>
         </div>
       </div>

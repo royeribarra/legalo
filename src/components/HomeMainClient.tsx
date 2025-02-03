@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 // import { Star } from "lucide-react";
+import * as Popover from '@radix-ui/react-popover';
 
 import { useState } from "react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
@@ -143,7 +144,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 Regístrate gratis
               </CardTitle>
               <CardDescription className="line-clamp-4 text-base text-black text-center">
-                Crea una cuenta facilmente y accede a nuestra comunidad de
+                Crea una cuenta fácilmente y accede a nuestra comunidad de
                 abogados de confianza.
               </CardDescription>
             </CardHeader>
@@ -284,7 +285,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 />
                 <div className="text-white">
                   <h3 className="text-lg lg:text-[28px] font-nimbus mb-2 ">
-                    Profesionalismo y Experiencia
+                    Profesionalismo y {" "}<span className="italic font-light">Experiencia</span>
                   </h3>
                   <p className="text-base">
                     Todos nuestros abogados han sido verificados y cuentan con
@@ -354,7 +355,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
           </div>
           <div className="flex flex-col items-center justify-center gap-4 3xl:gap-8 p-8 lg:py-20">
             <h3 className="text-[40px] text-center max-w-[416px] font-nimbus 3xl:max-w-[700px] 3xl:text-6xl">
-              Calcula tus ganancias potenciales
+              Tarifas promedio en el mercado legal
             </h3>
             <p className="text-lg text-center">
               Encuentra la referencia perfecta para tu caso.
@@ -409,9 +410,24 @@ const HomeMain: React.FC<HomeMainProps> = ({
             <h2 className="text-6xl font-bold 3xl:text-7xl mb-4">
               {getPrice(sliderValue[0], totalPaid)}
             </h2>
-            <Link href="#" className="underline 3xl:text-xl text-[#666666]">
-              ¿Cómo calculamos?
-            </Link>
+            <Popover.Root>
+              <Popover.Trigger asChild>
+                <Button variant={"link"} className="underline 3xl:text-xl text-[#666666]">
+                  ¿Cómo calculamos?
+                </Button>
+              </Popover.Trigger>
+              
+              <Popover.Portal>
+                <Popover.Content 
+                  className="bg-white text-sm text-gray-700 p-4 rounded-lg shadow-lg w-96"
+                  side="top" // Puedes ajustar la posición
+                  align="center"
+                >
+                  Las tarifas promedio presentadas se basan en una encuesta anónima realizada a abogados del Perú y están diseñadas para brindarte una referencia sobre los ingresos potenciales en el mercado legal. Los ingresos reales pueden variar según las particularidades de cada caso, tu experiencia profesional y tus clientes. Según esta encuesta, los factores que podrían incrementar las tarifas son: Urgencia del caso, especialización requerida y volumen de trabajo estimado.
+                  <Popover.Arrow className="fill-white" />
+                </Popover.Content>
+              </Popover.Portal>
+            </Popover.Root>
           </div>
         </div>
       </div>

@@ -175,7 +175,7 @@ const HomeBannerClient = () => {
         <div className="bg-lg-lawyer lg:pl-16 p-4 2xl:p-16 h-full flex lg:w-[44%] items-center w-full">
           <div className="flex flex-col gap-8 py-4 ">
             <h1 className="text-black text-2xl lg:text-[48px] xl:text-[64px] 3xl:text-7xl font-nimbus leading-[1.2]">
-              <span className="italic font-light">Conecta</span>
+              <span className="italic font-light">Conecta </span>
               con clientes que necesitan tu experiencia legal.
             </h1>
             <div className="w-full flex gap-4 relative">
@@ -200,7 +200,7 @@ const HomeBannerClient = () => {
               </Button>
             </div>
             <div className="underline text-lg lg:text-2xl">
-              <Link href="#">Descubre cuanto puedes llegar a ganar</Link>
+              <Link href="#">Descubre cuánto puedes llegar a ganar</Link>
             </div>
           </div>
         </div>

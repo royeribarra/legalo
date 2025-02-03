@@ -52,7 +52,7 @@ const HomeFaq = () => {
               ¿Cuánto tiempo tarda en encontrar un abogado?
             </AccordionTrigger>
             <AccordionContent className="text-base">
-              En cuanto publicas tu caso, los abogados empiezan a postular.
+              Tan pronto publicas tu caso, los abogados empiezan a postular.
               Puedes recibir propuestas en pocas horas y contratar a un abogado
               en menos de un día o máximo 48 horas. (Aún no cierro esta
               respuesta).

@@ -162,7 +162,7 @@ const HomeBannerClient = () => {
           <div className="flex flex-col gap-8 py-4 ">
             <h1 className="text-black text-2xl lg:text-[48px] xl:text-[60px] 3xl:text-7xl font-nimbus leading-[1.2]">
               <span className="italic font-light"> Simplificamos</span> la
-              contratación de tu abogado, donde y cuándo lo necesites
+              contratación de tu abogado, dónde y cuándo lo necesites
             </h1>
             <div className="w-full flex gap-4 relative">
               <Input
@@ -187,7 +187,7 @@ const HomeBannerClient = () => {
             </div>
             <div className="underline text-lg lg:text-2xl">
               <Link href="#calculo-ahorros">
-                Descubre cuanto puedes llegar a ahorrar
+                Descubre cuánto puedes llegar a ahorrar
               </Link>
             </div>
           </div>
