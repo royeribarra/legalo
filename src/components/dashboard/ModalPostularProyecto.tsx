@@ -83,11 +83,11 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
   const [impuesto, setImpuesto] = useState<number>(0); 
   const [totalRecibido, setTotalRecibido] = useState<number>(0);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [uploadedFile, setUploadedFile] = useState<{ nombre: string; tipo: string; contenido: string } | null>(null);
+  const [uploadedFile, setUploadedFile] = useState<{ nombre: string; tipo: string; contenido: File } | null>(null);
   const [uploadedVideo, setUploadedVideo] = useState<{
     nombre: string;
     tipo: string;
-    contenido: string;
+    contenido: File;
   } | null>(null);
 
   const nextStep = async () => {
@@ -138,18 +138,33 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    handleFileUpload(
-      event,
-      (fileData) => {
-        setUploadedFile({
-          nombre: fileData.name,       // Cambié 'name' a 'nombre'
-          tipo: fileData.type,         // Cambié 'type' a 'tipo'
-          contenido: fileData.content, // Cambié 'content' a 'contenido'
-        });
-      },
-      ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"], // DOC, DOCX, PDF
-      2 * 1024 * 1024 // Tamaño máximo: 2 MB
-    );
+    const selectedFile = event.target.files?.[0];
+    const validTypes = [
+      "application/pdf",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ];
+    const fileSizeLimit = 5 * 1024 * 1024; // 5 MB
+
+    if (!selectedFile) return;
+
+    // Validar tipo y tamaño del archivo
+    if (!validTypes.includes(selectedFile.type)) {
+      alert(`Formato de archivo no válido. Solo se permiten: ${validTypes.join(", ")}.`);
+      return;
+    }
+
+    if (selectedFile.size > fileSizeLimit) {
+      alert(`El archivo debe pesar menos de ${(fileSizeLimit / 1024 / 1024).toFixed(2)} MB.`);
+      return;
+    }
+
+    // Guardamos el archivo en el estado
+    setUploadedFile({
+      nombre: selectedFile.name,
+      tipo: selectedFile.type,
+      contenido: selectedFile, // Guardamos el archivo directamente en 'contenido'
+    });
   };
 
   const handleClick = () => {
@@ -163,19 +178,31 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
   };
 
   const handleVideoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    handleFileUpload(
-      event,
-      (fileData) => {
-        // Guardamos el archivo en el estado con el formato adecuado.
-        setUploadedVideo({
-          nombre: fileData.name,
-          tipo: fileData.type,
-          contenido: fileData.content
-        });
-      },
-      ["video/mp4", "video/avi", "video/mov"], // Tipos permitidos de video
-      10 * 1024 * 1024 // Tamaño máximo: 10 MB
-    );
+    const selectedFile = event.target.files?.[0];
+
+    if (selectedFile) {
+      // Verificar duración y tamaño del video
+      const videoUrl = URL.createObjectURL(selectedFile);
+      const video = document.createElement("video");
+
+      video.src = videoUrl;
+      video.onloadedmetadata = () => {
+        const duration = video.duration;
+        const sizeInMB = selectedFile.size / (1024 * 1024);
+
+        if (duration > 60) {
+          setUploadedVideo(null);
+        } else if (sizeInMB > 10) {
+          setUploadedVideo(null);
+        } else {
+          setUploadedVideo({
+            nombre: selectedFile.name,
+            tipo: selectedFile.type,
+            contenido: selectedFile,
+          });
+        }
+      };
+    }
   };
 
   const handlePrecioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -198,11 +225,11 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
     aplicacionId: number,
     nombreArchivo: string
   ) => {
-    const archivoBlob = base64ToFile(archivo.contenido, archivo.tipo, archivo.nombre);
+    // const archivoBlob = base64ToFile(archivo.contenido, archivo.tipo, archivo.nombre);
     const body = {
       nombreArchivo,
       aplicacionId,
-      file: archivoBlob,
+      file: archivo.contenido,
       folder: "aplicaciones"
     };
 
