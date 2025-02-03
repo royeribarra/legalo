@@ -6,7 +6,7 @@ export default class PagoService extends MainService {
   }
 
   public async realizarPago(
-    pagoData: { ofertaId: number; monto: number, clienteId: number, aplicacionId: number, operacion: string }
+    pagoData: { ofertaId?: number; monto: number, clienteId?: number, aplicacionId?: number, operacion: string, trabajoId?: number }
   ): Promise<any> {
     return this.post(`/create`, pagoData);
   }

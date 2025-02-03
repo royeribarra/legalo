@@ -132,7 +132,7 @@ const NosotrosPage = () => {
         </div>
         <div className="lg:w-[45%]">
           <Image
-            src="/assets/img-nosotros-2.jpg"
+            src="/assets/images/img-nosotros-2.webp"
             alt="img"
             width={800}
             height={450}

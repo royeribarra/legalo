@@ -134,7 +134,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
               </div>
               <div className="w-full h-auto flex justify-center ">
                 <Image
-                  src="/assets/img-1-register.webp"
+                  src="/assets/images/pasos-publicacion/abogado/paso-1.png"
                   alt="Regístrate"
                   width={107}
                   height={107}
@@ -158,7 +158,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
               </div>
               <div className="w-full h-auto flex justify-center ">
                 <Image
-                  src="/assets/img-2-publicar.webp"
+                  src="/assets/images/pasos-publicacion/abogado/paso-2.png"
                   alt="Regístrate"
                   width={107}
                   height={107}
@@ -182,7 +182,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
               </div>
               <div className="w-full h-auto flex justify-center ">
                 <Image
-                  src="/assets/img-3-export.webp"
+                  src="/assets/images/pasos-publicacion/abogado/paso-3.png"
                   alt="Regístrate"
                   width={107}
                   height={107}
@@ -206,7 +206,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
               </div>
               <div className="w-full h-auto flex justify-center ">
                 <Image
-                  src="/assets/img-4-contrata.webp"
+                  src="/assets/images/pasos-publicacion/abogado/paso-4.png"
                   alt="Regístrate"
                   width={107}
                   height={107}
@@ -230,7 +230,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
               </div>
               <div className="w-full h-auto flex justify-center ">
                 <Image
-                  src="/assets/img-5-resuelve.webp"
+                  src="/assets/images/pasos-publicacion/abogado/paso-5.png"
                   alt="Regístrate"
                   width={107}
                   height={107}
@@ -254,7 +254,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
               </div>
               <div className="w-full h-auto flex justify-center ">
                 <Image
-                  src="/assets/img-6-recibe.webp"
+                  src="/assets/images/pasos-publicacion/abogado/paso-6.png"
                   alt="Regístrate"
                   width={107}
                   height={107}

@@ -36,7 +36,7 @@ async function getTrabajos(){
 
   useEffect(()=>{
     getTrabajos();
-  }, []);
+  }, [token?.cliente?.id]);
 
   return(
     <div className="flex flex-col gap-8 flex-1 mt-12">

@@ -3,15 +3,18 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { ITrabajoBack } from "@/interfaces/Trabajo.interface";
+import ModalPago from "./Cliente/ModalPago";
 
 interface TrabajoItemProps {
   tipe: string;
-  trabajo: any;
+  trabajo: ITrabajoBack;
 }
 
 const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo }) => {
+  console.log(trabajo)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newProgress, setNewProgress] = useState<number>(trabajo.progreso);
+  const [openModalPago, setOpenModalPago] = useState(false);
   const whatsappNumber = "51939784580";
 
   const handleOpenModal = () => {
@@ -26,6 +29,14 @@ const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo }) => {
     // Aquí iría la lógica para guardar el progreso
     console.log("Nuevo progreso guardado:", newProgress);
     setIsModalOpen(false);
+  };
+
+  const hideModalPagoDetalle = () => {
+    setOpenModalPago(false);
+  };
+
+  const showModalPagoDetalle = () => {
+    setOpenModalPago(true);
   };
 
   return (
@@ -53,7 +64,7 @@ const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo }) => {
           <div className="bg-green-500 h-4" style={{ width: `${trabajo.progreso}%` }}></div>
         </div>
         <p>{trabajo.progreso}% Completado</p>
-        <Button onClick={handleOpenModal}>Registrar Progreso</Button>
+        <Button onClick={handleOpenModal} className="mt-2">Registrar Progreso</Button>
       </div>
       
       {/* Tabla de Pagos */}
@@ -76,6 +87,7 @@ const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo }) => {
               ))}
             </tbody>
           </table>
+          <Button onClick={showModalPagoDetalle} className="mt-2">Registrar Pago</Button>
         </div>
       )}
 
@@ -111,7 +123,12 @@ const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo }) => {
           </div>
         </div>
       )}
-
+      <ModalPago 
+        isOpen={openModalPago}
+        onClose={hideModalPagoDetalle}
+        aplicacionId={trabajo.aplicacion.id}
+        trabajoId={trabajo.id}
+      />
     </div>
   );
 };

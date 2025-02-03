@@ -46,116 +46,115 @@ const HomeBannerClient = () => {
     return () => clearInterval(interval); // Limpia el intervalo al desmontar
   }, []);
 
-  const carouselItems = [
+  const dataServices = [
     {
-      CardTitle: "Civil",
-      CardDescription:
-        "¿Necesitas revisar o firmar un contrato, asegurar la compra o alquiler de una propiedad o con el trámite de una herencia familiar?",
-      ImageSrc: "/icos/ico-d-civil.png",
+      id: 1,
+      nombre: "Abogado Civil",
+      descripcion: "¿Necesitas revisar o firmar un contrato, asegurar la compra o alquiler de una propiedad o con el trámite de una herencia familiar?",
+      imagen: "/civil.svg"
     },
     {
-      CardTitle: "Penal",
-      CardDescription:
-        "¿Te enfrentas a un juicio penal, necesitas asesoría en una investigación policial o quieres conocer tus derechos ante una detención?",
-      ImageSrc: "/icos/ico-d-penal.png",
+      id: 2,
+      nombre: "Abogado Penalista",
+      descripcion: "¿Te enfrentas a un juicio penal, necesitas asesoría en una investigación policial o quieres conocer tus derechos ante una detención?",
+      imagen: "/penalista.svg"
     },
     {
-      CardTitle: "Laboral",
-      CardDescription:
-        "¿Tienes problemas con un contrato de trabajo, fuiste despedido injustamente, necesitas asesoría en una inspección de SUNAFIL o sobre derechos laborales",
-      ImageSrc: "/icos/ico-d-laboral.png",
+      id: 3,
+      nombre: "Abogado Laboral",
+      descripcion: "¿Tienes problemas con un contrato de trabajo, fuiste despedido injustamente, necesitas asesoría en una inspección de SUNAFIL o sobre derechos laborales, como maternidad o acoso?",
+      imagen: "/laboral.svg"
     },
     {
-      CardTitle: "Procesalista",
-      CardDescription:
-        "¿Quieres presentar una demanda, necesitas ayuda para defenderte en un proceso judicial, o necesitas orientación en el seguimiento de tu caso judicial?",
-      ImageSrc: "/icos/ico-d-procesalista.png",
+      id: 4,
+      nombre: "Abogado Procesalista",
+      descripcion: "¿Quieres presentar una demanda, necesitas ayuda para defenderte en un proceso judicial, o necesitas orientación en el seguimiento de tu caso judicial?",
+      imagen: "/procesalista.svg"
     },
     {
-      CardTitle: "Administrativo",
-      CardDescription:
-        "¿Necesitas apoyo para gestionar trámites con entidades públicas, defenderte de una sanción o multa o resolver problemas con permisos y licencias?",
-      ImageSrc: "/icos/ico-d-administrativo.png",
+      id: 5,
+      nombre: "Abogado Administrativo",
+      descripcion: "¿Necesitas apoyo para gestionar trámites con entidades públicas, defenderte de una sanción o multa o resolver problemas con permisos y licencias?",
+      imagen: "/administrativo.svg"
     },
     {
-      CardTitle: "de Familia",
-      CardDescription:
-        "¿Estás atravesando un divorcio, buscas custodia compartida, o necesitas asesoría sobre pensiones alimenticias y acuerdos familiares?",
-      ImageSrc: "/icos/ico-d-familia.png",
+      id: 6,
+      nombre: "Abogado de Familia",
+      descripcion: "¿Estás atravesando un divorcio, buscas custodia compartida, o necesitas asesoría sobre pensiones alimenticias y acuerdos familiares?",
+      imagen: "/familia.svg"
     },
     {
-      CardTitle: "Tributario",
-      CardDescription:
-        "¿Necesitas ayuda con la declaración de impuestos, o defensa en fiscalización de SUNAT o en un litigio tributario?",
-      ImageSrc: "/icos/ico-d-tributario.png",
+      id: 7,
+      nombre: "Abogado Tributario",
+      descripcion: "¿Necesitas ayuda con la declaración de impuestos, o defensa en fiscalización de SUNAT o en un litigio tributario?",
+      imagen: "/tributario.svg"
     },
     {
-      CardTitle: "de Migraciones",
-      CardDescription:
-        "¿Necesitas ayuda con trámites de residencia, permisos de trabajo, o enfrentas problemas de inmigración?",
-      ImageSrc: "/icos/ico-d-migraciones.png",
+      id: 8,
+      nombre: "Abogado de Migraciones",
+      descripcion: "¿Necesitas ayuda con trámites de residencia, permisos de trabajo, o enfrentas problemas de inmigración?",
+      imagen: "/migraciones.svg"
     },
     {
-      CardTitle: "de Poteccion al Consumidor",
-      CardDescription:
-        "¿Te vendieron un producto defectuoso, no cumplieron con la garantía o te han hecho cobros indebidos?",
-      ImageSrc: "/icos/ico-d-consumidor.png",
+      id: 9,
+      nombre: "Abogado de Protección al Consumidor",
+      descripcion: "¿Te vendieron un producto defectuoso, no cumplieron con la garantía o te han hecho cobros indebidos?",
+      imagen: "/proteccion-al-consumidor.svg"
     },
     {
-      CardTitle: "Empresarial",
-      CardDescription:
-        "¿Planeas constituir una empresa, necesitas revisar contratos comerciales o estás involucrado en una fusión o disputa entre socios?",
-      ImageSrc: "/icos/ico-d-empresarial.png",
+      id: 10,
+      nombre: "Abogado Empresarial",
+      descripcion: "¿Planeas constituir una empresa, necesitas revisar contratos comerciales o estás involucrado en una fusión o disputa entre socios?",
+      imagen: "/empresarial.svg"
     },
     {
-      CardTitle: "Ambiental",
-      CardDescription:
-        "¿Necesitas asesoría sobre normativa ambiental, enfrentas problemas de permisos, o necesitas defensa en casos de contaminación?",
-      ImageSrc: "/icos/ico-d-ambiental.png",
+      id: 11,
+      nombre: "Abogado Ambiental",
+      descripcion: "¿Necesitas asesoría sobre normativa ambiental, enfrentas problemas de permisos, o necesitas defensa en casos de contaminación?",
+      imagen: "/ambiental.svg"
     },
     {
-      CardTitle: "de Arbitraje y Resolución de Conflico",
-      CardDescription:
-        "¿Tu contrato requiere resolver un conflicto ante un árbitro o tribunal arbitral o estás considerando iniciar una mediación o demanda arbitral?",
-      ImageSrc: "/icos/ico-d-arbitraje.png",
+      id: 12,
+      nombre: "Abogado de Arbitraje y Resolución de Conflicto",
+      descripcion: "¿Tu contrato requiere resolver un conflicto ante un árbitro o tribunal arbitral o estás considerando iniciar una mediación o demanda arbitral?",
+      imagen: "/arbitraje-resolucion-conflictos.svg"
     },
     {
-      CardTitle: "de la Competencia",
-      CardDescription:
-        "¿Te han denunciado por prácticas anticompetitivas, o buscas cumplir con las normativas de competencia y evitar sanciones?",
-      ImageSrc: "/icos/ico-d-competencia2.png",
+      id: 13,
+      nombre: "Abogado de la Competencia",
+      descripcion: "¿Te han denunciado por prácticas anticompetitivas, o buscas cumplir con las normativas de competencia y evitar sanciones?",
+      imagen: "/competencia.svg"
     },
     {
-      CardTitle: "de Competencia Desleal",
-      CardDescription:
-        "¿Necesitas proteger tu marca de publicidad engañosa o tu negocio enfrenta prácticas desleales?",
-      ImageSrc: "/icos/ico-d-compe-desleal.png",
+      id: 14,
+      nombre: "Abogado de Competencia Desleal",
+      descripcion: "¿Necesitas proteger tu marca de publicidad engañosa o tu negocio enfrenta prácticas desleales?",
+      imagen: "/competencia-desleal.svg"
     },
     {
-      CardTitle: "de Compliance",
-      CardDescription:
-        "¿Necesitas proteger tu marca de publicidad engañosa o tu negocio enfrenta prácticas desleales?",
-      ImageSrc: "/icos/ico-d-compliance.png",
+      id: 15,
+      nombre: "Abogado de Compliance",
+      descripcion: "¿Necesitas asesoría para cumplir con normativas legales, prevenir riesgos empresariales o implementar políticas de ética en tu organización?",
+      imagen: "/compliance.svg"
     },
     {
-      CardTitle: "de Propiedad Intelectual",
-      CardDescription:
-        "¿Quieres registrar una marca, proteger una invención o necesitas ayuda para defenderte de infracciones a tus derechos de autor?",
-      ImageSrc: "/icos/ico-d-intelectual.png",
-    },
-
-    {
-      CardTitle: "de Tecnología y Datos",
-      CardDescription:
-        "¿Necesitas asesoría para proteger datos personales, negociar contratos de software, o resolver problemas de ciberseguridad?",
-      ImageSrc: "/icos/ico-d-tecnologia.png",
+      id: 16,
+      nombre: "Abogado de Propiedad Intelectual",
+      descripcion: "¿Quieres registrar una marca, proteger una invención o necesitas ayuda para defenderte de infracciones a tus derechos de autor?",
+      imagen: "/propiedad-intelectual.svg"
     },
     {
-      CardTitle: "de Salud",
-      CardDescription:
-        "¿Enfrentas un conflicto de mala praxis médica, necesitas asesoría en seguros de salud, o buscas defender tus derechos como paciente?",
-      ImageSrc: "/icos/ico-d-salud.png",
+      id: 17,
+      nombre: "Abogado de Tecnología y Datos",
+      descripcion: "¿Necesitas asesoría para proteger datos personales, negociar contratos de software, o resolver problemas de ciberseguridad?",
+      imagen: "/tecnologia-de-datos.svg"
     },
+    {
+      id: 18,
+      nombre: "Abogado de Salud",
+      descripcion: "¿Enfrentas un conflicto de mala praxis médica, necesitas asesoría en seguros de salud, o buscas defender tus derechos como paciente?",
+      imagen: "/salud.svg"
+    }
   ];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -207,8 +206,8 @@ const HomeBannerClient = () => {
         <div
           className={`${
             isImageOne
-              ? "bg-[url('/assets/images/image-banner-lawyer.jpg')]"
-              : "bg-[url('/assets/images/image-banner-lawyer2.jpg')]"
+              ? "bg-[url('/assets/images/image-banner-lawyer.webp')]"
+              : "bg-[url('/assets/images/image-banner-lawyer2.webp')]"
           } bg-top bg-cover bg-no-repeat w-full h-full lg:block border-l border-l-black lg:w-[56%] min-h-[140px] lg:min-h-[inherit]`}
         ></div>
         {/* <div className="hidden lg:block absolute lg:left-[30vw] xl:left-[38vw] 2xl:left-[30vw] bottom-[24vh]">
@@ -238,7 +237,7 @@ const HomeBannerClient = () => {
             </div>
             <div className="w-[60vw] lg:w-[84%] flex flex-none lg:ml-[1px]">
               <CarouselContent className="flex flex-row m-0 w-[60vw] lg:w-auto">
-                {carouselItems.map((item, index) => (
+                {dataServices.map((item, index) => (
                   <CarouselItem
                     key={index}
                     className=" lg:w-1/3 lg:flex-none border-r border-black min-h-[118px] flex items-center m-0 p-0"
@@ -246,7 +245,7 @@ const HomeBannerClient = () => {
                     <Card className="p-4 border-none flex gap-2 lg:gap-4  lg:items-center flex-col lg:flex-row">
                       <div className="flex items-center justify-center flex-none">
                         <Image
-                          src={item.ImageSrc}
+                          src={`/assets/images/especialidades/${item.imagen}`}
                           alt="icon"
                           width={60}
                           height={60}
@@ -254,10 +253,10 @@ const HomeBannerClient = () => {
                       </div>
                       <CardHeader className="p-0 space-y-0">
                         <CardTitle className="text-base lg:text-lg font-nimbus">
-                          Derecho <i>{item.CardTitle}</i>
+                          Derecho <i>{item.nombre}</i>
                         </CardTitle>
                         <CardDescription className="line-clamp-3 lg:text-sm text-xs">
-                          {item.CardDescription}
+                          {item.descripcion}
                         </CardDescription>
                       </CardHeader>
                     </Card>

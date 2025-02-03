@@ -13,7 +13,7 @@ import { useLoader } from "@/contexts/loaderContext";
 import { IAbogadoBack } from "@/interfaces/Abogado.interface";
 import ModalAbogadoDetalle from "./Cliente/ModalAbogadoDetalle";
 import { IAplicacionBack } from "@/interfaces/Aplicacion.interface";
-import ModalPagoOferta from "./abogado/ModalPagoOferta";
+import ModalPagoOferta from "./Cliente/ModalPago";
 
 const AplicacionesPorAceptar = () => {
   const { token } = useAuth();
