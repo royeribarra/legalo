@@ -16,7 +16,7 @@ const CompleteProfileLawyerPage = () => {
       const verifyActivationCode = async () => {
         try {
           const response = await fetch(
-            `${process.env.BASE_APP_API_URL}/usuarios/verify-activation`,
+            `${process.env.BASE_APP_API_URL}/usuarios/validar-cuenta`,
             {
               method: "POST",
               headers: {
