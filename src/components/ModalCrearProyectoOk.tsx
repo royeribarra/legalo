@@ -29,20 +29,19 @@ const ModalCrearProyectoOk: React.FC<ModalPostulacionOkProps> = ({
             height={214}
           />
           <h2 className="text-3xl lg:text-[40px] font-nimbus text-center">
-            ¿Qué sigue después de publicar un proyecto?
+            ¿Qué sigue después de publicar un caso?
           </h2>
           <p className="text-center">
             Comenzarás a recibir propuestas y también podrás invitar a abogados
-            a unirse a tu proyecto. No se aplicarán cargos hasta que los
+            a unirse a tu caso. No se aplicará cargo hasta que los
             contrates.
           </p>
 
           <div className="flex gap-4">
-            // te tiene que llevar a encargos
-            <Button>Editar proyecto</Button>
+            <Button>Editar caso</Button>
             <Link href={"/dashboard/cliente"}>
               <Button variant={"outline"} className="border-black">
-                Publicar proyecto
+                Publicar caso
               </Button>
             </Link>
           </div>
