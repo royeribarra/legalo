@@ -19,17 +19,48 @@ const PublicarPageFour = () => {
   const { state, updateState } = useOferta();
   const [selectedServices, setSelectedServices] = useState<number[]>([]);
   const [serviceList, setServiceList] = useState<IServicio[]>([]);
-  // const serviceItems = [
-  //   { id: 1, name: "No estoy seguro del servicio a escoger" },
-  //   { id: 2, name: "Asesoría legal" },
-  //   { id: 3, name: "Consultoría" },
-  //   { id: 4, name: "Patrocinio en poder judicial" },
-  //   { id: 5, name: "Patrocinio en procedimiento administrativo" },
-  //   { id: 6, name: "Redacción de Documentos Legales" },
-  //   { id: 7, name: "Cumplimiento Regulatorio" },
-  //   { id: 8, name: "Mediación" },
-  //   { id: 9, name: "Prácticas pre-profesionales" },
-  // ];
+  const serviceItems = [
+    { id: 1, 
+      nombre: "No estoy seguro del servicio a escoger",
+      descripcion: "Recibe orientación para identificar el tipo de servicio legal que necesitas."
+    },
+    { id: 2, 
+      nombre: "Consultoría/ Asesoría legal",
+      descripcion: "Consulta con un abogado para aclarar dudas legales y obtener recomendaciones."
+    },
+    { id: 3, 
+      nombre: "Patrocinio en Poder judicial",
+      descripcion: "Representación en procesos judiciales ante el Poder Judicial."
+    },
+    { id: 4, 
+      nombre: "Defensa y trámites ante entidades públicas",
+      descripcion: "Representación y gestión en trámites y procesos ante entidades públicas."
+    },
+    { 
+      id: 5, 
+      nombre: "Redacción de Documentos Legales",
+      descripcion: "Elaboración de contratos, demandas y otros documentos jurídicos."
+    },
+    { id: 6, 
+      nombre: "Cumplimiento regulatorio",
+      descripcion: "Asegura que tus actividades cumplan con la normativa vigente."
+    },
+    { 
+      id: 7, 
+      nombre: "Mediación/Conciliación",
+      descripcion: "Representación y/o asistencia a audiencias de conciliación o mediación."
+    },
+    { 
+      id: 8, 
+      nombre: "Prácticas preprofesionales y profesionales",
+      descripcion: "Asistencia de estudiantes o bachilleres en tareas legales supervisadas."
+    },
+    { 
+      id: 9, 
+      nombre: "Investigación legal",
+      descripcion: "Búsqueda, análisis y síntesis de información jurídica por estudiantes o bachilleres."
+    },
+  ];
 
   // Sincronizar estado inicial desde el contexto
   useEffect(() => {
@@ -96,7 +127,7 @@ const PublicarPageFour = () => {
         </h1>
         <p className="mb-6 lg:text-lg">Puedes escoger max 2*</p>
         <div className="grid grid-cols-2 lg:grid-cols-3 lg:grid-rows-3 gap-4">
-          {serviceList.map((item) => (
+          {serviceItems.map((item) => (
             <div
               key={item.id}
               className={`flex flex-col gap-4 p-4 border border-black rounded-[10px] ${
@@ -122,8 +153,7 @@ const PublicarPageFour = () => {
                 {item.nombre}
               </label>
               <p className="text-sm">
-                Recibe orientación para identificar el tipo de servicio legal
-                que necesitas.
+                {item.descripcion}
               </p>
             </div>
           ))}
