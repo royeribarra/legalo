@@ -101,26 +101,32 @@ const CompleteProfileLawyerPage: React.FC = () => {
       setLoading(true);
       if (!archivoImagen) {
         showToast("error", "Archivo Imagen", "Sube una imagen");
+        setLoading(false);
         return;
       }
       if (!archivoVideo) {
         showToast("error", "Archivo Video", "Sube un video");
+        setLoading(false);
         return;
       }
       if (!archivoCv) {
         showToast("error", "Archivo CV", "Sube un archivo");
+        setLoading(false);
         return;
       }
       if (!archivoCul) {
         showToast("error", "Archivo CUL", "Sube un archivo");
+        setLoading(false);
         return;
       }
       if (!stateAbogado.servicios.length) {
         showToast("error", "Servicios", "Selecciona una opción como mínimo.");
+        setLoading(false);
         return;
       }
       if (!stateAbogado.industrias.length) {
         showToast("error", "Industrias", "Selecciona una opción como mínimo.");
+        setLoading(false);
         return;
       }
 
@@ -130,6 +136,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
           "Habilidades Blandas",
           "Selecciona una opción como mínimo."
         );
+        setLoading(false);
         return;
       }
 
@@ -139,6 +146,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
           "Habilidades Duras",
           "Selecciona una opción como mínimo."
         );
+        setLoading(false);
         return;
       }
 
@@ -236,6 +244,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
           setTriger("tab2");
           setStepNumber(stepNumber + 1);
         }
+        setLoading(false);
         break;
       case 2:
         if (!stateAbogado.estudios.length) {
@@ -244,6 +253,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
           setTriger("tab3");
           setStepNumber(stepNumber + 1);
         }
+        setLoading(false);
         break;
       case 3:
         if (
@@ -260,6 +270,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
           setTriger("tab4");
           setStepNumber(stepNumber + 1);
         }
+        setLoading(false);
         break;
       default:
         break;
@@ -385,8 +396,8 @@ const CompleteProfileLawyerPage: React.FC = () => {
         </div>
         <UploadVideo 
           uploadFileVideo={handleFileVideo}
-          campo={"archivo_cul"}
-          archivoVideo={archivoCul}
+          campo={"archivo_video"}
+          archivoVideo={archivoVideo}
           removeFileVideo={removeFileVideo}
         />
       </div>

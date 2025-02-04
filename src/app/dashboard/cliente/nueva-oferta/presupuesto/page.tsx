@@ -147,12 +147,12 @@ const PublicarPageSeven = () => {
                 />
               </div>
             </div>
-            <div className="flex items-center gap-2 my-4">
+            {/* <div className="flex items-center gap-2 my-4">
               <IcoInfo size={16} color="#666666" />
               <p className="text-[#666666]">
                 Te mostraremos abogados acorde al rango ingresado.
               </p>
-            </div>
+            </div> */}
           </>
         )}
         {selected === "monto-fijo" && (

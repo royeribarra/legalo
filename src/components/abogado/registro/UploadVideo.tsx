@@ -4,7 +4,7 @@ import { Button } from "../../ui/button";
 
 type FileUploadProps = {
   uploadFileVideo: (fileData: { nombre: string; tipo: string; contenido: File }) => void;
-  campo: "archivo_cul" | "archivo_cv" | "archivo_imagen";
+  campo: "archivo_cul" | "archivo_cv" | "archivo_imagen" | "archivo_video";
   archivoVideo?: { nombre: string; tipo: string; contenido: File } | null;
   removeFileVideo: () => void;
 };
