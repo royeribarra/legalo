@@ -23,15 +23,21 @@ const { setLoading } = useLoader();
 const [trabajos, setTrabajos] = useState<ITrabajoBack[]>([]);
 
 async function getTrabajos(){
-  setLoading(true);
-  if(token?.cliente?.id){
-    const data = {
-      clienteId: token.cliente.id
+    setLoading(true);
+    try {
+      if(token?.cliente?.id){
+        const data = {
+          clienteId: token.cliente.id
+        }
+        const response = await clienteService.getTrabajos(data);
+        setTrabajos(response.data);
+        setLoading(false);
+      }
+    } catch (error) {
+    } finally {
+      setLoading(false);
     }
-    const response = await clienteService.getTrabajos(data);
-    setTrabajos(response.data);
-    setLoading(false);
-    }
+  
   }
 
   useEffect(()=>{
