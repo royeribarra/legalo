@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ITrabajoBack } from "@/interfaces/Trabajo.interface";
 import ModalPago from "./Cliente/ModalPago";
+import { trabajoService } from "@/services";
 
 interface TrabajoItemProps {
   tipe: string;
@@ -25,9 +26,19 @@ const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo }) => {
     setIsModalOpen(false);
   };
 
-  const handleSaveProgress = () => {
+  const handleSaveProgress = async () => {
     // Aquí iría la lógica para guardar el progreso
     console.log("Nuevo progreso guardado:", newProgress);
+    try {
+      const data = {
+        trabajoId: trabajo.id,
+        progreso: newProgress
+      };
+      const response = await trabajoService.updateTrabajo(data);
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
     setIsModalOpen(false);
   };
 

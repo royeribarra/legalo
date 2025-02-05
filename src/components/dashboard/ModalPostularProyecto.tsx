@@ -121,7 +121,7 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
       const data = {
         abogadoId: token?.abogado?.id,
         ofertaId: Number(proyectoId),
-        salarioEsperado: totalRecibido
+        salarioEsperado: precio
       };
       const response = await abogadoService.postularOferta(data);
       if(response.state){

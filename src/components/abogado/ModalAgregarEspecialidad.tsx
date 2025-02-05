@@ -225,6 +225,7 @@ function ModalAgregarEspecialidad({
           <Button
             className="w-[190px] h-12 rounded-[10px] border border-gray-300"
             onClick={() => setShowModal(false)}
+            variant={"destructive"}
           >
             Cancelar
           </Button>
