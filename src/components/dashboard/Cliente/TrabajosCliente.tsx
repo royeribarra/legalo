@@ -43,7 +43,7 @@ import TrabajoItem from "../TrabajoItem";
             <AccordionContent className="flex flex-col gap-4">
               {
                 trabajos.map((trabajo)=>
-                  <TrabajoItem tipe="cotizacionAceptada" trabajo={trabajo} />
+                  <TrabajoItem tipe="cotizacionAceptada" trabajo={trabajo} persona="cliente" />
                 )
               }
             </AccordionContent>
