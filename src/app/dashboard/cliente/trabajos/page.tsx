@@ -37,7 +37,6 @@ async function getTrabajos(){
     } finally {
       setLoading(false);
     }
-  
   }
 
   useEffect(()=>{
@@ -54,7 +53,11 @@ async function getTrabajos(){
           <AccordionContent className="flex flex-col gap-4">
             {
               trabajos.map((trabajo)=>
-                <TrabajoItem tipe="cotizacionAceptada" trabajo={trabajo} />
+                <TrabajoItem
+                  tipe="cotizacionAceptada"
+                  trabajo={trabajo}
+                  persona="cliente"
+                />
               )
             }
           </AccordionContent>

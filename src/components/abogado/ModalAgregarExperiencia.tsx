@@ -311,7 +311,7 @@ function ModalAgregarExperiencia({
               <div className="flex justify-end gap-6 border-t-[1px] border-black pt-4">
                 <Button
                   type="submit"
-                  variant="outline"
+                  variant="destructive"
                   className="w-[190px] h-12 rounded-[10px]"
                   onClick={cancelar}
                 >

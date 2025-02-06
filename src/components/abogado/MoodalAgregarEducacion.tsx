@@ -17,6 +17,12 @@ import { X as IconX } from "lucide-react";
 import { useEffect, useState } from "react";
 import { RegistroAbogadoState } from "@/contexts/registroAbogadoContext";
 import { IEstudio } from "@/interfaces/Estudio.interface";
+import type { DatePickerProps } from 'antd';
+import { DatePicker } from "antd";
+import type { Dayjs } from 'dayjs';
+import dayjs from "dayjs";
+import "dayjs/locale/es";
+dayjs.locale("es");
 
 const formSchema = z.object({
   desde_fecha: z.string().min(2, {
@@ -156,6 +162,20 @@ function ModalAgregarEducacion({
     }
   }, [educacionSelected]);
 
+  const handleChangeStartDate: DatePickerProps<Dayjs[]>['onChange'] = (date, dateString) => {
+    console.log(date, dateString);
+    if (typeof dateString === "string") {
+      form.setValue("desde_fecha", dateString); // Establecemos el valor como string
+    }
+  };
+
+  const handleChangeEndDate: DatePickerProps<Dayjs[]>['onChange'] = (date, dateString) => {
+    console.log(date, dateString);
+    if (typeof dateString === "string") {
+      form.setValue("hasta_fecha", dateString); // Establecemos el valor como string
+    }
+  };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-20 ">
       <div className="bg-white px-6 py-12 lg:p-16 lg:rounded-lg shadow-lg lg:min-w-[970px] relative w-full h-full lg:w-auto lg:h-auto overflow-y-auto">
@@ -179,13 +199,22 @@ function ModalAgregarEducacion({
                         <FormItem>
                           <FormLabel></FormLabel>
                           <FormControl>
-                            <Input
+                            {/* <Input
                               type="month"
                               className="border border-black rounded-[10px] h-12"
                               placeholder="2024"
                               {...field}
                               disabled={trabajoActualmente ? true : false}
                               max={new Date().toISOString().slice(0, 7)}  // Limita la fecha al mes actual
+                            /> */}
+                            <DatePicker.MonthPicker
+                              className="border border-black rounded-[10px] h-12 w-full"
+                              {...form.register("desde_fecha")}
+                              onChange={handleChangeStartDate}
+                              value={form.getValues("desde_fecha") ? [dayjs(form.getValues("desde_fecha"), "YYYY-MM")] : null}
+                              disabledDate={(current) => current && current > dayjs().endOf("month")}
+                              placeholder="Selecciona un mes"
+                              // format="MMMM [de] YYYY"x
                             />
                           </FormControl>
                           <FormMessage />
@@ -205,7 +234,7 @@ function ModalAgregarEducacion({
                         <FormItem>
                           <FormLabel></FormLabel>
                           <FormControl>
-                            <Input
+                            {/* <Input
                               type="month"
                               className="border border-black rounded-[10px] h-12"
                               placeholder="2024"
@@ -213,6 +242,18 @@ function ModalAgregarEducacion({
                               disabled={trabajoActualmente ? true : false}
                               max={new Date().toISOString().slice(0, 7)}  // Limita la fecha al mes actual
                               min={form.watch('desde_fecha')}  // Asegura que 'hasta_fecha' no sea menor que 'desde_fecha'
+                            /> */}
+                            <DatePicker.MonthPicker
+                              className="border border-black rounded-[10px] h-12 w-full"
+                              {...form.register("hasta_fecha")}
+                              onChange={handleChangeEndDate}
+                              value={form.getValues("hasta_fecha") ? [dayjs(form.getValues("hasta_fecha"), "YYYY-MM")] : null}
+                              disabledDate={(current) => {
+                                const desdeFecha = form.watch("desde_fecha"); // Obtenemos el valor de 'desde_fecha'
+                                return desdeFecha ? current && current.isBefore(dayjs(desdeFecha, "YYYY-MM"), "month") : false;
+                              }}
+                              placeholder="Selecciona un mes"
+                              // format="MMMM [de] YYYY"x
                             />
                           </FormControl>
                           <FormMessage />
@@ -295,7 +336,7 @@ function ModalAgregarEducacion({
               <div className="flex justify-end gap-6 border-t-[1px] border-black pt-4">
                 <Button
                   type="submit"
-                  variant="outline"
+                  variant="destructive"
                   className="w-[190px] h-12 rounded-[10px]"
                   onClick={cancelar}
                 >

@@ -492,13 +492,12 @@ const CompleteProfileLawyerPage: React.FC = () => {
                 <div className="flex justify-between border-b border-gray-600 py-2">
                   <p className="font-bold text-lg">Experiencia*</p>
                   <Button
-                    variant="outline"
+                    variant="secondary"
                     size="sm"
                     className="rounded-full"
                     onClick={() => setShowModalAddExperiencia(true)}
                   >
-                    <Plus size={20} color="black" className="mr-4" /> Sumar
-                    experiencia
+                    <Plus size={20} color="black" className="mr-4" />Sumar experiencia
                   </Button>
                 </div>
                 <p>
@@ -564,13 +563,12 @@ const CompleteProfileLawyerPage: React.FC = () => {
               <div className="flex justify-between border-b border-gray-600 py-2">
                 <p className="font-bold text-lg">Educación*</p>
                 <Button
-                  variant="outline"
+                  variant="secondary"
                   size="sm"
                   className="rounded-full"
                   onClick={() => setShowModalAddEducacion(true)}
                 >
-                  <Plus size={20} color="black" className="mr-4" /> Agregar
-                  estudio
+                  <Plus size={20} color="black" className="mr-4" />Agregar estudio
                 </Button>
               </div>
               <p>

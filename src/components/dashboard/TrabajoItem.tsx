@@ -9,9 +9,10 @@ import { trabajoService } from "@/services";
 interface TrabajoItemProps {
   tipe: string;
   trabajo: ITrabajoBack;
+  persona: 'cliente' | 'abogado';
 }
 
-const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo }) => {
+const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo, persona }) => {
   console.log(trabajo)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newProgress, setNewProgress] = useState<number>(trabajo.progreso);
@@ -67,7 +68,7 @@ const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo }) => {
         <p><strong>Estado:</strong> {trabajo.aplicacion.status}</p>
         <p><strong>Salario Esperado:</strong> ${trabajo.aplicacion.salarioEsperado}</p>
       </div>
-      
+
       {/* Barra de progreso */}
       <div className="border p-4 rounded-md bg-gray-100">
         <h3 className="text-lg font-bold">Progreso</h3>
@@ -75,9 +76,12 @@ const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo }) => {
           <div className="bg-green-500 h-4" style={{ width: `${trabajo.progreso}%` }}></div>
         </div>
         <p>{trabajo.progreso}% Completado</p>
-        <Button onClick={handleOpenModal} className="mt-2">Registrar Progreso</Button>
+        {
+          persona === 'abogado' &&
+          <Button onClick={handleOpenModal} className="mt-2">Registrar Progreso</Button>
+        }
       </div>
-      
+
       {/* Tabla de Pagos */}
       {trabajo.pagos && trabajo.pagos.length > 0 && (
         <div className="border p-4 rounded-md bg-gray-100">
@@ -98,7 +102,10 @@ const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo }) => {
               ))}
             </tbody>
           </table>
-          <Button onClick={showModalPagoDetalle} className="mt-2">Registrar Pago</Button>
+          {
+            persona === 'cliente' &&
+            <Button onClick={showModalPagoDetalle} className="mt-2">Registrar Pago</Button>
+          }
         </div>
       )}
 
@@ -118,7 +125,7 @@ const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo }) => {
               min={0}
               max={100}
             />
-            
+
             {/* Campo para la descripción */}
             <textarea
               className="mt-4 p-2 border rounded w-full"
@@ -134,7 +141,7 @@ const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo }) => {
           </div>
         </div>
       )}
-      <ModalPago 
+      <ModalPago
         isOpen={openModalPago}
         onClose={hideModalPagoDetalle}
         aplicacionId={trabajo.aplicacion.id}
