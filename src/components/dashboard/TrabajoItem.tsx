@@ -83,7 +83,7 @@ const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo, persona }) => 
       </div>
 
       {/* Tabla de Pagos */}
-      {trabajo.pagos && trabajo.pagos.length > 0 && (
+      {trabajo.pagos && (
         <div className="border p-4 rounded-md bg-gray-100">
           <h3 className="text-lg font-bold">Pagos</h3>
           <table className="w-full border-collapse border border-gray-200">
