@@ -12,6 +12,7 @@ const StyledComponentsRegistry = ({ children }: React.PropsWithChildren) => {
     if (isServerInserted.current) {
       return;
     }
+    
     isServerInserted.current = true;
     return (
       <style

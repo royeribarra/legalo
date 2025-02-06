@@ -139,16 +139,19 @@ export default function ModalAbogadoDetalle({ open, abogadoId, onClose }: ModalA
                 </Tabs.Content>
                 <Tabs.Content value="video" className="mt-4">
                   <h2 className="font-bold">Video</h2>
-                  <div>
-                    <video
-                      src={`${process.env.S3_FILE_ROUTE}/${abogado.video_url}` }
-                      controls
-                      width="600"
-                      style={{ border: '1px solid black', borderRadius: '8px' }}
-                    >
-                      Tu navegador no soporta el elemento video.
-                    </video>
-                  </div>
+                  {abogado?.files.find((file)=>file.nombreArchivo==='archivo_video') ? (
+                    <div className="w-[600px] h-[400px] border border-black rounded-lg shadow-lg overflow-hidden">
+                      <video
+                        src={`${process.env.S3_FILE_ROUTE}/${abogado?.files.find((file)=>file.nombreArchivo==='archivo_video')?.filePath}`}
+                        controls
+                        className="w-full h-full object-cover"
+                      >
+                        Tu navegador no soporta el elemento video.
+                      </video>
+                    </div>
+                  ) : (
+                    <p className="text-gray-500">No hay video disponible.</p>
+                  )}
                 </Tabs.Content>
               </Tabs.Root>
             </div>

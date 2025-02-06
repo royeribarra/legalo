@@ -79,7 +79,7 @@ const PublicarPageFour = () => {
       if (checked) {
         if (prevState.length >= 2) {
           showToast("error", "Solo puedes seleccionar hasta 2 servicios.", "");
-          return prevState; // No agregar más si ya hay 2 seleccionados
+          return prevState;
         }
         newSelection = [...prevState, serviceId];
       } else {

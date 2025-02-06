@@ -97,7 +97,7 @@ const ModalPago: React.FC<CheckoutModalProps> = ({
         aplicacionId: aplicacionId,
         trabajoId: trabajoId
       };
-      const response = await pagoService.realizarPago(pagoData);
+      const response = await pagoService.crearPago(pagoData);
       if (response.state) {
         showToast("success", response.message, "");
         onClose();

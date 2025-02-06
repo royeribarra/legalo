@@ -9,6 +9,7 @@ import { ITrabajo } from "./Trabajo.interface";
 export interface IPreguntaOfertaBack {
     id: number;
     pregunta: string;
+    respuesta: string;
     ofertaId: number;
 }
 

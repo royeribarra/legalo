@@ -11,6 +11,7 @@ import { useOferta } from "@/contexts/ofertaContext";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/contexts/toastContext";
 import * as Popover from '@radix-ui/react-popover';
+import { Upload, Trash, Check } from "lucide-react";
 
 const PublicarPageFour = () => {
   const route = useRouter();
@@ -19,43 +20,43 @@ const PublicarPageFour = () => {
   const [fileError, setFileError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  useEffect(() => {
-    if (state.documento) {
-      setFileError(null);
-    }
-  }, [state.documento]);
+  // useEffect(() => {
+  //   if (state.documento) {
+  //     setFileError(null);
+  //   }
+  // }, [state.documento]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
+    const validTypes = [
+      "application/pdf",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "text/plain",
+    ];
+    const fileSizeLimit = 4 * 1024 * 1024;
 
-    if (selectedFile) {
-      const validTypes = [
-        "application/pdf",
-        "application/msword",
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        "text/plain", // TXT
-      ];
+    if (!selectedFile) return;
 
-      if (!validTypes.includes(selectedFile.type)) {
-        setFileError("Formato de archivo no válido. Solo se aceptan PDF, DOC, DOCX y TXT.");
-        return;
-      }
-
-      const fileSizeLimit = 4 * 1024 * 1024; // 4 MB
-      if (selectedFile.size > fileSizeLimit) {
-        setFileError("El archivo debe pesar menos de 4 MB.");
-        return;
-      }
-
-      setFileError(null);
-      updateState({
-        documento: {
-          nombre: selectedFile.name,
-          tipo: selectedFile.type,
-          contenido: selectedFile, // Guardamos el archivo como File
-        },
-      });
+    if (!validTypes.includes(selectedFile.type)) {
+      setFileError("Formato de archivo no válido. Solo se aceptan PDF, DOC, DOCX y TXT.");
+      alert(`Formato de archivo no válido. Solo se permiten: ${validTypes.join(", ")}.`);
+      return;
     }
+
+    if (selectedFile.size > fileSizeLimit) {
+      alert(`El archivo debe pesar menos de ${(fileSizeLimit / 1024 / 1024).toFixed(2)} MB.`);
+      setFileError("El archivo debe pesar menos de 4 MB.");
+      return;
+    }
+    setFileError(null);
+    updateState({
+      documento: {
+        nombre: selectedFile.name,
+        tipo: selectedFile.type,
+        contenido: selectedFile, // Guardamos el archivo como File
+      },
+    });
   };
 
   const removeFile = () => {
@@ -79,6 +80,10 @@ const PublicarPageFour = () => {
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     updateState({ descripcion: event.target.value });
+  };
+
+  const handleClick = () => {
+    fileInputRef.current?.click();
   };
 
   return (
@@ -141,13 +146,19 @@ const PublicarPageFour = () => {
           <p className="lg:text-lg">Documentación</p>
           <div className="border border-black border-dashed p-2 flex flex-col items-center">
             <Image src="/assets/images/ico-upload.png" alt="ico-cv" width={64} height={64} />
-            <input
-              type="file"
-              accept=".pdf,.doc,.docx,.txt"
-              ref={fileInputRef}
-              onChange={handleFileChange}
-              className="mb-2"
-            />
+            <div>
+              <input
+                type="file"
+                accept=".pdf,.doc,.docx,.txt"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                onChange={handleFileChange}
+                className="mb-2"
+              />
+              <Button onClick={handleClick}>
+                Sube tu documento <Upload size={18} color="white" className="ml-2" />
+              </Button>
+            </div>
             {fileError && <p className="text-red-500 text-sm">{fileError}</p>}
             {state.documento && (
               <div className="text-center mt-2">

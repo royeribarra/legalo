@@ -1,4 +1,5 @@
 import { IAbogadoBack } from "./Abogado.interface";
+import { IFileBack } from "./File.interface";
 import { IOfertaBack } from "./Oferta.interface";
 import { ITrabajoBack } from "./Trabajo.interface";
 
@@ -17,4 +18,5 @@ export interface IAplicacionBack {
     salarioEsperado: number;
     abogado: IAbogadoBack;
     trabajo: ITrabajoBack;
+    files: IFileBack[];
 }

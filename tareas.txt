@@ -1,5 +1,4 @@
 ## revisar el guardado de prespeusto desde la aplicacion
-## actualizar es estado de la aplicacion, cuando se acepte la aplicacion
 ## En oportunidades para ti: que sean solo respecto a servicios y especialiades (el abogado debe tener almenos una de esas para que le salga el filtro)
 ## en publicadas recientemente: 
 ## en tabla de trabajos modificacion fechas: fecha inicio y fecha fin, aplicaciones, 
@@ -69,7 +68,16 @@ Caja Los Andes
 3. Postular oferta - el valor esperado
 4. corregir el envio de correos para el abogado
 
+1. Revisar correo de verificacion en pagina bienvenida
+2. mensaje de abogado creado en rojo, aún.
+3. transicion de pantalla de activacion a bienvenida
+4. creacion de la oferta
+5. subir imagenes
+6. link de verificacion de email al boton de activar
+7. no es el total que recibe el abogado
 
-1, cuando postulas a una oferta como abogado, te guarda oferta1 y abogado1, para todos los casos
+8. cambiar color en la transicion de la landing (switch)
+9. corregir textos
 
-1. cuando aplicas a una oferta, debes actualizar la oferta "estado"
+### tabla de usuarios
+1. fecha de creacion

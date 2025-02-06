@@ -50,6 +50,17 @@ const OfertasActivas = () => {
   // Definir las columnas de la tabla
   const columns: ColumnsType<IOfertaBack> = [
     {
+      title: "Fecha",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (createdAt) => {
+        const fecha = new Date(createdAt);
+        const fechaFormateada = fecha.toLocaleDateString();
+        return(
+        <span>{fechaFormateada}</span>
+      )},
+    },
+    {
       title: "Título del proyecto",
       dataIndex: "titulo",
       key: "titulo",

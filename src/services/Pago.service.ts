@@ -10,4 +10,10 @@ export default class PagoService extends MainService {
   ): Promise<any> {
     return this.post(`/create`, pagoData);
   }
+
+  public async crearPago(
+    pagoData: { ofertaId?: number; monto: number, clienteId?: number, aplicacionId?: number, operacion: string, trabajoId?: number }
+  ): Promise<any> {
+    return this.post(`/create-only-pago`, pagoData);
+  }
 }
