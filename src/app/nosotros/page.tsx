@@ -60,7 +60,7 @@ const NosotrosPage = () => {
           <div className="p-8">
             <div className="flex gap-4 items-end">
               <Image
-                src="/assets/img-legalo-history.jpg"
+                src="/assets/images/perfil-evelyn.jpeg"
                 alt="img"
                 width={102}
                 height={107}
