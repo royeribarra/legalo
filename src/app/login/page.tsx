@@ -171,7 +171,7 @@ export default function LoginPage() {
           </div>
           <div className="w-full flex flex-col-reverse lg:flex-wrap gap-8 justify-center text-white my-8 lg:flex-row">
             <p>© 2024 Legalo. Todos los derechos reservados</p>
-            <Link href="#" className="underline">
+            <Link href="/politica-de-privacidad" className="underline">
               Política de privacidad
             </Link>
             <Link href="/terminos-y-condiciones" className="underline">
