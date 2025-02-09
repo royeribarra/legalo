@@ -26,26 +26,25 @@ const DashboardClientLayout = ({ children }: LayoutProps) => {
 const LayoutContent = ({ children }: { children: ReactNode }) => {
   const whatsappNumber = "51939784580";
   const pathname = usePathname();
-  const { token, userRole } = useAuth();
+  // const { token, userRole, setToken, setUserRole } = useAuth();
   const router = useRouter();
   const {setLoading} = useLoader();
 
-  useEffect(() => {
-    if (token && userRole) {
-      if (userRole === "abogado") {
-        router.push("/dashboard/abogado");
-      } else {
-        setLoading(false);
-      }
-    }
-  }, [token, userRole, router]);
+  // useEffect(() => {
+  //   if (token && userRole !== "cliente") {
+  //     router.push(userRole === "abogado" ? "/dashboard/abogado" : "/login");
+  //   } else {
+  //     setLoading(false);
+  //   }
+  // }, [token, userRole, router]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("tokenRole");
-    localStorage.removeItem("userRole");
-    localStorage.removeItem("token");
-    router.push("/login");
-  };
+  // const handleLogout = () => {
+  //   localStorage.removeItem("tokenRole");
+  //   localStorage.removeItem("userRole");
+  //   setToken(null);
+  //   setUserRole(null);
+  //   router.push("/login");
+  // };
 
   const menuItems = [
     { id: "abogados", texto: "Abogados", url: "/dashboard/cliente/" },
@@ -74,14 +73,14 @@ const LayoutContent = ({ children }: { children: ReactNode }) => {
               <Avatar>
                 <AvatarImage src="" />
                 <AvatarFallback>
-                  {token ? token.nombres[0] + token.apellidos[0] : ""}
+                  {/* {token ? token.nombres[0] + token.apellidos[0] : ""} */}
                 </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem onClick={handleLogout}>
+              {/* <DropdownMenuItem onClick={handleLogout}>
                 Cerrar sesión
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

@@ -18,16 +18,16 @@ import TrabajoItem from "@/components/dashboard/TrabajoItem";
 import { useLoader } from "@/contexts/loaderContext";
 
 function TrabajosCliente(){
-const { token } = useAuth();
+const { user } = useAuth();
 const { setLoading } = useLoader();
 const [trabajos, setTrabajos] = useState<ITrabajoBack[]>([]);
 
 async function getTrabajos(){
     setLoading(true);
     try {
-      if(token?.cliente?.id){
+      if(user?.cliente?.id){
         const data = {
-          clienteId: token.cliente.id
+          clienteId: user.cliente.id
         }
         const response = await clienteService.getTrabajos(data);
         setTrabajos(response.data);
@@ -41,7 +41,7 @@ async function getTrabajos(){
 
   useEffect(()=>{
     getTrabajos();
-  }, [token?.cliente?.id]);
+  }, [user?.cliente?.id]);
 
   return(
     <div className="flex flex-col gap-8 flex-1 mt-12">

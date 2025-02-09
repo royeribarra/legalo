@@ -38,4 +38,5 @@ export interface IUsuarioBack {
     is_active: boolean;
     cliente: IClienteBack | null;
     abogado: IAbogadoBack | null;
+    rol: 'cliente' | 'admin' | 'abogado';
 }

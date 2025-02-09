@@ -20,28 +20,28 @@ import { useLoader } from "@/contexts/loaderContext";
   function TrabajosAbogado ()
   {
     const { setLoading } = useLoader();
-    const { token } = useAuth();
+    // const { token } = useAuth();
     const [trabajos, setTrabajos] = useState<ITrabajoBack[]>([]);
 
-    async function getTrabajos(){
-      setLoading(true);
-      if(token?.abogado?.id){
-        try {
-          const data = {
-            abogadoId: token.abogado.id
-          }
-          const response = await abogadoService.getTrabajos(data);
-          setTrabajos(response.data);
-          setLoading(false);
-        } catch (error) {
-          setLoading(false)
-        }
-      }
-    }
+    // async function getTrabajos(){
+    //   setLoading(true);
+    //   if(token?.abogado?.id){
+    //     try {
+    //       const data = {
+    //         abogadoId: token.abogado.id
+    //       }
+    //       const response = await abogadoService.getTrabajos(data);
+    //       setTrabajos(response.data);
+    //       setLoading(false);
+    //     } catch (error) {
+    //       setLoading(false)
+    //     }
+    //   }
+    // }
 
-    useEffect(()=>{
-      getTrabajos();
-    }, []);
+    // useEffect(()=>{
+    //   getTrabajos();
+    // }, []);
 
     return(
       <div className="flex flex-col gap-8 flex-1 mt-12">

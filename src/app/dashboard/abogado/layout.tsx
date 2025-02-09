@@ -37,7 +37,7 @@ const LayoutContent = ({ children }: LayoutProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const whatsappNumber = "51939784580";
-  const { token, userRole } = useAuth();
+  const { user } = useAuth();
   const {setLoading } = useLoader();
 
   const menuItems = [
@@ -56,15 +56,15 @@ const LayoutContent = ({ children }: LayoutProps) => {
     router.push("/login"); // Redirige al usuario a la página de login
   };
 
-  useEffect(() => {
-    if (token && userRole) {
-      if (userRole === "cliente") {
-        router.push("/dashboard/abogado");
-      } else {
-        setLoading(false);
-      }
-    }
-  }, [token, userRole, router]);
+  // useEffect(() => {
+  //   if (token && userRole) {
+  //     if (userRole === "cliente") {
+  //       router.push("/dashboard/abogado");
+  //     } else {
+  //       setLoading(false);
+  //     }
+  //   }
+  // }, [token, userRole, router]);
 
   return (
     <div className="">
@@ -87,7 +87,7 @@ const LayoutContent = ({ children }: LayoutProps) => {
               <Avatar>
                 <AvatarImage src="" />
                 <AvatarFallback>
-                  {token ? token.nombres[0] + token.apellidos[0] : ""}
+                  {/* {token ? token.nombres[0] + token.apellidos[0] : ""} */}
                 </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>

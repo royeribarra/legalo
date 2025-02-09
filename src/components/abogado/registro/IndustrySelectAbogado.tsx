@@ -106,7 +106,7 @@ function IndustrySelectAbogado({
             </span>
           ))
         ) : (
-          <p className="text-gray-500">Selecciona servicios</p>
+          <p className="text-gray-500">Selecciona industrias</p>
         )}
     </div>
     </div>

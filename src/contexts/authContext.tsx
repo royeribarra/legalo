@@ -1,60 +1,57 @@
-import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+'use client';
+
+import { createContext, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { IUser } from '@/interfaces/User.interface';
+import Cookies from 'js-cookie';
+import { IUsuarioBack } from '@/interfaces/User.interface';
 
-type TokenType = IUser | null;
-
-interface AuthContextType {
-  token: TokenType;
-  userRole: string | null;
-  setToken: (token: TokenType) => void;
-  setUserRole: (role: string | null) => void;
-}
+type AuthContextType = {
+  user: IUsuarioBack | null;
+  login: (userData: IUsuarioBack, jwt: string) => void;
+  logout: () => void;
+};
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [token, setToken] = useState<TokenType>(null);
-  const [userRole, setUserRole] = useState<string | null>(null);
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [user, setUser] = useState<IUsuarioBack | null>(null);
   const router = useRouter();
 
-  // Cargar token y rol desde localStorage al cargar el componente
   useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-    const storedUserRole = localStorage.getItem('userRole');
-
-    if (storedToken) {
-      const parsedToken: IUser = JSON.parse(storedToken); // Deserializar el token
-      setToken(parsedToken);
-    }
-
-    if (storedUserRole) {
-      setUserRole(storedUserRole);
+    const token = Cookies.get('token');
+    if (token) {
+      try {
+        const userData = JSON.parse(atob(token.split('.')[1])); // Decodificar JWT
+        setUser(userData);
+      } catch (error) {
+        console.error('Error decoding token', error);
+      }
     }
   }, []);
 
-  // Lógica de redirección según el estado del token y el rol de usuario
-  // useEffect(() => {
-  //   if (!token) {
-  //     router.push('/login');
-  //   } else if (userRole === 'abogado') {
-  //     router.push('/dashboard/abogado');
-  //   } else if (userRole !== 'cliente') {
-  //     router.push('/login');
-  //   }
-  // }, [token, userRole, router]);
+  const login = (userData: IUsuarioBack, jwt: string) => {
+    Cookies.set('token', jwt, { secure: true, sameSite: 'Strict' });
+    setUser(userData);
+    router.push(userData.rol === 'abogado' ? '/dashboard/abogado' : '/dashboard/cliente');
+  };
+
+  const logout = () => {
+    Cookies.remove('token');
+    setUser(null);
+    router.push('/login');
+  };
 
   return (
-    <AuthContext.Provider value={{ token, userRole, setToken, setUserRole }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = (): AuthContextType => {
+export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error('useAuth debe estar dentro de un AuthProvider');
   }
   return context;
 };

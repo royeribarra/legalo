@@ -5,14 +5,14 @@ import { useAuth } from "@/contexts/authContext";
 import { useEffect, useState } from "react";
 
 function PerfilAbogado(){
-  const { token } = useAuth();
+  const { user } = useAuth();
   const [abogadoId, setAbogadoId] = useState(1);
 
   useEffect(()=>{
-    if(token?.abogado?.id){
+    if(user?.abogado?.id){
       setAbogadoId(abogadoId);
     }
-  }, [token?.abogado?.id]);
+  }, [user?.abogado?.id]);
 
   return(
     <FormAbogado abogadoId={abogadoId}></FormAbogado>

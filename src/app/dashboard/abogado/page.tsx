@@ -39,7 +39,7 @@ import InvitacionesOferta from "@/components/dashboard/abogado/InvitacionesOfert
 import TrabajosAbogado from "@/components/dashboard/abogado/Trabajos";
 
 const DashboardLawyerPage = () => {
-  const {token} = useAuth();
+  const {user} = useAuth();
   const [openFilter, setOpenFilter] = useState<boolean>(true);
   const { state } = useDashboardAbogado();
   const [menuActive, setMenuActive] = useState("oportunidades");

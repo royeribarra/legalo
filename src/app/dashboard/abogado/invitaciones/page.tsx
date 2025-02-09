@@ -8,14 +8,14 @@ import { useLoader } from "@/contexts/loaderContext";
 
 function InvitacionesOferta() {
   const { setLoading } = useLoader();
-  const { token } = useAuth();
+  const { user } = useAuth();
   const [ofertas, setOfertas] = useState<IOfertaBack[]>([]);
 
   async function getOfertas() {
     setLoading(true);
-    if (token?.abogado?.id) {
+    if (user?.abogado?.id) {
       const data = {
-        abogadoId: token?.abogado?.id,
+        abogadoId: user?.abogado?.id,
       };
       try {
         const response = await abogadoService.getInvitacionesAOfertas(data);
