@@ -426,7 +426,7 @@ function RegisterLawyer() {
                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                       >
                         Acepto los{" "}
-                        <Link href="#" className="underline">
+                        <Link href="/terminos-y-condiciones" className="underline">
                           Términos y condiciones{" "}
                         </Link>
                       </label>

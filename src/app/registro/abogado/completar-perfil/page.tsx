@@ -104,11 +104,11 @@ const CompleteProfileLawyerPage: React.FC = () => {
         setLoading(false);
         return;
       }
-      if (!archivoVideo) {
-        showToast("error", "Archivo Video", "Sube un video");
-        setLoading(false);
-        return;
-      }
+      // if (!archivoVideo) {
+      //   showToast("error", "Archivo Video", "Sube un video");
+      //   setLoading(false);
+      //   return;
+      // }
       if (!archivoCv) {
         showToast("error", "Archivo CV", "Sube un archivo");
         setLoading(false);

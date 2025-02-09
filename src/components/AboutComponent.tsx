@@ -32,7 +32,7 @@ const AboutComponent = () => {
 
         <div className="w-full lg:w-[32%] ">
           <Image
-            src="/assets/img-legalo-history.jpg"
+            src="/assets/perfil-evelyn.png.jpg"
             alt="img"
             width={459}
             height={484}
@@ -51,7 +51,7 @@ const AboutComponent = () => {
         <div className="w-[50%] lg:w-[32%] p-8 ">
           <div>
             <Image
-              src="/assets/images/firma-evelyn.png"
+              src="/assets/images/perfil-evelyn.png"
               alt="img"
               width={130}
               height={60}

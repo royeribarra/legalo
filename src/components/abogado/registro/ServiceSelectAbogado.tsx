@@ -17,6 +17,49 @@ interface ISelectableService {
   nombre: string;
 }
 
+const serviceItems = [
+  { id: 1, 
+    nombre: "No estoy seguro del servicio a escoger",
+    descripcion: "Recibe orientación para identificar el tipo de servicio legal que necesitas."
+  },
+  { id: 2, 
+    nombre: "Consultoría/ Asesoría legal",
+    descripcion: "Consulta con un abogado para aclarar dudas legales y obtener recomendaciones."
+  },
+  { id: 3, 
+    nombre: "Patrocinio en Poder judicial",
+    descripcion: "Representación en procesos judiciales ante el Poder Judicial."
+  },
+  { id: 4, 
+    nombre: "Defensa y trámites ante entidades públicas",
+    descripcion: "Representación y gestión en trámites y procesos ante entidades públicas."
+  },
+  { 
+    id: 5, 
+    nombre: "Redacción de Documentos Legales",
+    descripcion: "Elaboración de contratos, demandas y otros documentos jurídicos."
+  },
+  { id: 6, 
+    nombre: "Cumplimiento regulatorio",
+    descripcion: "Asegura que tus actividades cumplan con la normativa vigente."
+  },
+  { 
+    id: 7, 
+    nombre: "Mediación/Conciliación",
+    descripcion: "Representación y/o asistencia a audiencias de conciliación o mediación."
+  },
+  { 
+    id: 8, 
+    nombre: "Prácticas preprofesionales y profesionales",
+    descripcion: "Asistencia de estudiantes o bachilleres en tareas legales supervisadas."
+  },
+  { 
+    id: 9, 
+    nombre: "Investigación legal",
+    descripcion: "Búsqueda, análisis y síntesis de información jurídica por estudiantes o bachilleres."
+  },
+];
+
 type ServiceSelectProps = {
   updateStateAbogado: (newState: Partial<RegistroAbogadoState>) => void;
   stateAbogado: RegistroAbogadoState;
@@ -27,20 +70,22 @@ function ServiceSelectAbogado({
   stateAbogado,
 }: ServiceSelectProps) {
   const [selectedServices, setSelectedServices] = useState<number[]>(stateAbogado.servicios);
-  const [availableServices, setAvailableServices] = useState<ISelectableService[]>([]);
+  // const [availableServices, setAvailableServices] = useState<ISelectableService[]>([]);
 
-  useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        const response = await axios.get(`${process.env.BASE_APP_API_URL}/servicios/all`);
-        setAvailableServices(response.data);
-      } catch (error) {
-        console.error("Error fetching services", error);
-      }
-    };
+  const [availableServices, setAvailableServices] = useState(serviceItems);
 
-    fetchServices();
-  }, []);
+  // useEffect(() => {
+  //   const fetchServices = async () => {
+  //     try {
+  //       const response = await axios.get(`${process.env.BASE_APP_API_URL}/servicios/all`);
+  //       setAvailableServices(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching services", error);
+  //     }
+  //   };
+
+  //   fetchServices();
+  // }, []);
 
   useEffect(() => {
     if (stateAbogado.servicios && stateAbogado.servicios.length > 0) {
