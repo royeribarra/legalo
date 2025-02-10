@@ -34,10 +34,10 @@ const DashboardAbogadoLayout = ({ children }: LayoutProps) => {
 };
 
 const LayoutContent = ({ children }: LayoutProps) => {
+  const { logout } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
   const whatsappNumber = "51939784580";
-  const { user } = useAuth();
   const {setLoading } = useLoader();
 
   const menuItems = [
@@ -50,21 +50,8 @@ const LayoutContent = ({ children }: LayoutProps) => {
   ];
 
   const handleLogout = () => {
-    localStorage.removeItem("tokenRole");
-    localStorage.removeItem("userRole");
-    localStorage.removeItem("token");
-    router.push("/login"); // Redirige al usuario a la página de login
+    logout();
   };
-
-  // useEffect(() => {
-  //   if (token && userRole) {
-  //     if (userRole === "cliente") {
-  //       router.push("/dashboard/abogado");
-  //     } else {
-  //       setLoading(false);
-  //     }
-  //   }
-  // }, [token, userRole, router]);
 
   return (
     <div className="">
