@@ -14,7 +14,7 @@ const DashboardClientPage = () => {
     setServiceTipe(newType);
   };
   const [openFilter, setOpenFilter] = useState(true);
-  const [menuActive, setMenuActive] = useState("oportunidades");
+  const [menuActive, setMenuActive] = useState("talentos");
 
   const menuItems = [
     { id: "talentos", texto: "Talentos" },
@@ -90,9 +90,9 @@ const DashboardClientPage = () => {
             <Suspense fallback={<div>Loading...</div>}>
               {menuActive === "talentos" && <BusquedaAbogado searchButton={searchQuery} />}
             </Suspense>
-            {menuActive === "oportunidades" && (
-              <BusquedaOferta></BusquedaOferta>
-            )}
+            <Suspense fallback={<div>Loading...</div>}>
+              {menuActive === "oportunidades" && <BusquedaOferta />}
+            </Suspense>
           </div>
         </div>
         {/* <ModalInviteProyect 

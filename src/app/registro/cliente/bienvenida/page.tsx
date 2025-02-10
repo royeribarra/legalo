@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useLoader } from "@/contexts/loaderContext";
 import { usuarioService } from "@/services";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 const RegistroBienvenidaCliente = () => {
@@ -93,4 +93,10 @@ const RegistroBienvenidaCliente = () => {
   );
 };
 
-export default RegistroBienvenidaCliente;
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <RegistroBienvenidaCliente />
+    </Suspense>
+  );
+}

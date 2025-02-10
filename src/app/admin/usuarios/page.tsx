@@ -139,10 +139,10 @@ function Clientes() {
       render: (validado: boolean, record: IUsuarioBack) => (
         <Button
           type="primary"
-          danger={!record.is_active} // Usamos el estado actualizado
+          danger={!record.isActive} // Usamos el estado actualizado
           onClick={async () => {
             try {
-              const nuevoEstado = !record.is_active; // Alternar el estado
+              const nuevoEstado = !record.isActive; // Alternar el estado
               const data = { 
                 is_active: nuevoEstado,
                 abogadoId: record.abogado?.id
@@ -150,7 +150,7 @@ function Clientes() {
               const response = await usuarioService.validarUsuarioPorAdmin(data); // Realizar la petición
               
               if(response.state){
-                record.is_active = nuevoEstado;
+                record.isActive = nuevoEstado;
                 showToast("success", response.message, "");
                 setFilteredData((prevDataSource) =>
                   prevDataSource.map((item) =>
@@ -165,7 +165,7 @@ function Clientes() {
             }
           }}
         >
-          {record.is_active ? 'Activado' : 'Desactivado'}
+          {record.isActive ? 'Activado' : 'Desactivado'}
         </Button>
       ),
     }

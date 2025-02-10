@@ -54,10 +54,10 @@ const navData: NavItem[] = [
         title: "Lista de abogados",
         url: "/admin/abogados",
       },
-      {
-        title: "Lista de usuarios",
-        url: "/admin/usuarios",
-      },
+      // {
+      //   title: "Lista de usuarios",
+      //   url: "/admin/usuarios",
+      // },
     ],
   },
 ];
