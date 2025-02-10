@@ -103,7 +103,7 @@ function ModalAgregarEducacion({
       });
       return;
     }
-
+  
     // Validar que 'hasta_fecha' no sea menor que 'desde_fecha'
     if (hasta_fecha < desde_fecha) {
       form.setError("hasta_fecha", {
@@ -112,34 +112,44 @@ function ModalAgregarEducacion({
       });
       return;
     }
-
-    const tmpEstudio = stateAbogado.estudios || [];
-    const nuevoId = tmpEstudio.length <= 0 ? 1 : tmpEstudio[tmpEstudio.length -1].id + 1;
-
+  
+    // Obtener lista actual de estudios
+    const tmpEstudio = [...(stateAbogado.estudios || [])];
+  
+    // 🔹 Generar un ID único basado en timestamp + random (para evitar duplicados)
+    const nuevoId = educacionSelected?.id || Date.now() + Math.floor(Math.random() * 1000);
+  
     const nuevoEstudio = {
-      id: educacionSelected ? educacionSelected.id : nuevoId,
-      desde_fecha: values.desde_fecha,
-      hasta_fecha: values.hasta_fecha,
+      id: nuevoId,
+      desde_fecha,
+      hasta_fecha,
       titulo: values.titulo,
       institucion: values.institucion,
       ubicacion: values.ubicacion,
       descripcion: values.descripcion,
     };
+  
     if (educacionSelected) {
+      // Si se edita, reemplazar en la misma posición
       const indexSelected = tmpEstudio.findIndex(
-        (estudio: Educacion) => estudio.id === educacionSelected.id
+        (estudio) => estudio.id === educacionSelected.id
       );
       tmpEstudio[indexSelected] = nuevoEstudio;
-      updateStateAbogado({estudios: tmpEstudio})
     } else {
+      // Agregar nuevo estudio
       tmpEstudio.push(nuevoEstudio);
-      updateStateAbogado({estudios: tmpEstudio})
     }
-
+  
+    // 🔹 Ordenar los estudios por "hasta_fecha" de más reciente a más antiguo
+    tmpEstudio.sort((a, b) => (a.hasta_fecha > b.hasta_fecha ? -1 : 1));
+  
+    // Actualizar estado con la lista ordenada
+    updateStateAbogado({ estudios: tmpEstudio });
+  
     setShowModal(false);
     setEducacionSelected(null);
     form.reset();
-  }
+  }  
 
   function onError(errors: FieldValues) {
     console.log("Errores de validación", errors);

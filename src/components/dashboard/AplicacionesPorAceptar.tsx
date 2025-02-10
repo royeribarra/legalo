@@ -16,7 +16,7 @@ import ModalPagoOferta from "./Cliente/ModalPago";
 import ModalDetalleAplicacion from "./Cliente/ModalDetalleAplicacion";
 
 const AplicacionesPorAceptar = () => {
-  const { token } = useAuth();
+  const { user } = useAuth();
   const router = useRouter();
   const { setLoading } = useLoader();
   const [openProyecto, setOpenProyecto] = useState<number | null>(null);
@@ -33,8 +33,8 @@ const AplicacionesPorAceptar = () => {
     const fetchOfertasConAplicaciones = async () => {
       setLoading(true);
       try {
-        if (token?.cliente?.id) {
-          const data = { clienteId: token.cliente.id, estado: "verificar_postulaciones" };
+        if (user?.cliente?.id) {
+          const data = { clienteId: user.cliente.id, estado: "verificar_postulaciones" };
           const response = await clienteService.getOfertas(data);
           setOfertasConAplicaciones(response.data);
         }

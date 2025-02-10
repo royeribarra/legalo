@@ -5,7 +5,7 @@ import { IHabilidad } from "./Habilidad.interface";
 import { IIndustriaAbogado } from "./Industria.interface";
 import { IServicioAbogado } from "./Servicio.interface";
 import { ITrabajo } from "./Trabajo.interface";
-import { IUser } from "./User.interface";
+import { IUser, IUsuarioBack } from "./User.interface";
 
 export interface IAbogado {
   id?: number;
@@ -31,6 +31,7 @@ export interface IAbogado {
 export interface IAbogadoBack {
   id: number;
   user: IUser;
+  usuario: IUsuarioBack;
   nombres: string;
   apellidos: string;
   dni: string;

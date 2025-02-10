@@ -16,7 +16,7 @@ const CheckoutPage = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const { ofertaId } = useParams();
-  const { token, userRole } = useAuth();
+  const { user } = useAuth();
   const [payoutState, setPayoutState] = useState("not-paid");
   const [valueOperation, setValueOperation] = useState<string>("");
 
@@ -39,7 +39,7 @@ const CheckoutPage = () => {
         return;
       }
 
-      if (token?.cliente?.id) {
+      if (user?.cliente?.id) {
         const pagoData = {
           clienteId: Number(clienteId),
           monto: Number(monto),

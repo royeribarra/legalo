@@ -20,15 +20,15 @@ const OfertasActivas = () => {
   const { setLoading } = useLoader();
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1); // Para controlar la página actual
-  const { token } = useAuth();
+  const { user } = useAuth();
 
 
   const fetchProyectos = async () => {
     setLoading(true);
     try {
-      if(token?.cliente?.id){
+      if(user?.cliente?.id){
         const filter = {
-          clienteId: token?.cliente?.id,
+          clienteId: user?.cliente?.id,
           estado: 'creado'
         };
         const response = await clienteService.getOfertas(filter);

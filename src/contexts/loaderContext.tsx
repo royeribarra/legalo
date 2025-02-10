@@ -10,7 +10,7 @@ type LoaderContextType = {
 const LoaderContext = createContext<LoaderContextType | undefined>(undefined);
 
 export const LoaderProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   return (
     <LoaderContext.Provider value={{ loading, setLoading }}>

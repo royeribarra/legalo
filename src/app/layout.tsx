@@ -3,6 +3,7 @@ import "@/app/globals.css";
 import LoaderComponent from "@/components/LoaderComponent";
 import { LoaderProvider } from "@/contexts/loaderContext";
 import { ToastProvider } from "@/contexts/toastContext";
+import { AuthProvider } from "@/contexts/authContext";
 
 // El metadata también puede incluir el favicon aquí
 export const metadata: Metadata = {
@@ -24,7 +25,9 @@ export default function RootLayout({
         <ToastProvider>
           <LoaderProvider>
             <LoaderComponent />
-            {children}
+              <AuthProvider>
+              {children}
+              </AuthProvider>
           </LoaderProvider>
         </ToastProvider>
       </body>

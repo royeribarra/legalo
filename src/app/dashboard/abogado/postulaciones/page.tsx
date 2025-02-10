@@ -18,16 +18,16 @@ import { useLoader } from "@/contexts/loaderContext";
   function Postulaciones ()
   {
     const { setLoading } = useLoader();
-    const { token } = useAuth();
+    const { user } = useAuth();
     const [aplicacionesCreadas, setAplicacionesCreadas] = useState<IAplicacionBack[]>([]);
     const [aplicacionesAceptadas, setAplicacionesAceptadas] = useState<IAplicacionBack[]>([]);
   
     async function getAplicacionesCreadas(){
       setLoading(true);
-      if(token?.abogado?.id){
+      if(user?.abogado?.id){
         try {
           const data = {
-            abogadoId: token.abogado.id,
+            abogadoId: user.abogado.id,
             estado: 'aceptada'
           }
           const response = await abogadoService.getAplicaciones(data);
@@ -41,11 +41,11 @@ import { useLoader } from "@/contexts/loaderContext";
   
     async function getAplicacionesAceptadas(){
       setLoading(true);
-      if(token?.abogado?.id){
+      if(user?.abogado?.id){
         try {
           const statusAceptado = 2; 
           const data = {
-            abogadoId: token.abogado.id,
+            abogadoId: user.abogado.id,
             estado: 'pendiente'
           }
           const response = await abogadoService.getAplicaciones(data);

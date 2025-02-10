@@ -538,18 +538,22 @@ const CompleteProfileLawyerPage: React.FC = () => {
                     </div>
                   )
                 )}
-                <div className="flex items-center space-x-2 my-4">
-                  <Checkbox
-                    id="terms"
-                    onClick={() => setNoExperiencia(!noExperiencia)}
-                  />
-                  <label
-                    htmlFor="terms"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    No cuento con experiencia aún.
-                  </label>
-                </div>
+                {
+                  !stateAbogado.experiencias.length &&
+                  <div className="flex items-center space-x-2 my-4">
+                    <Checkbox
+                      id="terms"
+                      onClick={() => setNoExperiencia(!noExperiencia)}
+                    />
+                    <label
+                      htmlFor="terms"
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      No cuento con experiencia aún.
+                    </label>
+                  </div>
+                }
+                
 
                 <UploadFileCV
                   uploadFileCV={handleFileCV}

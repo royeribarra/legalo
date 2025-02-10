@@ -2,35 +2,6 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { Search as IcoSearch } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-
-import { Label as LabelCn } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-
-import { ChevronsLeft } from "lucide-react";
-import { ChevronsRight } from "lucide-react";
-
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import AbogadoResumeCard from "@/components/dashboard/AbogadoResumeCard";
-import ModalInviteProyect from "@/components/dashboard/ModalInviteProyect";
-import Link from "next/link";
-import { useDashboardCliente } from "@/contexts/dashboardClienteContext";
-import { abogadoService } from "@/services";
-import { IAbogadoBack } from "@/interfaces/Abogado.interface";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import BusquedaOferta from "@/components/busqueda/busquedaOferta";
@@ -40,38 +11,15 @@ const DashboardClientPage = () => {
   const [serviceTipe, setServiceTipe] = useState<string>("client");
   const [searchQuery, setSearchQuery] = useState("");
   const updateServiceTipe = (newType: string) => {
-    console.log(newType)
     setServiceTipe(newType);
   };
   const [openFilter, setOpenFilter] = useState(true);
-  const [menuActive, setMenuActive] = useState("talentos");
-  const { state } = useDashboardCliente();
-  const [subMenuActive, setSubMenuActive] = useState("ofertas-activas");
-  const [abogados, setAbogados] = useState<IAbogadoBack[]>([]);
-  const [abogadoPrevioInvitado, setAbogadoPrevioInvitado] = useState<number>(0);
-
-  const [inviteProyectModal, setInviteProyectModal] = useState(false);
+  const [menuActive, setMenuActive] = useState("oportunidades");
 
   const menuItems = [
     { id: "talentos", texto: "Talentos" },
     { id: "oportunidades", texto: "Oportunidades" },
   ];
-
-  const subMenuItems = [
-    { id: "ofertas-activas", texto: "Ofertas Activas" },
-    { id: "ofertas-por-aceptar", texto: "Ofertas con aplicación" },
-    { id: "trabajos-activos", texto: "Trabajos activos" },
-    { id: "trabajos-finalizados", texto: "Trabajos finalizados" },
-  ];
-
-  const handleFilter = () => {
-    setOpenFilter(!openFilter);
-  };
-
-  const inviteProyect = (abogadoId: number) => {
-    setAbogadoPrevioInvitado(abogadoId);
-    setInviteProyectModal(true);
-  };
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(min-width: 1024px)");
@@ -79,20 +27,6 @@ const DashboardClientPage = () => {
     const handleChange = (e: MediaQueryListEvent) => setOpenFilter(e.matches);
     mediaQuery.addEventListener("change", handleChange);
     return () => mediaQuery.removeEventListener("change", handleChange);
-  }, []);
-
-  async function fetchAbogados() {
-    try {
-      const data = await abogadoService.obtenerTodos();
-      setAbogados(data);
-      console.log(data)
-    } catch (error) {
-      console.error("Error al obtener el detalle:", error);
-    }
-  }
-
-  useEffect(()=> {
-    fetchAbogados();
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

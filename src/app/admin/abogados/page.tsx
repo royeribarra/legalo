@@ -4,7 +4,7 @@ import { Table, Input, Button, Select, Space, Tag, DatePicker } from 'antd';
 import { FilterOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import { Key } from 'antd/lib/table/interface';
-import { abogadoService, clienteService, ofertaservice } from '@/services';
+import { abogadoService, clienteService, ofertaservice, usuarioService } from '@/services';
 import { IClienteBack } from '@/interfaces/Cliente.interface';
 import { IAplicacionBack } from '@/interfaces/Aplicacion.interface';
 import { IOfertaBack } from '@/interfaces/Oferta.interface';
@@ -235,6 +235,37 @@ function Abogados() {
       }
     },
     {
+      title: 'Envíar código de verificación',
+      key: 'enviar',
+      render: (_: unknown, record: IAbogadoBack) => {
+        const enviarMail = async() => {
+          try {
+            const data = {
+              abogadoId: record.usuario.id
+            }
+            const response = await usuarioService.enviarMailVerificacion(data);
+            console.log(response)
+            if(response.state){
+              showToast("success", response.message, "");
+              
+            }
+          } catch (error) {
+            showToast("error", "Error al actualizar el estado", "");
+            console.error('Error al enviar mail de verificación:', error);
+          }
+        }
+        return(
+          <>
+            {
+              record.usuario.isActive ? 
+              <Button type="primary" onClick={()=>console.log("nada")}>Activado</Button> :
+              <Button type="primary" onClick={enviarMail}>Envíar código de activación</Button>
+            }
+          </>
+        )
+      }
+    },
+    {
       title: 'Estado',
       dataIndex: 'validado_admin',
       key: 'validado_admin',
@@ -247,7 +278,6 @@ function Abogados() {
               const nuevoEstado = !record.validado_admin;
               const data = { validado_admin: nuevoEstado };
               const response = await abogadoService.updateAbogado(record.id, data);
-              
               if(response.state){
                 record.validado_admin = nuevoEstado;
                 showToast("success", response.message, "");
@@ -257,7 +287,6 @@ function Abogados() {
                   )
                 );
               }
-              // Actualizar el estado local para reflejar el cambio en la tabla
             } catch (error) {
               showToast("error", "Error al actualizar el estado", "");
               console.error('Error al actualizar el estado:', error);

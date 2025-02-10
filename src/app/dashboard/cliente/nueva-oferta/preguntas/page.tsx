@@ -37,7 +37,7 @@ const PublicarPageEight = () => {
   const { setLoading } = useLoader();
   const { state, updateState, setDefaultValues } = useOferta();
   const { preguntas } = state;
-  const { token } = useAuth();
+  const { user } = useAuth();
   const [input, setInput] = useState<string>("");
   const [newOferta, setNewOferta] = useState<number>(0);
   const [suggestions, setSuggestions] = useState<IPregunta[]>([...initialSuggestions]);
@@ -114,14 +114,14 @@ const PublicarPageEight = () => {
     setLoading(true);
     const data = {
       ...state,
-      clienteId: token?.cliente?.id,
+      clienteId: user?.cliente?.id,
       documento: "",
     };
 
     try {
       const response = await ofertaservice.createOferta(data);
       if (response.state) {
-        if (state.documento && token) {
+        if (state.documento && user) {
           try {
             await enviarArchivo(state.documento, response.oferta.id, "oferta_documento");
           } catch (error) {

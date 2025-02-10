@@ -35,7 +35,7 @@ export interface IUsuarioBack {
     telefono: string;
     activationCode: string | null;
     activationCodeExpires: string;
-    is_active: boolean;
+    isActive: boolean;
     cliente: IClienteBack | null;
     abogado: IAbogadoBack | null;
     rol: 'cliente' | 'admin' | 'abogado';

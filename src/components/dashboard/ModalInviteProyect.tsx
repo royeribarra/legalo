@@ -29,7 +29,7 @@ const ModalInviteProyect: React.FC<ModalInviteProyectProps> = ({
   isOpen,
   onModalClosed,
 }) => {
-  const { token } = useAuth();
+  const { user } = useAuth();
   const [visible, setVisible] = useState(isOpen);
   const [currentStep, setCurrentStep] = useState(1);
   const [ofertasDisponibles, setOfertasDisponibles] = useState<IOferta[]>([]);
@@ -47,11 +47,11 @@ const ModalInviteProyect: React.FC<ModalInviteProyectProps> = ({
   }, [currentStep, abogadoPrevioInvitado]);
 
   const fetchOfertasDisponibles = async () => {
-    if(token?.cliente?.id && abogadoPrevioInvitado?.id){
+    if(user?.cliente?.id && abogadoPrevioInvitado?.id){
       try {
         const body = {
           abogadoId: abogadoPrevioInvitado.id,
-          clienteId: token?.cliente.id
+          clienteId: user?.cliente.id
         };
         const data = await ofertaservice.getOfertasSinAplicacionesPorAbogado(body);
         setOfertasDisponibles(data);

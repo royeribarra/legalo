@@ -22,13 +22,6 @@ const CompleteProfileLawyerLayout = ({ children }: LayoutProps) => {
               className="max-w-[100px] md:max-w-none"
             />
           </Link>
-
-          <div className="flex gap-2 p-2 flex-col md:flex-row">
-            <Avatar>
-              <AvatarImage src="" />
-              <AvatarFallback>JA</AvatarFallback>
-            </Avatar>
-          </div>
         </header>
         <main>{children}</main>
       </div>

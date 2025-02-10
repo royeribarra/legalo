@@ -5,14 +5,14 @@ import { IOfertaBack } from "@/interfaces/Oferta.interface";
 import { useAuth } from "@/contexts/authContext";
 
 function InvitacionesOferta() {
-  const { token } = useAuth();
+  const { user } = useAuth();
   const [ofertas, setOfertas] = useState<IOfertaBack[]>([]);
   const [loading, setLoading] = useState(true); // Opcional para manejar un estado de carga
 
   async function getOfertas() {
-    if (token?.abogado?.id) {
+    if (user?.abogado?.id) {
       const data = {
-        abogadoId: token?.abogado?.id,
+        abogadoId: user?.abogado?.id,
       };
       try {
         const response = await abogadoService.getInvitacionesAOfertas(data);

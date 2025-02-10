@@ -3,17 +3,17 @@ import { Button } from "../ui/button";
 import { ChevronsLeft } from "lucide-react";
 import { ChevronsRight } from "lucide-react";
 import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
 } from "@/components/ui/accordion";
-  import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 
 import { Label as LabelCn } from "@/components/ui/label";
@@ -23,8 +23,10 @@ import { IAbogadoBack } from "@/interfaces/Abogado.interface";
 import AbogadoResumeCard from "@/components/dashboard/AbogadoResumeCard";
 import { abogadoService } from "@/services";
 import { useSearchParams } from "next/navigation";
+import { useLoader } from "@/contexts/loaderContext";
 
 function BusquedaAbogado({searchButton}: {searchButton: string}){
+  const { setLoading, loading } = useLoader();
   const { state } = useDashboardCliente();
   const [abogados, setAbogados] = useState<IAbogadoBack[]>([]);
   const [abogadosFiltrados, setAbogadosFiltrados] = useState<IAbogadoBack[]>([]);
@@ -33,16 +35,18 @@ function BusquedaAbogado({searchButton}: {searchButton: string}){
   const [filtroEspecialidad, setFiltroEspecialidad] = useState<number | null>(null);
   const [filtroIndustria, setFiltroIndustria] = useState<number | null>(null);
   const searchParams = useSearchParams();
+  const [firstLoad, setFirstLoad] = useState(true);
 
   const handleFilter = () => {
-      setOpenFilter(!openFilter);
+    setOpenFilter(!openFilter);
   };
 
   const inviteProyect = (abogado: IAbogadoBack) => {
-      console.log(abogado)
+    console.log(abogado)
   };
 
   async function fetchAbogados() {
+    setLoading(true);
     try {
       const params = { validado_admin: true };
       const data = await abogadoService.obtenerTodos(params);
@@ -50,6 +54,8 @@ function BusquedaAbogado({searchButton}: {searchButton: string}){
       setAbogadosFiltrados(data)
     } catch (error) {
       console.error("Error al obtener el detalle:", error);
+    } finally{
+      setLoading(false);
     }
   }
 
@@ -132,6 +138,12 @@ function BusquedaAbogado({searchButton}: {searchButton: string}){
     }
   }, [searchButton]);
 
+  useEffect(() => {
+    if (!loading && firstLoad) {
+      setFirstLoad(false);
+    }
+  }, [loading]);
+
   return(
     <>
       <div className="mt-6 h-6">
@@ -146,7 +158,6 @@ function BusquedaAbogado({searchButton}: {searchButton: string}){
       </div>
 
       <div className="mt-8 flex overflow-hidden">
-          {/* filtros */}
           {openFilter && (
           <div className="lg:block w-[288px] mr-16 flex-none">
               <div className="border-b border-black flex justify-between items-center pb-6">
@@ -236,7 +247,7 @@ function BusquedaAbogado({searchButton}: {searchButton: string}){
           </div>
           )}
            <div className="flex flex-col gap-8 flex-1 mt-12">
-            {abogadosFiltrados.length === 0 ? (
+            {/* {abogadosFiltrados.length === 0 ? (
               <div className="text-center text-lg font-light text-gray-600">
                 No se encontró ningún abogado con el filtro seleccionado.
               </div>
@@ -244,7 +255,19 @@ function BusquedaAbogado({searchButton}: {searchButton: string}){
               abogadosFiltrados.map((abogado, index) => (
                 <AbogadoResumeCard inviteProyect={inviteProyect} abogado={abogado} key={index} />
               ))
-            )}
+            )} */}
+            {
+              loading && firstLoad ? (
+                <p>Cargando abogados...</p>
+              ) : abogadosFiltrados.length === 0 ? (
+                <p>No se encontró ningún abogado con el filtro seleccionado.</p>
+              ) : 
+              (
+                abogadosFiltrados.map((abogado, index) => (
+                  <AbogadoResumeCard inviteProyect={inviteProyect} abogado={abogado} key={index} />
+                ))
+              )
+            }
           </div>
       </div>
     </>

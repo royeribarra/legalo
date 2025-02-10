@@ -14,14 +14,14 @@ import { IAplicacionBack } from "@/interfaces/Aplicacion.interface";
 
 function Postulaciones ()
 {
-  const { token } = useAuth();
+  const { user } = useAuth();
   const [aplicacionesCreadas, setAplicacionesCreadas] = useState<IAplicacionBack[]>([]);
   const [aplicacionesAceptadas, setAplicacionesAceptadas] = useState<IAplicacionBack[]>([]);
 
   async function getAplicacionesCreadas(){
-    if(token?.abogado?.id){
+    if(user?.abogado?.id){
       const data = {
-        abogadoId: token.abogado.id,
+        abogadoId: user.abogado.id,
         estado: 'aceptada'
       }
       const response = await abogadoService.getAplicaciones(data);
@@ -30,10 +30,10 @@ function Postulaciones ()
   }
 
   async function getAplicacionesAceptadas(){
-    if(token?.abogado?.id){
+    if(user?.abogado?.id){
       const statusAceptado = 2; 
       const data = {
-        abogadoId: token.abogado.id,
+        abogadoId: user.abogado.id,
         estado: 'pendiente'
       }
       const response = await abogadoService.getAplicaciones(data);

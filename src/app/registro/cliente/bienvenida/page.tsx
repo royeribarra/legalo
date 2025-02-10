@@ -1,62 +1,61 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useLoader } from "@/contexts/loaderContext";
+import { usuarioService } from "@/services";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
-const CompleteProfileLawyerPage = () => {
+const RegistroBienvenidaCliente = () => {
+  const { setLoading, loading } = useLoader();
   const [isVerified, setIsVerified] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
+  const searchParams = useSearchParams();
+  const activationCode = searchParams.get("code_activation");
+
+  const verifyActivationCode = async () => {
+    if (!activationCode) {
+      setIsChecking(false);
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await usuarioService.validarcuenta({ code: activationCode });
+      if (response.success) {
+        setIsVerified(true);
+      }
+    } catch (error) {
+      console.error("Error en la verificación:", error);
+    } finally {
+      setLoading(false);
+      setIsChecking(false);
+    }
+  };
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const activationCode = params.get("code_activation");
-
-    if (activationCode) {
-      // Hacer el fetch para verificar el código
-      const verifyActivationCode = async () => {
-        try {
-          const response = await fetch(
-            `${process.env.BASE_APP_API_URL}/usuarios/validar-cuenta`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ code: activationCode }),
-            }
-          );
-
-          if (response.ok) {
-            const data = await response.json();
-            if (data.success) {
-              setIsVerified(true);
-            } else {
-              console.error("Código de activación no válido o expirado.");
-            }
-          } else {
-            console.error("Error en la verificación del código.");
-          }
-        } catch (error) {
-          console.error("Error en la solicitud de verificación:", error);
-        }
-      };
-
-      verifyActivationCode();
-    }
-  }, []);
+    verifyActivationCode();
+  }, [activationCode]);
 
   return (
     <>
-      {isVerified ? (
+      {loading || isChecking ? (
+        <div className="flex mt-[3%] flex-col items-center gap-5 flex-auto pb-20">
+          <h2 className="text-4xl text-center font-nimbus mt-2 text-gray-600">
+            Verificando cuenta...
+          </h2>
+          <p className="text-center">Por favor, espera un momento.</p>
+        </div>
+      ) : isVerified ? (
         <div className="container mx-auto p-4 m-8 max-w-[720px] flex flex-col gap-8">
           <h1 className="text-5xl my-4 font-nimbus">
             ¡Bienvenida(o) a <span className="italic font-light">Legalo!</span>
           </h1>
           <div>
-            <p className="text-xl">¡Vamos a publicar tu primer proyecto! </p>
+            <p className="text-xl">¡Vamos a publicar tu primer proyecto!</p>
             <p className="text-xl">
-              Conéctate con abogados expertos para llevar tu caso al siguiente
-              nivel.
+              Conéctate con abogados expertos para llevar tu caso al siguiente nivel.
             </p>
           </div>
           <div className="flex flex-col lg:flex-row gap-4 mt-10">
@@ -83,10 +82,15 @@ const CompleteProfileLawyerPage = () => {
           <p className="text-center">
             El código de activación no es válido o ha expirado.
           </p>
+          <Link href="/">
+            <Button className="h-12 rounded-[10px] text-base">
+              Ir a la página principal
+            </Button>
+          </Link>
         </div>
       )}
     </>
   );
 };
 
-export default CompleteProfileLawyerPage;
+export default RegistroBienvenidaCliente;

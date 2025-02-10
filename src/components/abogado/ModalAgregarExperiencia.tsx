@@ -18,7 +18,6 @@ import { useEffect, useState } from "react";
 import { RegistroAbogadoState } from "@/contexts/registroAbogadoContext";
 import { IExperiencia } from "@/interfaces/Experiencia.interface";
 import { DatePicker } from "antd"
-import moment from "moment";
 import type { DatePickerProps } from 'antd';
 import type { Dayjs } from 'dayjs';
 import dayjs from "dayjs";
@@ -58,7 +57,6 @@ function ModalAgregarExperiencia({
   updateStateAbogado,
   stateAbogado
 }: ModalAgregarEducacionProps) {
-  console.log(showModal)
   const [trabajoActualmente] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -74,7 +72,6 @@ function ModalAgregarExperiencia({
   function onSubmit(values: z.infer<typeof formSchema>) {
     const { desde_fecha, hasta_fecha } = values;
   
-    // Validar que 'desde_fecha' no sea mayor que el mes actual
     if (desde_fecha > new Date().toISOString().slice(0, 7)) {
       form.setError("desde_fecha", {
         type: "manual",
@@ -82,8 +79,7 @@ function ModalAgregarExperiencia({
       });
       return;
     }
-
-    // Validar que 'hasta_fecha' no sea menor que 'desde_fecha'
+  
     if (hasta_fecha < desde_fecha) {
       form.setError("hasta_fecha", {
         type: "manual",
@@ -91,8 +87,7 @@ function ModalAgregarExperiencia({
       });
       return;
     }
-
-    // Validar que 'hasta_fecha' no sea mayor que el mes actual
+  
     if (hasta_fecha > new Date().toISOString().slice(0, 7)) {
       form.setError("hasta_fecha", {
         type: "manual",
@@ -100,29 +95,35 @@ function ModalAgregarExperiencia({
       });
       return;
     }
-    
-    const tmpExperiencia = stateAbogado.experiencias || [];
-    const nuevoId = tmpExperiencia.length <= 0 ? 1 : tmpExperiencia[tmpExperiencia.length -1].id + 1;
-    const nuevoEstudio = {
-      id: experienciaSelected ? experienciaSelected.id : nuevoId,
-      desde_fecha: values.desde_fecha,
-      hasta_fecha: values.hasta_fecha,
+  
+    const tmpExperiencia = [...(stateAbogado.experiencias || [])];
+  
+    // 🔹 Generar un ID numérico aleatorio
+    const nuevoId = experienciaSelected?.id || Date.now() + Math.floor(Math.random() * 1000);
+  
+    const nuevoEstudio: IExperiencia = {
+      id: nuevoId,
+      desde_fecha,
+      hasta_fecha,
       titulo: values.titulo,
       empresa: values.empresa,
       descripcion: values.descripcion,
     };
-    
+  
     if (experienciaSelected) {
       const indexSelected = tmpExperiencia.findIndex(
-        (estudio: IExperiencia) => estudio.id === experienciaSelected.id
+        (estudio) => estudio.id === experienciaSelected.id
       );
       tmpExperiencia[indexSelected] = nuevoEstudio;
-      updateStateAbogado({experiencias: tmpExperiencia})
     } else {
       tmpExperiencia.push(nuevoEstudio);
-      updateStateAbogado({experiencias: tmpExperiencia})
     }
-
+  
+    // 🔹 Ordenar la lista por "hasta_fecha" de más reciente a más antigua
+    tmpExperiencia.sort((a, b) => (a.hasta_fecha > b.hasta_fecha ? -1 : 1));
+  
+    updateStateAbogado({ experiencias: tmpExperiencia });
+  
     setShowModal(false);
     setExperienciaSelected(null);
     form.reset();
@@ -156,16 +157,14 @@ function ModalAgregarExperiencia({
   }, [trabajoActualmente, form]);
 
   const handleChangeStartDate: DatePickerProps<Dayjs[]>['onChange'] = (date, dateString) => {
-    console.log(date, dateString);
     if (typeof dateString === "string") {
-      form.setValue("desde_fecha", dateString); // Establecemos el valor como string
+      form.setValue("desde_fecha", dateString);
     }
   };
 
   const handleChangeEndDate: DatePickerProps<Dayjs[]>['onChange'] = (date, dateString) => {
-    console.log(date, dateString);
     if (typeof dateString === "string") {
-      form.setValue("hasta_fecha", dateString); // Establecemos el valor como string
+      form.setValue("hasta_fecha", dateString);
     }
   };
 
@@ -192,14 +191,6 @@ function ModalAgregarExperiencia({
                         <FormItem>
                           <FormLabel></FormLabel>
                           <FormControl>
-                            {/* <Input
-                              type="month"
-                              className="border border-black rounded-[10px] h-12"
-                              placeholder="2024"
-                              {...field}
-                              disabled={trabajoActualmente ? true : false}
-                              max={new Date().toISOString().slice(0, 7)}  // Limita la fecha al mes actual
-                            /> */}
                             <DatePicker.MonthPicker
                               className="border border-black rounded-[10px] h-12 w-full"
                               {...form.register("desde_fecha")}
@@ -207,7 +198,6 @@ function ModalAgregarExperiencia({
                               value={form.getValues("desde_fecha") ? [dayjs(form.getValues("desde_fecha"), "YYYY-MM")] : null}
                               disabledDate={(current) => current && current > dayjs().endOf("month")}
                               placeholder="Selecciona un mes"
-                              // format="MMMM [de] YYYY"x
                             />
                           </FormControl>
                           <FormMessage />
@@ -226,15 +216,6 @@ function ModalAgregarExperiencia({
                         <FormItem>
                           <FormLabel></FormLabel>
                           <FormControl>
-                            {/* <Input
-                              type="month"
-                              className="border border-black rounded-[10px] h-12"
-                              placeholder="2024"
-                              {...field}
-                              disabled={trabajoActualmente ? true : false}
-                              max={new Date().toISOString().slice(0, 7)}  // Limita la fecha al mes actual
-                              min={form.watch('desde_fecha')}  // Asegura que 'hasta_fecha' no sea menor que 'desde_fecha'
-                            /> */}
                             <DatePicker.MonthPicker
                               className="border border-black rounded-[10px] h-12 w-full"
                               {...form.register("hasta_fecha")}
@@ -245,7 +226,6 @@ function ModalAgregarExperiencia({
                                 return desdeFecha ? current && current.isBefore(dayjs(desdeFecha, "YYYY-MM"), "month") : false;
                               }}
                               placeholder="Selecciona un mes"
-                              // format="MMMM [de] YYYY"x
                             />
                           </FormControl>
                           <FormMessage />

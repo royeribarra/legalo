@@ -26,7 +26,7 @@ const DashboardClientLayout = ({ children }: LayoutProps) => {
 const LayoutContent = ({ children }: { children: ReactNode }) => {
   const whatsappNumber = "51939784580";
   const pathname = usePathname();
-  // const { token, userRole, setToken, setUserRole } = useAuth();
+  const { logout } = useAuth();
   const router = useRouter();
   const {setLoading} = useLoader();
 
@@ -38,13 +38,9 @@ const LayoutContent = ({ children }: { children: ReactNode }) => {
   //   }
   // }, [token, userRole, router]);
 
-  // const handleLogout = () => {
-  //   localStorage.removeItem("tokenRole");
-  //   localStorage.removeItem("userRole");
-  //   setToken(null);
-  //   setUserRole(null);
-  //   router.push("/login");
-  // };
+  const handleLogout = () => {
+    logout();
+  };
 
   const menuItems = [
     { id: "abogados", texto: "Abogados", url: "/dashboard/cliente/" },
@@ -78,9 +74,9 @@ const LayoutContent = ({ children }: { children: ReactNode }) => {
               </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              {/* <DropdownMenuItem onClick={handleLogout}>
+              <DropdownMenuItem onClick={handleLogout}>
                 Cerrar sesión
-              </DropdownMenuItem> */}
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
@@ -97,8 +93,8 @@ const LayoutContent = ({ children }: { children: ReactNode }) => {
             </div>
             <div className="mt-8">
               <div className="border-b-2 border-[#808080] flex w-full overflow-auto lg:overflow-auto">
-                {menuItems.map((boton) => (
-                  <Link href={boton.url}>
+                {menuItems.map((boton, index) => (
+                  <Link href={boton.url} key={index}>
                     <Button
                       key={boton.id}
                       variant={boton.url === pathname ? "dashActive" : "dashInActive"}

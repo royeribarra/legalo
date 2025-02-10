@@ -16,13 +16,13 @@ import TrabajoItem from "../TrabajoItem";
   
   function TrabajosAbogado ()
   {
-    const { token } = useAuth();
+    const { user } = useAuth();
     const [trabajos, setTrabajos] = useState<ITrabajoBack[]>([]);
   
     async function getTrabajos(){
-      if(token?.abogado?.id){
+      if(user?.abogado?.id){
         const data = {
-          abogadoId: token.abogado.id
+          abogadoId: user.abogado.id
         }
         const response = await abogadoService.getTrabajos(data);
         setTrabajos(response.data);

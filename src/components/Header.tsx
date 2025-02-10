@@ -31,10 +31,13 @@ const Header: React.FC<HeaderProps> = ({ serviceTipe, updateServiceTipe }) => {
 
   return (
     <>
-      <header
+      {/* <header
         className={`bg-black lg:sticky lg:top-0 lg:z-20 transition-all duration-300 ${
           isScrolled ? "h-[60px] lg:h-[100px]" : "h-[80px] lg:h-[160px]"
         }`}
+      > */}
+      <header
+        className={`bg-black lg:sticky lg:top-0 lg:z-20 transition-all duration-300 h-[80px] lg:h-[160px]`}
       >
         <div className="mx-auto max-w-[1920px] px-4 lg:px-16 flex justify-between items-center h-full">
           <div className="flex items-center">

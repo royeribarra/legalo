@@ -11,7 +11,7 @@ import React, { useEffect, useState, Suspense } from "react";
 const WelcomeLawyerPage = () => {
   const { setLoading, loading } = useLoader();
   const [isVerified, setIsVerified] = useState(false);
-  const [isChecking, setIsChecking] = useState(true); // Estado para saber si sigue verificando
+  const [isChecking, setIsChecking] = useState(true);
   const searchParams = useSearchParams();
   const activationCode = searchParams.get("code_activation");
   const router = useRouter();

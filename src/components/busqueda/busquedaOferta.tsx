@@ -24,44 +24,49 @@ import { IOfertaBack } from "@/interfaces/Oferta.interface";
 import { ofertaservice } from "@/services";
 import { useDashboardCliente } from "@/contexts/dashboardClienteContext";
 import { useSearchParams } from "next/navigation";
+import { useLoader } from "@/contexts/loaderContext";
 
 function BusquedaOferta(){
-    const { state } = useDashboardCliente();
-    const [openFilter, setOpenFilter] = useState<boolean>(true);
-    const [ofertas, setOfertas] = useState<IOfertaBack[]>([]);
-    const [ofertasFiltrados, setOfertasFiltrados] = useState<IOfertaBack[]>([]);
-    const [filtroServicio, setFiltroServicio] = useState<number | null>(null);
-    const [filtroEspecialidad, setFiltroEspecialidad] = useState<number | null>(null);
-    const [filtroIndustria, setFiltroIndustria] = useState<number | null>(null);
-    const searchParams = useSearchParams();
+  const { setLoading, loading } = useLoader();
+  const { state } = useDashboardCliente();
+  const [openFilter, setOpenFilter] = useState<boolean>(true);
+  const [ofertas, setOfertas] = useState<IOfertaBack[]>([]);
+  const [ofertasFiltrados, setOfertasFiltrados] = useState<IOfertaBack[]>([]);
+  const [filtroServicio, setFiltroServicio] = useState<number | null>(null);
+  const [filtroEspecialidad, setFiltroEspecialidad] = useState<number | null>(null);
+  const [filtroIndustria, setFiltroIndustria] = useState<number | null>(null);
+  const searchParams = useSearchParams();
+  const [firstLoad, setFirstLoad] = useState(true);
 
-    const handleFilter = () => {
-        setOpenFilter(!openFilter);
-    };
+  const handleFilter = () => {
+    setOpenFilter(!openFilter);
+  };
 
-    const inviteProyect = (abogadoId: number = 0) => {
-        console.log(abogadoId)
-    };
+  const inviteProyect = (abogadoId: number = 0) => {
+    console.log(abogadoId)
+  };
 
-    async function fetchOfertas() {
-        try {
-          const data = await ofertaservice.obtenerTodos();
-          setOfertas(data);
-          setOfertasFiltrados(data)
-          console.log(data)
-        } catch (error) {
-          console.error("Error al obtener el detalle:", error);
-        }
-      }
+  async function fetchOfertas() {
+    setLoading(true);
+    try {
+      const data = await ofertaservice.obtenerTodos();
+      setOfertas(data);
+      setOfertasFiltrados(data)
+    } catch (error) {
+      console.error("Error al obtener el detalle:", error);
+    } finally{
+      setLoading(false);
+    }
+  }
 
-    useEffect(()=> {
-        fetchOfertas();
-    }, []);
+  useEffect(()=> {
+    fetchOfertas();
+  }, []);
 
-    const handleServicioChangue = (newValue: string) => {
-        setFiltroServicio(Number(newValue));
-        filtrarOfertas(filtroEspecialidad, Number(newValue), filtroIndustria);
-    };
+  const handleServicioChangue = (newValue: string) => {
+    setFiltroServicio(Number(newValue));
+    filtrarOfertas(filtroEspecialidad, Number(newValue), filtroIndustria);
+  };
 
     const handleEspecialidadChange = (selectedValue: string) => {
         setFiltroEspecialidad(Number(selectedValue));
@@ -116,120 +121,138 @@ function BusquedaOferta(){
       setOfertasFiltrados(filtrados);
     };
 
-    useEffect(() => {
-    const searchParam = searchParams.get("query");
-      if (searchParam) {
-          filtrarOfertaPorTexto(searchParam.toLowerCase());
-      }
-    }, [searchParams, ofertas, state.especialidades, state.industrias, state.servicios]);
+  useEffect(() => {
+  const searchParam = searchParams.get("query");
+    if (searchParam) {
+      filtrarOfertaPorTexto(searchParam.toLowerCase());
+    }
+  }, [searchParams, ofertas, state.especialidades, state.industrias, state.servicios]);
 
-    return(
-        <div className="mt-8">
-            <div>
-                <div className="mt-6 h-6">
-                    <Button
-                        variant="link"
-                        onClick={handleFilter}
-                        className="text-base px-0 font-light gap-2 flex items-center"
-                    >
-                        {openFilter ? <ChevronsLeft /> : <ChevronsRight />}
-                        <span>{openFilter ? "Ocultar Filtros" : "Ver Filtros"}</span>
-                    </Button>
-                </div>
-                <div className="mt-8 flex overflow-hidden">
-                {/* filtros */}
-                {openFilter && (
-                    <div className="lg:block w-[288px] mr-16 flex-none">
-                    <div className="border-b border-black flex justify-between items-center pb-6">
-                        <h3 className="text-2xl">Filtros</h3>
-                        <Button
-                        onClick={handleFilter}
-                        variant="link"
-                        className="hidden underline px-0"
-                        >
-                        Ocultar todo
-                        </Button>
-                    </div>
-                    <div>
-                        <Accordion
-                        type="multiple"
-                        defaultValue={[
-                            "item-1",
-                            "item-2",
-                            "item-3",
-                            "item-4",
-                            "item-5",
-                            "item-6",
-                        ]}
-                        >
-                        <AccordionItem value="item-1">
-                            <AccordionTrigger>Especialidad</AccordionTrigger>
-                            <AccordionContent>
-                                <Select onValueChange={(selectedValue) => handleEspecialidadChange(selectedValue)}>
-                                <SelectTrigger className="focus-visible:ring-0 border border-black rounded-[10px] focus:ring-0 outline-none">
-                                    <SelectValue placeholder="Selecciona especialidad" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {
-                                    state.especialidades.map((especialidad, index)=>
-                                        <SelectItem value={`${especialidad.id}`} key={index}>{especialidad.nombre}</SelectItem>
-                                    )
-                                    }
-                                </SelectContent>
-                                </Select>
-                            </AccordionContent>
-                        </AccordionItem>
-                        <AccordionItem value="item-2">
-                            <AccordionTrigger>Industria</AccordionTrigger>
-                            <AccordionContent>
-                                <Select onValueChange={(selectedValue) => handleIndustriaChange(selectedValue)}>
-                                <SelectTrigger className="focus-visible:ring-0 border border-black rounded-[10px] focus:ring-0 outline-none">
-                                    <SelectValue placeholder="Selecciona industria" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {
-                                    state.industrias.map((industria, index)=>
-                                        <SelectItem value={`${industria.id}`} key={index}>{industria.nombre}</SelectItem>
-                                    )
-                                    }
-                                </SelectContent>
-                                </Select>
-                            </AccordionContent>
-                        </AccordionItem>
-                        <AccordionItem value="item-5">
-                            <AccordionTrigger>Servicios</AccordionTrigger>
-                            <AccordionContent>
-                                <RadioGroup  defaultValue={`${state.servicios[0]?.id}` || ""} onValueChange={(newValue) => handleServicioChangue(newValue)}>
-                                {state.servicios.map((servicio, index) => {
-                                    const radioId = `radio-${index}`;
-                                    return (
-                                    <div className="flex items-center space-x-2" key={servicio.id || index}>
-                                        <RadioGroupItem value={`${servicio.id}`} id={radioId} />
-                                        <LabelCn htmlFor={radioId} className="text-base font-light">
-                                        {servicio.nombre}
-                                        </LabelCn>
-                                    </div>
-                                    );
-                                })}
-                                </RadioGroup>
-                            </AccordionContent>
-                        </AccordionItem>
-                        </Accordion>
-                    </div>
-                    </div>
-                )}
+  useEffect(() => {
+    if (!loading && firstLoad) {
+      setFirstLoad(false);
+    }
+  }, [loading]);
 
-                <div className="flex flex-col gap-8 flex-1">
-                    {
-                        ofertasFiltrados.map((oferta, index)=>
-                            <ResumeProyect oferta={oferta} inviteProyect={inviteProyect} key={index} />
-                        )
-                    }
-                </div>
-                </div>
-            </div>
+  return(
+    <div className="mt-8">
+      <div>
+        <div className="mt-6 h-6">
+            <Button
+                variant="link"
+                onClick={handleFilter}
+                className="text-base px-0 font-light gap-2 flex items-center"
+            >
+                {openFilter ? <ChevronsLeft /> : <ChevronsRight />}
+                <span>{openFilter ? "Ocultar Filtros" : "Ver Filtros"}</span>
+            </Button>
         </div>
-    );
+        <div className="mt-8 flex overflow-hidden">
+        {/* filtros */}
+        {openFilter && (
+            <div className="lg:block w-[288px] mr-16 flex-none">
+            <div className="border-b border-black flex justify-between items-center pb-6">
+                <h3 className="text-2xl">Filtros</h3>
+                <Button
+                onClick={handleFilter}
+                variant="link"
+                className="hidden underline px-0"
+                >
+                Ocultar todo
+                </Button>
+            </div>
+            <div>
+                <Accordion
+                type="multiple"
+                defaultValue={[
+                    "item-1",
+                    "item-2",
+                    "item-3",
+                    "item-4",
+                    "item-5",
+                    "item-6",
+                ]}
+                >
+                <AccordionItem value="item-1">
+                    <AccordionTrigger>Especialidad</AccordionTrigger>
+                    <AccordionContent>
+                        <Select onValueChange={(selectedValue) => handleEspecialidadChange(selectedValue)}>
+                        <SelectTrigger className="focus-visible:ring-0 border border-black rounded-[10px] focus:ring-0 outline-none">
+                            <SelectValue placeholder="Selecciona especialidad" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {
+                            state.especialidades.map((especialidad, index)=>
+                                <SelectItem value={`${especialidad.id}`} key={index}>{especialidad.nombre}</SelectItem>
+                            )
+                            }
+                        </SelectContent>
+                        </Select>
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                    <AccordionTrigger>Industria</AccordionTrigger>
+                    <AccordionContent>
+                        <Select onValueChange={(selectedValue) => handleIndustriaChange(selectedValue)}>
+                        <SelectTrigger className="focus-visible:ring-0 border border-black rounded-[10px] focus:ring-0 outline-none">
+                            <SelectValue placeholder="Selecciona industria" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {
+                            state.industrias.map((industria, index)=>
+                                <SelectItem value={`${industria.id}`} key={index}>{industria.nombre}</SelectItem>
+                            )
+                            }
+                        </SelectContent>
+                        </Select>
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-5">
+                    <AccordionTrigger>Servicios</AccordionTrigger>
+                    <AccordionContent>
+                        <RadioGroup  defaultValue={`${state.servicios[0]?.id}` || ""} onValueChange={(newValue) => handleServicioChangue(newValue)}>
+                        {state.servicios.map((servicio, index) => {
+                            const radioId = `radio-${index}`;
+                            return (
+                            <div className="flex items-center space-x-2" key={servicio.id || index}>
+                                <RadioGroupItem value={`${servicio.id}`} id={radioId} />
+                                <LabelCn htmlFor={radioId} className="text-base font-light">
+                                {servicio.nombre}
+                                </LabelCn>
+                            </div>
+                            );
+                        })}
+                        </RadioGroup>
+                    </AccordionContent>
+                </AccordionItem>
+                </Accordion>
+            </div>
+            </div>
+        )}
+
+        <div className="flex flex-col gap-8 flex-1">
+          {/* {
+              ofertasFiltrados.map((oferta, index)=>
+                  <ResumeProyect oferta={oferta} inviteProyect={inviteProyect} key={index} />
+              )
+          } */}
+          {
+            loading && firstLoad ? (
+              <p>Cargando ofertas...</p>
+            ) : ofertasFiltrados.length === 0 ? (
+              <p>No se encontró ninguna oferta con el filtro seleccionado.</p>
+            ) : 
+            (
+              ofertasFiltrados.map((oferta, index) => (
+                <ResumeProyect oferta={oferta} inviteProyect={inviteProyect} key={index} />
+              ))
+            )
+          }
+        </div>
+          </div>
+      </div>
+    </div>
+  );
 }
 
 export default BusquedaOferta;

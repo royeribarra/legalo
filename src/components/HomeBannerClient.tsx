@@ -27,9 +27,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
+import { useLoader } from "@/contexts/loaderContext";
 
 const HomeBannerClient = () => {
   const router = useRouter();
+  const { setLoading } = useLoader();
   const [searchQuery, setSearchQuery] = useState("");
   const dataServices = [
     {
@@ -148,9 +150,8 @@ const HomeBannerClient = () => {
   };
 
   const searchAbogado = () => {
-    console.log(searchQuery);
     if (searchQuery.trim() !== "") {
-      // Navega a la ruta con el query param
+      setLoading(true);
       router.push(`/busqueda?query=${encodeURIComponent(searchQuery)}`);
     }
   };
