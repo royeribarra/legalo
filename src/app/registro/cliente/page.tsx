@@ -30,6 +30,8 @@ import {
   SelectTrigger,
 } from "@/components/ui/select";
 import { useToast } from "@/contexts/toastContext";
+import { useLoader } from "@/contexts/loaderContext";
+import { clienteService } from "@/services";
 
 type PasswordFieldProps<T extends FieldValues> = {
   field: {
@@ -163,6 +165,7 @@ const formSchema = z.object({
 
 const RegisterClient = () => {
   const { showToast } = useToast();
+  const { setLoading } = useLoader();
   const router = useRouter();
   const [tipoPersona, setTipoPersona] = useState("natural");
   const form = useForm<z.infer<typeof formSchema>>({
@@ -178,8 +181,9 @@ const RegisterClient = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    setLoading(true);
     const data = {
       nombres: values.names,
       apellidos: values.lastNames,
@@ -191,31 +195,24 @@ const RegisterClient = () => {
       opinion: values.howDiscover,
       contrasena: values.password,
     };
-    fetch(`${process.env.BASE_APP_API_URL}/clientes/create`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        if (data.state) {
-          localStorage.clear();
-          router.push("/registro/cliente/email-verify");
-        } else {
-          showToast("error", "Error", data.message || "Ocurrió un error.");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
+    try {
+      const response = await clienteService.createCliente(data);
+      if (response.state) {
+        localStorage.clear();
+        router.push("/registro/cliente/email-verify");
+      } else {
+        showToast("error", "Error", response.message || "Ocurrió un error.");
+      }
+    } catch (error) {
+      console.log(error);
         showToast(
           "error",
           "Error",
           "Ocurrió un error al momento del registro."
         );
-      });
+    } finally {
+      setLoading(false);
+    }
   }
 
   function onError(errors: FieldValues) {
@@ -238,7 +235,7 @@ const RegisterClient = () => {
 
           <div className="flex gap-2 p-2 flex-col md:flex-row">
             <p className="text-sm">¿Buscas Trabajo?</p>
-            <Link href="/registro" className="underline text-sm">
+            <Link href="/busqueda" className="underline text-sm">
               Ir a Oportunidades
             </Link>
           </div>

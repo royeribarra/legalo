@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Search as IcoSearch } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label as LabelCn } from "@/components/ui/label";
@@ -24,22 +23,18 @@ import {
 } from "@/components/ui/accordion";
 import AbogadoResumeCard from "@/components/dashboard/AbogadoResumeCard";
 import ModalInviteProyect from "@/components/dashboard/ModalInviteProyect";
-import ProyectosActivos from "@/components/dashboard/OfertasActivas";
-import ProyectosPorAceptar from "@/components/dashboard/AplicacionesPorAceptar";
-import ProyectosFinalizados from "@/components/dashboard/ProyectosFinalizados";
-import Link from "next/link";
 import { useDashboardCliente } from "@/contexts/dashboardClienteContext";
 import { abogadoService } from "@/services";
 import { IAbogadoBack } from "@/interfaces/Abogado.interface";
-import TrabajosCliente from "@/components/dashboard/Cliente/TrabajosCliente";
 import { useLoader } from "@/contexts/loaderContext";
+import { useAuth } from "@/contexts/authContext";
 
 const DashboardClientPage = () => {
+  const { user } = useAuth();
   const { setLoading } = useLoader();
   const [openFilter, setOpenFilter] = useState(true);
   const [menuActive, setMenuActive] = useState("abogados");
   const { state } = useDashboardCliente();
-  const [subMenuActive, setSubMenuActive] = useState("ofertas-activas");
   const [abogados, setAbogados] = useState<IAbogadoBack[]>([]);
   const [abogadosFiltrados, setAbogadosFiltrados] = useState<IAbogadoBack[]>([]);
   const [abogadoPrevioInvitado, setAbogadoPrevioInvitado] = useState<IAbogadoBack>();
@@ -48,13 +43,6 @@ const DashboardClientPage = () => {
   const [filtroServicio, setFiltroServicio] = useState<number | null>(null);
   const [filtroEspecialidad, setFiltroEspecialidad] = useState<number | null>(null);
   const [filtroIndustria, setFiltroIndustria] = useState<number | null>(null);
-
-  const subMenuItems = [
-    { id: "ofertas-activas", texto: "Ofertas Activas" },
-    { id: "ofertas-por-aceptar", texto: "Ofertas con aplicación" },
-    // { id: "trabajos-activos", texto: "Trabajos activos" },
-    // { id: "trabajos-finalizados", texto: "Trabajos finalizados" },
-  ];
 
   const handleFilter = () => {
     setOpenFilter(!openFilter);
@@ -77,7 +65,8 @@ const DashboardClientPage = () => {
     setLoading(true);
     try {
       const data = {
-        validadoAdmin: true
+        validadoAdmin: true,
+        clienteId: user?.cliente?.id
       };
       const response = await abogadoService.obtenerTodos(data);
       setAbogados(response);

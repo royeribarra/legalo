@@ -8,7 +8,6 @@ import { AuthProvider, useAuth } from "@/contexts/authContext";
 import Image from "next/image";
 import Link from "next/link";
 import { DashboardClienteProvider } from "@/contexts/dashboardClienteContext";
-import { useLoader } from "@/contexts/loaderContext";
 import { Button } from "@/components/ui/button";
 
 interface LayoutProps {
@@ -26,17 +25,7 @@ const DashboardClientLayout = ({ children }: LayoutProps) => {
 const LayoutContent = ({ children }: { children: ReactNode }) => {
   const whatsappNumber = "51939784580";
   const pathname = usePathname();
-  const { logout } = useAuth();
-  const router = useRouter();
-  const {setLoading} = useLoader();
-
-  // useEffect(() => {
-  //   if (token && userRole !== "cliente") {
-  //     router.push(userRole === "abogado" ? "/dashboard/abogado" : "/login");
-  //   } else {
-  //     setLoading(false);
-  //   }
-  // }, [token, userRole, router]);
+  const { logout, user } = useAuth();
 
   const handleLogout = () => {
     logout();
@@ -69,7 +58,7 @@ const LayoutContent = ({ children }: { children: ReactNode }) => {
               <Avatar>
                 <AvatarImage src="" />
                 <AvatarFallback>
-                  {/* {token ? token.nombres[0] + token.apellidos[0] : ""} */}
+                  {user ? user.nombres[0] + user.apellidos[0] : ""}
                 </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>

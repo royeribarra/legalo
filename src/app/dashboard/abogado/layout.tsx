@@ -5,22 +5,13 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { ReactNode } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Input } from "@/components/ui/input";
-import { Search as IcoSearch } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { usePathname, useRouter } from "next/navigation";
 import { AuthProvider, useAuth } from "@/contexts/authContext";
 import { DashboardAbogadoProvider } from "@/contexts/dashboardAbogadoContext";
-import { useLoader } from "@/contexts/loaderContext";
+
 interface LayoutProps {
   children: ReactNode;
 }
@@ -34,11 +25,9 @@ const DashboardAbogadoLayout = ({ children }: LayoutProps) => {
 };
 
 const LayoutContent = ({ children }: LayoutProps) => {
-  const { logout } = useAuth();
-  const router = useRouter();
+  const { logout, user } = useAuth();
   const pathname = usePathname();
   const whatsappNumber = "51939784580";
-  const {setLoading } = useLoader();
 
   const menuItems = [
     { id: "oportunidades", texto: "Oportunidades para ti", url: "/dashboard/abogado" },
@@ -74,7 +63,7 @@ const LayoutContent = ({ children }: LayoutProps) => {
               <Avatar>
                 <AvatarImage src="" />
                 <AvatarFallback>
-                  {/* {token ? token.nombres[0] + token.apellidos[0] : ""} */}
+                  {user ? user.nombres[0] + user.apellidos[0] : ""}
                 </AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>

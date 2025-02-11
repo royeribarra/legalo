@@ -18,7 +18,7 @@ const LibroReclamaciones = () => {
       <div>
         <div className="p-8 max-w-[1300px] mx-auto">
           <h1 className="text-4xl lg:text-6xl font-nimbus my-8">
-            Términos y condiciones
+            Términos y Condiciones
           </h1>
           <p>Last Modified: July 19, 2021</p>
 

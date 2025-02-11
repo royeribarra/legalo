@@ -19,7 +19,7 @@ const TerminosPage = () => {
       <div>
         <div className="p-8 max-w-[1300px] mx-auto">
           <h1 className="text-4xl lg:text-6xl font-nimbus my-8">
-            Términos y condiciones
+            Términos y Condiciones
           </h1>
           <Link href="https://legalo.s3.us-east-1.amazonaws.com/Legalo+-+Te%CC%81rminos+y+Condiciones+de+Uso+-+Enero+2025.pdf" target="_blank">
             Descarga aquí.

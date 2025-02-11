@@ -106,11 +106,10 @@ const PublicarPageEight = () => {
   };
 
   const handleSubmit = async () => {
-    if (!state.documento) {
-      // showToast("error", "Falta documento", "Sube un documento por favor.");
-      setShowModalDocumentoOferta(true);
-      return;
-    }
+    // if (!state.documento) {
+    //   setShowModalDocumentoOferta(true);
+    //   return;
+    // }
     setLoading(true);
     const data = {
       ...state,

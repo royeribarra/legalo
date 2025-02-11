@@ -30,7 +30,7 @@ import TrabajoItem from "../TrabajoItem";
     }
   
     useEffect(()=>{
-        getTrabajos();
+      getTrabajos();
     }, []);
   
     return(

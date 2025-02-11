@@ -85,13 +85,13 @@ function Ofertas() {
   };
 
   async function fetchOfertas() {
-      try {
-        const data = await ofertaservice.obtenerTodos();
-        setFilteredData(data);
-      } catch (error) {
-        console.error("Error al obtener las ofertas:", error);
-      }
+    try {
+      const data = await ofertaservice.obtenerTodos();
+      setFilteredData(data);
+    } catch (error) {
+      console.error("Error al obtener las ofertas:", error);
     }
+  }
 
   useEffect(()=> {
     fetchOfertas();

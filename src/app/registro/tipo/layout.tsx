@@ -26,7 +26,7 @@ export default function AboutLayout({ children }: { children: ReactNode }) {
 
           <div className="flex gap-2 p-2 flex-col md:flex-row">
             <p className="text-sm">¿Buscas Trabajo?</p>
-            <Link href="/registro" className="underline text-sm">
+            <Link href="/busqueda" className="underline text-sm">
               Ir a Oportunidades
             </Link>
           </div>

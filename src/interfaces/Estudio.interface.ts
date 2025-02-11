@@ -9,3 +9,16 @@ export interface IEstudio {
     titulo: string;
     ubicacion: string;
 }
+
+export interface IEducacionBack{
+    id: number;
+    createdAt: string;
+    updatedAt: string;
+    deletedAt: string;
+    fecha_fin: string
+    fecha_inicio: string;
+    descripcion: string;
+    institucion: string;
+    ubicacion: string;
+    titulo: string;
+}

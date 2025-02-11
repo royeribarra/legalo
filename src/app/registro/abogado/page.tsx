@@ -218,7 +218,7 @@ function RegisterLawyer() {
 
           <div className="flex gap-2 p-2 flex-col md:flex-row">
             <p className="text-sm">¿Buscas Trabajo?</p>
-            <Link href="/registro" className="underline text-sm">
+            <Link href="/busqueda" className="underline text-sm">
               Ir a Oportunidades
             </Link>
           </div>
@@ -426,8 +426,8 @@ function RegisterLawyer() {
                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                       >
                         Acepto los{" "}
-                        <Link href="/terminos-y-condiciones" className="underline">
-                          Términos y condiciones{" "}
+                        <Link href="/terminos-y-condiciones" className="underline" target="_blank">
+                          Términos y Condiciones{" "}
                         </Link>
                       </label>
                       <FormMessage />

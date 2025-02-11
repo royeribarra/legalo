@@ -22,7 +22,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (token) {
       try {
         const userData = JSON.parse(atob(token.split('.')[1])); // Decodificar JWT
-        setUser(userData);
+        console.log(userData)
+        setUser(userData.user);
       } catch (error) {
         console.error('Error decoding token', error);
       }

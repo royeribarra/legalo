@@ -6,6 +6,10 @@ export default class ClienteService extends MainService {
     super(url);
   }
 
+  public async createCliente(data: any): Promise<any>{
+    return this.post(`/create`, data);
+  }
+
   public async obtenerTodos(params?: any): Promise<any> {
     return this.get("/all", params);
   }
