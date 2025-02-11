@@ -19,16 +19,6 @@ import {
 } from "@/components/ui/card";
 
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
-import {
   Carousel,
   CarouselContent,
   CarouselItem,
@@ -413,9 +403,8 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   ¿Cómo calculamos?
                 </Button>
               </Popover.Trigger>
-              
               <Popover.Portal>
-                <Popover.Content 
+                <Popover.Content
                   className="bg-white text-sm text-gray-700 p-4 rounded-lg shadow-lg w-96"
                   side="top" // Puedes ajustar la posición
                   align="center"

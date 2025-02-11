@@ -423,7 +423,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   side="top" // Puedes ajustar la posición
                   align="center"
                 >
-                  Las tarifas promedio presentadas se basan en una encuesta anónima realizada a abogados del Perú y están diseñadas para brindarte una referencia sobre los ingresos potenciales en el mercado legal. Los ingresos reales pueden variar según las particularidades de cada caso, tu experiencia profesional y tus clientes. Según esta encuesta, los factores que podrían incrementar las tarifas son: Urgencia del caso, especialización requerida y volumen de trabajo estimado.
+                  Las tarifas promedio presentadas se basan en una encuesta anónima realizada a abogados del Perú y tienen como único propósito servir como referencia de los costos legales. No constituyen valores oficiales o definitivos del mercado legal. Los abogados contratados a través de LEGALO pueden aplicar tarifas menores o mayores según las particularidades de cada caso. Según esta encuesta, los factores que podrían incrementar las tarifas son: Urgencia del caso, especialización requerida y volumen de trabajo estimado.
                   <Popover.Arrow className="fill-white" />
                 </Popover.Content>
               </Popover.Portal>

@@ -25,6 +25,9 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
+import { useLoader } from "@/contexts/loaderContext";
+import { mailService } from "@/services";
+import { useToast } from "@/contexts/toastContext";
 
 const schema = z.object({
   name: z.string().min(1, "El nombre es obligatorio"),
@@ -35,6 +38,8 @@ const schema = z.object({
 });
 
 const ContactoPage = () => {
+  const { setLoading } = useLoader();
+  const { showToast } = useToast();
   const [serviceTipe, setServiceTipe] = useState<string>("lawyer");
 
   const updateServiceTipe = (newType: string) => {
@@ -52,8 +57,19 @@ const ContactoPage = () => {
     },
   });
 
-  const onSubmit = () => {
-    // console.log(data);
+  const onSubmit = async (data: any) => {
+    console.log(data);
+    setLoading(true);
+    try {
+      const response = await mailService.enviarFormularioContacto(data);
+      if(response.state){
+        showToast("success", response.message, '');
+      }
+    } catch (error) {
+      showToast("error", "No se pudo envíar el mail.", '');
+    } finally{
+      setLoading(false);
+    }
   };
 
   return (
@@ -155,19 +171,12 @@ const ContactoPage = () => {
                   <FormItem>
                     <FormLabel>¿Qué tipo de servicio te interesa?</FormLabel>
                     <FormControl>
-                      <Select onValueChange={field.onChange}>
-                        <SelectTrigger className="border-black rounded-[10px] focus:border-none">
-                          <SelectValue placeholder="Seleccionar" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="laboral">
-                            Derecho laboral
-                          </SelectItem>
-                          <SelectItem value="familiar">
-                            Derecho familiar
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <Input
+                        placeholder="Abogado Civil"
+                        type="text"
+                        className="border-black rounded-[10px] focus:border-none"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

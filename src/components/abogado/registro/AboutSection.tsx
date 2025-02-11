@@ -77,10 +77,9 @@ function AboutSection({
 
   return (
     <div className="flex flex-col gap-2">
-      <p>
-        Completa tu perfil con tus especialidades, nivel profesional y una breve
-        descripción sobre ti.
-      </p>
+      {/* <p>
+        Completa tu perfil con tus especialidades, nivel profesional y una breve descripción sobre ti.
+      </p> */}
       <div>
         <Select onValueChange={onChangeGrado} value={stateAbogado.grado}>
           <p className="text-sm my-2">Grado*</p>

@@ -56,14 +56,21 @@ const EmailVerify = () => {
             En un máximo de 48 horas recibirás un correo de confirmación.
           </p>
         </div>
-        <Button
+        {/* <Button
           onClick={() => {
             setShowStep(false);
           }}
           className="mt-4 rounded-[10px] h-12 px-6 text-base"
         >
           Enviar de nuevo
-        </Button>
+        </Button> */}
+        <Link href={"/login"}>
+          <Button
+            className="mt-4 rounded-[10px] h-12 px-6 text-base"
+          >
+            Empezar ahora
+          </Button>
+        </Link>
       </div>
     </div>
   );

@@ -200,6 +200,7 @@ const RegisterClient = () => {
       if (response.state) {
         localStorage.clear();
         router.push("/registro/cliente/email-verify");
+        showToast("success", response.message, "");
       } else {
         showToast("error", "Error", response.message || "Ocurrió un error.");
       }

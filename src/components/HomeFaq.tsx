@@ -54,8 +54,7 @@ const HomeFaq = () => {
             <AccordionContent className="text-base">
               Tan pronto publicas tu caso, los abogados empiezan a postular.
               Puedes recibir propuestas en pocas horas y contratar a un abogado
-              en menos de un día o máximo 48 horas. (Aún no cierro esta
-              respuesta).
+              en menos de un día o máximo 48 horas.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-3" className="border-b-black">

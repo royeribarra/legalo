@@ -225,8 +225,8 @@ const CompleteProfileLawyerPage: React.FC = () => {
           router.push(
             `/registro/abogado/email-verify?correo=${encodeURIComponent(stateAbogado.email)}`
           );
+          showToast("success", response.message, "");
         }
-        showToast("info", response.message, "");
       } catch (error) {
         showToast("error", "Ocurrió un error", "");
       } finally {
@@ -282,11 +282,6 @@ const CompleteProfileLawyerPage: React.FC = () => {
     abogadoId: number,
     nombreArchivo: string
   ) => {
-    // const archivoBlob = base64ToFile(
-    //   archivo.contenido,
-    //   archivo.tipo,
-    //   archivo.nombre
-    // );
     const body = {
       nombreArchivo,
       abogadoId,
@@ -500,10 +495,9 @@ const CompleteProfileLawyerPage: React.FC = () => {
                     <Plus size={20} color="black" className="mr-4" />Sumar experiencia
                   </Button>
                 </div>
-                <p>
-                  Detalla tus experiencias laborales relevantes para resaltar tu
-                  trayectoria profesional
-                </p>
+                {/* <p>
+                  Detalla tus experiencias laborales relevantes para resaltar tu trayectoria profesional
+                </p> */}
                 {stateAbogado.experiencias.map(
                   (experiencia: IExperiencia, index) => (
                     <div className="flex gap-4 p-4" key={index}>
@@ -575,10 +569,10 @@ const CompleteProfileLawyerPage: React.FC = () => {
                   <Plus size={20} color="black" className="mr-4" />Agregar estudio
                 </Button>
               </div>
-              <p>
+              {/* <p>
                 Añade tus títulos y certificaciones para destacar tu formación
                 académica.
-              </p>
+              </p> */}
               <div>
                 {stateAbogado.estudios.map((educacion: IEstudio, index) => (
                   <div className="flex gap-4 p-4" key={index}>
