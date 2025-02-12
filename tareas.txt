@@ -51,6 +51,16 @@ Caja Los Andes
         - aceptado
         - cerrado
 
+    Estados abogado
+        - por verificar = 0  ==>    usuario => validado_admin = 0
+        - rechazado = 0 y eliminado  ==>  usuario ==> eliminado
+        - aceptado = 1 ==> usuario ==> verificado y se envía mail
+
+    Estados usuario
+        - por verificar = 0
+        - rechazado = 0 y eliminado
+        - aceptado = 1
+
 2. Un abogado puede recibir una invitacion a una oferta.
 3. Cuando el abogado acepta una invitacion, se genera automaticamente la aplicacion.
 4. Cuando el cliente acepta una aplicacion:
