@@ -16,6 +16,7 @@ import Link from 'next/link';
 import { useToast } from '@/contexts/toastContext';
 import { IFileBack } from '@/interfaces/File.interface';
 import { useLoader } from '@/contexts/loaderContext';
+import { Modal } from 'antd';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -33,31 +34,68 @@ interface Opportunity {
   ubicacion: string;
 }
 
-// Datos de ejemplo
-const data: Opportunity[] = [
-  {
-    key: '1',
-    title: 'Representación en Caso Laboral',
-    cliente: 'Empresa ABC',
-    abogados: ['Juan Pérez', 'María Gómez'],
-    presupuesto: 3000,
-    estado: 'Activo',
-    fechaPublicacion: '2023-05-14',
-    industria: 'Recursos Humanos',
-    ubicacion: 'Ciudad de México',
-  },
-  {
-    key: '2',
-    title: 'Asesoría en Derecho Corporativo',
-    cliente: 'Startup XYZ',
-    abogados: ['Pedro López', 'Ana Martínez'],
-    presupuesto: 5000,
-    estado: 'Inactivo',
-    fechaPublicacion: '2023-06-10',
-    industria: 'Tecnología',
-    ubicacion: 'Guadalajara',
-  },
-];
+const OpcionesVerificacion = ({ record }: { record: IAbogadoBack }) => {
+  console.log(record);
+  const { showToast } = useToast();
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const handleChange = (value: any) => {
+    setSelectedOption(value);
+  };
+
+  const handleConfirm = async () => {
+    setIsModalVisible(false);
+    try {
+      const data = { abogadoId: record.usuario.id, action: selectedOption };
+      const response = await usuarioService.enviarMailVerificacion(data);
+      console.log(response);
+      if (response.state) {
+        showToast('success', response.message, '');
+      }
+    } catch (error) {
+      showToast('error', 'Error al actualizar el estado', '');
+      console.error('Error al enviar solicitud:', error);
+    }
+  };
+
+  return (
+    <>
+      {record.validado_admin && record.usuario.isActive ? (
+        <Tag color="green">Validado</Tag>
+      ) : (
+        <Tag color="orange">Por validar</Tag>
+      )}
+      <Select
+        placeholder="Seleccione una acción"
+        style={{ width: 200, marginLeft: 10 }}
+        onChange={handleChange}
+        value={selectedOption}
+      >
+        {/* <Select.Option value="validar">Validar documentos</Select.Option> */}
+        <Select.Option value="rechazar">Rechazar documentos</Select.Option>
+        <Select.Option value="aceptar">Aceptar documentos</Select.Option>
+      </Select>
+      <Button 
+        type="primary" 
+        onClick={() => setIsModalVisible(true)} 
+        disabled={!selectedOption}
+        style={{ marginLeft: 10 }}
+      >
+        Guardar
+      </Button>
+
+      <Modal
+        title="Confirmación"
+        visible={isModalVisible}
+        onOk={handleConfirm}
+        onCancel={() => setIsModalVisible(false)}
+      >
+        <p>¿Está seguro de que desea {selectedOption} los documentos?</p>
+      </Modal>
+    </>
+  );
+};
 
 // Filtros disponibles
 const estados: ('Activo' | 'Inactivo')[] = ['Activo', 'Inactivo'];
@@ -71,27 +109,6 @@ function Abogados() {
   const [estadoFilter, setEstadoFilter] = useState<'Activo' | 'Inactivo' | null>(null);
   const [industriaFilter, setIndustriaFilter] = useState<string | null>(null);
   // const [fechaFilter, setFechaFilter] = useState<[Dayjs, Dayjs] | null>(null);
-
-  // Filtros aplicados por el usuario
-  const applyFilters = () => {
-    let newData = data;
-
-    // Filtrado por término de búsqueda (por título de la oferta)
-    if (searchTerm) {
-      newData = newData.filter((item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()));
-    }
-
-    // Filtrado por estado
-    if (estadoFilter) {
-      newData = newData.filter((item) => item.estado === estadoFilter);
-    }
-
-    // Filtrado por industria
-    if (industriaFilter) {
-      newData = newData.filter((item) => item.industria === industriaFilter);
-    }
-    // setFilteredData(newData); // Establecer los datos filtrados
-  };
 
   async function fetchOfertas() {
     setLoading(true);
@@ -235,6 +252,11 @@ function Abogados() {
       }
     },
     {
+      title: 'Acciones',
+      key: 'acciones',
+      render: (_: unknown, record: IAbogadoBack) => <OpcionesVerificacion record={record} />,
+    },
+    {
       title: 'Envíar código de verificación',
       key: 'enviar',
       render: (_: unknown, record: IAbogadoBack) => {
@@ -317,7 +339,7 @@ function Abogados() {
           placeholder="Buscar ofertas..."
           style={{ width: '250px' }}
           onChange={(e) => setSearchTerm(e.target.value)}
-          onPressEnter={applyFilters}
+          // onPressEnter={applyFilters}
         />
         <Select
           placeholder="Filtrar por estado"
@@ -352,7 +374,7 @@ function Abogados() {
         <Button
           type="primary"
           icon={<FilterOutlined />}
-          onClick={applyFilters}
+          // onClick={applyFilters}
         >
           Aplicar filtros
         </Button>
