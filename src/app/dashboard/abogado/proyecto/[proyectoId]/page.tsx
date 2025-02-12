@@ -334,8 +334,8 @@ const ProyectSinglePage = () => {
       )}
 
       {showModalPostularOk && (
-        <ModalPostulacionOk 
-          handleModalPostularOk={handleModalPostularOk} 
+        <ModalPostulacionOk
+          handleModalPostularOk={handleModalPostularOk}
           oferta={oferta}
           newAplicacionId={newAplicacionId}
         />

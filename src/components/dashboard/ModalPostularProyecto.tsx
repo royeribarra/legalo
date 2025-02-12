@@ -79,9 +79,9 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
   console.log(abogado)
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const [step, setStep] = useState("step1");
-  const [precio, setPrecio] = useState<number>(0); // Precio ingresado por el usuario
-  const [comision, setComision] = useState<number>(0); // 20% del precio
-  const [impuesto, setImpuesto] = useState<number>(0); 
+  const [precio, setPrecio] = useState<number>(0);
+  const [comision, setComision] = useState<number>(0);
+  const [impuesto, setImpuesto] = useState<number>(0);
   const [totalRecibido, setTotalRecibido] = useState<number>(0);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [uploadedFile, setUploadedFile] = useState<{ nombre: string; tipo: string; contenido: File } | null>(null);

@@ -132,43 +132,43 @@ function Clientes() {
         <p>{dni}</p>
       )
     },
-    {
-      title: 'Estado',
-      dataIndex: 'is_active',
-      key: 'is_active',
-      render: (validado: boolean, record: IUsuarioBack) => (
-        <Button
-          type="primary"
-          danger={!record.isActive} // Usamos el estado actualizado
-          onClick={async () => {
-            try {
-              const nuevoEstado = !record.isActive; // Alternar el estado
-              const data = { 
-                is_active: nuevoEstado,
-                abogadoId: record.abogado?.id
-            };
-              const response = await usuarioService.validarUsuarioPorAdmin(data); // Realizar la petición
+    // {
+    //   title: 'Estado',
+    //   dataIndex: 'is_active',
+    //   key: 'is_active',
+    //   render: (validado: boolean, record: IUsuarioBack) => (
+    //     <Button
+    //       type="primary"
+    //       danger={!record.isActive} // Usamos el estado actualizado
+    //       onClick={async () => {
+    //         try {
+    //           const nuevoEstado = !record.isActive; // Alternar el estado
+    //           const data = {
+    //             is_active: nuevoEstado,
+    //             abogadoId: record.abogado?.id
+    //         };
+    //           const response = await usuarioService.validarUsuarioPorAdmin(data); // Realizar la petición
               
-              if(response.state){
-                record.isActive = nuevoEstado;
-                showToast("success", response.message, "");
-                setFilteredData((prevDataSource) =>
-                  prevDataSource.map((item) =>
-                    item.id === record.id ? { ...item, is_active: nuevoEstado } : item
-                  )
-                );
-              }
-              // Actualizar el estado local para reflejar el cambio en la tabla
-            } catch (error) {
-              showToast("error", "Error al actualizar el estado", "");
-              console.error('Error al actualizar el estado:', error);
-            }
-          }}
-        >
-          {record.isActive ? 'Activado' : 'Desactivado'}
-        </Button>
-      ),
-    }
+    //           if(response.state){
+    //             record.isActive = nuevoEstado;
+    //             showToast("success", response.message, "");
+    //             setFilteredData((prevDataSource) =>
+    //               prevDataSource.map((item) =>
+    //                 item.id === record.id ? { ...item, is_active: nuevoEstado } : item
+    //               )
+    //             );
+    //           }
+    //           // Actualizar el estado local para reflejar el cambio en la tabla
+    //         } catch (error) {
+    //           showToast("error", "Error al actualizar el estado", "");
+    //           console.error('Error al actualizar el estado:', error);
+    //         }
+    //       }}
+    //     >
+    //       {record.isActive ? 'Activado' : 'Desactivado'}
+    //     </Button>
+    //   ),
+    // }
   ];
 
   return (
