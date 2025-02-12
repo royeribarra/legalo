@@ -10,6 +10,10 @@ export default class ClienteService extends MainService {
     return this.post(`/create`, data);
   }
 
+  public async getDetalleCliente(id: number): Promise<any> {
+    return this.get(`/${id}`);
+  }
+
   public async obtenerTodos(params?: any): Promise<any> {
     return this.get("/all", params);
   }

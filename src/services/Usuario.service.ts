@@ -17,7 +17,11 @@ export default class UsuarioService extends MainService {
     return this.post("/enviar-mail-verificacion", data);
   }
 
-  public async validarUsuarioPorAdmin(data: {abogadoId?: number, is_active: boolean}): Promise<any> {
+  public async validarUsuarioPorAdmin(data: {abogadoId: number}): Promise<any> {
     return this.post("/validar-usuario-por-admin", data);
+  }
+
+  public async rechazarUsuarioPorAdmin(data: {abogadoId: number}): Promise<any> {
+    return this.post("/rechazar-usuario-por-admin", data);
   }
 }

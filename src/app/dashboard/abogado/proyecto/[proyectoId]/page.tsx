@@ -51,6 +51,7 @@ const ProyectSinglePage = () => {
     try {
       if (proyectoId) {
         const data = await ofertaservice.getOfertaByID(Number(proyectoId));
+        console.log(data)
         setOferta(data);
         setLoading(false);
       }

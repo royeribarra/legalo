@@ -46,16 +46,31 @@ const OpcionesVerificacion = ({ record }: { record: IAbogadoBack }) => {
 
   const handleConfirm = async () => {
     setIsModalVisible(false);
-    try {
-      const data = { abogadoId: record.usuario.id, action: selectedOption };
-      const response = await usuarioService.enviarMailVerificacion(data);
-      console.log(response);
-      if (response.state) {
-        showToast('success', response.message, '');
+    console.log(selectedOption)
+    if(selectedOption== 'aceptar'){
+      try {
+        const data = { abogadoId: record.id, action: selectedOption };
+        const response = await usuarioService.validarUsuarioPorAdmin(data);
+        console.log(response);
+        if (response.state) {
+          showToast('success', response.message, '');
+        }
+      } catch (error) {
+        showToast('error', 'Error al actualizar el estado', '');
+        console.error('Error al enviar solicitud:', error);
       }
-    } catch (error) {
-      showToast('error', 'Error al actualizar el estado', '');
-      console.error('Error al enviar solicitud:', error);
+    } else{
+      try {
+        const data = { abogadoId: record.id, action: selectedOption };
+        const response = await usuarioService.rechazarUsuarioPorAdmin(data);
+        console.log(response);
+        if (response.state) {
+          showToast('success', response.message, '');
+        }
+      } catch (error) {
+        showToast('error', 'Error al actualizar el estado', '');
+        console.error('Error al enviar solicitud:', error);
+      }
     }
   };
 
@@ -76,9 +91,9 @@ const OpcionesVerificacion = ({ record }: { record: IAbogadoBack }) => {
         <Select.Option value="rechazar">Rechazar documentos</Select.Option>
         <Select.Option value="aceptar">Aceptar documentos</Select.Option>
       </Select>
-      <Button 
-        type="primary" 
-        onClick={() => setIsModalVisible(true)} 
+      <Button
+        type="primary"
+        onClick={() => setIsModalVisible(true)}
         disabled={!selectedOption}
         style={{ marginLeft: 10 }}
       >
