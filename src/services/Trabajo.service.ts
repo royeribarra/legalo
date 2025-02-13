@@ -5,6 +5,10 @@ export default class TrabajoService extends MainService {
     super(url);
   }
 
+  public async createTrabajo(data: any): Promise<any>{
+    return this.post(`/create`, data);
+  }
+
   public async updateTrabajo(
     data: { trabajoId: number, progreso: number }
   ): Promise<any> {

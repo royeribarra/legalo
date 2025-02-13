@@ -28,7 +28,6 @@ function AbogadoModal({ isOpen, onClose, aplicacion, oferta }: ModalProps) {
             </button>
 
             <h3 className="text-xl font-semibold text-gray-800 mb-4">Información de la aplicación</h3>
-            
             <div className="space-y-2">
               <p><strong>Nombre:</strong> {aplicacion.abogado.nombres} {aplicacion.abogado.apellidos}</p>
               {/* <p><strong>Correo:</strong> {aplicacion.abogado.correo}</p>

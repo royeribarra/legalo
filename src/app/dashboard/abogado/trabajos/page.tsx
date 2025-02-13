@@ -25,23 +25,25 @@ import { useLoader } from "@/contexts/loaderContext";
 
     async function getTrabajos(){
       setLoading(true);
-      if(abogado?.id){
-        try {
+      try {
+        if(abogado){
           const data = {
             abogadoId: abogado.id
           }
           const response = await abogadoService.getTrabajos(data);
           setTrabajos(response.data);
           setLoading(false);
-        } catch (error) {
-          setLoading(false)
         }
+      } catch (error) {
+        console.log(error)
+      } finally {
+        setLoading(false)
       }
     }
 
     useEffect(()=>{
       getTrabajos();
-    }, []);
+    }, [abogado?.id]);
 
     return(
       <div className="flex flex-col gap-8 flex-1 mt-12">

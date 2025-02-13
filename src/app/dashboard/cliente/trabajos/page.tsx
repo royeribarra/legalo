@@ -18,7 +18,7 @@ import TrabajoItem from "@/components/dashboard/TrabajoItem";
 import { useLoader } from "@/contexts/loaderContext";
 
 function TrabajosCliente(){
-const { user } = useAuth();
+const { user, cliente } = useAuth();
 const { setLoading } = useLoader();
 const [trabajos, setTrabajos] = useState<ITrabajoBack[]>([]);
 
@@ -52,11 +52,13 @@ async function getTrabajos(){
           </AccordionTriggerBig>
           <AccordionContent className="flex flex-col gap-4">
             {
-              trabajos.map((trabajo)=>
+              trabajos.map((trabajo, index)=>
                 <TrabajoItem
+                  key={index}
                   tipe="cotizacionAceptada"
                   trabajo={trabajo}
                   persona="cliente"
+                  cliente={cliente}
                 />
               )
             }

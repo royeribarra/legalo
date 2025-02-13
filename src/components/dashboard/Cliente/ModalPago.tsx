@@ -12,7 +12,7 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { pagoService } from "@/services";
+import { pagoService, trabajoService } from "@/services";
 import { useToast } from "@/contexts/toastContext";
 import { useLoader } from "@/contexts/loaderContext";
 
@@ -47,6 +47,7 @@ interface CheckoutModalProps {
   clienteId?: number;
   aplicacionId: number;
   trabajoId?: number;
+  fetchOfertasConAplicaciones: () => void;
 }
 
 type CheckoutFormData = z.infer<typeof checkoutSchema>;
@@ -58,7 +59,8 @@ const ModalPago: React.FC<CheckoutModalProps> = ({
   monto,
   clienteId,
   aplicacionId,
-  trabajoId
+  trabajoId,
+  fetchOfertasConAplicaciones
 }) => {
   const {
     register,
@@ -97,10 +99,12 @@ const ModalPago: React.FC<CheckoutModalProps> = ({
         aplicacionId: aplicacionId,
         trabajoId: trabajoId
       };
-      if(trabajoId){
-        const response = await pagoService.crearPago(pagoData);
+      if(!trabajoId){
+        const response = await trabajoService.createTrabajo(pagoData);
         if (response.state) {
+          fetchOfertasConAplicaciones();
           showToast("success", response.message, "");
+          await pagoService.crearPago({...pagoData, trabajoId: response.trabajo?.id});
           onClose();
         }
       }else{

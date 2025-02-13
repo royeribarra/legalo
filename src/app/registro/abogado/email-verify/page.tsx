@@ -64,11 +64,11 @@ const EmailVerify = () => {
         >
           Enviar de nuevo
         </Button> */}
-        <Link href={"/login"}>
+        <Link href={"/"}>
           <Button
             className="mt-4 rounded-[10px] h-12 px-6 text-base"
           >
-            Empezar ahora
+            Ir al inicio
           </Button>
         </Link>
       </div>

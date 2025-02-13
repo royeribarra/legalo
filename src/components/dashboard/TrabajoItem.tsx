@@ -2,22 +2,28 @@ import React, { useState } from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import { ITrabajoBack } from "@/interfaces/Trabajo.interface";
+import { IPagoBack, ITrabajoBack } from "@/interfaces/Trabajo.interface";
 import ModalPago from "./Cliente/ModalPago";
 import { trabajoService } from "@/services";
+import { IClienteBack } from "@/interfaces/Cliente.interface";
 
 interface TrabajoItemProps {
   tipe: string;
   trabajo: ITrabajoBack;
   persona: 'cliente' | 'abogado';
+  cliente?: IClienteBack | null;
 }
 
-const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo, persona }) => {
+const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo, persona, cliente }) => {
   console.log(trabajo)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newProgress, setNewProgress] = useState<number>(trabajo.progreso);
   const [openModalPago, setOpenModalPago] = useState(false);
   const whatsappNumber = "51939784580";
+
+  const fetchExample = () => {
+    console.log("paando ejemplo")
+  };
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -60,7 +66,7 @@ const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo, persona }) => 
         <h3 className="text-lg font-bold mt-2">Información del Abogado</h3>
         <p>{trabajo.abogado.nombres} {trabajo.abogado.apellidos}</p>
       </div>
-      
+
       {/* Detalles de la Aplicación */}
       <div className="border p-4 rounded-md bg-gray-100">
         <h3 className="text-lg font-bold">Detalles de la Aplicación</h3>
@@ -94,10 +100,10 @@ const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo, persona }) => 
               </tr>
             </thead>
             <tbody>
-              {trabajo.pagos.map((pago: any, index: number) => (
+              {trabajo.pagos.map((pago: IPagoBack, index: number) => (
                 <tr key={index}>
                   <td className="border border-gray-300 px-4 py-2">{pago.operacion}</td>
-                  <td className="border border-gray-300 px-4 py-2">${pago.monto}</td>
+                  <td className="border border-gray-300 px-4 py-2">${pago.monto_total}</td>
                 </tr>
               ))}
             </tbody>
@@ -146,6 +152,8 @@ const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo, persona }) => 
         onClose={hideModalPagoDetalle}
         aplicacionId={trabajo.aplicacion.id}
         trabajoId={trabajo.id}
+        fetchOfertasConAplicaciones={fetchExample}
+        clienteId={cliente?.id}
       />
     </div>
   );

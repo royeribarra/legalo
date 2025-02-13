@@ -33,9 +33,10 @@ const OfertasActivas = () => {
         };
         const response = await clienteService.getOfertas(filter);
         setProyectos(response.data);
-        setLoading(false);
       }
     } catch (err) {
+      console.log(err)
+    } finally{
       setLoading(false);
     }
   };

@@ -25,25 +25,26 @@ const AplicacionesPorAceptar = () => {
   const [openModalPago, setOpenModalPago] = useState(false);
   const [openModalDetalleAplicacion, setOpenModalDetalleAplicacion] = useState(false);
   const [abogadoSeleccionado, setAbogadoSeleccionado] = useState<IAbogadoBack | null>(null);
-  
+
   const [ofertaSeleccionada, setOfertaSeleccionada] = useState<IOfertaBack | null>(null);
   const [aplicacionSeleccionada, setAplicacionSeleccionada] = useState<IAplicacionBack | null>(null);
 
-  useEffect(() => {
-    const fetchOfertasConAplicaciones = async () => {
-      setLoading(true);
-      try {
-        if (user?.cliente?.id) {
-          const data = { clienteId: user.cliente.id, estado: "verificar_postulaciones" };
-          const response = await clienteService.getOfertas(data);
-          setOfertasConAplicaciones(response.data);
-        }
-      } catch (error) {
-        console.error("Error al obtener las ofertas con aplicaciones:", error);
-      } finally {
-        setLoading(false);
+  const fetchOfertasConAplicaciones = async () => {
+    setLoading(true);
+    try {
+      if (user?.cliente?.id) {
+        const data = { clienteId: user.cliente.id, estado: "verificar_postulaciones" };
+        const response = await clienteService.getOfertas(data);
+        setOfertasConAplicaciones(response.data);
       }
-    };
+    } catch (error) {
+      console.error("Error al obtener las ofertas con aplicaciones:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchOfertasConAplicaciones();
   }, []);
 
@@ -149,6 +150,7 @@ const AplicacionesPorAceptar = () => {
           ofertaId={ofertaSeleccionada.id}
           monto={aplicacionSeleccionada.salarioEsperado}
           aplicacionId={aplicacionSeleccionada.id}
+          fetchOfertasConAplicaciones={fetchOfertasConAplicaciones}
         />
       )}
 

@@ -27,6 +27,8 @@ export interface IPagoBack {
     aplicacion: IAplicacionBack;
     oferta: IOfertaBack;
     trabajo: ITrabajoBack;
+    monto_abogado: number;
+    monto_total: number;
   }
 
 export interface ITrabajoBack {

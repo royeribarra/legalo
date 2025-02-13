@@ -181,7 +181,7 @@ export default function ClientPage() {
                 />
                 <Row gutter={16}>
                   <Col span={12}>
-                    <p><DollarOutlined /> Presupuesto: ${item.budget}</p>
+                    <p><DollarOutlined /> Presupuesto: S/ {item.budget}</p>
                     <p><ClockCircleOutlined /> Publicado: {item.postedDate}</p>
                     <p>Industria: {item.industria}</p>
                   </Col>
