@@ -32,12 +32,13 @@ function UploadVideo({ campo, uploadFileVideo, archivoVideo, removeFileVideo }: 
       video.onloadedmetadata = () => {
         const duration = video.duration;
         const sizeInMB = selectedFile.size / (1024 * 1024);
-
+        console.log(sizeInMB, "sizeInMB")
+        console.log(duration, "duration")
         if (duration > 60) {
           setError("El video debe ser de máximo 1 minuto de duración.");
           setFile(null);
-        } else if (sizeInMB > 5) {
-          setError("El tamaño del video debe ser menor a 5 MB.");
+        } else if (sizeInMB > 11) {
+          setError("El tamaño del video debe ser menor a 10 MB.");
           setFile(null);
         } else {
           setError(null);

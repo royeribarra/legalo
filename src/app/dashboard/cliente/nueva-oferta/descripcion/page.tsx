@@ -34,7 +34,7 @@ const PublicarPageFour = () => {
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "text/plain",
     ];
-    const fileSizeLimit = 4 * 1024 * 1024;
+    const fileSizeLimit = 11 * 1024 * 1024;
 
     if (!selectedFile) return;
 
@@ -71,10 +71,10 @@ const PublicarPageFour = () => {
       showToast("error", "Ingresa una descripción", "");
       return;
     }
-    if (!state.documento) {
-      showToast("error", "Sube un documento", "");
-      return;
-    }
+    // if (!state.documento) {
+    //   showToast("error", "Sube un documento", "");
+    //   return;
+    // }
     route.push("/dashboard/cliente/nueva-oferta/servicio");
   };
 

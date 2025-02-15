@@ -2,6 +2,6 @@
 
 export interface IPresupuesto {
     id?: number;
-    salario_minimo: string;
-    salario_maximo: string;
+    salario_minimo: number;
+    salario_maximo: number;
 }

@@ -6,19 +6,13 @@ import { Pencil } from "lucide-react";
 import { ArrowRight } from "lucide-react";
 import { Minus, Equal } from "lucide-react";
 import { Info as IcoInfo } from "lucide-react";
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import Image from "next/image";
-
-import { Play as PlayIcon } from "lucide-react";
-
 import DocsForClients from "./DocsForClients";
 import { Textarea } from "../ui/textarea";
-
 import { Input } from "@/components/ui/input";
-
 import {
   Select,
   SelectContent,
@@ -30,10 +24,11 @@ import {
 } from "@/components/ui/select";
 import { abogadoService, fileService } from "@/services";
 import { useAuth } from "@/contexts/authContext";
-import { base64ToFile, handleFileUpload } from "utils/uploadFile";
-import { Eye, Trash } from "lucide-react"; 
 import { IOfertaBack } from "@/interfaces/Oferta.interface";
 import { IArchivo } from "@/interfaces/Archivo.interface";
+import SubirDocumentoPostulacion from "./abogado/postularOferta/SubirDocumentoPostulacion";
+import SubirVideoPostulacion from "./abogado/postularOferta/SubirVideoPostulacion";
+import { useLoader } from "@/contexts/loaderContext";
 
 interface ModalPostularProyectoProps {
   handleModalPostular: () => void;
@@ -67,6 +62,10 @@ const bancos = [
   {nombre: "Caja Los Andes"}
 ]
 const steps = ["step1", "step2", "step3", "step4"];
+interface Respuesta {
+  idPregunta: number;
+  respuesta: string;
+}
 
 const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
   handleModalPostular,
@@ -77,19 +76,18 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
 
   const { abogado } = useAuth();
   console.log(abogado)
+  const { setLoading } = useLoader();
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const [step, setStep] = useState("step1");
   const [precio, setPrecio] = useState<number>(0);
   const [comision, setComision] = useState<number>(0);
   const [impuesto, setImpuesto] = useState<number>(0);
   const [totalRecibido, setTotalRecibido] = useState<number>(0);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [uploadedFile, setUploadedFile] = useState<{ nombre: string; tipo: string; contenido: File } | null>(null);
-  const [uploadedVideo, setUploadedVideo] = useState<{
-    nombre: string;
-    tipo: string;
-    contenido: File;
-  } | null>(null);
+  const [archivoDocumento, setArchivoDocumento] = useState<IArchivo | null>(null);
+  const [archivoVideo, setArchivoVideo] = useState<IArchivo | null>(null);
+  const [respuestas, setRespuestas] = useState<Respuesta[]>([]);
+  const [numeroCuenta, setNumeroCuenta] = useState<string>('');
+  const [selectedBanco, setSelectedBanco] = useState<string>('b2');
 
   const nextStep = async () => {
     console.log(step)
@@ -117,93 +115,58 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
     }
   };
 
-  const enviarPostulacion = async () => {
-    if(abogado?.id){
-      const data = {
-        abogadoId: abogado?.id,
-        ofertaId: Number(proyectoId),
-        salarioEsperado: precio
-      };
-      const response = await abogadoService.postularOferta(data);
-      if(response.state){
-        if (uploadedFile) {
-          enviarArchivo(uploadedFile, response.aplicacionId,  "aplicacion_documento");
-        }
-        if (uploadedVideo) {
-          enviarArchivo(uploadedVideo, response.aplicacionId, "aplicacion_video");
-        }
-        handleModalPostularOk();
+  const handleChangeRespuestas = (id: number, respuesta: string) => {
+    setRespuestas((prevRespuestas) => {
+      // Buscar si la respuesta ya existe para esa pregunta
+      const respuestaExistente = prevRespuestas.find((r) => r.idPregunta === id);
+  
+      // Si la respuesta ya existe, actualizamos, si no, la agregamos al arreglo
+      if (respuestaExistente) {
+        return prevRespuestas.map((r) =>
+          r.idPregunta === id ? { ...r, respuesta } : r
+        );
+      } else {
+        return [...prevRespuestas, { idPregunta: id, respuesta }];
       }
-      console.log(response)
-    }
-  };
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files?.[0];
-    const validTypes = [
-      "application/pdf",
-      "application/msword",
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    ];
-    const fileSizeLimit = 5 * 1024 * 1024; // 5 MB
-
-    if (!selectedFile) return;
-
-    // Validar tipo y tamaño del archivo
-    if (!validTypes.includes(selectedFile.type)) {
-      alert(`Formato de archivo no válido. Solo se permiten: ${validTypes.join(", ")}.`);
-      return;
-    }
-
-    if (selectedFile.size > fileSizeLimit) {
-      alert(`El archivo debe pesar menos de ${(fileSizeLimit / 1024 / 1024).toFixed(2)} MB.`);
-      return;
-    }
-
-    // Guardamos el archivo en el estado
-    setUploadedFile({
-      nombre: selectedFile.name,
-      tipo: selectedFile.type,
-      contenido: selectedFile, // Guardamos el archivo directamente en 'contenido'
     });
   };
+  
 
-  const handleClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-
-  const handleRemoveFile = () => {
-    setUploadedFile(null); // Eliminar el archivo subido
-  };
-
-  const handleVideoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files?.[0];
-
-    if (selectedFile) {
-      // Verificar duración y tamaño del video
-      const videoUrl = URL.createObjectURL(selectedFile);
-      const video = document.createElement("video");
-
-      video.src = videoUrl;
-      video.onloadedmetadata = () => {
-        const duration = video.duration;
-        const sizeInMB = selectedFile.size / (1024 * 1024);
-
-        if (duration > 60) {
-          setUploadedVideo(null);
-        } else if (sizeInMB > 10) {
-          setUploadedVideo(null);
-        } else {
-          setUploadedVideo({
-            nombre: selectedFile.name,
-            tipo: selectedFile.type,
-            contenido: selectedFile,
-          });
+  const enviarPostulacion = async () => {
+    setLoading(true);
+    try {
+      if(abogado?.id){
+        const data = {
+          abogadoId: abogado?.id,
+          ofertaId: Number(proyectoId),
+          salarioEsperado: precio,
+          respuestas,
+          numeroCuenta,
+          selectedBanco
+        };
+        const response = await abogadoService.postularOferta(data);
+        if(response.state){
+          if (archivoDocumento) {
+            enviarArchivo(archivoDocumento, response.aplicacionId,  "aplicacion_documento");
+          }
+          if (archivoVideo) {
+            enviarArchivo(archivoVideo, response.aplicacionId, "aplicacion_video");
+          }
+          handleModalPostularOk();
         }
-      };
+        console.log(response)
+      }
+    } catch (error) {
+      console.log(error)
+    } finally{
+      setLoading(false);
     }
+  };
+
+  const handleChangeNumero = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // Convertimos el valor a número, pero primero verificamos si el campo está vacío
+    setNumeroCuenta(value);
   };
 
   const handlePrecioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -221,12 +184,15 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
     }
   };
 
+  const handleBancoChange = (value: string) => {
+    setSelectedBanco(value);
+  };
+
   const enviarArchivo = async (
     archivo: IArchivo,
     aplicacionId: number,
     nombreArchivo: string
   ) => {
-    // const archivoBlob = base64ToFile(archivo.contenido, archivo.tipo, archivo.nombre);
     const body = {
       nombreArchivo,
       aplicacionId,
@@ -239,6 +205,22 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
     } catch (error) {
       console.error("Error al enviar el archivo", error);
     }
+  };
+
+  const handleFileDocumento= async (fileData: { nombre: string; tipo: string; contenido: File }) => {
+    setArchivoDocumento(fileData);
+  };
+
+  const removeFileDocumento = () => {
+    setArchivoDocumento(null);
+  };
+
+  const handleFileVideo = async (fileData: { nombre: string; tipo: string; contenido: File }) => {
+    setArchivoVideo(fileData);
+  };
+
+  const removeFileVideo = () => {
+    setArchivoVideo(null);
   };
 
   return (
@@ -289,14 +271,13 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                     <Avatar className="w-24 h-24">
                       <AvatarImage src="" alt="user-img" />
                       <AvatarFallback>
-                        <img 
+                        <img
                         src={`${process.env.S3_FILE_ROUTE}/${abogado?.files.find((file)=>file.nombreArchivo==='archivo_imagen')?.filePath}`}
-                        alt="default-img" 
-                        className="w-full h-full object-cover" 
+                        alt="default-img"
+                        className="w-full h-full object-cover"
                       />
                       </AvatarFallback>
                     </Avatar>
-                    
                     <div className="flex flex-row gap-1 items-center">
                       <span className="font-bold text-2xl">{abogado?.nombres}</span>
                         <Button
@@ -308,7 +289,6 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                       </Button>
                     </div>
                   </div>
-
                   <div className="flex gap-4 flex-wrap ">
                     <Button
                       variant="outline"
@@ -334,7 +314,6 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                       }
                     </div>
                   </div>
-                  
                   <div className="my-2">
                     <span className="font-bold text-lg">Especialidades</span>
                     <div className="flex gap-4 flex-wrap mt-3">
@@ -371,125 +350,28 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                     </span>
 
                     <div className="flex flex-col gap-2 mt-3">
-                      <DocsForClients 
-                        documento={abogado?.files.find((file)=>file.nombreArchivo === 'archivo_cv')?.filePath ?? 'url-por-defecto'} 
-                        nombre="Curriculum Vitae" 
+                      <DocsForClients
+                        documento={abogado?.files.find((file)=>file.nombreArchivo === 'archivo_cv')?.filePath ?? 'url-por-defecto'}
+                        nombre="Curriculum Vitae"
                       />
                       <DocsForClients documento={abogado?.files.find((file)=>file.nombreArchivo === 'archivo_cul')?.filePath ?? 'url-por-defecto'} nombre="CUL" />
                     </div>
                   </div>
-                  <div className="my-2">
-                    <p className="font-bold text-lg mb-4">
-                      ¿Consideras necesario enviar algún documento extra para potenciar tu
-                      postulación?
-                    </p>
-                    <div
-                      className="border border-black border-dashed p-2 flex flex-col items-center cursor-pointer"
-                      onClick={handleClick}
-                    >
-                      <input
-                        type="file"
-                        ref={fileInputRef}
-                        onChange={handleFileChange}
-                        className="hidden"
-                        accept=".pdf, .doc, .docx"
-                      />
-                      {uploadedFile ? (
-                        <div className="flex flex-col items-center">
-                          <Image
-                            src="/assets/images/ico-upload.png"
-                            alt="ico-cv"
-                            width={64}
-                            height={64}
-                          />
-                          <p className="mt-2 text-gray-700">{uploadedFile.nombre}</p>
-                          <div className="flex space-x-4 mt-2">
-                            <button
-                              onClick={handleRemoveFile}
-                              className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded hover:bg-gray-100"
-                            >
-                              <Trash className="w-4 h-4 text-red-500" />
-                              <span>Eliminar</span>
-                            </button>
-                          </div>
-                        </div>
-                      ) : (
-                        <>
-                          <Image
-                            src="/assets/images/ico-upload.png"
-                            alt="ico-cv"
-                            width={64}
-                            height={64}
-                          />
-                          <p>Clic aquí o arrastra el documento a adjuntar</p>
-                          <p className="text-xs text-gray-500">DOC, DOCX, PDF (2 MB)</p>
-                        </>
-                      )}
-                    </div>
-                  </div>
+                  <SubirDocumentoPostulacion
+                    uploadFileDocumento={handleFileDocumento}
+                    campo={"aplicacion_documento"}
+                    archivoDocumento={archivoDocumento}
+                    removeFileDocumento={removeFileDocumento}
+                  />
                 </div>
               </TabsContent>
               <TabsContent value="step2" className="mt-36 lg:mt-0">
-                <div className="p-0 lg:p-8 flex flex-col gap-3 overflow-hidden">
-                  <h3 className="font-bold text-2xl">
-                    Sube un video de tu postulación
-                  </h3>
-                  <p>
-                    Graba un video de 1 minuto sobre quién eres y por qué eres
-                    ideal para el puesto.
-                  </p>
-                  <div
-                    className="border border-black border-dashed p-2 flex flex-col items-center cursor-pointer"
-                    onClick={() => document.getElementById("videoInput")?.click()}
-                  >
-                    <input
-                      type="file"
-                      id="videoInput"
-                      className="hidden"
-                      accept="video/mp4, video/avi, video/mov"
-                      onChange={handleVideoChange}
-                    />
-                    <div className="flex justify-center items-center border border-black w-16 h-16 rounded-full">
-                      <PlayIcon />
-                    </div>
-                    <p>Agregar un video</p>
-                    <p className="text-xs text-gray-500">MP4, MOV, AVI (10 MB)</p>
-                  </div>
-
-                  {uploadedVideo ? (
-                    <div className="mt-4">
-                      <p>{uploadedVideo.nombre}</p>
-                      <video width="300" controls>
-                        <source type={uploadedVideo.tipo} />
-                        Tu navegador no soporta la etiqueta de video.
-                      </video>
-                    </div>
-                  ) : (
-                    <p className="text-sm text-gray-500 mt-2">No se ha subido ningún video.</p>
-                  )}
-                  <div>
-                    <h3>Recomendaciones:</h3>
-                    <ul className="list-disc  list-outside ml-5">
-                      <li>
-                        <b>Claridad y Simplicidad: </b>
-                        El contenido debe ser lo suficientemente claro para que
-                        el cliente no se sienta abrumado por términos
-                        complicados.
-                      </li>
-                      <li>
-                        <b>Empatía: </b>
-                        Considera que subir un video puede ser estresante para
-                        algunos clientes, así que el tono debe ser amigable y
-                        tranquilizador en todo momento.
-                      </li>
-                      <li>
-                        <b>Anticipar problemas: </b>
-                        Brindar ayuda en caso de fallos sin que el cliente tenga
-                        que buscarlo.
-                      </li>
-                    </ul>
-                  </div>
-                </div>
+                <SubirVideoPostulacion
+                  uploadFileVideo={handleFileVideo}
+                  campo={"aplicacion_video"}
+                  archivoVideo={archivoVideo}
+                  removeFileVideo={removeFileVideo}
+                />
               </TabsContent>
               <TabsContent value="step3" className="mt-36 lg:mt-0">
                 <div className="p-0 lg:p-8 flex flex-col gap-3 overflow-hidden">
@@ -499,13 +381,15 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                   <div>
                     <ol className="list-decimal list-inside ">
                       {
-                        oferta.preguntas_oferta.map((pregunta)=>
-                          <li className="my-4">
+                        oferta.preguntas_oferta.map((pregunta, index)=>
+                          <li className="my-4" key={index}>
                             {pregunta.pregunta}
                             <Textarea
                               placeholder="Tu respuesta max 500 caracteres."
                               className="mt-2 border-black"
-                            ></Textarea>
+                              value={respuestas.find((r) => r.idPregunta === pregunta.id)?.respuesta || ""}
+                              onChange={(e) => handleChangeRespuestas(pregunta.id, e.target.value)}
+                            />
                           </li>
                         )
                       }
@@ -533,7 +417,6 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                         SOLES
                       </span>
                     </div>
-                    
                     {/* IGB */}
                     <div className="flex items-center justify-between gap-8 py-6 border-b border-dashed border-black">
                       <div className="border-2 border-black rounded-full w-5 h-5 flex items-center justify-center">
@@ -596,39 +479,33 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                         </h3>
                       </div>
                       <Input
-                        type="number"
+                        type="text"
                         placeholder="83983479837899487934"
-                        className="placeholder:text-[#666666] h-12 border rounded-[10px] border-black text-black  focus-visible:ring-0"
+                        className="placeholder:text-[#666666] h-12 border rounded-[10px] border-black text-black focus-visible:ring-0"
+                        value={numeroCuenta}
+                        onChange={handleChangeNumero}
                       />
                     </div>
                     <div className="min-w-32">
                       <div>
                         <h3 className="text-sm text-[#61646B] mb-2">Banco</h3>
                       </div>
-                      <Select defaultValue="b2">
-                        <SelectTrigger className="rounded-[10px] border-black focus-visible:ring-0 focus:outline-none focus:border-0  h-12">
+                      <Select value={selectedBanco} onValueChange={handleBancoChange}>
+                        <SelectTrigger className="rounded-[10px] border-black focus-visible:ring-0 focus:outline-none focus:border-0 h-12">
                           <SelectValue placeholder="Selecciona tu banco" />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
                             <SelectLabel>Bancos</SelectLabel>
                             {
-                              bancos.map((banco, length)=>
-                                <SelectItem key={length} value={banco.nombre}>{banco.nombre}</SelectItem>
-                              )
+                              bancos.map((banco, index) => (
+                                <SelectItem key={index} value={banco.nombre}>{banco.nombre}</SelectItem>
+                              ))
                             }
                           </SelectGroup>
                         </SelectContent>
                       </Select>
                     </div>
-                    {/* <div>
-                      <Button
-                        variant="outline"
-                        className="rounded-[10px] border-black h-12 w-36"
-                      >
-                        Cambiar
-                      </Button>
-                    </div> */}
                   </div>
                   <div className="text-[#61646B] flex items-center gap-2 text-sm">
                     <IcoInfo size={16} /> Al realizar la transferencia me
@@ -641,38 +518,25 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
           <div className="fixed lg:sticky  w-full bg-lg-lawyer h-20 flex justify-between items-center px-4 lg:px-10 bottom-0 flex-none border-t border-black">
             <Button
               variant="outline"
-              onClick={prevStep} 
+              onClick={prevStep}
               className="h-12 px-8 lg:px-16 bg-[#d5f1f0] border border-black rounded-[10px] hover:bg-[#d5f1f0]"
             >
               Atrás
             </Button>
             <Button
-              onClick={nextStep} 
+              onClick={nextStep}
               className="h-12 px-8 lg:px-16 gap-2 rounded-[10px]"
             >
               Continuar <ArrowRight />
             </Button>
           </div>
         </div>
-        <div className="w-full lg:w-[416px] mt-10 lg:mt-20 border-l border-black lg:sticky top-20 lg:mr-[-20px]">
+        {/* <div className="w-full lg:w-[416px] mt-10 lg:mt-20 border-l border-black lg:sticky top-20 lg:mr-[-20px]">
           <div className="px-5 pt-0 pb-2">
             <h3 className="font-nimbus text-xl mb-4">
               Asesoría para Contrato de Trabajadores Temporales
             </h3>
             <div className="flex gap-4 flex-wrap">
-              {/* <Button
-                variant="outline"
-                className="border border-black rounded-full h-[43px]"
-              >
-                <Image
-                  src="/icos/ico-dash-pin-map.svg"
-                  alt=""
-                  width={24}
-                  height={24}
-                  className="mr-2"
-                />
-                <p>Remoto</p>
-              </Button> */}
               <Button
                 variant="outline"
                 className="border border-black rounded-full h-[43px]"
@@ -746,8 +610,11 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                 </span>
                 <div className="flex flex-col gap-4">
                   <p>Presupuesto</p>
-                  // corregir preterminado
-                  <p>S/ 0.00</p>
+                  {
+                    oferta.salario_minimo === oferta.salario_maximo ?
+                    <p>S/ {oferta.salario_maximo}</p> :
+                    <p>S/ {oferta.salario_minimo} - S/ {oferta.salario_maximo}</p>
+                  }
                 </div>
               </div>
             </div>
@@ -758,7 +625,7 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
             <p>Miembro desde 2021</p>
             <p>Para trabajo/personal</p>
           </div>
-        </div>
+        </div> */}
 
         <div
           onClick={handleModalPostular}

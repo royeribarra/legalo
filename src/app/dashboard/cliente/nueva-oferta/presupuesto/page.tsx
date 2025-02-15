@@ -19,10 +19,10 @@ const PublicarPageSeven = () => {
   const route = useRouter();
   const { state, updateState } = useOferta();
   const { showToast } = useToast();
-  const [selected, setSelected] = useState("rango");
-  const [rangoDesde, setRangoDesde] = useState("");
-  const [rangoHasta, setRangoHasta] = useState("");
-  const [montoFijo, setMontoFijo] = useState("");
+  const [selected, setSelected] = useState<"rango" | "monto-fijo">("rango");
+  const [rangoDesde, setRangoDesde] = useState<number>(0);
+  const [rangoHasta, setRangoHasta] = useState<number>(0);
+  const [montoFijo, setMontoFijo] = useState<number>(0);
 
   // Cargar valores iniciales si ya existen
   useEffect(() => {
@@ -30,11 +30,11 @@ const PublicarPageSeven = () => {
       const { salario_minimo, salario_maximo } = state.presupuesto;
       if (salario_minimo !== salario_maximo) {
         setSelected("rango");
-        setRangoDesde(salario_minimo || "");
-        setRangoHasta(salario_maximo || "");
+        setRangoDesde(salario_minimo || 0);
+        setRangoHasta(salario_maximo || 0);
       } else {
         setSelected("monto-fijo");
-        setMontoFijo(salario_maximo || "");
+        setMontoFijo(salario_maximo || 0);
       }
     }
   }, [state.presupuesto]);
@@ -76,7 +76,7 @@ const PublicarPageSeven = () => {
   return (
     <div className="container mx-auto p-4 lg:p-8 m-8 lg:w-[600px]">
       <div className="w-full max-w-[480px] mx-auto mb-8">
-        <Progress value={100/8*7} className="mx-auto mb-4 h-2" />
+        <Progress value={(100 / 8) * 7} className="mx-auto mb-4 h-2" />
         <p className="text-left">Paso 7/8</p>
       </div>
       <div>
@@ -113,14 +113,6 @@ const PublicarPageSeven = () => {
                 <RadioGroupItem value="monto-fijo" id="r2" />
               </div>
               <Label htmlFor="r2">Monto fijo</Label>
-              <div
-                className={`absolute top-[-50px] right-[25px] lg:top-[-55px] lg:right-[-100px] w-[120px] bg-white text-[#666666] gap-2 p-2 border border-[#666666] rounded-tl-[10px] rounded-tr-[10px] rounded-bl-none rounded-br-[10px] ${
-                  selected === "monto-fijo" ? "flex" : "hidden"
-                }`}
-              >
-                <IcoInfo size={14} color="#61646B" className="w-[36px]" />
-                <p className="text-xs">Se añadirá el IGV al monto ingresado</p>
-              </div>
             </div>
           </RadioGroup>
         </div>
@@ -131,28 +123,22 @@ const PublicarPageSeven = () => {
               <div className="w-1/2">
                 <p className="mb-2 font-bold">Desde</p>
                 <Input
-                  type="text"
+                  type="number"
                   className="border-black rounded-none h-10 focus-visible:border-none"
                   value={rangoDesde}
-                  onChange={(e) => setRangoDesde(e.target.value)}
+                  onChange={(e) => setRangoDesde(Number(e.target.value))}
                 />
               </div>
               <div className="w-1/2">
                 <p className="mb-2 font-bold">Hasta</p>
                 <Input
-                  type="text"
+                  type="number"
                   className="border-black rounded-none h-10 focus-visible:border-none"
                   value={rangoHasta}
-                  onChange={(e) => setRangoHasta(e.target.value)}
+                  onChange={(e) => setRangoHasta(Number(e.target.value))}
                 />
               </div>
             </div>
-            {/* <div className="flex items-center gap-2 my-4">
-              <IcoInfo size={16} color="#666666" />
-              <p className="text-[#666666]">
-                Te mostraremos abogados acorde al rango ingresado.
-              </p>
-            </div> */}
           </>
         )}
         {selected === "monto-fijo" && (
@@ -160,10 +146,10 @@ const PublicarPageSeven = () => {
             <div className="w-full">
               <p className="mb-2 font-bold">Ingrese el monto fijo</p>
               <Input
-                type="text"
+                type="number"
                 className="border-black rounded-none h-10 focus-visible:border-none"
                 value={montoFijo}
-                onChange={(e) => setMontoFijo(e.target.value)}
+                onChange={(e) => setMontoFijo(Number(e.target.value))}
               />
             </div>
             <div className="flex items-center gap-2 my-4">
@@ -174,17 +160,6 @@ const PublicarPageSeven = () => {
             </div>
           </>
         )}
-
-        <div className="flex items-center gap-2 mt-4">
-          <input
-            type="checkbox"
-            id="include-igv"
-            className="w-4 h-4 rounded border-gray-300 focus:ring-blue-500"
-          />
-          <label htmlFor="include-igv" className="text-base font-bold">
-            Prefiero que el abogado cotice
-          </label>
-        </div>
 
         <div className="flex justify-between mt-16">
           <Link href="/dashboard/cliente/nueva-oferta/alcance">

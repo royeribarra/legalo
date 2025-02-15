@@ -261,7 +261,7 @@ function RegisterLawyer() {
                             placeholder="Nombres"
                             {...field}
                             onKeyDown={(e) => {
-                              if (!/^[a-zA-Z\s]*$/.test(e.key)) {
+                              if (!/^[a-zA-ZÀ-ÿ\s]*$/.test(e.key)) {
                                 e.preventDefault();
                               }
                             }}
@@ -284,7 +284,7 @@ function RegisterLawyer() {
                             placeholder="Apellidos"
                             {...field}
                             onKeyDown={(e) => {
-                              if (!/^[a-zA-Z\s]*$/.test(e.key)) {
+                              if (!/^[a-zA-ZÀ-ÿ\s]*$/.test(e.key)) {
                                 e.preventDefault();
                               }
                             }}

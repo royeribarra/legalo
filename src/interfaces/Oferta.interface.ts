@@ -6,11 +6,19 @@ import { IIndustriaOferta } from "./Industria.interface";
 import { IServicioOferta } from "./Servicio.interface";
 import { ITrabajo } from "./Trabajo.interface";
 
+
+export interface IRespuestaOfertaBack {
+    id: number;
+    respuesta: string;
+    aplicacion: IAplicacionBack
+}
+
 export interface IPreguntaOfertaBack {
     id: number;
     pregunta: string;
     respuesta: string;
     ofertaId: number;
+    respuestas: IRespuestaOfertaBack[];
 }
 
 export interface IOferta {
@@ -32,8 +40,8 @@ export interface IOfertaBack {
     documento_url: string;
     duracion: string;
     experiencia_abogado: string;
-    salario_minimo: string;
-    salario_maximo: string;
+    salario_minimo: number;
+    salario_maximo: number;
     estado: string;
     especialidadesOferta: IEspecialidadOferta[];
     serviciosOferta: IServicioOferta[];

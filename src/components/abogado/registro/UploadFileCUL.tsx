@@ -22,7 +22,7 @@ const UploadFileCUL = ({ campo, uploadFileCUL, archivoCul, removeFileCul }: File
     "application/msword",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
   ];
-  const fileSizeLimit = 5 * 1024 * 1024; // 5MB
+  const fileSizeLimit = 6 * 1024 * 1024; // 5MB
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
@@ -117,21 +117,3 @@ const UploadFileCUL = ({ campo, uploadFileCUL, archivoCul, removeFileCul }: File
 };
 
 export default UploadFileCUL;
-
-
-// const handleFileChange1 = (event: React.ChangeEvent<HTMLInputElement>) => {
-//   handleFileUpload(event, (fileData) => {
-//     setFile({
-//       nombre: fileData.name,
-//       tipo: fileData.type,
-//       contenido: fileData.content,
-//     });
-//     // Enviar el archivo al componente padre
-//     uploadFileCUL({
-//       nombre: fileData.name,
-//       tipo: fileData.type,
-//       contenido: fileData.content,
-//     });
-//     setUploadSuccess(true);
-//   }, validTypes, fileSizeLimit);
-// };

@@ -90,14 +90,12 @@ const CompleteProfileLawyerPage: React.FC = () => {
   };
 
   const nextStep = async () => {
-    
     // if(stepNumber === 4){
     //   console.log(archivoCul)
     // console.log(archivoCv)
     // return;
     // }
     if (stepNumber === 4) {
-      
       setLoading(true);
       if (!archivoImagen) {
         showToast("error", "Archivo Imagen", "Sube una imagen");
@@ -389,7 +387,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
             />
           </div>
         </div>
-        <UploadVideo 
+        <UploadVideo
           uploadFileVideo={handleFileVideo}
           campo={"archivo_video"}
           archivoVideo={archivoVideo}
@@ -547,8 +545,6 @@ const CompleteProfileLawyerPage: React.FC = () => {
                     </label>
                   </div>
                 }
-                
-
                 <UploadFileCV
                   uploadFileCV={handleFileCV}
                   campo={"archivo_cv"}

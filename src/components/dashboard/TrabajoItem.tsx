@@ -72,7 +72,7 @@ const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo, persona, clien
         <h3 className="text-lg font-bold">Detalles de la Aplicación</h3>
         <p><strong>Fecha Aplicación:</strong> {trabajo.aplicacion.fecha_aplicacion}</p>
         <p><strong>Estado:</strong> {trabajo.aplicacion.status}</p>
-        <p><strong>Salario Esperado:</strong> ${trabajo.aplicacion.salarioEsperado}</p>
+        <p><strong>Salario Esperado:</strong> S/ {trabajo.aplicacion.salarioEsperado}</p>
       </div>
 
       {/* Barra de progreso */}
@@ -103,7 +103,7 @@ const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo, persona, clien
               {trabajo.pagos.map((pago: IPagoBack, index: number) => (
                 <tr key={index}>
                   <td className="border border-gray-300 px-4 py-2">{pago.operacion}</td>
-                  <td className="border border-gray-300 px-4 py-2">${pago.monto_total}</td>
+                  <td className="border border-gray-300 px-4 py-2">S/ {pago.monto_total}</td>
                 </tr>
               ))}
             </tbody>

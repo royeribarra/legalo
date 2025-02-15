@@ -28,15 +28,10 @@ import {
   AccordionTrigger,
   AccordionTriggerBig,
 } from "@/components/ui/accordion";
-import ProyectItem from "@/components/dashboard/ProyectItem";
 import { IOfertaBack } from "@/interfaces/Oferta.interface";
 import { ofertaservice } from "@/services";
 import { useDashboardAbogado } from "@/contexts/dashboardAbogadoContext";
-import Postulaciones from "@/components/dashboard/abogado/Postulaciones";
 import { useAuth } from "@/contexts/authContext";
-import PublicacionesRecientes from "@/components/dashboard/abogado/PublicacionesRecientes";
-import InvitacionesOferta from "@/components/dashboard/abogado/InvitacionesOferta";
-import TrabajosAbogado from "@/components/dashboard/abogado/Trabajos";
 
 const DashboardLawyerPage = () => {
   const {user} = useAuth();

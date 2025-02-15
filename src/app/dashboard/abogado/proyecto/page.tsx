@@ -114,23 +114,7 @@ const ProyectPage = () => {
           <div>
             <p>Descripción de proyecto: </p>{" "}
             <p>
-              Estoy en busca de asesoría legal para la creación de un modelo de
-              contrato que regule adecuadamente la contratación de trabajadores
-              temporales, de acuerdo con la normativa laboral vigente. En mi
-              empresa, planeo incorporar empleados para proyectos de mediana
-              duración, y quiero asegurarme de que el contrato cumpla con todas
-              las disposiciones legales aplicables, garantizando tanto la
-              protección de los derechos de los trabajadores como los intereses
-              de la empresa. El contrato debe incluir todas las cláusulas
-              esenciales, como los términos y condiciones de empleo, la duración
-              del contrato, derechos y obligaciones de ambas partes,
-              procedimientos de terminación anticipada, el régimen de beneficios
-              y compensaciones, así como cualquier otra disposición relevante
-              para un empleo temporal. Es fundamental que el contrato se ajuste
-              a las normativas laborales específicas del país o región donde
-              operamos, asegurando que cubra aspectos como la seguridad social,
-              condiciones de trabajo, y cualquier normativa sectorial o especial
-              que deba considerarse.
+              Estoy en busca de asesoría le
             </p>
           </div>
           <div>
@@ -188,40 +172,9 @@ const ProyectPage = () => {
             <p>Miembro desde 2021</p>
             <p>Para trabajo/personal</p>
           </div>
-          {/* <div className="bg-[#FEF7FF] p-3 flex flex-wrap justify-center lg:justify-between max-w-[474px] border border-[#CAC4D0] rounded-xl gap-2">
-            <div className="w-full flex-none flex items-center justify-center">
-              <IcoInfo size={24} />
-            </div>
-            <div className="flex gap-3 lg:flex-1">
-              <div className="flex gap-2  items-center w-[45%] flex-wrap">
-                <p className="text-sm">Postulaciones restantes:</p>
-                <span className="font-bold text-base">5</span>
-              </div>
-              <div className="w-[1px] my-2 lg:my-1 bg-black"></div>
-              <div className="flex gap-2 items-center w-[45%] flex-wrap">
-                <p className="text-sm">Tipo de membresia:</p>
-                <span className="font-bold text-base">Gratuita</span>
-              </div>
-            </div>
-            <div className="w-full flex justify-end">
-              <Link href="#" className="text-[#007AFF] font-bold">
-                Aumenta tus chances
-              </Link>
-            </div>
-          </div> */}
         </div>
       </div>
       <div className="pl-4 lg:pl-16 lg:pb-16 pr-0 overflow-hidden">
-        {/* <div>
-          <h3 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-8">
-            Oportunidades similares:
-          </h3>
-          <div className="flex gap-4 overflow-x-auto  scroll-smooth">
-            <SimilarProyect />
-            <SimilarProyect />
-            <SimilarProyect />
-          </div>
-        </div> */}
         <h3 className="text-xl lg:text-2xl font-bold my-8 ">
           Pasos para postular a un proyecto:
         </h3>
@@ -265,21 +218,12 @@ const ProyectPage = () => {
         </div>
       </div>
 
-      {/* {showModalPostular && (
-        <ModalPostularProyecto
-          handleModalPostular={handleModalPostular}
-          handleModalPostularOk={handleModalPostularOk}
-          oferta={oferta}
-        />
-      )} */}
 
       {showModalPostularOk && (
         <ModalPostulacionOk 
           handleModalPostularOk={handleModalPostularOk}
         />
       )}
-
-      {/* <HalloweenAnimation /> */}
     </div>
   );
 };

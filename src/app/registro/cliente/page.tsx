@@ -271,12 +271,10 @@ const RegisterClient = () => {
                             placeholder="Nombres"
                             {...field}
                             className="border-black focus-visible:border-none rounded-[10px] h-12"
-                            onInput={(e: React.FormEvent<HTMLInputElement>) => {
-                              const input = e.currentTarget;
-                              input.value = input.value.replace(
-                                /[^A-Za-z\s]/g,
-                                ""
-                              );
+                            onKeyDown={(e) => {
+                              if (!/^[a-zA-ZÀ-ÿ\s]*$/.test(e.key)) {
+                                e.preventDefault();
+                              }
                             }}
                           />
                         </FormControl>
@@ -297,12 +295,10 @@ const RegisterClient = () => {
                             placeholder="Apellidos"
                             {...field}
                             className="border-black focus-visible:border-none rounded-[10px] h-12"
-                            onInput={(e: React.FormEvent<HTMLInputElement>) => {
-                              const input = e.currentTarget;
-                              input.value = input.value.replace(
-                                /[^A-Za-z\s]/g,
-                                ""
-                              );
+                            onKeyDown={(e) => {
+                              if (!/^[a-zA-ZÀ-ÿ\s]*$/.test(e.key)) {
+                                e.preventDefault();
+                              }
                             }}
                           />
                         </FormControl>

@@ -52,10 +52,18 @@ function AbogadoModal({ isOpen, onClose, aplicacion, oferta }: ModalProps) {
                   {oferta.preguntas_oferta.map((pregunta) => (
                     <li key={pregunta.id} className="border p-3 rounded-md shadow-sm">
                       <p className="font-medium">{pregunta.pregunta}</p>
-                      <p className="text-gray-600">{pregunta.respuesta}</p>
+                      <p className="text-gray-600">
+                        {
+                          // Buscar la respuesta correspondiente en el arreglo de respuestas
+                          pregunta.respuestas.find(
+                            (respuesta) => respuesta.aplicacion.id === aplicacion.id
+                          )?.respuesta || "No hay respuesta"
+                        }
+                      </p>
                     </li>
                   ))}
                 </ul>
+
               </CardContent>
             </Card>
 

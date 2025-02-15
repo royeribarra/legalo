@@ -49,7 +49,11 @@ const ResumeProyect = ({ inviteProyect, oferta }: ProyectProps) => {
       {/* Presupuesto */}
       <div className="text-sx lg:text-base">
         <p>Presupuesto: </p>
-        <p>{oferta.salario_maximo}</p>
+        {
+          oferta.salario_minimo === oferta.salario_maximo ?
+          <p>S/ {oferta.salario_maximo}</p> :
+          <p>S/ {oferta.salario_minimo} - S/ {oferta.salario_maximo}</p>
+        }
       </div>
 
       {/* Especialidades y Servicios */}

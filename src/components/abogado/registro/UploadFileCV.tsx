@@ -20,7 +20,7 @@ function UploadFileCV({ uploadFileCV, campo, archivoCv, removeFileCv }: CvUpload
       "application/msword",
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     ];
-    const fileSizeLimit = 5 * 1024 * 1024;
+    const fileSizeLimit = 6 * 1024 * 1024;
 
     if (!selectedFile) return;
 

@@ -35,7 +35,7 @@ function UploadImagen({
     if (selectedFile) {
       // Verificar el tipo y el tamaño del archivo
       const validTypes = ["image/jpeg", "image/png"];
-      const fileSizeLimit = 5 * 1024 * 1024; // 5 MB
+      const fileSizeLimit = 6 * 1024 * 1024; // 5 MB
 
       if (!validTypes.includes(selectedFile.type)) {
         setError("Solo se aceptan archivos JPG y PNG.");
