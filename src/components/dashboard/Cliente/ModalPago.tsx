@@ -202,11 +202,11 @@ const ModalPago: React.FC<CheckoutModalProps> = ({
               {/* Campos adicionales si se elige factura */}
               {watch("tipoComprobante") === "factura" && (
                 <>
-                  <div>
+                  {/* <div>
                     <label className="block text-sm font-medium">Nombre en la Factura</label>
                     <Input type="text" {...register("nombreFactura")} />
                     {errors.nombreFactura && <p className="text-red-500 text-sm">{errors.nombreFactura.message}</p>}
-                  </div>
+                  </div> */}
                   <div>
                     <label className="block text-sm font-medium">RUC</label>
                     <Input type="text" {...register("ruc")} />

@@ -53,7 +53,7 @@ const PublicarPageThree = () => {
       setSelectServices(filteredServices);
       updateState({ especialidades: filteredServices });
     } else {
-      if (selectServices.length >= 1) {
+      if (selectServices.length >= 3) {
         console.log("No se puede escoger más de una especialidad");
         return;
       }

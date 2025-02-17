@@ -24,7 +24,7 @@ const EmailVerify = () => {
       </header>
       <div className="flex mt-[3%] flex-col items-center gap-5 flex-auto pb-20">
         <Image
-          src="/assets/images/img-client-verify.jpg"
+          src="/assets/images/img-client-verify.webp"
           alt="img-wireframe"
           width={460}
           height={320}
@@ -35,11 +35,11 @@ const EmailVerify = () => {
         <p className="text-center">
           No olvides revisar tu carpeta de correo no deseado y otras bandejas
         </p>
-        <Link href={"/login"}>
+        <Link href={"/"}>
           <Button
             className="mt-4 rounded-[10px] h-12 px-6 text-base"
           >
-            Empezar
+            Ir al inicio
           </Button>
         </Link>
       </div>

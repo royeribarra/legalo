@@ -271,69 +271,69 @@ function Abogados() {
       key: 'acciones',
       render: (_: unknown, record: IAbogadoBack) => <OpcionesVerificacion record={record} />,
     },
-    {
-      title: 'Envíar código de verificación',
-      key: 'enviar',
-      render: (_: unknown, record: IAbogadoBack) => {
-        const enviarMail = async() => {
-          try {
-            const data = {
-              abogadoId: record.usuario.id
-            }
-            const response = await usuarioService.enviarMailVerificacion(data);
-            console.log(response)
-            if(response.state){
-              showToast("success", response.message, "");
+    // {
+    //   title: 'Envíar código de verificación',
+    //   key: 'enviar',
+    //   render: (_: unknown, record: IAbogadoBack) => {
+    //     const enviarMail = async() => {
+    //       try {
+    //         const data = {
+    //           abogadoId: record.usuario.id
+    //         }
+    //         const response = await usuarioService.enviarMailVerificacion(data);
+    //         console.log(response)
+    //         if(response.state){
+    //           showToast("success", response.message, "");
               
-            }
-          } catch (error) {
-            showToast("error", "Error al actualizar el estado", "");
-            console.error('Error al enviar mail de verificación:', error);
-          }
-        }
-        return(
-          <>
-            {
-              record.usuario.isActive ? 
-              <Button type="primary" onClick={()=>console.log("nada")}>Activado</Button> :
-              <Button type="primary" onClick={enviarMail}>Envíar código de activación</Button>
-            }
-          </>
-        )
-      }
-    },
-    {
-      title: 'Estado',
-      dataIndex: 'validado_admin',
-      key: 'validado_admin',
-      render: (validado: boolean, record: IAbogadoBack) => (
-        <Button
-          type="primary"
-          danger={!record.validado_admin}
-          onClick={async () => {
-            try {
-              const nuevoEstado = !record.validado_admin;
-              const data = { validado_admin: nuevoEstado };
-              const response = await abogadoService.updateAbogado(record.id, data);
-              if(response.state){
-                record.validado_admin = nuevoEstado;
-                showToast("success", response.message, "");
-                setFilteredData((prevDataSource) =>
-                  prevDataSource.map((item) =>
-                    item.id === record.id ? { ...item, validado_admin: nuevoEstado } : item
-                  )
-                );
-              }
-            } catch (error) {
-              showToast("error", "Error al actualizar el estado", "");
-              console.error('Error al actualizar el estado:', error);
-            }
-          }}
-        >
-          {record.validado_admin ? 'Activado' : 'Desactivado'}
-        </Button>
-      ),
-    },
+    //         }
+    //       } catch (error) {
+    //         showToast("error", "Error al actualizar el estado", "");
+    //         console.error('Error al enviar mail de verificación:', error);
+    //       }
+    //     }
+    //     return(
+    //       <>
+    //         {
+    //           record.usuario.isActive ? 
+    //           <Button type="primary" onClick={()=>console.log("nada")}>Activado</Button> :
+    //           <Button type="primary" onClick={enviarMail}>Envíar código de activación</Button>
+    //         }
+    //       </>
+    //     )
+    //   }
+    // },
+    // {
+    //   title: 'Estado',
+    //   dataIndex: 'validado_admin',
+    //   key: 'validado_admin',
+    //   render: (validado: boolean, record: IAbogadoBack) => (
+    //     <Button
+    //       type="primary"
+    //       danger={!record.validado_admin}
+    //       onClick={async () => {
+    //         try {
+    //           const nuevoEstado = !record.validado_admin;
+    //           const data = { validado_admin: nuevoEstado };
+    //           const response = await abogadoService.updateAbogado(record.id, data);
+    //           if(response.state){
+    //             record.validado_admin = nuevoEstado;
+    //             showToast("success", response.message, "");
+    //             setFilteredData((prevDataSource) =>
+    //               prevDataSource.map((item) =>
+    //                 item.id === record.id ? { ...item, validado_admin: nuevoEstado } : item
+    //               )
+    //             );
+    //           }
+    //         } catch (error) {
+    //           showToast("error", "Error al actualizar el estado", "");
+    //           console.error('Error al actualizar el estado:', error);
+    //         }
+    //       }}
+    //     >
+    //       {record.validado_admin ? 'Activado' : 'Desactivado'}
+    //     </Button>
+    //   ),
+    // },
     {
       title: 'Editar',
       key: 'editar',

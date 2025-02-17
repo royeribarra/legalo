@@ -6,6 +6,7 @@ import { usuarioService } from "@/services";
 import Link from "next/link";
 import React, { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import Image from "next/image";
 
 const RegistroBienvenidaCliente = () => {
   const { setLoading, loading } = useLoader();
@@ -52,6 +53,12 @@ const RegistroBienvenidaCliente = () => {
           <h1 className="text-5xl my-4 font-nimbus">
             ¡Bienvenida(o) a <span className="italic font-light">Legalo!</span>
           </h1>
+          <Image
+            src="/assets/images/img-client-bienvenida.webp"
+            alt="img-wireframe"
+            width={460}
+            height={320}
+          />
           <div>
             <p className="text-xl">¡Vamos a publicar tu primer proyecto!</p>
             <p className="text-xl">

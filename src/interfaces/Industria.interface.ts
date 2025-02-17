@@ -4,7 +4,7 @@ import { IAbogado } from "./Abogado.interface";
 import { IOferta } from "./Oferta.interface";
 
 export interface IIndustria {
-    id?: number;
+    id: number;
     nombre: string;
 }
 
