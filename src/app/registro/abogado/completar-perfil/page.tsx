@@ -189,36 +189,27 @@ const CompleteProfileLawyerPage: React.FC = () => {
       try {
         const response = await abogadoService.createAbogado(data);
         if (response.state) {
+          const uploadPromises = [];
+
           if (archivoCv) {
-            enviarArchivo(
-              archivoCv,
-              response.abogado.id,
-              "archivo_cv"
-            );
+            uploadPromises.push(enviarArchivo(archivoCv, response.abogado.id, "archivo_cv"));
           }
 
           if (archivoCul) {
-            enviarArchivo(
-              archivoCul,
-              response.abogado.id,
-              "archivo_cul"
-            );
+            uploadPromises.push(enviarArchivo(archivoCul, response.abogado.id, "archivo_cul"));
           }
 
           if (archivoImagen) {
-            enviarArchivo(
-              archivoImagen,
-              response.abogado.id,
-              "archivo_imagen"
-            );
+            uploadPromises.push(enviarArchivo(archivoImagen, response.abogado.id, "archivo_imagen"));
           }
+
           if (archivoVideo) {
-            enviarArchivo(
-              archivoVideo,
-              response.abogado.id,
-              "archivo_video"
-            );
+            uploadPromises.push(enviarArchivo(archivoVideo, response.abogado.id, "archivo_video"));
           }
+
+          // Esperar a que todas las subidas de archivos se completen
+          await Promise.all(uploadPromises);
+
           localStorage.clear();
           router.push(
             `/registro/abogado/email-verify?correo=${encodeURIComponent(stateAbogado.email)}`
