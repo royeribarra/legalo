@@ -1,5 +1,4 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import Link from "next/link";
@@ -20,9 +19,9 @@ const PublicarPageSeven = () => {
   const { state, updateState } = useOferta();
   const { showToast } = useToast();
   const [selected, setSelected] = useState<"rango" | "monto-fijo">("rango");
-  const [rangoDesde, setRangoDesde] = useState<number>(0);
-  const [rangoHasta, setRangoHasta] = useState<number>(0);
-  const [montoFijo, setMontoFijo] = useState<number>(0);
+  const [rangoDesde, setRangoDesde] = useState<number | null>(null);
+  const [rangoHasta, setRangoHasta] = useState<number | null>(null);
+  const [montoFijo, setMontoFijo] = useState<number | null>(null);
 
   // Cargar valores iniciales si ya existen
   useEffect(() => {
@@ -30,11 +29,11 @@ const PublicarPageSeven = () => {
       const { salario_minimo, salario_maximo } = state.presupuesto;
       if (salario_minimo !== salario_maximo) {
         setSelected("rango");
-        setRangoDesde(salario_minimo || 0);
-        setRangoHasta(salario_maximo || 0);
+        setRangoDesde(salario_minimo || null);
+        setRangoHasta(salario_maximo || null);
       } else {
         setSelected("monto-fijo");
-        setMontoFijo(salario_maximo || 0);
+        setMontoFijo(salario_maximo || null);
       }
     }
   }, [state.presupuesto]);
@@ -44,15 +43,15 @@ const PublicarPageSeven = () => {
     if (selected === "rango") {
       updateState({
         presupuesto: {
-          salario_minimo: rangoDesde,
-          salario_maximo: rangoHasta,
+          salario_minimo: rangoDesde ?? 0, // Asegurar número válido
+          salario_maximo: rangoHasta ?? 0,
         },
       });
     } else if (selected === "monto-fijo") {
       updateState({
         presupuesto: {
-          salario_minimo: montoFijo,
-          salario_maximo: montoFijo,
+          salario_minimo: montoFijo ?? 0,
+          salario_maximo: montoFijo ?? 0,
         },
       });
     }
@@ -60,11 +59,11 @@ const PublicarPageSeven = () => {
 
   const nextStep = () => {
     // Validaciones
-    if (selected === "rango" && (!rangoDesde || !rangoHasta)) {
+    if (selected === "rango" && (rangoDesde === null || rangoHasta === null)) {
       showToast("error", "Debes ingresar un rango válido.", "");
       return;
     }
-    if (selected === "monto-fijo" && !montoFijo) {
+    if (selected === "monto-fijo" && montoFijo === null) {
       showToast("error", "Debes ingresar un monto fijo válido.", "");
       return;
     }
@@ -125,8 +124,12 @@ const PublicarPageSeven = () => {
                 <Input
                   type="number"
                   className="border-black rounded-none h-10 focus-visible:border-none"
-                  value={rangoDesde}
-                  onChange={(e) => setRangoDesde(Number(e.target.value))}
+                  value={rangoDesde ?? ""}
+                  min="0" // Evita valores negativos en la interfaz
+                  onChange={(e) => {
+                    const value = Number(e.target.value);
+                    setRangoDesde(value >= 0 ? value : null); // Asegura que solo se guarden números positivos
+                  }}
                 />
               </div>
               <div className="w-1/2">
@@ -134,8 +137,12 @@ const PublicarPageSeven = () => {
                 <Input
                   type="number"
                   className="border-black rounded-none h-10 focus-visible:border-none"
-                  value={rangoHasta}
-                  onChange={(e) => setRangoHasta(Number(e.target.value))}
+                  value={rangoHasta ?? ""}
+                  min="0"
+                  onChange={(e) => {
+                    const value = Number(e.target.value);
+                    setRangoHasta(value >= 0 ? value : null);
+                  }}
                 />
               </div>
             </div>
@@ -148,8 +155,12 @@ const PublicarPageSeven = () => {
               <Input
                 type="number"
                 className="border-black rounded-none h-10 focus-visible:border-none"
-                value={montoFijo}
-                onChange={(e) => setMontoFijo(Number(e.target.value))}
+                value={montoFijo ?? ""}
+                min="0"
+                onChange={(e) => {
+                  const value = Number(e.target.value);
+                  setMontoFijo(value >= 0 ? value : null);
+                }}
               />
             </div>
             <div className="flex items-center gap-2 my-4">

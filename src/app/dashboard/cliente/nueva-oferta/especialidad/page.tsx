@@ -201,7 +201,7 @@ const PublicarPageThree = () => {
         ¿Qué especialidad estás buscando?
       </h1>
       <div className="flex justify-between mt-8">
-        <p className="text-lg">Puedes escoger solo 1*</p>
+        <p className="text-lg">Puedes escoger solo 3*</p>
         <button
           className="text-lg font-bold underline"
           onClick={openModal} // Abre el modal

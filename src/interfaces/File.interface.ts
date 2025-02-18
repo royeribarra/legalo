@@ -15,13 +15,13 @@ export interface IFile {
 
 export interface IFileBack {
   id: number;
-  dni: string;
-  correo: string;
+  dni?: string;
+  correo?: string;
   nombreArchivo: string;
   filePath: string;
-  idFront: string;
-  abogado: IAbogadoBack;
-  oferta: IOfertaBack;
-  aplicacion: IAplicacionBack;
-  trabajo: ITrabajoBack;
+  idFront?: string;
+  abogado?: IAbogadoBack;
+  oferta?: IOfertaBack;
+  aplicacion?: IAplicacionBack;
+  trabajo?: ITrabajoBack;
 }

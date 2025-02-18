@@ -10,15 +10,17 @@ import { IOfertaBack } from "@/interfaces/Oferta.interface";
 import Link from "next/link";
 import { Table, Modal, Form, Input, Select } from "antd"; // Importar Modal y Form
 import { ColumnsType } from "antd/es/table"; // Para tipado de las columnas
-import { clienteService } from "@/services";
+import { clienteService, ofertaservice } from "@/services";
 import { IFileBack } from "@/interfaces/File.interface";
 import { IServicioOferta } from "@/interfaces/Servicio.interface";
 import { useLoader } from "@/contexts/loaderContext";
 import EditOfertaModal from "./Cliente/ModalDetalleOferta";
+import { useToast } from "@/contexts/toastContext";
 
 const OfertasActivas = () => {
   const [proyectos, setProyectos] = useState<IOfertaBack[]>([]);
   const { setLoading } = useLoader();
+  const { showToast } = useToast();
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1); // Para controlar la página actual
   const { user } = useAuth();
@@ -141,14 +143,34 @@ const OfertasActivas = () => {
     setCurrentOferta(null);
   };
 
-  const handleSave = (updatedOferta: IOfertaBack) => {
+  const handleSave = async (updatedOferta: IOfertaBack) => {
+    setLoading(true);
     // Aquí puedes hacer la solicitud para actualizar la oferta en el backend
     console.log("Oferta actualizada:", updatedOferta);
-    // Actualizar el estado de proyectos si es necesario
-    const updatedProyectos = proyectos.map((proyecto) =>
-      proyecto.id === updatedOferta.id ? updatedOferta : proyecto
-    );
-    setProyectos(updatedProyectos);
+    const especialidades = updatedOferta.especialidadesOferta.map((especialidad) => especialidad.especialidad.id);
+    const servicios = updatedOferta.serviciosOferta.map((servicio) => servicio.servicio.id);
+
+    try {
+      const data = {
+        ...updatedOferta,
+        especialidades,
+        servicios
+      };
+      const response = await ofertaservice.updateOferta(updatedOferta.id, data);
+      console.log(response)
+      if(response.state){
+        showToast("success", response.message, "");
+        const updatedProyectos = proyectos.map((proyecto) =>
+          proyecto.id === updatedOferta.id ? updatedOferta : proyecto
+        );
+        setProyectos(updatedProyectos);
+      }
+    } catch (error) {
+      showToast("error", "Hubo un error al actualizar la oferta", "");
+      console.log(error)
+    } finally{
+      setLoading(false);
+    }
   };
 
   return (

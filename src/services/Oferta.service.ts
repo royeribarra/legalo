@@ -1,3 +1,4 @@
+import { OfertaUpdateDTO } from "@/interfaces/Oferta.interface";
 import { MainService } from "./Main.service";
 
 export default class OfertaService extends MainService {
@@ -7,6 +8,10 @@ export default class OfertaService extends MainService {
 
   public async createOferta(body: any): Promise<any> {
     return this.post(`/create`, body);
+  }
+
+  public async updateOferta(id: number, fieldsToUpdate: Partial<OfertaUpdateDTO>) : Promise<any>{
+    return this.put(`/edit/${id}`, fieldsToUpdate);
   }
 
   public async realizarPago(pagoData: { clienteId: number; monto: number }): Promise<any> {

@@ -51,3 +51,18 @@ export interface IOfertaBack {
     preguntas_oferta: IPreguntaOfertaBack[];
     files: IFileBack[];
 }
+
+export interface OfertaUpdateDTO {
+    uso?: string;
+    titulo?: string;
+    descripcion?: string;
+    documento_url?: string;
+    duracion?: string;
+    experiencia_abogado?: string;
+    salario_minimo?: number;
+    salario_maximo?: number;
+    estado?: string;
+    especialidade?: number[];
+    servicios?: number[];
+    preguntas_oferta?: IPreguntaOfertaBack[];
+  }

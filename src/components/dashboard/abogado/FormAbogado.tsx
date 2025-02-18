@@ -13,47 +13,34 @@ import { Row, Col } from "antd";
 import EstudioAbogadoForm from "../admin/EstudioAbogado";
 import { IIndustriaAbogado } from "@/interfaces/Industria.interface";
 import industriasData from "@/data/industrias";
+import dataServicios from "@/data/servicios";
 import dataEspecialidades from "@/data/especialidades";
+import DocumentosAbogado from "./DocumentosAbogado";
 
-const FormAbogado = ({abogadoId}:{abogadoId: number}) => {
+
+
+const FormAbogado = ({abogado}:{abogado: IAbogadoBack}) => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
-  const [abogado, setAbogado] = useState<IAbogadoBack | null>(null);
-  const [industriasSeleccionadas, setIndustriasSeleccionadas] = useState<number[]>([]);
-  const [especialidadesSeleccionadas, setEspecialidadesSeleccionadas] = useState<number[]>([]);
+
+  const serviciosDisponibles = dataServicios;
+  const especialidadesDisponibles = dataEspecialidades;
 
   useEffect(() => {
-    const fetchAbogado = async () => {
-      setLoading(true);
-      try {
-        const response: IAbogadoBack = await abogadoService.getAbogadoByID(Number(abogadoId));
-        setAbogado(response);
-        if (response.industriasAbogado.length > 0) {
-          const industriasIds = response.industriasAbogado
-            .map((item) => item.industria.id)
-            .filter((id): id is number => id !== undefined); // Filtramos `undefined` de manera segura
-          console.log(industriasIds)
-          setIndustriasSeleccionadas(industriasIds);
-        }
-        
-        form.setFieldsValue({
-          ...response,
-          fecha_nacimiento: dayjs(response.fecha_nacimiento),
-        });
-      } catch (error) {
-        console.error("Error al obtener los datos del abogado:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchAbogado();
-  }, [abogadoId, form]);
+    if (abogado) {
+      form.setFieldsValue({
+        ...abogado,
+        serviciosAbogado: abogado.serviciosAbogado.map((item) => item.servicio.id),
+        especialidadesAbogado: abogado.especialidadesAbogado.map((item) => item.especialidad.id),
+      });
+    }
+  }, [abogado, form]);
 
   const handleFinish = async (values: any) => {
     console.log("Datos actualizados:", values);
     try {
       setLoading(true);
-      await abogadoService.getAbogadoByID(Number(abogadoId));
+      await abogadoService.getAbogadoByID(Number(abogado.id));
       console.log("Abogado actualizado con éxito");
     } catch (error) {
       console.error("Error al actualizar el abogado:", error);
@@ -105,15 +92,15 @@ const FormAbogado = ({abogadoId}:{abogadoId: number}) => {
   if (!abogado) {
     return <p>Cargando detalles del abogado...</p>;
   }
-  const handleChangeIndustrias = (values: number[]) => {
-    console.log(values)
-    setIndustriasSeleccionadas(values);
-  };
+  // const handleChangeIndustrias = (values: number[]) => {
+  //   console.log(values)
+  //   setIndustriasSeleccionadas(values);
+  // };
 
-  const handleChangeEspecialidades = (values: number[]) => {
-    console.log(values)
-    setEspecialidadesSeleccionadas(values);
-  };
+  // const handleChangeEspecialidades = (values: number[]) => {
+  //   console.log(values)
+  //   setEspecialidadesSeleccionadas(values);
+  // };
 
   return (
     <div className="mt-4">
@@ -178,6 +165,47 @@ const FormAbogado = ({abogadoId}:{abogadoId: number}) => {
             </Form.Item>
           </Col>
         </Row>
+        <Form.Item
+          label="Especialidades"
+          name="especialidadesAbogado"
+          rules={[{ required: true, message: "Por favor selecciona al menos una especialidad" }]}
+        >
+          <Select
+            mode="multiple"
+            placeholder="Selecciona las especialidades"
+            optionLabelProp="label"
+            style={{ width: "100%" }}
+          >
+            {especialidadesDisponibles.map((especialidad) => (
+              <Select.Option key={especialidad.id} value={especialidad.id} label={especialidad.nombre}>
+                {especialidad.nombre}
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
+        <Form.Item
+          label="Servicios"
+          name="serviciosAbogado"
+          rules={[{ required: true, message: "Por favor selecciona al menos un servicio" }]}
+        >
+          <Select
+            mode="multiple"
+            placeholder="Selecciona los servicios"
+            optionLabelProp="label"
+            style={{ width: "100%" }}
+          >
+            {serviciosDisponibles.map((servicio) => (
+              <Select.Option key={servicio.id} value={servicio.id} label={servicio.nombre}>
+                {servicio.nombre}
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit" loading={loading}>
+            Guardar Cambios
+          </Button>
+        </Form.Item>
         <div>
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-lg font-semibold">Experiencias</h2>
@@ -210,47 +238,7 @@ const FormAbogado = ({abogadoId}:{abogadoId: number}) => {
             />
           ))}
         </div>
-        <Form.Item label="Industria" name="industria">
-          <Select
-            mode="multiple"
-            placeholder="Selecciona industrias"
-            value={industriasSeleccionadas}
-            onChange={handleChangeIndustrias}
-            allowClear
-            options={industriasData.map((industria) => ({
-              label: industria.nombre,
-              value: industria.id,
-            }))}
-          />
-        </Form.Item><Form.Item label="Especialidades" name="especialidad">
-          <Select
-            mode="multiple"
-            placeholder="Selecciona especialidades"
-            value={especialidadesSeleccionadas}
-            onChange={handleChangeEspecialidades}
-            allowClear
-            options={dataEspecialidades.map((especialidad) => ({
-              label: especialidad.nombre,
-              value: especialidad.id,
-            }))}
-          />
-        </Form.Item>
-        <Form.Item label="CV (PDF)" name="pdf_cv">
-          <Upload>
-            <Button icon={<UploadOutlined />}>Subir CV</Button>
-          </Upload>
-        </Form.Item>
-        <Form.Item label="Foto URL" name="foto_url">
-          <Input />
-        </Form.Item>
-        <Form.Item label="Video URL" name="video_url">
-          <Input />
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit" loading={loading}>
-            Guardar Cambios
-          </Button>
-        </Form.Item>
+        <DocumentosAbogado archivos={abogado.files} />
       </Form>
     </div>
   );

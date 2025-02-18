@@ -42,7 +42,7 @@ const EditOfertaModal: React.FC<EditOfertaModalProps> = ({ visible, oferta, onCl
             servicio: serviciosDisponibles.find((servicio) => servicio.id === servicioId),
           })),
           especialidadesOferta: values.especialidadesOferta.map((especialidadId: number) => ({
-            servicio: especialidadesDisponibles.find((especialidad) => especialidad.id === especialidadId),
+            especialidad: especialidadesDisponibles.find((especialidad) => especialidad.id === especialidadId),
           })),
         };
         onSave(updatedOferta); // Guarda los cambios de la oferta
@@ -89,10 +89,7 @@ const EditOfertaModal: React.FC<EditOfertaModalProps> = ({ visible, oferta, onCl
           </Form.Item>
 
           <Form.Item label="Estado" name="estado" rules={[{ required: true, message: "Por favor selecciona el estado" }]}>
-            <Select>
-              <Select.Option value="activo">Activo</Select.Option>
-              <Select.Option value="inactivo">Inactivo</Select.Option>
-            </Select>
+            <Input />
           </Form.Item>
 
           {/* Select múltiple para los servicios */}
