@@ -63,6 +63,7 @@ const AbogadoDetail = () => {
       descripcion: "",
       institucion: "",
       titulo: "",
+      ubicacion: ""
     },
   ]);
 
@@ -77,6 +78,7 @@ const AbogadoDetail = () => {
       descripcion: "",
       institucion: "",
       titulo: "",
+      ubicacion: ""
     };
     setExperiencias([...experiencias, nuevaExperiencia]);
   };

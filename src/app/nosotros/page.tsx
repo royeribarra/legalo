@@ -68,10 +68,9 @@ const NosotrosPage = () => {
               <div>
                 <p className="text-[30px] font-nimbus">Evelyn Castro</p>
                 <p className="font-bold">Fundadora de LEGALO</p>
-                <p>
-                  Abogada con más de 14 años de experiencia y Máster en la
-                  Universidad de Barcelona
-                </p>
+                <p>Abogada con más de 14 años de experiencia.</p>
+                <p>Máster en Economía y Regulación en Universitat de Barcelona</p>
+                <p>Certificación en Legal Tech e Innovación en MIT y ESADE</p>
               </div>
             </div>
           </div>

@@ -38,6 +38,9 @@ const formSchema = z.object({
     message: "Debe completar la institución",
   }),
   descripcion: z.string(),
+  ubicacion: z.string().min(2, {
+    message: "Complete una ubicación",
+  }),
 });
 
 type ModalAgregarEducacionProps = {
@@ -66,6 +69,7 @@ function ModalAgregarExperiencia({
       titulo: "",
       empresa: "",
       descripcion: "",
+      ubicacion: "",
     },
   });
 
@@ -108,6 +112,7 @@ function ModalAgregarExperiencia({
       titulo: values.titulo,
       empresa: values.empresa,
       descripcion: values.descripcion,
+      ubicacion: values.ubicacion,
     };
   
     if (experienciaSelected) {
@@ -146,6 +151,7 @@ function ModalAgregarExperiencia({
         form.setValue("titulo", experienciaSelected.titulo);
         form.setValue("empresa", experienciaSelected.empresa);
         form.setValue("descripcion", experienciaSelected.descripcion);
+        form.setValue("ubicacion", experienciaSelected.ubicacion);
       }
   }, [experienciaSelected]);
 
@@ -263,6 +269,23 @@ function ModalAgregarExperiencia({
                         <Input
                           className="border border-black rounded-[10px] h-12"
                           placeholder="Massachusetts Institute of tecnology"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="ubicacion"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Ubicacion*</FormLabel>
+                      <FormControl>
+                        <Input
+                          className="border border-black rounded-[10px] h-12"
+                          placeholder="Lima,Peru"
                           {...field}
                         />
                       </FormControl>

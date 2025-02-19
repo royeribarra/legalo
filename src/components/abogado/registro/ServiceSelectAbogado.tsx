@@ -18,43 +18,43 @@ interface ISelectableService {
 }
 
 const serviceItems = [
-  { id: 1, 
+  { id: 1,
     nombre: "No estoy seguro del servicio a escoger",
     descripcion: "Recibe orientación para identificar el tipo de servicio legal que necesitas."
   },
-  { id: 2, 
+  { id: 2,
     nombre: "Consultoría/ Asesoría legal",
     descripcion: "Consulta con un abogado para aclarar dudas legales y obtener recomendaciones."
   },
-  { id: 3, 
+  { id: 3,
     nombre: "Patrocinio en Poder judicial",
     descripcion: "Representación en procesos judiciales ante el Poder Judicial."
   },
-  { id: 4, 
+  { id: 4,
     nombre: "Defensa y trámites ante entidades públicas",
     descripcion: "Representación y gestión en trámites y procesos ante entidades públicas."
   },
-  { 
-    id: 5, 
+  {
+    id: 5,
     nombre: "Redacción de Documentos Legales",
     descripcion: "Elaboración de contratos, demandas y otros documentos jurídicos."
   },
-  { id: 6, 
+  { id: 6,
     nombre: "Cumplimiento regulatorio",
     descripcion: "Asegura que tus actividades cumplan con la normativa vigente."
   },
-  { 
-    id: 7, 
+  {
+    id: 7,
     nombre: "Mediación/Conciliación",
     descripcion: "Representación y/o asistencia a audiencias de conciliación o mediación."
   },
-  { 
-    id: 8, 
+  {
+    id: 8,
     nombre: "Prácticas preprofesionales y profesionales",
     descripcion: "Asistencia de estudiantes o bachilleres en tareas legales supervisadas."
   },
-  { 
-    id: 9, 
+  {
+    id: 9,
     nombre: "Investigación legal",
     descripcion: "Búsqueda, análisis y síntesis de información jurídica por estudiantes o bachilleres."
   },
@@ -140,7 +140,8 @@ function ServiceSelectAbogado({
           selectedServiceNames.map((service) => (
             <span
               key={service.id}
-              className="bg-blue-500 text-white text-sm rounded-full px-3 py-1 mr-2 mb-2 flex items-center"
+              style={{ backgroundColor: "#e5e7eb"}}
+              className="text-white text-sm rounded-full px-3 py-1 mr-2 mb-2 flex items-center"
             >
               {service.nombre}
               <button

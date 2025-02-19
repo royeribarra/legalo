@@ -7,6 +7,7 @@ export interface IExperiencia {
     empresa: string;
     hasta_fecha: string;
     titulo: string;
+    ubicacion: string;
 }
 
 export interface IExperienciaBack{
@@ -19,4 +20,5 @@ export interface IExperienciaBack{
     descripcion: string;
     institucion: string;
     titulo: string;
+    ubicacion: string;
 }

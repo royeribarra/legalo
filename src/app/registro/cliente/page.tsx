@@ -251,7 +251,7 @@ const RegisterClient = () => {
               Bienvenido a Legalo 👋
             </h2>
             <p className="text-center">
-              Conecta con clientes y haz crecer tu práctica legal.
+              Encuentra a tu abogado de confianza para tu caso.
             </p>
             <Form {...form}>
               <form

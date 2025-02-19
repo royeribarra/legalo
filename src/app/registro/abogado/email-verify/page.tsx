@@ -9,9 +9,7 @@ const EmailVerify = () => {
   const [showStep, setShowStep] = useState(true);
 
   return (
-    <div
-      className={`h-screen flex flex-col p-4 bg-lg-lawyer`}
-    >
+    <div className={`h-screen flex flex-col px-4 pb-4 bg-lg-lawyer`}>
       <header className="container mx-auto px-4 lg:px-8 flex justify-between items-center align h-[72px] min-h-[60px]">
         <Link href="/">
           <Image
@@ -23,13 +21,7 @@ const EmailVerify = () => {
           />
         </Link>
       </header>
-      <div className="flex mt-[3%] flex-col items-center gap-5 flex-auto pb-20">
-        {/* <Image
-          src="/assets/images/img-client-verify.jpg"
-          alt="img-wireframe"
-          width={460}
-          height={320}
-        /> */}
+      <div className="flex mt-[3%] flex-col items-center gap-5 flex-auto">
         <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" fill="none">
           <g clip-path="url(#clip0_783_8603)">
           <path d="M63.8625 7.6425C62.5772 7.54761 61.2888 7.50007 60 7.5V0C61.474 0.000718707 62.9475 0.0557561 64.4175 0.165L63.8625 7.6425ZM78.8925 11.0175C76.4883 10.0898 74.0192 9.34026 71.505 8.775L73.1475 1.455C76.02 2.1 78.8475 2.955 81.5925 4.02L78.8925 11.0175ZM89.1675 16.3425C88.0952 15.6274 86.997 14.9519 85.875 14.3175L89.5725 7.7925C92.1368 9.24552 94.5909 10.8849 96.915 12.6975L92.3025 18.615C91.2857 17.8217 90.24 17.0662 89.1675 16.35V16.3425ZM102.922 29.7675C101.439 27.6598 99.802 25.6644 98.025 23.7975L103.455 18.6225C105.48 20.76 107.355 23.0475 109.058 25.4475L102.922 29.7675ZM108.502 39.9075C108.01 38.7184 107.475 37.5477 106.898 36.3975L113.595 33.0225C114.919 35.6556 116.048 38.3831 116.97 41.1825L109.845 43.53C109.442 42.3065 108.994 41.0982 108.502 39.9075ZM112.477 58.71C112.417 56.1325 112.166 53.5631 111.728 51.0225L119.115 49.7475C119.618 52.6425 119.91 55.5825 119.985 58.5225L112.485 58.71H112.477ZM111.495 70.245C111.743 68.97 111.945 67.7025 112.102 66.42L119.55 67.3425C119.19 70.2687 118.613 73.1641 117.825 76.005L110.595 74.0025C110.94 72.765 111.24 71.5125 111.495 70.245ZM104.355 88.0875C105.735 85.9125 106.95 83.6325 108 81.2775L114.855 84.315C113.655 87.015 112.267 89.61 110.692 92.1L104.355 88.0875ZM97.125 97.125C98.04 96.21 98.9175 95.265 99.75 94.29L105.435 99.1875C104.472 100.304 103.469 101.384 102.427 102.428L97.125 97.125Z" fill="black"/>
@@ -56,14 +48,6 @@ const EmailVerify = () => {
             En un máximo de 48 horas recibirás un correo de confirmación.
           </p>
         </div>
-        {/* <Button
-          onClick={() => {
-            setShowStep(false);
-          }}
-          className="mt-4 rounded-[10px] h-12 px-6 text-base"
-        >
-          Enviar de nuevo
-        </Button> */}
         <Link href={"/"}>
           <Button
             className="mt-4 rounded-[10px] h-12 px-6 text-base"

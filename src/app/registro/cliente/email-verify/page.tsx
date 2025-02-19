@@ -22,7 +22,7 @@ const EmailVerify = () => {
           />
         </Link>
       </header>
-      <div className="flex mt-[3%] flex-col items-center gap-5 flex-auto pb-20">
+      <div className="flex mt-[3%] flex-col items-center gap-5 flex-auto">
         <Image
           src="/assets/images/img-client-verify.webp"
           alt="img-wireframe"

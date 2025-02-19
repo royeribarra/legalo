@@ -60,6 +60,7 @@ const FormAbogado = ({abogado}:{abogado: IAbogadoBack}) => {
       descripcion: "",
       institucion: "",
       titulo: "",
+      ubicacion: ""
     },
   ]);
 
@@ -74,6 +75,7 @@ const FormAbogado = ({abogado}:{abogado: IAbogadoBack}) => {
       descripcion: "",
       institucion: "",
       titulo: "",
+      ubicacion: ""
     };
     setExperiencias([...experiencias, nuevaExperiencia]);
   };

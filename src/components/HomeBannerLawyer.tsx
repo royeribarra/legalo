@@ -49,109 +49,109 @@ const HomeBannerClient = () => {
   const dataServices = [
     {
       id: 1,
-      nombre: "Abogado Civil",
+      nombre: "Derecho Civil",
       descripcion: "¿Necesitas revisar o firmar un contrato, asegurar la compra o alquiler de una propiedad o con el trámite de una herencia familiar?",
       imagen: "/civil.svg"
     },
     {
       id: 2,
-      nombre: "Abogado Penalista",
+      nombre: "Derecho Penalista",
       descripcion: "¿Te enfrentas a un juicio penal, necesitas asesoría en una investigación policial o quieres conocer tus derechos ante una detención?",
       imagen: "/penalista.svg"
     },
     {
       id: 3,
-      nombre: "Abogado Laboral",
+      nombre: "Derecho Laboral",
       descripcion: "¿Tienes problemas con un contrato de trabajo, fuiste despedido injustamente, necesitas asesoría en una inspección de SUNAFIL o sobre derechos laborales, como maternidad o acoso?",
       imagen: "/laboral.svg"
     },
     {
       id: 4,
-      nombre: "Abogado Procesalista",
+      nombre: "Derecho Procesalista",
       descripcion: "¿Quieres presentar una demanda, necesitas ayuda para defenderte en un proceso judicial, o necesitas orientación en el seguimiento de tu caso judicial?",
       imagen: "/procesalista.svg"
     },
     {
       id: 5,
-      nombre: "Abogado Administrativo",
+      nombre: "Derecho Administrativo",
       descripcion: "¿Necesitas apoyo para gestionar trámites con entidades públicas, defenderte de una sanción o multa o resolver problemas con permisos y licencias?",
       imagen: "/administrativo.svg"
     },
     {
       id: 6,
-      nombre: "Abogado de Familia",
+      nombre: "Derecho de Familia",
       descripcion: "¿Estás atravesando un divorcio, buscas custodia compartida, o necesitas asesoría sobre pensiones alimenticias y acuerdos familiares?",
       imagen: "/familia.svg"
     },
     {
       id: 7,
-      nombre: "Abogado Tributario",
+      nombre: "Derecho Tributario",
       descripcion: "¿Necesitas ayuda con la declaración de impuestos, o defensa en fiscalización de SUNAT o en un litigio tributario?",
       imagen: "/tributario.svg"
     },
     {
       id: 8,
-      nombre: "Abogado de Migraciones",
+      nombre: "Derecho de Migraciones",
       descripcion: "¿Necesitas ayuda con trámites de residencia, permisos de trabajo, o enfrentas problemas de inmigración?",
       imagen: "/migraciones.svg"
     },
     {
       id: 9,
-      nombre: "Abogado de Protección al Consumidor",
+      nombre: "Derecho de Protección al Consumidor",
       descripcion: "¿Te vendieron un producto defectuoso, no cumplieron con la garantía o te han hecho cobros indebidos?",
       imagen: "/proteccion-al-consumidor.svg"
     },
     {
       id: 10,
-      nombre: "Abogado Empresarial",
+      nombre: "Derecho Empresarial",
       descripcion: "¿Planeas constituir una empresa, necesitas revisar contratos comerciales o estás involucrado en una fusión o disputa entre socios?",
       imagen: "/empresarial.svg"
     },
     {
       id: 11,
-      nombre: "Abogado Ambiental",
+      nombre: "Derecho Ambiental",
       descripcion: "¿Necesitas asesoría sobre normativa ambiental, enfrentas problemas de permisos, o necesitas defensa en casos de contaminación?",
       imagen: "/ambiental.svg"
     },
     {
       id: 12,
-      nombre: "Abogado de Arbitraje y Resolución de Conflicto",
+      nombre: "Derecho de Arbitraje y Resolución de Conflicto",
       descripcion: "¿Tu contrato requiere resolver un conflicto ante un árbitro o tribunal arbitral o estás considerando iniciar una mediación o demanda arbitral?",
       imagen: "/arbitraje-resolucion-conflictos.svg"
     },
     {
       id: 13,
-      nombre: "Abogado de la Competencia",
+      nombre: "Derecho de la Competencia",
       descripcion: "¿Te han denunciado por prácticas anticompetitivas, o buscas cumplir con las normativas de competencia y evitar sanciones?",
       imagen: "/competencia.svg"
     },
     {
       id: 14,
-      nombre: "Abogado de Competencia Desleal",
+      nombre: "Derecho de Competencia Desleal",
       descripcion: "¿Necesitas proteger tu marca de publicidad engañosa o tu negocio enfrenta prácticas desleales?",
       imagen: "/competencia-desleal.svg"
     },
     {
       id: 15,
-      nombre: "Abogado de Compliance",
+      nombre: "Derecho de Compliance",
       descripcion: "¿Necesitas asesoría para cumplir con normativas legales, prevenir riesgos empresariales o implementar políticas de ética en tu organización?",
       imagen: "/compliance.svg"
     },
     {
       id: 16,
-      nombre: "Abogado de Propiedad Intelectual",
+      nombre: "Derecho de Propiedad Intelectual",
       descripcion: "¿Quieres registrar una marca, proteger una invención o necesitas ayuda para defenderte de infracciones a tus derechos de autor?",
       imagen: "/propiedad-intelectual.svg"
     },
     {
       id: 17,
-      nombre: "Abogado de Tecnología y Datos",
+      nombre: "Derecho de Tecnología y Datos",
       descripcion: "¿Necesitas asesoría para proteger datos personales, negociar contratos de software, o resolver problemas de ciberseguridad?",
       imagen: "/tecnologia-de-datos.svg"
     },
     {
       id: 18,
-      nombre: "Abogado de Salud",
+      nombre: "Derecho de Salud",
       descripcion: "¿Enfrentas un conflicto de mala praxis médica, necesitas asesoría en seguros de salud, o buscas defender tus derechos como paciente?",
       imagen: "/salud.svg"
     }
@@ -253,7 +253,7 @@ const HomeBannerClient = () => {
                       </div>
                       <CardHeader className="p-0 space-y-0">
                         <CardTitle className="text-base lg:text-lg font-nimbus">
-                          Derecho <i>{item.nombre}</i>
+                          <i>{item.nombre}</i>
                         </CardTitle>
                         <CardDescription className="line-clamp-3 lg:text-sm text-xs">
                           {item.descripcion}

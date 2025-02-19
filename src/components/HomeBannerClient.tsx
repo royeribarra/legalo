@@ -229,7 +229,7 @@ const HomeBannerClient = () => {
                       </div>
                       <CardHeader className="p-0 space-y-0">
                         <CardTitle className="text-base lg:text-lg  font-nimbus">
-                          Abogado <i>{item.nombre}</i>
+                          <i>{item.nombre}</i>
                         </CardTitle>
                         <CardDescription className="line-clamp-3 lg:text-sm text-xs text-black">
                           {item.descripcion}
