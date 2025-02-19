@@ -155,6 +155,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
           fecha_inicio: experiencia.desde_fecha,
           descripcion: experiencia.descripcion,
           titulo: experiencia.titulo,
+          ubicacion: experiencia.ubicacion
         })
       );
       const educaciones = stateAbogado.estudios.map((estudio: IEstudio) => ({
