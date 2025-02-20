@@ -501,7 +501,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
                         <p>{experiencia.empresa}</p>
                         <div className="flex gap-2 border-b border-black py-4">
                           <Button
-                            variant="outline"
+                            variant="default"
                             size="sm"
                             className="w-[120px] rounded-2xl border-black"
                             id="editar-experiencia"
@@ -510,7 +510,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
                             Editar
                           </Button>
                           <Button
-                            variant="outline"
+                            variant="destructive"
                             size="sm"
                             className="w-[120px] rounded-2xl border-black"
                             onClick={() => eliminarExperiencia(experiencia)}
@@ -575,7 +575,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
                       <p>{educacion.ubicacion}</p>
                       <div className="flex gap-2 border-b border-black py-4">
                         <Button
-                          variant="outline"
+                          variant="default"
                           size="sm"
                           className="w-[120px] rounded-2xl border-black"
                           onClick={() => editarEducacion(educacion)}
@@ -583,7 +583,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
                           Editar
                         </Button>
                         <Button
-                          variant="outline"
+                          variant="destructive"
                           size="sm"
                           className="w-[120px] rounded-2xl border-black"
                           onClick={() => eliminarEducacion(educacion)}

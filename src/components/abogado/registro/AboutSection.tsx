@@ -238,8 +238,9 @@ function AboutSection({
           {selectedSpecialties.length > 0 ? (
             selectedSpecialties.map((especialidad) => (
               <div
+                style={{ backgroundColor: "#e5e7eb", color: '#020817'}}
                 key={especialidad.id}
-                className="bg-blue-500 text-white rounded-full px-3 py-1 text-sm flex items-center"
+                className="rounded-full px-3 py-1 text-sm flex items-center"
               >
                 {especialidad.nombre}
               </div>

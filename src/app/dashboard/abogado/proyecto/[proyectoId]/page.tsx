@@ -80,71 +80,79 @@ const ProyectSinglePage = () => {
         oferta &&
         <div className="p-4 lg:px-16 lg:pt-12 flex gap-16 2xl:gap-32 lg:flex-row">
           <div className="flex-1 lg:p-8 flex flex-col gap-6">
-            <div className="flex flex-col lg:flex-row gap-8">
-              {/* Columna izquierda con título y estado */}
-              <div className="flex-1 flex flex-col gap-6">
-                <Link href="/dashboard/abogado">
-                  <ArrowLeft size={32} />
-                </Link>
-                <div className="flex items-start justify-between flex-wrap">
-                  <div>
-                    <h1 className="font-nimbus text-2xl mb-4">{oferta.titulo}</h1>
-                    <p className="text-slate-500">
-                      {!diasPublicados ? "Publicado Hoy" : `Publicado hace ${diasPublicados} días`}
-                    </p>
-                  </div>
-                  <div className="mt-4 lg:mt-0">
-                    {["creado", "verificar_postulaciones"].includes(oferta.estado) && (
-                      <Button className="w-[300px] h-12 bg-blue-500 hover:bg-blue-700 text-white" onClick={handleModalPostular}>
-                        Enviar Postulación
-                      </Button>
-                    )}
-                    {oferta.estado === "asignado" && (
-                      <Button className="w-[300px] h-12 bg-yellow-500 hover:bg-yellow-700 text-white">
-                        Asignado
-                      </Button>
-                    )}
-                    {oferta.estado === "cerrado" && (
-                      <Button className="w-[300px] h-12 bg-gray-500 hover:bg-gray-700 text-white">
-                        Cerrado
-                      </Button>
-                    )}
-                    {oferta.estado === "cancelado" && (
-                      <Button className="w-[300px] h-12 bg-red-500 hover:bg-red-700 text-white">
-                        Cancelado
-                      </Button>
-                    )}
+            <Link href="/dashboard/abogado" className="flex items-center gap-4">
+              <ArrowLeft size={32} /><p>Volver</p>
+            </Link>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              {/* Primera columna (8 de 12) */}
+              <div className="lg:col-span-8 flex flex-col gap-6">
+                <h1 className="font-nimbus text-4xl mb-4">{oferta.titulo}</h1>
+                <div className="flex">
+                  <p className="text-slate-500">
+                    {!diasPublicados ? "Publicado Hoy" : `Publicado hace ${diasPublicados} días |`}
+                  </p>
+                  <div className="flex items-center gap-2 text-slate-500">
+                    <User size={24} color="#4B5563" />{oferta.aplicaciones.length} postulaciones
                   </div>
                 </div>
+                <div>
+                  <Button
+                    variant="outline"
+                    className="border border-black rounded-full h-[43px]"
+                  >
+                    <Image
+                      src="/icos/ico-dash-alarm.svg"
+                      alt=""
+                      width={24}
+                      height={24}
+                      className="mr-2"
+                    />
+                    <p>{oferta.duracion}</p>
+                  </Button>
+                </div>
               </div>
-              {/* Columna derecha con información del cliente */}
-              <div className="w-full lg:w-[260px]">
-                <div className="p-6 border border-black rounded-[10px]">
-                  <h3 className="text-center font-nimbus">Sobre el cliente:</h3>
-                  <p>Nombre y apellido: {oferta.cliente.nombres}</p>
-                  <p>Para uso {oferta.uso}</p>
+              {/* Segunda columna (4 de 12) */}
+              <div className="lg:col-span-4">
+                <div className="mt-4 lg:mt-0 mb-4">
+                  {["creado", "verificar_postulaciones"].includes(oferta.estado) && (
+                    <Button className="w-full h-12 bg-black hover:bg-gray-800 text-white transition-colors duration-200" onClick={handleModalPostular}>
+                      Postular al caso
+                    </Button>
+                  )}
+                  {oferta.estado === "asignado" && (
+                    <Button className="w-full h-12 bg-yellow-500 hover:bg-yellow-700 text-white">
+                      Asignado
+                    </Button>
+                  )}
+                  {oferta.estado === "cerrado" && (
+                    <Button className="w-full h-12 bg-gray-500 hover:bg-gray-700 text-white">
+                      Cerrado
+                    </Button>
+                  )}
+                  {oferta.estado === "cancelado" && (
+                    <Button className="w-full h-12 bg-red-500 hover:bg-red-700 text-white">
+                      Cancelado
+                    </Button>
+                  )}
+                </div>
+                <div className="w-full">
+                  <div className="p-6 border border-black rounded-[10px] bg-lg-lawyer">
+                    <h3 className="text-left font-nimbus">Sobre el cliente:</h3>
+                    <p>{oferta.cliente.nombres + ' ' + oferta.cliente.apellidos} </p>
+                    <p>Para uso {oferta.uso}</p>
+                  </div>
                 </div>
               </div>
             </div>
 
             <div className="gap-4 flex-wrap">
-              <div>
-              <Button
-                variant="outline"
-                className="border border-black rounded-full h-[43px]"
-              >
-                <Image
-                  src="/icos/ico-dash-alarm.svg"
-                  alt=""
-                  width={24}
-                  height={24}
-                  className="mr-2"
-                />
-                <p>{oferta.duracion}</p>
-              </Button>
+              <div className="flex items-center gap-4 text-lg font-semibold text-gray-800">
+                <p><span className="text-black">Presupuesto:</span> S/ {oferta.salario_minimo} - {oferta.salario_maximo}</p>
+                <span className="text-gray-500 text-xl">|</span>
+                <p><span className="text-black">Experiencia requerida:</span> {oferta.experiencia_abogado}</p>
               </div>
               <div className="mt-2">
-                <h2>Especialidades</h2>
+                <h2 className="text-black font-semibold">Especialidades</h2>
               {
                 oferta.especialidadesOferta.map((especialidad)=>
                   <Button
@@ -164,7 +172,7 @@ const ProyectSinglePage = () => {
               }
               </div>
               <div className="mt-2">
-                <h2>Servicios</h2>
+                <h2 className="text-black font-semibold">Servicios</h2>
               {
                 oferta.serviciosOferta.map((servicio)=>
                   <Button
@@ -184,63 +192,25 @@ const ProyectSinglePage = () => {
               }
               </div>
             </div>
-            <div className="flex items-center gap-2 text-slate-500">
-              <User size={24} color="#4B5563" /> {oferta.aplicaciones.length} postulaciones
-            </div>
             <div>
-              <p>Descripción de proyecto: </p>{" "}
-              <p>
-                {oferta.descripcion}
-              </p>
+              <h4 className="text-black font-semibold">Descripción de proyecto:</h4>
+              <p>{oferta.descripcion}</p>
             </div>
-            <div>
-              <Accordion type="single" collapsible>
-                <AccordionItem value="item-1" className="border-y border-black">
-                  <AccordionTrigger className="hover:no-underline">
-                    <div className="flex items-center gap-2">
-                      <Image
-                        src="/icos/ico-document.svg"
-                        alt="ico"
-                        width={24}
-                        height={24}
-                      />
-                      Ver documentos adjuntos
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <Link href={`${process.env.S3_FILE_ROUTE}/${oferta?.files.find((file)=>file.nombreArchivo==='oferta_documento')?.filePath}`} target="_blank">Ver documento</Link>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            </div>
-            <div className="flex gap-6 lg:gap-10 mt-8 flex-col lg:flex-row justify-between">
-              <div className="flex items-start gap-4">
-                <span className="w-10 h-10 border border-black rounded-full flex items-center justify-center">
-                  <User size={24} color="#4B5563" />
-                </span>
-                <div>
-                  <p>Duración</p>
-                  <p>{oferta.duracion}</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <span className="w-10 h-10 border border-black rounded-full flex items-center justify-center">
-                  <User size={24} color="#4B5563" />
-                </span>
-                <div>
-                  <p>Experiencia requerida</p>
-                  <p>{oferta.experiencia_abogado}</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <span className="w-10 h-10 border border-black rounded-full flex items-center justify-center">
-                  <User size={24} color="#4B5563" />
-                </span>
-                <div>
-                  <p>Presupuesto S/</p>
-                  <p>{oferta.salario_minimo} - {oferta.salario_maximo}</p>
-                </div>
-              </div>
+            <div className="flex flex-col gap-2">
+              <p className="font-semibold text-gray-800">Documentación del caso:</p>
+              <Link
+                href={`${process.env.S3_FILE_ROUTE}/${oferta?.files.find((file)=>file.nombreArchivo==='oferta_documento')?.filePath}`}
+                target="_blank"
+                className="text-blue-600 hover:underline flex items-center gap-2"
+              >
+                <Image
+                  src="/icos/ico-document.svg"
+                  alt="ico"
+                  width={20}
+                  height={20}
+                />
+                Documento con la información del caso
+              </Link>
             </div>
           </div>
         </div>

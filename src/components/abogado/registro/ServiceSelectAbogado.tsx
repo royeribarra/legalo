@@ -140,7 +140,7 @@ function ServiceSelectAbogado({
           selectedServiceNames.map((service) => (
             <span
               key={service.id}
-              style={{ backgroundColor: "#e5e7eb"}}
+              style={{ backgroundColor: "#e5e7eb", color: '#020817'}}
               className="text-white text-sm rounded-full px-3 py-1 mr-2 mb-2 flex items-center"
             >
               {service.nombre}

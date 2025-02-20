@@ -165,7 +165,7 @@ const ProyectPage = () => {
             </div>
           </div>
         </div>
-        <div className="w-full lg:w-[260px]">
+        <div className="w-full lg:w-[260px] bg-lg-lawyer">
           <div className="p-6 border border-black rounded-[10px] mb-8">
             <h3 className="text-center font-nimbus">Sobre el cliente:</h3>
             <p>Nombre y apellido</p>

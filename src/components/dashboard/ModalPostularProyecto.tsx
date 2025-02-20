@@ -226,6 +226,12 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-20 ">
       <div className="flex flex-col lg:flex-row bg-white lg:rounded-[24px] shadow-lg relative w-full h-full overflow-y-auto lg:w-[1220px] lg:max-w-[84vw] lg:h-[830px] lg:max-h-[90vh] hidde-scrollbar" ref={scrollContainerRef}>
+        {/* <button
+          className="fixed top-4 right-4 lg:top-8 lg:right-8 w-8 h-8 bg-black flex justify-center items-center rounded-full cursor-pointer z-50"
+          onClick={handleModalPostular}
+        >
+          <IconX className="text-white w-5 h-5" />
+        </button> */}
         <div className="flex-1 flex flex-col justify-between">
           <div className="px-4 lg:p-9 lg:pt-0" >
             <Tabs defaultValue="step1" className="" value={step} >
@@ -531,102 +537,6 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
             </Button>
           </div>
         </div>
-        {/* <div className="w-full lg:w-[416px] mt-10 lg:mt-20 border-l border-black lg:sticky top-20 lg:mr-[-20px]">
-          <div className="px-5 pt-0 pb-2">
-            <h3 className="font-nimbus text-xl mb-4">
-              Asesoría para Contrato de Trabajadores Temporales
-            </h3>
-            <div className="flex gap-4 flex-wrap">
-              <Button
-                variant="outline"
-                className="border border-black rounded-full h-[43px]"
-              >
-                <Image
-                  src="/icos/ico-dash-alarm.svg"
-                  alt=""
-                  width={24}
-                  height={24}
-                  className="mr-2"
-                />
-                <p>{oferta.duracion}</p>
-              </Button>
-              {
-                oferta.especialidadesOferta.map((especialidad)=>
-                  <Button
-                    variant="outline"
-                    className="border border-black rounded-full h-[43px]"
-                  >
-                    <Image
-                      src="/icos/ico-dash-building.svg"
-                      alt=""
-                      width={24}
-                      height={24}
-                      className="mr-2"
-                    />
-                    <p>{especialidad.especialidad.nombre}</p>
-                  </Button>
-                )
-              }
-              {
-                oferta.serviciosOferta.map((servicio)=>
-                  <Button
-                    variant="outline"
-                    className="border border-black rounded-full h-[43px]"
-                  >
-                    <Image
-                      src="/icos/ico-dash-building.svg"
-                      alt=""
-                      width={24}
-                      height={24}
-                      className="mr-2"
-                    />
-                    <p>{servicio.servicio.nombre}</p>
-                  </Button>
-                )
-              }
-            </div>
-            <div className="flex gap-6  mt-8 flex-col">
-              <div className="flex items-start gap-8">
-                <span className="w-10 h-10 border border-black rounded-full flex items-center justify-center">
-                  <User size={24} color="#4B5563" />
-                </span>
-                <div className="flex flex-col gap-4">
-                  <p>Duración</p>
-                  <p>1-2 semanas</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-8">
-                <span className="w-10 h-10 border border-black rounded-full flex items-center justify-center">
-                  <User size={24} color="#4B5563" />
-                </span>
-                <div className="flex flex-col gap-4">
-                  <p>Experiencia requerida</p>
-                  <p>Junior</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-8">
-                <span className="w-10 h-10 border border-black rounded-full flex items-center justify-center">
-                  <User size={24} color="#4B5563" />
-                </span>
-                <div className="flex flex-col gap-4">
-                  <p>Presupuesto</p>
-                  {
-                    oferta.salario_minimo === oferta.salario_maximo ?
-                    <p>S/ {oferta.salario_maximo}</p> :
-                    <p>S/ {oferta.salario_minimo} - S/ {oferta.salario_maximo}</p>
-                  }
-                </div>
-              </div>
-            </div>
-            <h3 className="font-nimbus text-2xl mt-8">Sobre el cliente:</h3>
-          </div>
-          <div className="p-5 border-t border-black pb-24 lg:pb-5">
-            <p>Nombre y apellido</p>
-            <p>Miembro desde 2021</p>
-            <p>Para trabajo/personal</p>
-          </div>
-        </div> */}
-
         <div
           onClick={handleModalPostular}
           className="flex-none fixed lg:sticky top-4 right-4 lg:top-8 lg:right-8 w-5 h-5 bg-black flex  justify-center items-center rounded-full cursor-pointer z-20"
