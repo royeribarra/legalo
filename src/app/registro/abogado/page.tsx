@@ -304,7 +304,17 @@ function RegisterLawyer() {
                       <FormItem>
                         <FormLabel>DNI</FormLabel>
                         <FormControl>
-                          <Input maxLength={8} placeholder="DNI" {...field} />
+                          <Input
+                            maxLength={8}
+                            placeholder="DNI"
+                            {...field}
+                            onInput={(e: React.FormEvent<HTMLInputElement>) => {
+                              const input = e.currentTarget;
+                              input.value = input.value
+                                .replace(/\D/g, "");
+                              field.onChange(input.value);
+                            }}
+                          />
                         </FormControl>
                         <FormDescription></FormDescription>
                         <FormMessage />
@@ -319,8 +329,14 @@ function RegisterLawyer() {
                         <FormLabel>Teléfono</FormLabel>
                         <FormControl>
                           <Input
-                            maxLength={20}
+                            maxLength={9}
+                            type="number"
                             placeholder="Teléfono"
+                            onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                              if (e.target.value.length > 9) {
+                                e.target.value = e.target.value.slice(0, 9);
+                              }
+                            }}
                             {...field}
                           />
                         </FormControl>

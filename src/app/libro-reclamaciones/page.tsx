@@ -11,6 +11,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useState } from "react";
+import { useLoader } from "@/contexts/loaderContext";
+import { reclamoService } from "@/services";
+import { useToast } from "@/contexts/toastContext";
 
 const schema = z.object({
   nombre: z.string().min(3, "El nombre debe tener al menos 3 caracteres"),
@@ -24,6 +27,8 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 function LibroReclamaciones() {
+  const { setLoading } = useLoader();
+  const { showToast } = useToast();
   const [serviceTipe, setServiceTipe] = useState<string>("lawyer");
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -37,8 +42,21 @@ function LibroReclamaciones() {
     },
   });
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     console.log("Formulario enviado:", data);
+    setLoading(true);
+    try {
+      const response = await reclamoService.createReclamo(data);
+      if(response.state){
+        form.reset();
+        showToast("success", response.message, '');
+      }
+    } catch (error) {
+      console.log(error)
+      showToast("error", 'Hubo un problema al envíar el formulario', '');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const updateServiceTipe = (newType: string) => {

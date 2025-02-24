@@ -2,9 +2,9 @@
 
 import { Progress } from "@/components/ui/progress";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, FieldValues, FieldPath } from "react-hook-form";
+import { useForm, FieldValues, FieldPath, Controller } from "react-hook-form";
 import { z } from "zod";
-
+import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -161,6 +161,9 @@ const formSchema = z.object({
     .regex(/[a-z]/, { message: "Debe contener al menos una letra minúscula." })
     .regex(/[A-Z]/, { message: "Debe contener al menos una letra mayúscula." })
     .regex(/\d/, { message: "Debe contener al menos un número." }),
+  terms: z.boolean().refine((val) => val === true, {
+    message: "Debes aceptar los términos y condiciones",
+  }),
 });
 
 const RegisterClient = () => {
@@ -178,6 +181,7 @@ const RegisterClient = () => {
       password: "",
       rsocial: "natural",
       howDiscover: "facebook",
+      terms: false,
     },
   });
 
@@ -437,6 +441,11 @@ const RegisterClient = () => {
                             placeholder="987654321"
                             {...field}
                             className="border-black focus-visible:border-none rounded-[10px] h-12"
+                            onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                              if (e.target.value.length > 9) {
+                                e.target.value = e.target.value.slice(0, 9);
+                              }
+                            }}
                           />
                         </FormControl>
                         <FormDescription></FormDescription>
@@ -489,6 +498,36 @@ const RegisterClient = () => {
                       <FormDescription></FormDescription>
                       <FormMessage />
                     </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="terms"
+                  render={() => (
+                    <div className="flex items-center space-x-2 justify-center py-4">
+                      <Controller
+                        name="terms"
+                        control={form.control}
+                        render={({ field: { onChange, value, ref } }) => (
+                          <Checkbox
+                            id="terms2"
+                            checked={value} // Utiliza `checked` en lugar de `value`
+                            onCheckedChange={onChange} // Cambia de `onChange` a `onCheckedChange`
+                            ref={ref} // Mantén la referencia
+                          />
+                        )}
+                      />
+                      <label
+                        htmlFor="terms2"
+                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      >
+                        Acepto los{" "}
+                        <Link href="/terminos-y-condiciones" className="underline" target="_blank">
+                          Términos y Condiciones{" "}
+                        </Link>
+                      </label>
+                      <FormMessage />
+                    </div>
                   )}
                 />
                 <div className="flex justify-end">

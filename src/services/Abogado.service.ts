@@ -57,4 +57,20 @@ export default class AbogadoService extends MainService {
   public async getInvitacionesAOfertas(data: { abogadoId: number }): Promise<any> {
     return this.post("/invitacion-a-ofertas", data);
   }
+
+  public async updateExperienciaAbogado(experienciaId: number, data: any) : Promise<any>{
+    return this.put(`/edit-experiencia/${experienciaId}`, data);
+  }
+
+  public async deleteExperienciaAbogado(experienciaId: number) : Promise<any>{
+    return this.delete(`/eliminar-experiencia/${experienciaId}`);
+  }
+
+  public async updateEstudioAbogado(estudioId: number, data: any) : Promise<any>{
+    return this.put(`/edit-estudio/${estudioId}`, data);
+  }
+
+  public async deleteEstudioAbogado(estudioId: number) : Promise<any>{
+    return this.delete(`/eliminar-estudio/${estudioId}`);
+  }
 }

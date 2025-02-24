@@ -90,4 +90,20 @@ export class MainService {
     );
     return response.data;
   }
+
+  protected async delete<T = unknown>(
+    endpoint: string,
+    params?: Record<string, any>,
+    headers?: Record<string, string>
+  ): Promise<T> {
+    const response = await axios.delete<T>(`${this.url}${endpoint}`, {
+      ...this.options,
+      params,
+      headers: {
+        ...this.options.headers,
+        ...headers, // Si se pasa cabecera personalizada, se combinará
+      },
+    });
+    return response.data;
+  }
 }

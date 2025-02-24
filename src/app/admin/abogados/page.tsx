@@ -35,7 +35,6 @@ interface Opportunity {
 }
 
 const OpcionesVerificacion = ({ record }: { record: IAbogadoBack }) => {
-  console.log(record);
   const { showToast } = useToast();
   const [selectedOption, setSelectedOption] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -46,12 +45,10 @@ const OpcionesVerificacion = ({ record }: { record: IAbogadoBack }) => {
 
   const handleConfirm = async () => {
     setIsModalVisible(false);
-    console.log(selectedOption)
     if(selectedOption== 'aceptar'){
       try {
         const data = { abogadoId: record.id, action: selectedOption };
         const response = await usuarioService.validarUsuarioPorAdmin(data);
-        console.log(response);
         if (response.state) {
           showToast('success', response.message, '');
         }
@@ -63,7 +60,6 @@ const OpcionesVerificacion = ({ record }: { record: IAbogadoBack }) => {
       try {
         const data = { abogadoId: record.id, action: selectedOption };
         const response = await usuarioService.rechazarUsuarioPorAdmin(data);
-        console.log(response);
         if (response.state) {
           showToast('success', response.message, '');
         }
@@ -142,6 +138,16 @@ function Abogados() {
   }, []);
 
   const columns = [
+    {
+      title: 'Creación',
+      key: 'createdAt',
+      dataIndex: 'createdAt',
+      render: (createdAt: string) => {
+        if (!createdAt) return "-";
+        const fecha = new Date(createdAt);
+        return <p>{fecha.toLocaleDateString("es-ES")}</p>;
+      }
+    },
     {
       title: 'Nombre',
       key: 'nombre',

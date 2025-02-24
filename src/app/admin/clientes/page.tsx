@@ -101,9 +101,18 @@ function Clientes() {
 
   const columns = [
     {
+      title: 'Creación',
+      key: 'createdAt',
+      dataIndex: 'createdAt',
+      render: (createdAt: string) => {
+        if (!createdAt) return "-";
+        const fecha = new Date(createdAt);
+        return <p>{fecha.toLocaleDateString("es-ES")}</p>;
+      }
+    },
+    {
       title: 'Nombre',
       key: 'nombre',
-      // sorter: (a: IOfertaBack, b: IOfertaBack) => a.salario_minimo - b.salario_minimo,
       render: (_: any, record: IClienteBack) => (
         <p>{record.nombres} - {record.apellidos}</p>
       ),
@@ -141,6 +150,14 @@ function Clientes() {
       )
     },
     {
+      title: 'Empresa',
+      dataIndex: 'razon_social',
+      key: 'razon_social',
+      render: (razon_social: string) => (
+        <p>{razon_social}</p>
+      )
+    },
+    {
       title: 'Red Social',
       dataIndex: 'opinion',
       key: 'opinion',
@@ -148,40 +165,39 @@ function Clientes() {
         <p>{opinion}</p>
       )
     },
-    {
-      title: 'Estado',
-      dataIndex: 'validado_admin',
-      key: 'validado_admin',
-      render: (validado: boolean, record: IClienteBack) => (
-        <Button
-          type="primary"
-          danger={!record.validado_admin} // Usamos el estado actualizado
-          onClick={async () => {
-            try {
-              const nuevoEstado = !record.validado_admin; // Alternar el estado
-              const data = { validado_admin: nuevoEstado };
-              const response = await clienteService.updateCliente(record.id, data); // Realizar la petición
-              
-              if(response.state){
-                record.validado_admin = nuevoEstado;
-                showToast("success", response.message, "");
-                setFilteredData((prevDataSource) =>
-                  prevDataSource.map((item) =>
-                    item.id === record.id ? { ...item, validado_admin: nuevoEstado } : item
-                  )
-                );
-              }
-              // Actualizar el estado local para reflejar el cambio en la tabla
-            } catch (error) {
-              showToast("error", "Error al actualizar el estado", "");
-              console.error('Error al actualizar el estado:', error);
-            }
-          }}
-        >
-          {record.validado_admin ? 'Activado' : 'Desactivado'}
-        </Button>
-      ),
-    }
+    // {
+    //   title: 'Estado',
+    //   dataIndex: 'validado_admin',
+    //   key: 'validado_admin',
+    //   render: (validado: boolean, record: IClienteBack) => (
+    //     <Button
+    //       type="primary"
+    //       danger={!record.validado_admin} // Usamos el estado actualizado
+    //       onClick={async () => {
+    //         try {
+    //           const nuevoEstado = !record.validado_admin; // Alternar el estado
+    //           const data = { validado_admin: nuevoEstado };
+    //           const response = await clienteService.updateCliente(record.id, data); // Realizar la petición
+    //           if(response.state){
+    //             record.validado_admin = nuevoEstado;
+    //             showToast("success", response.message, "");
+    //             setFilteredData((prevDataSource) =>
+    //               prevDataSource.map((item) =>
+    //                 item.id === record.id ? { ...item, validado_admin: nuevoEstado } : item
+    //               )
+    //             );
+    //           }
+    //           // Actualizar el estado local para reflejar el cambio en la tabla
+    //         } catch (error) {
+    //           showToast("error", "Error al actualizar el estado", "");
+    //           console.error('Error al actualizar el estado:', error);
+    //         }
+    //       }}
+    //     >
+    //       {record.validado_admin ? 'Activado' : 'Desactivado'}
+    //     </Button>
+    //   ),
+    // }
   ];
 
   return (

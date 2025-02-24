@@ -9,6 +9,9 @@ import { IClienteBack } from '@/interfaces/Cliente.interface';
 import { IAplicacionBack } from '@/interfaces/Aplicacion.interface';
 import { IOfertaBack } from '@/interfaces/Oferta.interface';
 import { IIndustriaOferta } from '@/interfaces/Industria.interface';
+import { IEspecialidadOferta } from '@/interfaces/Especialidad.interface';
+import { IFileBack } from '@/interfaces/File.interface';
+import Link from 'next/link';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -99,6 +102,16 @@ function Ofertas() {
 
   const columns = [
     {
+      title: 'Creación',
+      key: 'createdAt',
+      dataIndex: 'createdAt',
+      render: (createdAt: string) => {
+        if (!createdAt) return "-";
+        const fecha = new Date(createdAt);
+        return <p>{fecha.toLocaleDateString("es-ES")}</p>;
+      }
+    },
+    {
       title: 'Título',
       dataIndex: 'titulo',
       key: 'titulo'
@@ -128,31 +141,14 @@ function Ofertas() {
     {
       title: 'Presupuesto',
       key: 'presupuesto',
-      // sorter: (a: IOfertaBack, b: IOfertaBack) => a.salario_minimo - b.salario_minimo,
       render: (_: any, record: IOfertaBack) => (
         <p>{record.salario_minimo} - {record.salario_maximo}</p>
       ),
     },
-    // {
-    //   title: 'Estado',
-    //   dataIndex: 'estado',
-    //   key: 'estado',
-    //   filters: estados.map((estado) => ({ text: estado, value: estado })),
-    //   onFilter: (value: boolean | Key, record: Opportunity) => {
-    //     return record.estado === value;
-    //   },
-    //   render: (estado: 'Activo' | 'Inactivo') => (
-    //     <Tag color={estado === 'Activo' ? 'green' : 'red'}>{estado}</Tag>
-    //   ),
-    // },
     {
       title: 'Industria',
       dataIndex: 'industriasOferta',
       key: 'industria',
-      // filters: industrias.map((industria) => ({ text: industria, value: industria })),
-      // onFilter: (value: boolean | Key, record: Opportunity) => {
-      //   return record.industria === value;
-      // },
       render: (industriasOferta: IIndustriaOferta[]) => (
         <div>
           {industriasOferta.map((industria)=>
@@ -162,17 +158,40 @@ function Ofertas() {
       ),
     },
     {
-      title: 'Ubicación',
-      dataIndex: 'ubicacion',
-      key: 'ubicacion',
+      title: 'Especialidad',
+      dataIndex: 'especialidadesOferta',
+      key: 'industria',
+      render: (especialidadesOferta: IEspecialidadOferta[]) => (
+        <div>
+          {especialidadesOferta.map((especialidad)=>
+            <p key={especialidad.id}>{especialidad.especialidad.nombre}</p>
+          )}
+        </div>
+      ),
     },
-    // {
-    //   title: 'Fecha de publicación',
-    //   dataIndex: 'fechaPublicacion',
-    //   key: 'fechaPublicacion',
-    //   sorter: (a: Opportunity, b: Opportunity) => dayjs(a.fechaPublicacion).unix() - dayjs(b.fechaPublicacion).unix(),
-    //   render: (fecha: string) => <span>{dayjs(fecha).format('DD/MM/YYYY')}</span>,
-    // },
+    {
+      title: 'Uso',
+      dataIndex: 'uso',
+      key: 'uso',
+    },
+    {
+      title: 'Estado',
+      dataIndex: 'estado',
+      key: 'estado',
+    },
+    {
+      title: 'Documento',
+      dataIndex: 'files',
+      key: 'files',
+      render: (files: IFileBack[]) =>  {
+        const file = files.find((file)=>file.nombreArchivo === 'oferta_documento')
+        return(
+          <Link href={`${process.env.S3_FILE_ROUTE}/${file?.filePath}`} target='_blank'>
+            <Button>Ver</Button>
+          </Link>
+        )
+      }
+    },
   ];
 
   return (

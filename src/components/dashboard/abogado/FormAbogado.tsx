@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { Form, Input, DatePicker, Select, Checkbox, Button, Upload } from "antd";
+import { Form, Input, DatePicker, Select, Checkbox, Button, Card, List } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { abogadoService } from "@/services";
@@ -15,11 +15,12 @@ import { IIndustriaAbogado } from "@/interfaces/Industria.interface";
 import industriasData from "@/data/industrias";
 import dataServicios from "@/data/servicios";
 import dataEspecialidades from "@/data/especialidades";
-import DocumentosAbogado from "./DocumentosAbogado";
-
-
+import { useToast } from "@/contexts/toastContext";
+import { IEducacionBack } from "@/interfaces/Estudio.interface";
+import DocumentoAbogado from "./DocumentoAbogado";
 
 const FormAbogado = ({abogado}:{abogado: IAbogadoBack}) => {
+  const { showToast } = useToast();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
@@ -38,9 +39,13 @@ const FormAbogado = ({abogado}:{abogado: IAbogadoBack}) => {
 
   const handleFinish = async (values: any) => {
     console.log("Datos actualizados:", values);
+    setLoading(true);
     try {
-      setLoading(true);
-      await abogadoService.getAbogadoByID(Number(abogado.id));
+      const response = await abogadoService.updateAbogado(abogado.id, values);
+      if(response.state){
+        showToast("success", response.message, '')
+      }
+      console.log(response)
       console.log("Abogado actualizado con éxito");
     } catch (error) {
       console.error("Error al actualizar el abogado:", error);
@@ -49,46 +54,23 @@ const FormAbogado = ({abogado}:{abogado: IAbogadoBack}) => {
     }
   };
 
-  const [experiencias, setExperiencias] = useState<IExperienciaBack[]>([
-    {
-      id: 1,
-      createdAt: "",
-      updatedAt: "",
-      deletedAt: "",
-      fecha_fin: "",
-      fecha_inicio: "",
-      descripcion: "",
-      institucion: "",
-      titulo: "",
-      ubicacion: ""
-    },
-  ]);
+  const [experiencias, setExperiencias] = useState<IExperienciaBack[]>(abogado.experiencias);
+  const [educaciones, setEducaciones] = useState<IEducacionBack[]>(abogado.educaciones);
 
-  const handleAddExperiencia = () => {
-    const nuevaExperiencia: IExperienciaBack = {
-      id: Date.now(),
-      createdAt: "",
-      updatedAt: "",
-      deletedAt: "",
-      fecha_fin: "",
-      fecha_inicio: "",
-      descripcion: "",
-      institucion: "",
-      titulo: "",
-      ubicacion: ""
-    };
-    setExperiencias([...experiencias, nuevaExperiencia]);
-  };
-
-  const handleUpdateExperiencia = (index: number, updatedExperiencia: IExperienciaBack) => {
-    const nuevasExperiencias = [...experiencias];
-    nuevasExperiencias[index] = updatedExperiencia;
-    setExperiencias(nuevasExperiencias);
-  };
+  // const handleUpdateExperiencia = (index: number, updatedExperiencia: IExperienciaBack) => {
+  //   const nuevasExperiencias = [...experiencias];
+  //   nuevasExperiencias[index] = updatedExperiencia;
+  //   setExperiencias(nuevasExperiencias);
+  // };
 
   const handleRemoveExperiencia = (index: number) => {
     const nuevasExperiencias = experiencias.filter((_, i) => i !== index);
     setExperiencias(nuevasExperiencias);
+  };
+
+  const handleRemoveEducacion = (index: number) => {
+    const nuevasEducaciones = educaciones.filter((_, i) => i !== index);
+    setEducaciones(nuevasEducaciones);
   };
 
   if (!abogado) {
@@ -115,6 +97,7 @@ const FormAbogado = ({abogado}:{abogado: IAbogadoBack}) => {
           ...abogado,
           fecha_nacimiento: dayjs(abogado.fecha_nacimiento),
         }}
+        className="bg-gray-100 border border-gray-300 rounded-lg p-6 shadow-sm"
       >
         <Row gutter={16}>
           <Col span={12}>
@@ -208,40 +191,70 @@ const FormAbogado = ({abogado}:{abogado: IAbogadoBack}) => {
             Guardar Cambios
           </Button>
         </Form.Item>
-        <div>
-          <div className="flex justify-between items-center mb-2">
-            <h2 className="text-lg font-semibold">Experiencias</h2>
-            <Button type="primary" onClick={handleAddExperiencia}>
-              Agregar Experiencia
-            </Button>
-          </div>
-          {abogado.experiencias.map((exp, index) => (
+      </Form>
+      <div className="pt-10">
+        <Card
+          title={
+            <div className="flex justify-between items-center">
+              <h2 className="text-lg font-semibold">Experiencias</h2>
+              <Button type="primary">
+                Agregar Experiencia
+              </Button>
+            </div>
+          }
+          bordered={true} // Esto agrega un borde alrededor del Card
+          className="shadow-lg" // Sombra opcional para dar profundidad
+        >
+          {experiencias.map((exp, index) => (
             <ExperienciaAbogadoForm
               key={exp.id}
               experiencia={exp}
-              onChange={(updatedExp) => handleUpdateExperiencia(index, updatedExp)}
+              // onChange={(updatedExp) => handleUpdateExperiencia(index, updatedExp)}
               onRemove={() => handleRemoveExperiencia(index)}
             />
           ))}
-        </div>
-        <div>
-          <div className="flex justify-between items-center mb-2">
-            <h2 className="text-lg font-semibold">Estudios</h2>
-            <Button type="primary" onClick={handleAddExperiencia}>
-              Agregar Estudio
-            </Button>
-          </div>
-          {abogado.educaciones.map((edc, index) => (
+        </Card>
+      </div>
+      <div className="pt-10">
+        <Card
+          title={
+            <div className="flex justify-between items-center">
+              <h2 className="text-lg font-semibold">Estudios</h2>
+              <Button type="primary">
+                Agregar Estudio
+              </Button>
+            </div>
+          }
+          bordered={true} // Agrega borde alrededor del Card
+          className="shadow-lg" // Sombra para dar profundidad
+        >
+          {educaciones.map((edc, index) => (
             <EstudioAbogadoForm
               key={edc.id}
               educacion={edc}
-              onChange={(updatedExp) => handleUpdateExperiencia(index, updatedExp)}
-              onRemove={() => handleRemoveExperiencia(index)}
+              // onChange={(updatedExp) => handleUpdateExperiencia(index, updatedExp)}
+              onRemove={() => handleRemoveEducacion(index)}
             />
           ))}
-        </div>
-        <DocumentosAbogado archivos={abogado.files} />
-      </Form>
+        </Card>
+      </div>
+      {/* <DocumentosAbogado archivos={abogado.files} /> */}
+      <div className="pt-10">
+        <Card
+          title="Archivos"
+          bordered={true}
+          className="shadow-lg"
+        >
+          <List
+            dataSource={abogado.files}
+            renderItem={(archivo) => (
+              <List.Item key={archivo.id}>
+                <DocumentoAbogado archivo={archivo} abogadoId={abogado.id} />
+              </List.Item>
+            )}
+          />
+        </Card>
+      </div>
     </div>
   );
 };
