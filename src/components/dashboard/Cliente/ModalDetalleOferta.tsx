@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Form, Input, Select, Button } from "antd";
+import { Modal, Form, Input, Select, Button, Space, List } from "antd";
+import { useForm, Controller } from "react-hook-form";
 import { IOfertaBack } from "@/interfaces/Oferta.interface";
 import { IServicio } from "@/interfaces/Servicio.interface";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
 import dataServicios from "@/data/servicios";
 import dataEspecialidades from "@/data/especialidades";
 
@@ -13,9 +14,19 @@ interface EditOfertaModalProps {
   onSave: (updatedOferta: IOfertaBack) => void;
 }
 
-const EditOfertaModal: React.FC<EditOfertaModalProps> = ({ visible, oferta, onClose, onSave }) => {
-  const [form] = Form.useForm();
+interface Pregunta {
+  id: number;
+  pregunta: string;
+}
 
+const EditOfertaModal: React.FC<EditOfertaModalProps> = ({ visible, oferta, onClose, onSave }) => {
+  const [preguntas, setPreguntas] = useState<Pregunta[]>(oferta?.preguntas_oferta? oferta?.preguntas_oferta : []);
+  const [form] = Form.useForm();
+  const { control, handleSubmit } = useForm({
+    defaultValues: {
+      preguntas: [], // Inicializamos con preguntas existentes
+    },
+  });
   // Lista de servicios disponibles
   const serviciosDisponibles = dataServicios;
   const especialidadesDisponibles = dataEspecialidades;
@@ -35,6 +46,9 @@ const EditOfertaModal: React.FC<EditOfertaModalProps> = ({ visible, oferta, onCl
       .validateFields()
       .then((values) => {
         // Actualiza la oferta con los nuevos valores del formulario
+        console.log(values)
+        console.log(preguntas)
+        // return;
         const updatedOferta = {
           ...oferta,
           ...values,
@@ -44,6 +58,7 @@ const EditOfertaModal: React.FC<EditOfertaModalProps> = ({ visible, oferta, onCl
           especialidadesOferta: values.especialidadesOferta.map((especialidadId: number) => ({
             especialidad: especialidadesDisponibles.find((especialidad) => especialidad.id === especialidadId),
           })),
+          preguntas: preguntas
         };
         onSave(updatedOferta); // Guarda los cambios de la oferta
         onClose(); // Cierra el modal
@@ -51,6 +66,24 @@ const EditOfertaModal: React.FC<EditOfertaModalProps> = ({ visible, oferta, onCl
       .catch((error) => {
         console.log("Error:", error);
       });
+  };
+
+  const agregarPregunta = () => {
+    const nuevaPregunta = { id: Date.now(), pregunta: "" };
+    const nuevasPreguntas = [...preguntas, nuevaPregunta];
+    setPreguntas(nuevasPreguntas);
+  };
+
+  // Editar una pregunta
+  const editarPregunta = (id: number, valor: string) => {
+    const nuevasPreguntas = preguntas.map((p) => (p.id === id ? { ...p, pregunta: valor } : p));
+    setPreguntas(nuevasPreguntas);
+  };
+
+  // Eliminar una pregunta
+  const eliminarPregunta = (id: number) => {
+    const nuevasPreguntas = preguntas.filter((p) => p.id !== id);
+    setPreguntas(nuevasPreguntas);
   };
 
   return (
@@ -129,6 +162,29 @@ const EditOfertaModal: React.FC<EditOfertaModalProps> = ({ visible, oferta, onCl
               ))}
             </Select>
           </Form.Item>
+          <div>
+            <h3>Preguntas</h3>
+            <List
+              bordered
+              dataSource={preguntas}
+              renderItem={(item, index) => (
+                <List.Item>
+                  <Space style={{ width: "100%" }}>
+                    <Input
+                      value={item.pregunta}
+                      onChange={(e) => editarPregunta(item.id, e.target.value)}
+                      placeholder={`Pregunta ${index + 1}`}
+                      style={{ flex: 1 }}
+                    />
+                    <MinusCircleOutlined style={{ color: "red" }} onClick={() => eliminarPregunta(item.id)} />
+                  </Space>
+                </List.Item>
+              )}
+            />
+            <Button type="dashed" onClick={agregarPregunta} block icon={<PlusOutlined />}>
+              Agregar Pregunta
+            </Button>
+          </div>
         </Form>
       )}
     </Modal>

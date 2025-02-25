@@ -173,6 +173,14 @@ function Abogados() {
       )
     },
     {
+      title: 'Objetivo',
+      dataIndex: 'objetivo',
+      key: 'objetivo',
+      render: (objetivo: string) => (
+        <p>{objetivo}</p>
+      )
+    },
+    {
       title: 'Especialidades',
       dataIndex: 'especialidadesAbogado',
       key: 'especialidades',

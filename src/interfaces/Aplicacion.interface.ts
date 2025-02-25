@@ -12,6 +12,7 @@ export interface IAplicacion {
 
 export interface IAplicacionBack {
     id: number;
+    createdAt: string;
     fecha_aplicacion: string;
     status: number;
     oferta: IOfertaBack;

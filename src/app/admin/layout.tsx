@@ -36,9 +36,13 @@ const navData: NavItem[] = [
         title: "Ofertas",
         url: "/admin/ofertas",
       },
+      // {
+      //   title: "Oportunidades",
+      //   url: "/admin/oportunidades",
+      // },
       {
-        title: "Oportunidades",
-        url: "/admin/oportunidades",
+        title: "Trabajos",
+        url: "/admin/trabajos",
       },
     ],
   },
@@ -54,10 +58,16 @@ const navData: NavItem[] = [
         title: "Lista de abogados",
         url: "/admin/abogados",
       },
-      // {
-      //   title: "Lista de usuarios",
-      //   url: "/admin/usuarios",
-      // },
+    ],
+  },
+  {
+    title: "Reclamos",
+    url: "#",
+    items: [
+      {
+        title: "Lista de reclamos",
+        url: "/admin/libro-reclamaciones",
+      },
     ],
   },
 ];

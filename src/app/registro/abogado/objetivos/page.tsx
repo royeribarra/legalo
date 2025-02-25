@@ -8,9 +8,13 @@ import { useState } from "react";
 import { ArrowLeft, Check } from "lucide-react";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
+import { useRegistroAbogado } from "@/contexts/registroAbogadoContext";
+import { useRouter } from "next/navigation";
 
 const CompleteProfileLawyerPage = () => {
+  const router = useRouter();
   const [selected, setSelected] = useState<number | null>(null);
+  const { stateAbogado, updateStateAbogado } = useRegistroAbogado();
 
   const options = [
     {
@@ -29,6 +33,13 @@ const CompleteProfileLawyerPage = () => {
       icon: "/icos/ico-objetivo-mente.png",
     },
   ];
+
+  const nextStep = () => {
+    updateStateAbogado({
+      objetivo: options.find((option)=>option.id === selected)?.label
+    });
+    router.push("/registro/abogado/completar-perfil");
+  };
 
   return (
     <div>
@@ -79,12 +90,12 @@ const CompleteProfileLawyerPage = () => {
             </Link>
           </div>
           <div className="w-[70%] flex justify-end">
-            <Link href="/registro/abogado/completar-perfil">
-              <Button size="lg" className="p-4 lg:px-8">
+            {/* <Link href="/registro/abogado/completar-perfil"> */}
+              <Button size="lg" className="p-4 lg:px-8" onClick={nextStep}>
                 <p className="">Sigue completando tu perfil</p>
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
-            </Link>
+            {/* </Link> */}
           </div>
         </div>
       </div>

@@ -32,6 +32,7 @@ export type RegistroAbogadoState = {
   industrias: number[];
   estudios: IEstudio[];
   especialidades: number[];
+  objetivo: string;
 };
 
 type RegistroAbogadoContextType = {
@@ -69,6 +70,7 @@ const defaultState: RegistroAbogadoState & { caducidad?: number } = {
   archivo_imagen: null,
   archivo_cv: null,
   archivo_video: null,
+  objetivo: "",
   caducidad: Date.now() + 12 * 60 * 60 * 1000, // 12 horas en milisegundos
 };
 
@@ -91,6 +93,7 @@ const isValidState = (state: any): state is RegistroAbogadoState & { caducidad?:
       typeof state.cip === "string" &&
       typeof state.colegio === "string" &&
       typeof state.sobre_ti === "string" &&
+      typeof state.objetivo === "string" &&
       Array.isArray(state.habilidades_duras) &&
       Array.isArray(state.habilidades_blandas) &&
       Array.isArray(state.experiencias) &&

@@ -8,4 +8,8 @@ export default class LibroReclamacionService extends MainService {
   public async createReclamo(data?: any): Promise<any> {
     return this.post("/create", data);
   }
+
+  public async obtenerTodos(params?: any): Promise<any> {
+    return this.get("/all", params);
+  }
 }
