@@ -25,7 +25,7 @@ export const DashboardAbogadoProvider = ({ children }: DashboardAbogadoProviderP
   const [state, setState] = useState<DashboardAbogadoState>({
     industrias: [],
     servicios: [],
-    especialidades: []
+    especialidades: [],
   });
 
   const updateState = (newState: Partial<DashboardAbogadoState>) => {

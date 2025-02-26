@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import { IPagoBack, ITrabajoBack } from "@/interfaces/Trabajo.interface";
+import { IPagoBack, IProgresoBack, ITrabajoBack } from "@/interfaces/Trabajo.interface";
 import ModalPago from "./Cliente/ModalPago";
 import { trabajoService } from "@/services";
 import { IClienteBack } from "@/interfaces/Cliente.interface";
@@ -20,6 +20,7 @@ const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo, persona, clien
   const [openModalProgreso, setOpenModalProgreso] = useState(false);
   const [newProgress, setNewProgress] = useState<number>(trabajo.progreso);
   const [openModalPago, setOpenModalPago] = useState(false);
+  const [showModalFinalizarTrabajo, setShowModalFinalizarTrabajo] = useState(false);
   const [descripcion, setDescripcion] = useState("");
   const [trabajoState, setTrabajoState] = useState<ITrabajoBack>(trabajo); // Estado para trabajo actualizado
   const whatsappNumber = "51939784580";
@@ -41,14 +42,16 @@ const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo, persona, clien
       try {
         const data = {
           trabajoId: trabajo.id,
-          progreso: newProgress
+          progreso: newProgress,
+          descripcion
         };
-        const response = await trabajoService.updateTrabajo(data);
+        const response = await trabajoService.registrarProgreso(data);
         if(response.state){
           setTrabajoState((prevState) => ({
             ...prevState,
-            progreso: newProgress, // Actualizamos el progreso
+            progreso: newProgress
           }));
+          setDescripcion("");
           showToast("success", response.message, '')
         }
       } catch (error) {
@@ -69,6 +72,25 @@ const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo, persona, clien
   const handleProgressClick = (value: number) => {
     if (value >= trabajo.progreso) {
       setNewProgress(value);
+    }
+  };
+
+  const showFinalizarTrabajo = () => {
+    setShowModalFinalizarTrabajo(true);
+  };
+
+  const finalizarTrabajo = async() => {
+    try {
+      const data = {
+        trabajoId: trabajo.id
+      };
+      const response = await trabajoService.finalizarTrabajo(data);
+      if(response.state){
+        showToast("success", response.message, '');
+        setShowModalFinalizarTrabajo(false);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -99,7 +121,28 @@ const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo, persona, clien
         <p>{trabajoState.progreso}% Completado</p>
         {
           persona === 'abogado' &&
-          <Button onClick={handleOpenModal} className="mt-2">Registrar Progreso</Button>
+          <Button onClick={handleOpenModal} className="mt-2 mb-2">Registrar Progreso</Button>
+        }
+
+        <table className="w-full border-collapse border border-gray-200">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="border border-gray-300 px-4 py-2">Avance</th>
+              <th className="border border-gray-300 px-4 py-2">Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            {trabajoState.progresos.map((progreso: IProgresoBack, index: number) => (
+              <tr key={index}>
+                <td className="border border-gray-300 px-4 py-2">{progreso.progreso}</td>
+                <td className="border border-gray-300 px-4 py-2">{progreso.descripcion}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {
+          persona === 'cliente' && (trabajo.progreso === 100) &&
+          <Button onClick={showFinalizarTrabajo} className="mt-2 mb-2" disabled={trabajo.estado === 'finalizado'}>Finalizar Trabajo</Button>
         }
       </div>
 
@@ -136,15 +179,20 @@ const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo, persona, clien
           <div className="bg-white p-6 rounded-lg w-96">
             <h3 className="text-xl font-bold">Registrar Progreso de Trabajo</h3>
             <p className="mt-4">Ingrese el nuevo porcentaje de progreso del trabajo.</p>
-    
+
             {/* Botones de progreso rápido */}
             <div className="flex justify-between mt-4">
               {[25, 50, 75, 100].map((value) => (
                 <button
                   key={value}
-                  className={`p-2 border rounded w-1/4 ${
-                    value < trabajoState.progreso ? "opacity-50 cursor-not-allowed" : "bg-blue-500 text-white"
-                  }`}
+                  className={`p-2 border rounded w-1/4 transition-all
+                    ${
+                      value < trabajoState.progreso
+                        ? "opacity-50 cursor-not-allowed"
+                        : value === newProgress
+                        ? "bg-blue-600 text-white border-2 border-blue-800 shadow-lg"
+                        : "bg-blue-500 text-white"
+                    }`}
                   onClick={() => handleProgressClick(value)}
                   disabled={value < trabajoState.progreso}
                 >
@@ -169,6 +217,14 @@ const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo, persona, clien
               value={descripcion}
               onChange={(e) => setDescripcion(e.target.value)}
             />
+            {newProgress === 100 && (
+              <div className="mt-4 p-3 bg-red-100 rounded">
+                <h4 className="text-red-600 font-bold">Esta acción es irreversible</h4>
+                <p className="text-red-500 text-sm">
+                  Una vez marques el proyecto como completado no podrás hacer cambios ni revertirlo.
+                </p>
+              </div>
+            )}
             <div className="mt-4 flex justify-end gap-2">
               <button onClick={()=>setOpenModalProgreso(false)} className="border px-4 py-2 rounded">Cancelar</button>
               <button onClick={handleSaveProgress} className="bg-blue-500 text-white px-4 py-2 rounded">
@@ -186,6 +242,30 @@ const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo, persona, clien
         fetchOfertasConAplicaciones={fetchExample}
         clienteId={cliente?.id}
       />
+      {
+        showModalFinalizarTrabajo &&
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg w-96 shadow-lg">
+            <h3 className="text-xl font-bold text-center">Finalizar Trabajo</h3>
+            <p className="mt-4 text-center">
+              Usted está a punto de dar por finalizado o completado un trabajo.
+            </p>
+            <p className="mt-4 text-red-600 text-center font-semibold">
+              Recuerde que si finaliza el trabajo debe asegurarse de abonar todo el monto pactado o todo el costo pactado.
+            </p>
+            <p className="mt-4 text-center">¿Está seguro de finalizar el trabajo?</p>
+
+            <div className="mt-6 flex justify-end gap-2">
+              <button onClick={()=>setShowModalFinalizarTrabajo(false)} className="border px-4 py-2 rounded">
+                Cancelar
+              </button>
+              <button onClick={finalizarTrabajo} className="bg-blue-500 text-white px-4 py-2 rounded">
+                Confirmar
+              </button>
+            </div>
+          </div>
+        </div>
+      }
     </div>
   );
 };

@@ -41,11 +41,16 @@ function TrabajosAbogado() {
     <div className="flex flex-col gap-8 flex-1 mt-12">
       <h2 className="text-2xl font-bold">Trabajos ({trabajos.length})</h2>
       <Accordion type="multiple"> {/* Permite abrir más de un item */}
-        {trabajos.map((trabajo) => (
+        {trabajos.map((trabajo, index) => (
           <AccordionItem key={trabajo.id} value={trabajo.id.toString()}>
-            <AccordionTriggerBig>{trabajo.aplicacion.oferta.titulo}</AccordionTriggerBig>
+            <AccordionTriggerBig>{trabajo.aplicacion.oferta.titulo} - {trabajo.estado}</AccordionTriggerBig>
             <AccordionContent>
-              <TrabajoItem tipe="cotizacionAceptada" trabajo={trabajo} persona="abogado" />
+              <TrabajoItem
+                key={index}
+                tipe="cotizacionAceptada"
+                trabajo={trabajo}
+                persona="abogado"
+              />
             </AccordionContent>
           </AccordionItem>
         ))}

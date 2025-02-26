@@ -29,11 +29,17 @@ export interface IPagoBack {
     trabajo: ITrabajoBack;
     monto_abogado: number;
     monto_total: number;
-  }
+}
+
+export interface IProgresoBack{
+    id: number;
+    descripcion: string;
+    progreso: number;
+}
 
 export interface ITrabajoBack {
     id: number;
-    estado: number;
+    estado: string;
     fecha_fin: string;
     fecha_inicio: string;
     progreso: number;
@@ -42,4 +48,5 @@ export interface ITrabajoBack {
     oferta: IOfertaBack;
     aplicacion: IAplicacionBack;
     pagos: IPagoBack[];
+    progresos: IProgresoBack[];
 }

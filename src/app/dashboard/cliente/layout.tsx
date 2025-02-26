@@ -25,14 +25,14 @@ const DashboardClientLayout = ({ children }: LayoutProps) => {
 const LayoutContent = ({ children }: { children: ReactNode }) => {
   const whatsappNumber = "51939784580";
   const pathname = usePathname();
-  const { logout, user } = useAuth();
+  const { logout, user, totalOfertasCliente, totalTrabajosCliente } = useAuth();
 
   const handleLogout = () => {
     logout();
   };
 
   const menuItems = [
-    { id: "abogados", texto: "Abogados", url: "/dashboard/cliente/" },
+    { id: "abogados", texto: "Abogados", url: "/dashboard/cliente" },
     { id: "proyectos", texto: "Encargos", url: "/dashboard/cliente/encargos" },
     { id: "trabajos", texto: "Trabajos", url: "/dashboard/cliente/trabajos" },
   ];
@@ -73,9 +73,29 @@ const LayoutContent = ({ children }: { children: ReactNode }) => {
       <main>
         <DashboardClienteProvider>
           <div className="px-4 py-4 lg:px-16 lg:py-8 max-w-[1920px] mx-auto">
-            <div className="mt-8">
-              <Link href={"/dashboard/cliente/nueva-oferta"}>
-                <Button>
+            <div className="mt-8 bg-blue-100 p-4 rounded-lg flex justify-between items-center">
+              {/* Imágenes superpuestas y texto */}
+              <div className="flex items-center gap-4">
+                <div className="flex">
+                  <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white">
+                    <Image src="https://randomuser.me/api/portraits/women/44.jpg" alt="User 1" width={48} height={48} />
+                  </div>
+                  <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white -ml-4">
+                    <Image src="https://randomuser.me/api/portraits/men/46.jpg" alt="User 2" width={48} height={48} />
+                  </div>
+                  <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white -ml-4">
+                    <Image src="https://randomuser.me/api/portraits/women/50.jpg" alt="User 3" width={48} height={48} />
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold">Comienza con la creación del proyecto</h3>
+                  <p className="text-gray-600">Encuentra el abogado perfecto para tus necesidades</p>
+                </div>
+              </div>
+
+              {/* Botón */}
+              <Link href="/dashboard/cliente/nueva-oferta">
+                <Button className="text-white px-6 py-2 rounded-md" variant={"default"}>
                   Crear Proyecto
                 </Button>
               </Link>
@@ -88,7 +108,12 @@ const LayoutContent = ({ children }: { children: ReactNode }) => {
                       key={boton.id}
                       variant={boton.url === pathname ? "dashActive" : "dashInActive"}
                     >
-                      {boton.texto}
+                      {boton.id === 'trabajos'
+                        ? `${boton.texto} (${totalTrabajosCliente})`
+                        : boton.id === 'proyectos'
+                        ? `${boton.texto} (${totalOfertasCliente})`
+                        : boton.texto
+                      }
                     </Button>
                   </Link>
                 ))}

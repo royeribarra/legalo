@@ -45,25 +45,25 @@ async function getTrabajos(){
 
   return(
     <div className="flex flex-col gap-8 flex-1 mt-12">
-      <Accordion type="single" collapsible defaultValue="item-1">
-        <AccordionItem value="item-1">
+      <h2 className="text-2xl font-bold">Trabajos ({trabajos.length})</h2>
+      <Accordion type="multiple">
+      {
+        trabajos.map((trabajo, index)=> (
+        <AccordionItem key={trabajo.id} value={trabajo.id.toString()}>
           <AccordionTriggerBig className="text-2xl font-bold">
-            Trabajos ({trabajos.length})
+          {trabajo.aplicacion.oferta.titulo} - {trabajo.estado}
           </AccordionTriggerBig>
           <AccordionContent className="flex flex-col gap-4">
-            {
-              trabajos.map((trabajo, index)=>
-                <TrabajoItem
-                  key={index}
-                  tipe="cotizacionAceptada"
-                  trabajo={trabajo}
-                  persona="cliente"
-                  cliente={cliente}
-                />
-              )
-            }
+            <TrabajoItem
+              key={index}
+              tipe="cotizacionAceptada"
+              trabajo={trabajo}
+              persona="cliente"
+              cliente={cliente}
+            />
           </AccordionContent>
-        </AccordionItem>
+        </AccordionItem>)
+      )}
       </Accordion>
     </div>
   )

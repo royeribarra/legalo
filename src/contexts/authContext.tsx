@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 import { IUsuarioBack } from '@/interfaces/User.interface';
 import { IAbogadoBack } from '@/interfaces/Abogado.interface';
 import { IClienteBack } from '@/interfaces/Cliente.interface';
-import { abogadoService, clienteService } from '@/services';
+import { abogadoService, clienteService, ofertaservice, trabajoService } from '@/services';
 
 type AuthContextType = {
   user: IUsuarioBack | null;
@@ -14,6 +14,8 @@ type AuthContextType = {
   cliente: IClienteBack | null;
   login: (userData: IUsuarioBack, jwt: string) => void;
   logout: () => void;
+  totalTrabajosCliente: number;
+  totalOfertasCliente: number;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -22,6 +24,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<IUsuarioBack | null>(null);
   const [abogado, setAbogado] = useState<IAbogadoBack | null>(null);
   const [cliente, setCliente] = useState<IClienteBack | null>(null);
+  const [totalTrabajosCliente, setTotalTrabajosCliente] = useState<number>(0);
+  const [totalOfertasCliente, setTotalOfertasCliente] = useState<number>(0);
   const router = useRouter();
 
   useEffect(() => {
@@ -39,6 +43,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         // Si el usuario es cliente, obtener más detalles
         if (userData.user.rol === 'cliente' && userData.user.cliente?.id) {
           fetchClienteData(userData.user.cliente.id);
+          fetchTotalTrabajos(userData.user.cliente.id);
+          fetchTotalOfertas(userData.user.cliente.id);
         }
       } catch (error) {
         console.error('Error decoding token', error);
@@ -64,6 +70,31 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  async function fetchTotalTrabajos(clienteId: number) {
+    try {
+      const data = {
+        clienteId: clienteId
+      }
+      const response = await trabajoService.obtenerTotalTrabajosPorCliente(data);
+      setTotalTrabajosCliente(response.total)
+    } catch (error) {
+      console.error("Error al obtener el detalle:", error);
+    }
+  }
+
+  async function fetchTotalOfertas(clienteId: number) {
+    try {
+      const data = {
+        clienteId: clienteId,
+        estado: 'sin_asignar'
+      }
+      const response = await ofertaservice.obtenerTotalOfertasPorCliente(data);
+      setTotalOfertasCliente(response.total)
+    } catch (error) {
+      console.error("Error al obtener el detalle:", error);
+    }
+  }
+
   const login = (userData: IUsuarioBack, jwt: string) => {
     Cookies.set('token', jwt, { secure: true, sameSite: 'Strict' });
     setUser(userData);
@@ -87,7 +118,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, abogado, cliente, login, logout }}>
+    <AuthContext.Provider value={{ user, abogado, cliente, login, logout, totalOfertasCliente, totalTrabajosCliente }}>
       {children}
     </AuthContext.Provider>
   );

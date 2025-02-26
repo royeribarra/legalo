@@ -13,6 +13,18 @@ export default class TrabajoService extends MainService {
     return this.post(`/create`, data);
   }
 
+  public async registrarProgreso(data: any): Promise<any>{
+    return this.post(`/registrar-progreso`, data);
+  }
+
+  public async finalizarTrabajo(data: any): Promise<any>{
+    return this.post(`/finalizar-trabajo`, data);
+  }
+
+  public async obtenerTotalTrabajosPorCliente(data: any): Promise<any>{
+    return this.post(`/obtener-total-trabajos-por-cliente`, data);
+  }
+
   public async updateTrabajo(
     data: { trabajoId: number, progreso: number }
   ): Promise<any> {

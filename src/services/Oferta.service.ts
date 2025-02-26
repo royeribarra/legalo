@@ -37,4 +37,8 @@ export default class OfertaService extends MainService {
   public async invitarAbogado(data: { ofertaId: number | undefined | null; abogadoId: number }): Promise<any>{
     return this.post(`/invitar-abogado`, data);
   }
+
+  public async obtenerTotalOfertasPorCliente(data: any): Promise<any>{
+    return this.post(`/obtener-total-ofertas-por-cliente`, data);
+  }
 }

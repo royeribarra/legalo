@@ -1,13 +1,16 @@
 import { IEspecialidad } from "@/interfaces/Especialidad.interface";
 import { IIndustria } from "@/interfaces/Industria.interface";
 import { IServicio } from "@/interfaces/Servicio.interface";
-import { especialidadService, industriaService, servicioService } from "@/services";
+import { especialidadService, industriaService, ofertaservice, servicioService, trabajoService } from "@/services";
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
+import { useAuth } from "./authContext";
 
 type DashboardClienteState = {
   servicios: IServicio[];
   industrias: IIndustria[];
   especialidades: IEspecialidad[];
+  totalEncargos: number;
+  totalTrabajos: number;
 };
 
 type DashboardClienteContextType = {
@@ -25,7 +28,9 @@ export const DashboardClienteProvider = ({ children }: DashboardClienteProviderP
   const [state, setState] = useState<DashboardClienteState>({
     industrias: [],
     servicios: [],
-    especialidades: []
+    especialidades: [],
+    totalEncargos: 0,
+    totalTrabajos: 0
   });
 
   const updateState = (newState: Partial<DashboardClienteState>) => {
