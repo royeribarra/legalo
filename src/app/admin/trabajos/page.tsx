@@ -14,7 +14,7 @@ import { IEspecialidadAbogado } from '@/interfaces/Especialidad.interface';
 import { IServicioAbogado } from '@/interfaces/Servicio.interface';
 import Link from 'next/link';
 import { useToast } from '@/contexts/toastContext';
-import { ITrabajoBack } from '@/interfaces/Trabajo.interface';
+import { IPagoBack, IProgresoBack, ITrabajoBack } from '@/interfaces/Trabajo.interface';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -80,6 +80,46 @@ function Trabajos() {
         if (!aplicacion.createdAt) return "-";
         const fecha = new Date(aplicacion.createdAt);
         return <p>{fecha.toLocaleDateString("es-ES")}</p>;
+      }
+    },
+    {
+      title: 'Pagos Cliente',
+      dataIndex: 'pagos',
+      key: 'pagos',
+      render: (pagos: IPagoBack[]) => {
+        return(
+        <div>
+          {
+            pagos.map((pago)=>
+              <p>S/ {pago.monto_total}</p>
+            )
+          }
+        </div>);
+      }
+    },
+    {
+      title: 'Progreso',
+      dataIndex: 'progreso',
+      key: 'progreso',
+      render: (progreso: string) => (
+        <p>{progreso}</p>
+      )
+    },
+    {
+      title: 'Progreso Abogado',
+      dataIndex: 'progresos',
+      key: 'progresos',
+      render: (progresos: IProgresoBack[]) => {
+        return(
+        <div>
+          {
+            progresos.map((progreso)=>
+              <>
+              <p>{progreso.progreso} - {progreso.descripcion}</p>
+            </>
+            )
+          }
+        </div>);
       }
     },
   ];

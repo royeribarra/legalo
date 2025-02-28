@@ -75,7 +75,7 @@ const Footer = () => {
           <Link href="/terminos-y-condiciones" className="underline">
             Términos y Condiciones
           </Link>
-          <Link href="#" className="underline">
+          <Link href="/libro-reclamaciones" className="underline">
             Libro de Reclamaciones
           </Link>
         </div>

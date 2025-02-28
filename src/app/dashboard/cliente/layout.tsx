@@ -78,18 +78,18 @@ const LayoutContent = ({ children }: { children: ReactNode }) => {
               <div className="flex items-center gap-4">
                 <div className="flex">
                   <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white">
-                    <Image src="https://randomuser.me/api/portraits/women/44.jpg" alt="User 1" width={48} height={48} />
+                    <Image src="/assets/bannerCliente/banner1.jpg" alt="User 1" width={48} height={48} />
                   </div>
                   <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white -ml-4">
-                    <Image src="https://randomuser.me/api/portraits/men/46.jpg" alt="User 2" width={48} height={48} />
+                    <Image src="/assets/bannerCliente/banner2.jpg" alt="User 2" width={48} height={48} />
                   </div>
                   <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white -ml-4">
-                    <Image src="https://randomuser.me/api/portraits/women/50.jpg" alt="User 3" width={48} height={48} />
+                    <Image src="/assets/bannerCliente/banner3.jpg" alt="User 3" width={48} height={48} />
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold">Comienza con la creación del proyecto</h3>
-                  <p className="text-gray-600">Encuentra el abogado perfecto para tus necesidades</p>
+                  <h3 className="text-lg font-bold">Comienza ahora con la publicación de tu encargo legal</h3>
+                  <p className="text-gray-600">Encuentra al abogado perfecto para tus necesidades.</p>
                 </div>
               </div>
 

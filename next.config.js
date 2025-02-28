@@ -13,10 +13,9 @@ const nextConfig = {
     images: {
         domains: [
             'http.example.com', 'localhost', 'images.example.net', 'www.example.com', 'legalo.pe',
-            'legalo.s3.us-east-1.amazonaws.com'
+            'legalo.s3.us-east-1.amazonaws.com', 'randomuser.me'
         ],
     },
-    
 };
 
 module.exports = nextConfig;

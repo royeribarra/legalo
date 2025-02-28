@@ -8,37 +8,35 @@ import { abogadoService } from "@/services";
 import { useEffect, useState } from "react";
 
 function PerfilAbogado(){
-  const { user } = useAuth();
+  const { abogado } = useAuth();
   const { setLoading} = useLoader();
-  const [abogadoId, setAbogadoId] = useState(1);
-  const [abogado, setAbogado] = useState<IAbogadoBack | null>(null);
+  const [abogadoId, setAbogadoId] = useState();
+  const [abogadoBody, setAbogadoBody] = useState<IAbogadoBack>();
 
-  useEffect(()=>{
-    if(user?.abogado?.id){
-      setAbogadoId(abogadoId);
+  const fetchAbogado = async () => {
+    setLoading(true);
+    try {
+      if(abogado?.id)
+      {
+        const response: IAbogadoBack = await abogadoService.getAbogadoByID(abogado?.id);
+        setAbogadoBody(response);
+      }
+    } catch (error) {
+      console.error("Error al obtener los datos del abogado:", error);
+    } finally {
+      setLoading(false);
     }
-  }, [user?.abogado?.id]);
+  };
 
   useEffect(() => {
-    const fetchAbogado = async () => {
-      setLoading(true);
-      try {
-        const response: IAbogadoBack = await abogadoService.getAbogadoByID(Number(abogadoId));
-        setAbogado(response);
-      } catch (error) {
-        console.error("Error al obtener los datos del abogado:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchAbogado();
-  }, [abogadoId]);
+  }, [abogado?.id]);
 
   return(
     <>
       {
-        abogado &&
-        <FormAbogado abogado={abogado}></FormAbogado>
+        abogadoBody &&
+        <FormAbogado abogado={abogadoBody}></FormAbogado>
       }
     </>
   );

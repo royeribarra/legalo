@@ -185,6 +185,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
         experiencias: experiencias,
         educaciones: educaciones,
         especialidades: stateAbogado.especialidades,
+        objetivo: stateAbogado.objetivo
       };
 
       try {

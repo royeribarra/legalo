@@ -112,25 +112,30 @@ const FormAbogado = ({abogado}:{abogado: IAbogadoBack}) => {
           </Col>
         </Row>
         <Row gutter={16}>
-          <Col span={8}>
+          <Col span={6}>
             <Form.Item label="DNI" name="dni" rules={[{ required: true, message: "Campo requerido" }]}>
               <Input />
             </Form.Item>
           </Col>
-          <Col span={8}>
+          <Col span={6}>
             <Form.Item label="Fecha de nacimiento" name="fecha_nacimiento" rules={[{ required: true, message: "Campo requerido" }]}>
               <DatePicker format="YYYY-MM-DD" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item label="Grado Académico" name="grado_academico">
+              <Input />
             </Form.Item>
           </Col>
         </Row>
         <Row gutter={16}>
           <Col span={12}>
-            <Form.Item label="Universidad" name="universidad">
+            <Form.Item label="Colegio" name="colegio">
               <Input />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label="Grado Académico" name="grado_academico">
+            <Form.Item label="CIP" name="cip">
               <Input />
             </Form.Item>
           </Col>
@@ -240,21 +245,35 @@ const FormAbogado = ({abogado}:{abogado: IAbogadoBack}) => {
       </div>
       {/* <DocumentosAbogado archivos={abogado.files} /> */}
       <div className="pt-10">
-        <Card
-          title="Archivos"
-          bordered={true}
-          className="shadow-lg"
-        >
+        <Card title="Archivos" bordered={true} className="shadow-lg">
           <List
-            dataSource={abogado.files}
-            renderItem={(archivo) => (
-              <List.Item key={archivo.id}>
-                <DocumentoAbogado archivo={archivo} abogadoId={abogado.id} />
-              </List.Item>
-            )}
+            dataSource={[
+              { id: 1, nombreArchivo: "archivo_imagen", titulo: "Imagen de perfil" },
+              { id: 2, nombreArchivo: "archivo_cul", titulo: "Certificado Cul" },
+              { id: 3, nombreArchivo: "archivo_cv", titulo: "Currículum Vitae" },
+              { id: 4, nombreArchivo: "archivo_video", titulo: "Video de presentación" },
+            ]}
+            renderItem={(item) => {
+              // Buscar el archivo real en abogado.files por nombreArchivo
+              const archivoEncontrado = abogado.files.find(
+                (file) => file.nombreArchivo === item.nombreArchivo
+              );
+
+              return (
+                <List.Item key={item.id}>
+                  <DocumentoAbogado
+                    archivo={archivoEncontrado || null}
+                    abogadoId={abogado.id}
+                    nombreArchivo={item.nombreArchivo}
+                    titulo={item.titulo} // Pasar el título como prop
+                  />
+                </List.Item>
+              );
+            }}
           />
         </Card>
       </div>
+
     </div>
   );
 };
