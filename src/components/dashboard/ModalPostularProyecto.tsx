@@ -29,6 +29,7 @@ import { IArchivo } from "@/interfaces/Archivo.interface";
 import SubirDocumentoPostulacion from "./abogado/postularOferta/SubirDocumentoPostulacion";
 import SubirVideoPostulacion from "./abogado/postularOferta/SubirVideoPostulacion";
 import { useLoader } from "@/contexts/loaderContext";
+import { useToast } from "@/contexts/toastContext";
 
 interface ModalPostularProyectoProps {
   handleModalPostular: () => void;
@@ -75,7 +76,7 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
 }) => {
 
   const { abogado } = useAuth();
-  console.log(abogado)
+  const { showToast } = useToast();
   const { setLoading } = useLoader();
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const [step, setStep] = useState("step1");
@@ -87,11 +88,22 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
   const [archivoVideo, setArchivoVideo] = useState<IArchivo | null>(null);
   const [respuestas, setRespuestas] = useState<Respuesta[]>([]);
   const [numeroCuenta, setNumeroCuenta] = useState<string>('');
-  const [selectedBanco, setSelectedBanco] = useState<string>('b2');
+  const [selectedBanco, setSelectedBanco] = useState<string>('');
 
   const nextStep = async () => {
-    console.log(step)
     if(step === "step4"){
+      if(!totalRecibido){
+        showToast("error", "Ingrese un monto", '');
+        return;
+      }
+      if(!numeroCuenta){
+        showToast("error", "Ingrese una cuenta bancaria", '');
+        return;
+      }
+      if(!selectedBanco){
+        showToast("error", "Seleccione un banco", '');
+        return;
+      }
       enviarPostulacion();
       return;
     }

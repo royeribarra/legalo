@@ -262,7 +262,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
           </Card>
         </div>
       </div>
-      <div className="border border-y-black border-x-0">
+      <div className="border border-y-black border-x-0" id="calculo-ahorros">
         <div className="max-w-[1920px] mx-auto  grid grid-cols-1 lg:grid-cols-[4fr_6fr]">
           <div className="bg-black flex flex-col justify-center gap-4 py-8 items-center">
             <div className="flex  flex-col justify-center gap-8 3xl:gap-16 p-4 max-w-[380px]">

@@ -14,7 +14,8 @@ import { IEspecialidadAbogado } from '@/interfaces/Especialidad.interface';
 import { IServicioAbogado } from '@/interfaces/Servicio.interface';
 import Link from 'next/link';
 import { useToast } from '@/contexts/toastContext';
-import { IPagoBack, IProgresoBack, ITrabajoBack } from '@/interfaces/Trabajo.interface';
+import { IPagoAbogadoBack, IPagoBack, IProgresoBack, ITrabajoBack } from '@/interfaces/Trabajo.interface';
+import ModalRegistrarPago from '@/components/admin/trabajos/ModalRegistrarPago';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -30,6 +31,8 @@ function Trabajos() {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [estadoFilter, setEstadoFilter] = useState<'Activo' | 'Inactivo' | null>(null);
   const [industriaFilter, setIndustriaFilter] = useState<string | null>(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedTrabajo, setSelectedTrabajo] = useState<ITrabajoBack | null>(null);
   // const [fechaFilter, setFechaFilter] = useState<[Dayjs, Dayjs] | null>(null);
 
   async function fetchTrabajos() {
@@ -40,6 +43,16 @@ function Trabajos() {
       console.error("Error al obtener las ofertas:", error);
     }
   }
+
+  const handleOpenModal = (trabajo: ITrabajoBack) => {
+    setSelectedTrabajo(trabajo);
+    setModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+    setSelectedTrabajo(null);
+  };
 
   useEffect(()=> {
     fetchTrabajos();
@@ -86,41 +99,57 @@ function Trabajos() {
       title: 'Pagos Cliente',
       dataIndex: 'pagos',
       key: 'pagos',
-      render: (pagos: IPagoBack[]) => {
-        return(
-        <div>
-          {
-            pagos.map((pago)=>
-              <p>S/ {pago.monto_total}</p>
-            )
-          }
-        </div>);
-      }
+      width: 250,
+      render: (pagos: IPagoBack[]) => (
+        <ul style={{ paddingLeft: '20px', margin: 0 }}>
+          {pagos.map((pago, index) => (
+            <li key={index}>
+              <strong>Monto:</strong> S/ {pago.monto_total} <br />
+              <strong>Operación:</strong> {pago.operacion}
+            </li>
+          ))}
+        </ul>
+      ),
     },
     {
-      title: 'Progreso',
-      dataIndex: 'progreso',
-      key: 'progreso',
-      render: (progreso: string) => (
-        <p>{progreso}</p>
-      )
+      title: 'Pagos Abogado',
+      dataIndex: 'pagosAbogado',
+      key: 'pagosAbogado',
+      width: 250,
+      render: (pagosAbogado: IPagoAbogadoBack[]) => (
+        <ul style={{ paddingLeft: '20px', margin: 0 }}>
+          {pagosAbogado.map((pagoAbogado, index) => (
+            <li key={index}>
+              <strong>Operación:</strong> {pagoAbogado.operacion} <br />
+              <strong>Monto:</strong> S/ {pagoAbogado.monto}
+            </li>
+          ))}
+        </ul>
+      ),
     },
     {
       title: 'Progreso Abogado',
       dataIndex: 'progresos',
       key: 'progresos',
-      render: (progresos: IProgresoBack[]) => {
-        return(
-        <div>
-          {
-            progresos.map((progreso)=>
-              <>
-              <p>{progreso.progreso} - {progreso.descripcion}</p>
-            </>
-            )
-          }
-        </div>);
-      }
+      width: 250,
+      render: (progresos: IProgresoBack[]) => (
+        <ul style={{ paddingLeft: '20px', margin: 0 }}>
+          {progresos.map((progreso, index) => (
+            <li key={index}>
+              <strong>{progreso.progreso} %</strong>: {progreso.descripcion}
+            </li>
+          ))}
+        </ul>
+      ),
+    },
+    {
+      title: 'Registrar Pago',
+      key: 'registrarPago',
+      render: (_: any, record: ITrabajoBack) => (
+        <Button type="primary" onClick={() => handleOpenModal(record)}>
+          Registrar Pago
+        </Button>
+      ),
     },
   ];
 
@@ -179,6 +208,15 @@ function Trabajos() {
         pagination={{ pageSize: 10 }}
         bordered
       />
+      {
+        selectedTrabajo &&
+        <ModalRegistrarPago
+          visible={modalVisible}
+          onClose={handleCloseModal}
+          aplicacion={selectedTrabajo?.aplicacion}
+          trabajoId={selectedTrabajo.id}
+        />
+      }
     </div>
   );
 };

@@ -17,6 +17,8 @@ export interface IAplicacionBack {
     status: number;
     oferta: IOfertaBack;
     salarioEsperado: number;
+    numeroCuenta: string;
+    selectedBanco: string;
     abogado: IAbogadoBack;
     trabajo: ITrabajoBack;
     files: IFileBack[];

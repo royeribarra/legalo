@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import { IPagoBack, IProgresoBack, ITrabajoBack } from "@/interfaces/Trabajo.interface";
+import { IPagoAbogadoBack, IPagoBack, IProgresoBack, ITrabajoBack } from "@/interfaces/Trabajo.interface";
 import ModalPago from "./Cliente/ModalPago";
 import { trabajoService } from "@/services";
 import { IClienteBack } from "@/interfaces/Cliente.interface";
@@ -146,8 +146,31 @@ const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo, persona, clien
         }
       </div>
 
+{/* Tabla de Pagos */}
+      {trabajoState.pagosAbogado && persona === 'abogado' && (
+        <div className="border p-4 rounded-md bg-gray-100">
+          <h3 className="text-lg font-bold">Pagos</h3>
+          <table className="w-full border-collapse border border-gray-200">
+            <thead>
+              <tr className="bg-gray-200">
+                <th className="border border-gray-300 px-4 py-2">Operación</th>
+                <th className="border border-gray-300 px-4 py-2">Monto</th>
+              </tr>
+            </thead>
+            <tbody>
+              {trabajoState.pagosAbogado.map((pago: IPagoAbogadoBack, index: number) => (
+                <tr key={index}>
+                  <td className="border border-gray-300 px-4 py-2">{pago.operacion}</td>
+                  <td className="border border-gray-300 px-4 py-2">S/ {pago.monto}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
       {/* Tabla de Pagos */}
-      {trabajoState.pagos && (
+      {trabajoState.pagos && persona === 'cliente' && (
         <div className="border p-4 rounded-md bg-gray-100">
           <h3 className="text-lg font-bold">Pagos</h3>
           <table className="w-full border-collapse border border-gray-200">
