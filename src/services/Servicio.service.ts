@@ -8,4 +8,8 @@ export default class ServicioService extends MainService {
   public async obtenerTodos(): Promise<any> {
     return this.get("/all");
   }
+
+  public async getEstadistica(): Promise<any>{
+    return this.post("/estadistica");
+  }
 }

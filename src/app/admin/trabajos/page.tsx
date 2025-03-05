@@ -86,12 +86,11 @@ function Trabajos() {
       )
     },
     {
-      title: 'Fecha de aceptación',
-      dataIndex: 'aplicacion',
-      key: 'aplicacion',
-      render: (aplicacion: IAplicacionBack) => {
-        if (!aplicacion.createdAt) return "-";
-        const fecha = new Date(aplicacion.createdAt);
+      title: 'Fecha de fin',
+      dataIndex: 'fecha_fin',
+      key: 'fecha_fin',
+      render: (fecha_fin: string) => {
+        const fecha = new Date(fecha_fin);
         return <p>{fecha.toLocaleDateString("es-ES")}</p>;
       }
     },

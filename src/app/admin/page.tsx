@@ -1,16 +1,16 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import EspecialidadEstadistica from "@/components/admin/estadistica/especialidadEstadistica";
+import ServicioEstadistica from "@/components/admin/estadistica/servicioEstadistica";
 
-function AdminPage() {
-  const router = useRouter();
+const EstadisticasPage = () => {
 
-  useEffect(() => {
-    router.replace("/admin/abogados"); // Redirige automáticamente
-  }, [router]);
+  return (
+    <div style={{ width: "80%", margin: "auto" }}>
+      <ServicioEstadistica />
+      <EspecialidadEstadistica />
+    </div>
+  );
+};
 
-  return null; // No renderiza nada, ya que redirige inmediatamente
-}
-
-export default AdminPage;
+export default EstadisticasPage;

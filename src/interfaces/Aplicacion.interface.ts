@@ -14,6 +14,7 @@ export interface IAplicacionBack {
     id: number;
     createdAt: string;
     fecha_aplicacion: string;
+    fecha_fin: string;
     status: number;
     oferta: IOfertaBack;
     salarioEsperado: number;

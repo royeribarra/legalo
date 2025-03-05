@@ -8,4 +8,8 @@ export default class EspecialidadService extends MainService {
   public async obtenerTodos(params?: any): Promise<any> {
     return this.get("/all", params);
   }
+
+  public async getEstadistica(): Promise<any>{
+    return this.post("/estadistica");
+  }
 }

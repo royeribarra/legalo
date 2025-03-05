@@ -132,7 +132,7 @@ function Ofertas() {
         <Space>
           {aplicaciones.map((aplicacion, idx) => (
             <Tag color="blue" key={idx}>
-              {aplicacion?.abogado?.nombres}
+              {aplicacion?.abogado?.nombres + ' ' + aplicacion?.abogado?.apellidos}
             </Tag>
           ))}
         </Space>
