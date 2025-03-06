@@ -150,6 +150,18 @@ function Trabajos() {
         </Button>
       ),
     },
+    {
+      title: 'Ver detalle',
+      dataIndex: 'id',
+      key: 'id',
+      render: (id: number) => (
+        <Link href={`/admin/trabajos/${id}`}>
+          <Button type="primary">
+            Ver Detalle
+          </Button>
+        </Link>
+      ),
+    },
   ];
 
   return (

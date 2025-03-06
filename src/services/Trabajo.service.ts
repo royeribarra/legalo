@@ -9,6 +9,10 @@ export default class TrabajoService extends MainService {
     return this.get("/all", params);
   }
 
+  public async getTrabajoById(id: number): Promise<any> {
+    return this.get(`/${id}`);
+  }
+
   public async createTrabajo(data: any): Promise<any>{
     return this.post(`/create`, data);
   }

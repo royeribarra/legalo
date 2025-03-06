@@ -30,6 +30,7 @@ export interface IAbogado {
 }
 
 export interface IAbogadoBack {
+  correo?: string;
   id: number;
   user: IUser;
   usuario: IUsuarioBack;
