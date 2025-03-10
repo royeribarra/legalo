@@ -30,6 +30,7 @@ import SubirDocumentoPostulacion from "./abogado/postularOferta/SubirDocumentoPo
 import SubirVideoPostulacion from "./abogado/postularOferta/SubirVideoPostulacion";
 import { useLoader } from "@/contexts/loaderContext";
 import { useToast } from "@/contexts/toastContext";
+import Link from "next/link";
 
 interface ModalPostularProyectoProps {
   handleModalPostular: () => void;
@@ -88,6 +89,7 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
   const [archivoVideo, setArchivoVideo] = useState<IArchivo | null>(null);
   const [respuestas, setRespuestas] = useState<Respuesta[]>([]);
   const [numeroCuenta, setNumeroCuenta] = useState<string>('');
+  const [numeroCuentaCci, setNumeroCuentaCci] = useState<string>('');
   const [selectedBanco, setSelectedBanco] = useState<string>('');
 
   const nextStep = async () => {
@@ -98,6 +100,10 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
       }
       if(!numeroCuenta){
         showToast("error", "Ingrese una cuenta bancaria", '');
+        return;
+      }
+      if(!numeroCuentaCci){
+        showToast("error", "Ingrese la cuenta CCI", '');
         return;
       }
       if(!selectedBanco){
@@ -154,7 +160,8 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
           salarioEsperado: precio,
           respuestas,
           numeroCuenta,
-          selectedBanco
+          selectedBanco,
+          numeroCuentaCci
         };
         const response = await abogadoService.postularOferta(data);
         if(response.state){
@@ -179,6 +186,12 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
     const value = e.target.value;
     // Convertimos el valor a número, pero primero verificamos si el campo está vacío
     setNumeroCuenta(value);
+  };
+
+  const handleChangeNumeroCci = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // Convertimos el valor a número, pero primero verificamos si el campo está vacío
+    setNumeroCuentaCci(value);
   };
 
   const handlePrecioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -298,13 +311,15 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                     </Avatar>
                     <div className="flex flex-row gap-1 items-center">
                       <span className="font-bold text-2xl">{abogado?.nombres}</span>
+                      <Link href={"/dashboard/abogado/perfil"}>
                         <Button
-                        variant="link"
-                        className="text-[#007AFF] flex items-center gap-2 px-0 justify-start"
-                      >
-                        <Pencil size={24} />
-                        <span>Editar perfil</span>
-                      </Button>
+                          variant="link"
+                          className="text-[#007AFF] flex items-center gap-2 px-0 justify-start"
+                        >
+                          <Pencil size={24} />
+                          <span>Editar perfil</span>
+                        </Button>
+                      </Link>
                     </div>
                   </div>
                   <div className="flex gap-4 flex-wrap ">
@@ -489,45 +504,54 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
                   <h3 className="my-2 text-[#666666] text-sm border-b border-[#666666] pb-2">
                     ¿Dónde quieres recibir tu pago?
                   </h3>
-                  <div className="flex justify-between gap-2 items-end flex-wrap">
-                    <div className="flex-1">
-                      <div>
-                        <h3 className="text-sm text-[#61646B] mb-2">
-                          Cuenta bancaria (CCI)
-                        </h3>
+                  <div className="flex flex-wrap gap-4">
+                    {/* Primera fila: Cuenta bancaria y Banco */}
+                    <div className="flex w-full gap-4">
+                      <div className="flex-1">
+                        <h3 className="text-sm text-[#61646B] mb-2">Cuenta bancaria</h3>
+                        <Input
+                          type="text"
+                          placeholder="83983479837899487934"
+                          className="placeholder:text-[#666666] h-12 border rounded-[10px] border-black text-black focus-visible:ring-0"
+                          value={numeroCuenta}
+                          onChange={handleChangeNumero}
+                        />
                       </div>
+                      <div className="min-w-32">
+                        <h3 className="text-sm text-[#61646B] mb-2">Banco</h3>
+                        <Select value={selectedBanco} onValueChange={handleBancoChange}>
+                          <SelectTrigger className="rounded-[10px] border-black focus-visible:ring-0 focus:outline-none focus:border-0 h-12">
+                            <SelectValue placeholder="Selecciona tu banco" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectLabel>Bancos</SelectLabel>
+                              {bancos.map((banco, index) => (
+                                <SelectItem key={index} value={banco.nombre}>
+                                  {banco.nombre}
+                                </SelectItem>
+                              ))}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+
+                    {/* Segunda fila: Cuenta bancaria (CCI) */}
+                    <div className="w-full">
+                      <h3 className="text-sm text-[#61646B] mb-2">Cuenta bancaria (CCI)</h3>
                       <Input
                         type="text"
                         placeholder="83983479837899487934"
                         className="placeholder:text-[#666666] h-12 border rounded-[10px] border-black text-black focus-visible:ring-0"
-                        value={numeroCuenta}
-                        onChange={handleChangeNumero}
+                        value={numeroCuentaCci}
+                        onChange={handleChangeNumeroCci}
                       />
                     </div>
-                    <div className="min-w-32">
-                      <div>
-                        <h3 className="text-sm text-[#61646B] mb-2">Banco</h3>
-                      </div>
-                      <Select value={selectedBanco} onValueChange={handleBancoChange}>
-                        <SelectTrigger className="rounded-[10px] border-black focus-visible:ring-0 focus:outline-none focus:border-0 h-12">
-                          <SelectValue placeholder="Selecciona tu banco" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectLabel>Bancos</SelectLabel>
-                            {
-                              bancos.map((banco, index) => (
-                                <SelectItem key={index} value={banco.nombre}>{banco.nombre}</SelectItem>
-                              ))
-                            }
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    </div>
                   </div>
+
                   <div className="text-[#61646B] flex items-center gap-2 text-sm">
-                    <IcoInfo size={16} /> Al realizar la transferencia me
-                    comprometo a concluir el servicio.
+                    <IcoInfo size={16} /> Al realizar la transferencia me comprometo a concluir el servicio.
                   </div>
                 </div>
               </TabsContent>

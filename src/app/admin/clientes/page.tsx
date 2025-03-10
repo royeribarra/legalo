@@ -114,7 +114,7 @@ function Clientes() {
       title: 'Nombre',
       key: 'nombre',
       render: (_: any, record: IClienteBack) => (
-        <p>{record.nombres} - {record.apellidos}</p>
+        <p>{record.nombres + ' ' + record.apellidos}</p>
       ),
     },
     {

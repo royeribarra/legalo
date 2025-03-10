@@ -57,8 +57,7 @@ const CheckoutPage = () => {
                   <span className="flex items-top lg:items-center gap-2">
                     <IcoInfo size={16} color="#61646B" className="flex-none" />
                     <p className="text-sm text-[#61646B]">
-                      Al realizar la transferencia me comprometo a concluir el
-                      servicio.
+                      Al realizar la transferencia me comprometo a concluir el servicio.
                     </p>
                   </span>
                 </div>

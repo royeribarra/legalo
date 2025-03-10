@@ -73,7 +73,7 @@ const LayoutContent = ({ children }: { children: ReactNode }) => {
       <main>
         <DashboardClienteProvider>
           <div className="px-4 py-4 lg:px-16 lg:py-8 max-w-[1920px] mx-auto">
-            <div className="mt-8 bg-blue-100 p-4 rounded-lg flex justify-between items-center">
+            <div className="mt-8 bg-lg-client p-4 rounded-lg flex justify-between items-center">
               {/* Imágenes superpuestas y texto */}
               <div className="flex items-center gap-4">
                 <div className="flex">

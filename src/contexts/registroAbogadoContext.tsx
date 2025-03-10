@@ -21,6 +21,7 @@ export type RegistroAbogadoState = {
   cip: string;
   colegio: string;
   sobre_ti: string;
+  ruc: string;
   archivo_cul: IArchivo | null;
   archivo_imagen: IArchivo | null;
   archivo_cv: IArchivo | null;
@@ -54,6 +55,7 @@ const defaultState: RegistroAbogadoState & { caducidad?: number } = {
   contrasena: "",
   terms: false,
   dni: "",
+  ruc: "",
   telefono: "",
   grado: "",
   cip: "",
@@ -93,6 +95,7 @@ const isValidState = (state: any): state is RegistroAbogadoState & { caducidad?:
       typeof state.cip === "string" &&
       typeof state.colegio === "string" &&
       typeof state.sobre_ti === "string" &&
+      typeof state.ruc === "string" &&
       typeof state.objetivo === "string" &&
       Array.isArray(state.habilidades_duras) &&
       Array.isArray(state.habilidades_blandas) &&

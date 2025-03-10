@@ -62,10 +62,10 @@ const WelcomeLawyerPage = () => {
           </h2>
           <p className="text-center">Por favor, espera un momento.</p>
         </div>
-      ) : isVerified ? (
+      ) : !isVerified ? (
         <main className="container mx-auto px-4 lg:px-8 flex justify-center flex-col items-center gap-6">
           <Image
-            src="/assets/images/img-welcome-lawyer.jpg"
+            src="/assets/abogado-bienvenida.webp"
             alt="Bienvenida"
             width={466}
             height={320}

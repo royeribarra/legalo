@@ -121,7 +121,7 @@ function Ofertas() {
       dataIndex: 'cliente',
       key: 'cliente',
       render: (cliente: IClienteBack) => (
-        <p>{cliente?.nombres + '-' + cliente?.razon_social}</p>
+        <p>{cliente?.nombres + ' ' + cliente?.apellidos}</p>
       )
     },
     {
@@ -191,6 +191,18 @@ function Ofertas() {
           </Link>
         )
       }
+    },
+    {
+      title: 'Ver detalle',
+      dataIndex: 'id',
+      key: 'id',
+      render: (id: number) => (
+        <Link href={`/admin/ofertas/${id}`}>
+          <Button type="primary">
+            Ver Detalle
+          </Button>
+        </Link>
+      ),
     },
   ];
 

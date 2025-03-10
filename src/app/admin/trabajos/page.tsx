@@ -70,6 +70,15 @@ function Trabajos() {
       }
     },
     {
+      title: 'Título',
+      dataIndex: 'aplicacion',
+      key: 'aplicacion',
+      render: (aplicacion: IAplicacionBack) => {
+  
+        return <p>{aplicacion?.oferta?.titulo}</p>;
+      }
+    },
+    {
       title: 'Abogado',
       dataIndex: 'abogado',
       key: 'abogado',

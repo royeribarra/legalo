@@ -68,6 +68,10 @@ const formSchema = z.object({
     .string()
     .min(8, { message: "El campo dni debe tener 8 dígitos" })
     .max(8),
+  ruc: z
+    .string()
+    .min(11, { message: "El campo ruc debe tener 11 dígitos" })
+    .max(30),
   telefono: z
     .string()
     .min(2, { message: "El campo teléfono debe tener al menos 6 caracteres" })
@@ -174,6 +178,7 @@ function RegisterLawyer() {
       terms: false,
       dni: "",
       telefono: "",
+      ruc: ""
     },
   });
   const { setValue } = form;
@@ -187,6 +192,7 @@ function RegisterLawyer() {
       terms: values.terms,
       dni: values.dni,
       telefono: values.telefono,
+      ruc: values.ruc
     });
     router.push("/registro/abogado/objetivos");
   }
@@ -199,6 +205,7 @@ function RegisterLawyer() {
     setValue("password", stateAbogado.contrasena || "");
     setValue("dni", stateAbogado.dni || "");
     setValue("telefono", stateAbogado.telefono || "");
+    setValue("ruc", stateAbogado.ruc || "");
     setValue("terms", stateAbogado.terms || false);
   }, [setValue, stateAbogado]);
 
@@ -346,47 +353,73 @@ function RegisterLawyer() {
                     )}
                   />
                 </div>
-                <FormField
-                  control={form.control}
-                  name="location"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Ciudad</FormLabel>
-                      <FormControl>
-                        <Select
-                          value={field.value} // Conecta el valor actual al formulario
-                          onValueChange={(value) => field.onChange(value)} // Maneja el cambio de valor
-                        >
-                          <SelectTrigger>
-                            {field.value ? (
-                              <span>
-                                {
-                                  departamentosPeru.find(
-                                    (departamento) =>
-                                      departamento.nombre === field.value
-                                  )?.nombre
-                                }
-                              </span>
-                            ) : (
-                              <span className="text-gray-400">
-                                Ingresa tu ciudad
-                              </span>
-                            )}
-                          </SelectTrigger>
-                          <SelectContent>
-                            {departamentosPeru.map(({ id, nombre }) => (
-                              <SelectItem key={id} value={nombre}>
-                                {nombre}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                      <FormDescription></FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <div className="grid grid-cols-2 gap-2">
+                  <FormField
+                    control={form.control}
+                    name="ruc"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>RUC</FormLabel>
+                        <FormControl>
+                          <Input
+                            maxLength={8}
+                            placeholder="RUC"
+                            {...field}
+                            onInput={(e: React.FormEvent<HTMLInputElement>) => {
+                              const input = e.currentTarget;
+                              input.value = input.value
+                                .replace(/\D/g, "");
+                              field.onChange(input.value);
+                            }}
+                          />
+                        </FormControl>
+                        <FormDescription></FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="location"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Ciudad</FormLabel>
+                        <FormControl>
+                          <Select
+                            value={field.value} // Conecta el valor actual al formulario
+                            onValueChange={(value) => field.onChange(value)} // Maneja el cambio de valor
+                          >
+                            <SelectTrigger>
+                              {field.value ? (
+                                <span>
+                                  {
+                                    departamentosPeru.find(
+                                      (departamento) =>
+                                        departamento.nombre === field.value
+                                    )?.nombre
+                                  }
+                                </span>
+                              ) : (
+                                <span className="text-gray-400">
+                                  Ingresa tu ciudad
+                                </span>
+                              )}
+                            </SelectTrigger>
+                            <SelectContent>
+                              {departamentosPeru.map(({ id, nombre }) => (
+                                <SelectItem key={id} value={nombre}>
+                                  {nombre}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormDescription></FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
                 <FormField
                   control={form.control}
                   name="email"

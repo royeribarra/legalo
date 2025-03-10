@@ -23,7 +23,7 @@ const ModalCrearProyectoOk: React.FC<ModalPostulacionOkProps> = ({
       <div className="flex flex-col lg:flex-row bg-white lg:rounded-[24px] shadow-lg relative w-full h-full overflow-y-auto lg:w-[1220px] lg:max-w-[84vw] lg:h-[830px] lg:max-h-[90vh] hidde-scrollbar">
         <div className="flex flex-col justify-center items-center gap-8 w-full p-4 pt-16">
           <Image
-            src="/assets/images/image-client-proyect-create.jpg"
+            src="/assets/oferta-creacion.webp"
             alt="img"
             width={369}
             height={214}
@@ -38,7 +38,11 @@ const ModalCrearProyectoOk: React.FC<ModalPostulacionOkProps> = ({
           </p>
 
           <div className="flex gap-4">
-            <Button>Editar caso</Button>
+            <Link href={"/dashboard/cliente/encargos"}>
+              <Button variant={"default"} className="border-black">
+                Editar caso
+              </Button>
+            </Link>
             <Link href={"/dashboard/cliente"}>
               <Button variant={"outline"} className="border-black">
                 Publicar caso

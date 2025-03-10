@@ -153,7 +153,7 @@ function Abogados() {
       key: 'nombre',
       // sorter: (a: IOfertaBack, b: IOfertaBack) => a.salario_minimo - b.salario_minimo,
       render: (_: any, record: IAbogadoBack) => (
-        <p>{record.nombres} - {record.apellidos}</p>
+        <p>{record.nombres + ' ' + record.apellidos}</p>
       ),
     },
     {
