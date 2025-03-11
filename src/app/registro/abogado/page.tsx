@@ -362,7 +362,7 @@ function RegisterLawyer() {
                         <FormLabel>RUC</FormLabel>
                         <FormControl>
                           <Input
-                            maxLength={8}
+                            maxLength={11}
                             placeholder="RUC"
                             {...field}
                             onInput={(e: React.FormEvent<HTMLInputElement>) => {

@@ -45,9 +45,8 @@ const ProyectSinglePage = () => {
     setLoading(true);
     try {
       if (proyectoId) {
-        const data = await ofertaservice.getOfertaByID(Number(proyectoId));
-        console.log(data)
-        setOferta(data);
+        const response = await ofertaservice.getOfertaByID(Number(proyectoId));
+        setOferta(response.data);
         setLoading(false);
       }
     } catch (error) {
@@ -92,7 +91,7 @@ const ProyectSinglePage = () => {
                     {!diasPublicados ? "Publicado Hoy" : `Publicado hace ${diasPublicados} días |`}
                   </p>
                   <div className="flex items-center gap-2 text-slate-500">
-                    <User size={24} color="#4B5563" />{oferta.aplicaciones.length} postulaciones
+                    <User size={24} color="#4B5563" />{oferta.aplicaciones?.length} postulaciones
                   </div>
                 </div>
                 <div>
