@@ -8,14 +8,14 @@ import { useLoader } from "@/contexts/loaderContext";
 
 function InvitacionesOferta() {
   const { setLoading } = useLoader();
-  const { user } = useAuth();
+  const { abogado } = useAuth();
   const [ofertas, setOfertas] = useState<IOfertaBack[]>([]);
 
   async function getOfertas() {
-    setLoading(true);
-    if (user?.abogado?.id) {
+    if (abogado?.id) {
+      setLoading(true);
       const data = {
-        abogadoId: user?.abogado?.id,
+        abogadoId: abogado?.id,
       };
       try {
         const response = await abogadoService.getInvitacionesAOfertas(data);
@@ -30,7 +30,7 @@ function InvitacionesOferta() {
 
   useEffect(() => {
     getOfertas();
-  }, []);
+  }, [abogado?.id]);
 
   return (
     <div className="flex flex-col gap-8 flex-1 mt-12">
