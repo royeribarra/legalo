@@ -36,46 +36,55 @@ export default function LoginPage() {
   };
 
   return (
-    <div>
-      <header
-        className={`bg-black lg:sticky lg:top-0 lg:z-20 transition-all duration-300 lg:h-[100px] lg:h-[160px]`}
-      >
-        <div className="mx-auto max-w-[1920px] px-4 lg:px-16 flex justify-between items-center h-full">
-          <div className="flex items-center">
-            <Link href="/">
-              <Image
-                src="/assets/logo-legalo-white.png"
-                alt="logo"
-                width={473}
-                height={89}
-                className={`max-w-[120px] lg:max-w-[213px] lg:max-w-[180px]`}
-              />
-            </Link>
-            <div className="hidden lg:block w-[1px] h-10 bg-white mx-6"></div>
-            <Link href="/nosotros" className="hidden lg:block text-white">
-              Nosotros
-            </Link>
-          </div>
+    <div className="h-screen flex flex-col">
+      {/* Header fijo con width 100% */}
+      <header className="w-full px-4 lg:px-8 flex justify-between items-center h-[72px] bg-background ">
+        <Link href="/">
+          <Image
+            src="/assets/legalo-logo.png"
+            alt="logo"
+            width={160}
+            height={30}
+            className="max-w-[100px] md:max-w-none"
+          />
+        </Link>
+
+        <div className="flex gap-2 p-2 flex-col md:flex-row">
+          <p className="text-sm font-bold">¿Buscas Trabajo?</p>
+          <Link href="/busqueda" className="underline text-sm font-bold">
+            Ir a Oportunidades
+          </Link>
         </div>
       </header>
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <Card title="Login" className="w-96">
-          <Form name="login" initialValues={{ remember: true }} onFinish={onFinish}>
-            <Form.Item name="correo" rules={[{ required: true, message: 'Ingresa tu correo' }]}>
-              <Input prefix={<UserOutlined />} placeholder="Correo" />
+
+      {/* Contenedor para centrar solo el formulario */}
+      <main className="flex flex-1 justify-center items-center">
+        <div className="w-full max-w-md p-6">
+          {/* Título con icono 👋 */}
+          <h2 className="text-2xl font-bold text-center mb-6">
+            Bienvenido a LEGALO <span className="inline-block">👋</span>
+          </h2>
+
+          <Form name="login" initialValues={{ remember: true }} onFinish={onFinish} className="space-y-4" layout='vertical'>
+            {/* Input con label para el correo */}
+            <Form.Item label="Correo" name="correo" rules={[{ required: true, message: 'Ingresa tu correo' }]}>
+              <Input prefix={<UserOutlined />} placeholder="Correo" className="font-bold border-gray-300" />
             </Form.Item>
-            <Form.Item name="contrasena" rules={[{ required: true, message: 'Ingresa tu contraseña' }]}>
-              <Input.Password prefix={<LockOutlined />} placeholder="Contraseña" />
+
+            {/* Input con label para la contraseña */}
+            <Form.Item label="Contraseña" name="contrasena" rules={[{ required: true, message: 'Ingresa tu contraseña' }]}>
+              <Input.Password prefix={<LockOutlined />} placeholder="Contraseña" className="font-bold border-gray-300" />
             </Form.Item>
+
+            {/* Botón de inicio de sesión */}
             <Form.Item>
-              <Button type="primary" htmlType="submit" block>
-                Log in
+              <Button type="primary" htmlType="submit" className="w-full bg-black text-white font-bold hover:bg-gray-800">
+                Iniciar Sesión
               </Button>
             </Form.Item>
           </Form>
-        </Card>
-      </div>
-      <Footer />
+        </div>
+      </main>
     </div>
   );
 }

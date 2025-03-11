@@ -29,6 +29,10 @@ export default class TrabajoService extends MainService {
     return this.post(`/obtener-total-trabajos-por-cliente`, data);
   }
 
+  public async obtenerTotalTrabajosPorAbogado(data: any): Promise<any>{
+    return this.post(`/obtener-total-trabajos-por-abogado`, data);
+  }
+
   public async updateTrabajo(
     data: { trabajoId: number, progreso: number }
   ): Promise<any> {

@@ -25,7 +25,7 @@ const DashboardAbogadoLayout = ({ children }: LayoutProps) => {
 };
 
 const LayoutContent = ({ children }: LayoutProps) => {
-  const { logout, user } = useAuth();
+  const { logout, user, totalInvitacionesAbogado, totalPostulacionesAbogado, totalTrabajosAbogado } = useAuth();
   const pathname = usePathname();
   const whatsappNumber = "51939784580";
 
@@ -86,7 +86,14 @@ const LayoutContent = ({ children }: LayoutProps) => {
                       key={boton.id}
                       variant={boton.url === pathname ? "dashActive" : "dashInActive"}
                     >
-                      {boton.texto}
+                      {boton.id === 'invitaciones'
+                        ? `${boton.texto} (${totalInvitacionesAbogado})`
+                        : boton.id === 'postulaciones'
+                        ? `${boton.texto} (${totalPostulacionesAbogado})`
+                        : boton.id === 'trabajos'
+                        ? `${boton.texto} (${totalTrabajosAbogado})`
+                        : boton.texto
+                      }
                     </Button>
                   </Link>
                 ))}

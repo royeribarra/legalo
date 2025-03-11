@@ -12,4 +12,8 @@ export default class AplicacionService extends MainService {
   public async updateLinkDocumentos(data: {abogadoId: number, ofertaId: number}): Promise<any>{
     return this.post(`/update-archivos`, data);
   }
+
+  public async obtenerTotalAplicacionesPorAbogado(data: any): Promise<any>{
+    return this.post(`/obtener-total-aplicaciones-por-abogado`, data);
+  }
 }

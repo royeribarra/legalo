@@ -41,4 +41,8 @@ export default class OfertaService extends MainService {
   public async obtenerTotalOfertasPorCliente(data: any): Promise<any>{
     return this.post(`/obtener-total-ofertas-por-cliente`, data);
   }
+
+  public async obtenerTotalInvitacionesPorAbogado(data: any): Promise<any>{
+    return this.post(`/obtener-total-invitaciones-por-abogado`, data);
+  }
 }
