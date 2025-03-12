@@ -24,13 +24,13 @@ import {
 import AbogadoResumeCard from "@/components/dashboard/AbogadoResumeCard";
 import ModalInviteProyect from "@/components/dashboard/ModalInviteProyect";
 import { useDashboardCliente } from "@/contexts/dashboardClienteContext";
-import { abogadoService } from "@/services";
+import { abogadoService, clienteService } from "@/services";
 import { IAbogadoBack } from "@/interfaces/Abogado.interface";
 import { useLoader } from "@/contexts/loaderContext";
 import { useAuth } from "@/contexts/authContext";
 
 const DashboardClientPage = () => {
-  const { user } = useAuth();
+  const { cliente } = useAuth();
   const { setLoading } = useLoader();
   const [openFilter, setOpenFilter] = useState(true);
   const [menuActive, setMenuActive] = useState("abogados");
@@ -66,21 +66,25 @@ const DashboardClientPage = () => {
     try {
       const data = {
         validadoAdmin: true,
-        clienteId: user?.cliente?.id
+        clienteId: cliente?.id
       };
-      const response = await abogadoService.obtenerTodos(data);
+      // const response = await clienteService.obtenerAbogadosAptosPorCliente(data);
+      // const response = await abogadoService.obtenerTodos(data);
+      const response = await clienteService.obtenerTodosAbogados(data);
       setAbogados(response);
       setAbogadosFiltrados(response);
-      setLoading(false);
     } catch (error) {
       console.error("Error al obtener el detalle:", error);
+    } finally {
       setLoading(false);
     }
   }
 
   useEffect(()=> {
-    fetchAbogados();
-  }, []);
+    if(cliente?.id){
+      fetchAbogados();
+    }
+  }, [cliente?.id]);
 
   const handleServicioChangue = (newValue: string) => {
     setFiltroServicio(Number(newValue));
@@ -220,29 +224,6 @@ const DashboardClientPage = () => {
                                 );
                               })}
                             </RadioGroup>
-                          </AccordionContent>
-                        </AccordionItem>
-                        <AccordionItem value="item-6">
-                          <AccordionTrigger>Duración</AccordionTrigger>
-                          <AccordionContent className="flex flex-col gap-2">
-                            <div className="flex items-center space-x-2 text-base">
-                              <Checkbox id="check1" />
-                              <label htmlFor="check1">
-                                Corto plazo ( 1- 6 meses)
-                              </label>
-                            </div>
-                            <div className="flex items-center space-x-2 text-base">
-                              <Checkbox id="check1" />
-                              <label htmlFor="check1">
-                                Mediano plazo ( 6 - 12 meses)
-                              </label>
-                            </div>
-                            <div className="flex items-center space-x-2 text-base">
-                              <Checkbox id="check1" />
-                              <label htmlFor="check1">
-                                Largo plazo (+ 12 meses)
-                              </label>
-                            </div>
                           </AccordionContent>
                         </AccordionItem>
                       </Accordion>

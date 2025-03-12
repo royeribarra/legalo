@@ -437,14 +437,12 @@ const RegisterClient = () => {
                         <FormLabel>Celular</FormLabel>
                         <FormControl>
                           <Input
-                            type="number"
+                            type="tel"
                             placeholder="987654321"
                             {...field}
                             className="border-black focus-visible:border-none rounded-[10px] h-12"
                             onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                              if (e.target.value.length > 9) {
-                                e.target.value = e.target.value.slice(0, 9);
-                              }
+                              e.target.value = e.target.value.replace(/\D/g, "").slice(0, 9);
                             }}
                           />
                         </FormControl>

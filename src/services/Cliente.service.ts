@@ -18,6 +18,14 @@ export default class ClienteService extends MainService {
     return this.get("/all", params);
   }
 
+  public async obtenerTodosAbogados(data: {clienteId?: number, validadoAdmin?: boolean}): Promise<any> {
+    return this.post("/all-abogados", data);
+  }
+
+  public async obtenerAbogadosAptosPorCliente(data: {clienteId?: number, validadoAdmin?: boolean}): Promise<any> {
+    return this.post("/obtener-abogados-aptos-por-cliente", data);
+  }
+
   public async updateCliente(id: number, fieldsToUpdate: Partial<IClienteUpdateBack>) : Promise<any>{
     return this.put(`/edit/${id}`, fieldsToUpdate);
   }

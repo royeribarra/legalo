@@ -127,15 +127,14 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   alt="Regístrate"
                   width={107}
                   height={107}
-                  className="rounded-lg"
+                  className="rounded-lg border border-black"
                 />
               </div>
               <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4">
                 Regístrate gratis
               </CardTitle>
               <CardDescription className="line-clamp-4 text-base text-black text-center">
-                Crea una cuenta fácilmente y accede a nuestra comunidad de
-                abogados de confianza.
+                Crea una cuenta fácilmente y accede a nuestra comunidad de abogados de confianza.
               </CardDescription>
             </CardHeader>
           </Card>
@@ -151,15 +150,14 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   alt="Regístrate"
                   width={107}
                   height={107}
-                  className="rounded-lg"
+                  className="rounded-lg border border-black"
                 />
               </div>
               <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4">
                 Publica tu caso
               </CardTitle>
               <CardDescription className="line-clamp-4 text-base text-black text-center">
-                Cuéntanos tu caso para recibir propuestas de abogados
-                interesados en ayudarte.
+                Cuéntanos tu caso para recibir propuestas de abogados interesados en ayudarte.
               </CardDescription>
             </CardHeader>
           </Card>
@@ -175,15 +173,14 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   alt="Regístrate"
                   width={107}
                   height={107}
-                  className="rounded-lg"
+                  className="rounded-lg border border-black"
                 />
               </div>
               <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4">
                 Explora ofertas
               </CardTitle>
               <CardDescription className="line-clamp-4 text-base text-black text-center">
-                Revisa las propuestas de los abogados interesados, consulta sus
-                perfiles para tomar una decisión informada.
+                Revisa las propuestas de los abogados interesados, consulta sus perfiles para tomar una decisión informada.
               </CardDescription>
             </CardHeader>
           </Card>
@@ -199,15 +196,14 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   alt="Regístrate"
                   width={107}
                   height={107}
-                  className="rounded-lg"
+                  className="rounded-lg border border-black"
                 />
               </div>
               <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4">
                 Contrata a tu abogado
               </CardTitle>
               <CardDescription className="line-clamp-4 text-base text-black text-center">
-                Selecciona al abogado que mejor se ajuste a tus necesidades y
-                contrátalo para resolver tu caso.
+                Selecciona al abogado que mejor se ajuste a tus necesidades y contrátalo para resolver tu caso.
               </CardDescription>
             </CardHeader>
           </Card>
@@ -223,15 +219,14 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   alt="Regístrate"
                   width={107}
                   height={107}
-                  className="rounded-lg"
+                  className="rounded-lg border border-black"
                 />
               </div>
               <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4">
                 Resuelve tu caso legal
               </CardTitle>
               <CardDescription className="line-clamp-4 text-base text-black text-center">
-                Trabaja con el abogado seleccionado y recibe el apoyo que
-                necesitas para tu caso.
+                Trabaja con el abogado seleccionado y recibe el apoyo que necesitas para tu caso.
               </CardDescription>
             </CardHeader>
           </Card>
@@ -247,22 +242,22 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   alt="Regístrate"
                   width={107}
                   height={107}
-                  className="rounded-lg"
+                  className="rounded-lg border border-black"
                 />
               </div>
               <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4">
                 Recibe el servicio con tranquilidad
               </CardTitle>
               <CardDescription className="line-clamp-4 text-base text-black text-center">
-                Nosotros protegemos tu pago hasta que recibas el servicio
-                acordado con tu abogado.
+                Nosotros protegemos tu pago hasta que recibas el servicio acordado con tu abogado.
               </CardDescription>
             </CardHeader>
           </Card>
         </div>
       </div>
       <div className="border-t border-b border-black" id="calculo-ahorros">
-        <div className="max-w-[1920px] mx-auto grid grid-cols-1 lg:grid-cols-[4fr_6fr]">
+        <div className="mx-auto grid grid-cols-1 lg:grid-cols-[4fr_6fr]">
+        {/* <div className="max-w-[1920px] mx-auto grid grid-cols-1 lg:grid-cols-[4fr_6fr]"> */}
           <div className="bg-black flex flex-col  gap-4 py-8 justify-center items-center">
             <div className="flex  flex-col justify-center gap-8 3xl:gap-16 p-4 max-w-[380px] ">
               <div className="grid grid-cols-[40px_auto]  gap-6 ">
@@ -271,22 +266,21 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   alt="ico"
                   width={40}
                   height={40}
-                  className="mx-auto"
+                  className="mx-auto border border-black"
                 />
                 <div className="text-white">
                   <h3 className="text-lg lg:text-[28px] font-nimbus mb-2 ">
                     Profesionalismo y {" "}<span className="italic font-light">Experiencia</span>
                   </h3>
                   <p className="text-base">
-                    Todos nuestros abogados han sido verificados y cuentan con
-                    años de experiencia en su especialidad.
+                    Todos nuestros abogados han sido verificados y cuentan con años de experiencia en su especialidad.
                   </p>
                 </div>
               </div>
 
               <div className="grid grid-cols-[40px_auto] gap-6 ">
                 <Image
-                  src="/icos/ico-users-w.png"
+                  src="/icos/people.svg"
                   alt="ico"
                   width={40}
                   height={40}
@@ -298,16 +292,15 @@ const HomeMain: React.FC<HomeMainProps> = ({
                     <span className="italic font-light">Personalizada</span>
                   </h3>
                   <p className="text-base">
-                    Recibe asesoría legal ajustada a tus necesidades
-                    específicas.
+                    Recibe asesoría legal ajustada a tus necesidades específicas.
                   </p>
                 </div>
               </div>
               <div className="grid grid-cols-[40px_auto] gap-6 ">
                 <Image
-                  src="/icos/ico-lock-w.png"
+                  src="/icos/lock.svg"
                   alt="ico"
-                  width={30}
+                  width={40}
                   height={40}
                   className="mx-auto"
                 />
@@ -324,7 +317,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
               </div>
               <div className="grid grid-cols-[40px_auto]  gap-6 ">
                 <Image
-                  src="/icos/ico-star-w.png"
+                  src="/icos/star.svg"
                   alt="ico"
                   width={40}
                   height={40}
@@ -423,7 +416,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
       </div>
 
       <div className="max-w-[1920px] mx-auto lg:h-[620px] 3xl:h-[780px] flex p-8 relative flex-col lg:flex-row">
-        <div className="flex justify-start items-center w-full lg:w-[50%] lg:px-8">
+        <div className="flex justify-start items-center w-full lg:w-[50%] lg:pl-8 lg:pr-16">
           <Image
             src="/assets/img-home-7.jpg"
             alt="img"
@@ -439,9 +432,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
           <p className="text-lg 3xl:text-2xl">
             Cuéntanos tu caso y accede a una{" "}
             <span className="font-montreal font-bold">comunidad</span> de
-            abogados especializados listos para ayudarte. Encuentra al
-            profesional ideal para tus necesidades legales y resuelve tu caso
-            con confianza y rapidez.
+            abogados especializados listos para ayudarte. Encuentra al profesional ideal para tus necesidades legales y resuelve tu caso con confianza y rapidez.
           </p>
           <Link href={"/registro/tipo"}>
             <Button className="w-fit">Cuéntanos tu caso</Button>

@@ -97,7 +97,7 @@ const ProyectSinglePage = () => {
                 <div>
                   <Button
                     variant="outline"
-                    className="border border-black rounded-full h-[43px]"
+                    className="border border-black rounded-full h-[43px] cursor-default"
                   >
                     <Image
                       src="/icos/ico-dash-alarm.svg"
@@ -146,57 +146,63 @@ const ProyectSinglePage = () => {
 
             <div className="gap-4 flex-wrap">
               <div className="flex items-center gap-4 text-lg font-semibold text-gray-800">
-                <p><span className="text-black">Presupuesto:</span> S/ {oferta.salario_minimo} - {oferta.salario_maximo}</p>
+                <p><span className="font-sans font-bold">Presupuesto:</span> S/ {oferta.salario_minimo} - {oferta.salario_maximo}</p>
                 <span className="text-gray-500 text-xl">|</span>
-                <p><span className="text-black">Experiencia requerida:</span> {oferta.experiencia_abogado}</p>
+                <p><span className="font-sans font-bold">Experiencia requerida:</span> {oferta.experiencia_abogado}</p>
               </div>
               <div className="mt-2">
-                <h2 className="text-black font-semibold">Especialidades</h2>
-              {
-                oferta.especialidadesOferta.map((especialidad)=>
-                  <Button
-                    variant="outline"
-                    className="border border-black rounded-full h-[43px]"
-                  >
-                    <Image
-                      src="/icos/ico-dash-building.svg"
-                      alt=""
-                      width={24}
-                      height={24}
-                      className="mr-2"
-                    />
-                    <p>{especialidad.especialidad.nombre}</p>
-                  </Button>
-                )
-              }
+                <h2 className="font-sans font-bold">Especialidades</h2>
+                <div className="flex flex-wrap gap-2 mt-4">
+                {
+                  oferta.especialidadesOferta.map((especialidad)=>
+                    <Button
+                      key={especialidad.id}
+                      variant="outline"
+                      className="border border-black rounded-full h-[43px] cursor-default"
+                    >
+                      <Image
+                        src={"/assets/images/especialidades/" + especialidad.especialidad.imagen}
+                        alt=""
+                        width={24}
+                        height={24}
+                        className="mr-2"
+                      />
+                      <p>{especialidad.especialidad.nombre}</p>
+                    </Button>
+                  )
+                }
+                </div>
               </div>
               <div className="mt-2">
-                <h2 className="text-black font-semibold">Servicios</h2>
-              {
-                oferta.serviciosOferta.map((servicio)=>
-                  <Button
-                    variant="outline"
-                    className="border border-black rounded-full h-[43px]"
-                  >
-                    <Image
-                      src="/icos/ico-dash-building.svg"
-                      alt=""
-                      width={24}
-                      height={24}
-                      className="mr-2"
-                    />
-                    <p>{servicio.servicio.nombre}</p>
-                  </Button>
-                )
-              }
+                <h2 className="font-sans font-bold">Servicios</h2>
+                <div className="flex flex-wrap gap-2 mt-4">
+                {
+                  oferta.serviciosOferta.map((servicio)=>
+                    <Button
+                      variant="outline"
+                      className="border border-black rounded-full h-[43px] cursor-default"
+                      key={servicio.id}
+                    >
+                      <Image
+                        src="/icos/ico-dash-building.svg"
+                        alt=""
+                        width={24}
+                        height={24}
+                        className="mr-2"
+                      />
+                      <p>{servicio.servicio.nombre}</p>
+                    </Button>
+                  )
+                }
+                </div>
               </div>
             </div>
             <div>
-              <h4 className="text-black font-semibold">Descripción de proyecto:</h4>
+              <h4 className="font-sans font-bold">Descripción de proyecto:</h4>
               <p>{oferta.descripcion}</p>
             </div>
             <div className="flex flex-col gap-2">
-              <p className="font-semibold text-gray-800">Documentación del caso:</p>
+              <p className="font-sans font-bold">Documentación del caso:</p>
               <Link
                 href={`${process.env.S3_FILE_ROUTE}/${oferta?.files.find((file)=>file.nombreArchivo==='oferta_documento')?.filePath}`}
                 target="_blank"

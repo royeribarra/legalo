@@ -37,7 +37,6 @@ const DashboardLawyerPage = () => {
   const {user} = useAuth();
   const [openFilter, setOpenFilter] = useState<boolean>(true);
   const { state } = useDashboardAbogado();
-  const [menuActive, setMenuActive] = useState("oportunidades");
   const [ofertas, setOfertas] = useState<IOfertaBack[]>([]);
   const [ofertasFiltradas, setOfertasFiltradas] = useState<IOfertaBack[]>([]);
   const [ofertaPrevioInvitado, setOfertaPrevioInvitado] = useState<number>(0);
@@ -46,15 +45,6 @@ const DashboardLawyerPage = () => {
   const [filtroServicio, setFiltroServicio] = useState<number | null>(null);
   const [filtroEspecialidad, setFiltroEspecialidad] = useState<number | null>(null);
   const [filtroIndustria, setFiltroIndustria] = useState<number | null>(null);
-
-  const menuItems = [
-    { id: "oportunidades", texto: "Oportunidades para ti" },
-    { id: "recientes", texto: "Publicadas recientemente" },
-    { id: "invitaciones", texto: "Invitaciones" },
-    // { id: "guardados", texto: "Guardados" },
-    { id: "postulaciones", texto: "Postulaciones" },
-    { id: "trabajos", texto: "Trabajos" },
-  ];
 
   const handleFilter = () => {
     setOpenFilter(!openFilter);
@@ -242,12 +232,10 @@ const DashboardLawyerPage = () => {
             </div>
           )}
           <div className="flex flex-col gap-8 flex-1 mt-12">
-              {
-                ofertasFiltradas.map((oferta)=>
-                  <ResumeProyect oferta={oferta} inviteProyect={inviteProyect} />
-                )
-              }
-            </div>
+            {ofertasFiltradas.map((oferta)=>
+              <ResumeProyect oferta={oferta} inviteProyect={inviteProyect} key={oferta.id} />
+            )}
+          </div>
         </div>
       </div>
     </div>

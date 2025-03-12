@@ -85,6 +85,7 @@ const LayoutContent = ({ children }: LayoutProps) => {
                     <Button
                       key={boton.id}
                       variant={boton.url === pathname ? "dashActive" : "dashInActive"}
+                      className="text-[18px]"
                     >
                       {boton.id === 'invitaciones'
                         ? `${boton.texto} (${totalInvitacionesAbogado})`

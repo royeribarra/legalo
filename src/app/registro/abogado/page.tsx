@@ -336,13 +336,12 @@ function RegisterLawyer() {
                         <FormLabel>Teléfono</FormLabel>
                         <FormControl>
                           <Input
+                            type="tel"
                             maxLength={9}
-                            type="number"
                             placeholder="Teléfono"
+                            pattern="[0-9]{9}"
                             onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                              if (e.target.value.length > 9) {
-                                e.target.value = e.target.value.slice(0, 9);
-                              }
+                              e.target.value = e.target.value.replace(/\D/g, "").slice(0, 9);
                             }}
                             {...field}
                           />

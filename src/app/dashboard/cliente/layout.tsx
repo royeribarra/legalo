@@ -107,6 +107,7 @@ const LayoutContent = ({ children }: { children: ReactNode }) => {
                     <Button
                       key={boton.id}
                       variant={boton.url === pathname ? "dashActive" : "dashInActive"}
+                      className="text-[18px]"
                     >
                       {boton.id === 'trabajos'
                         ? `${boton.texto} (${totalTrabajosCliente})`

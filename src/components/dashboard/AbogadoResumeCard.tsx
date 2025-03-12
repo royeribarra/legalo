@@ -44,23 +44,24 @@ const AbogadoResumeCard = ({ inviteProyect, abogado }: InviteProyectProps) => {
       className={` p-4 lg:px-8 border border-black  flex flex-col gap-4 flex-wrap`}
     >
       <div className="flex flex-col-reverse lg:flex-row lg:justify-between">
-        <div className="flex gap-4 items-center">
-          <Image
-            src={`${process.env.S3_FILE_ROUTE}/${abogado?.files.find((file)=>file.nombreArchivo==='archivo_imagen')?.filePath}`}
-            alt="img-abogado"
-            width={100}
-            height={100}
-            className="rounded-full"
-          />
-          <div>
-            <p className="text-2xl font-bold">{abogado.nombres + '-' + abogado.apellidos}</p>
-            <p>{abogado.serviciosAbogado[0]?.servicio.nombre}</p>
-            <p>{abogado.direccion}</p>
-          </div>
-        </div>
+      <div className="flex gap-4 items-center">
+  <Image
+    src={`${process.env.S3_FILE_ROUTE}/${abogado?.files.find((file) => file.nombreArchivo === 'archivo_imagen')?.filePath}`}
+    alt="img-abogado"
+    width={100}
+    height={100}
+    className="w-[100px] h-[100px] object-cover rounded-full border"
+  />
+  <div>
+    <h3 className="font-sans font-bold">{abogado.nombres + '-' + abogado.apellidos}</h3>
+    <p>{abogado.serviciosAbogado[0]?.servicio.nombre}</p>
+    <p>{abogado.direccion}</p>
+  </div>
+</div>
+
         <div className="flex justify-end">
           <Button
-            variant={"outline"}
+            variant={"secondary"}
             className="border border-black rounded-full h-11 text-sm lg:text-lg"
             onClick={invitarALaOferta}
           >
@@ -69,14 +70,15 @@ const AbogadoResumeCard = ({ inviteProyect, abogado }: InviteProyectProps) => {
         </div>
       </div>
       <div>
-      <h3 className="mb-2">Industrias:</h3>
-        <div className="flex gap-4 flex-wrap">
+      <p className="mb-2 font-sans font-bold">Industrias:</p>
+      <div className="flex flex-wrap gap-2 mt-4">
           {
             abogado.industriasAbogado.map((industria)=>
               <Button
                 variant="outline"
-                className="border border-black rounded-full h-[40px]"
+                className="border border-black rounded-full h-[40px] cursor-default"
                 key={industria.id}
+                title={industria.industria.nombre}
               >
                 <MapPin size={28} />
                 <p className="ml-2 text-sm lg:text-lg">{industria.industria.nombre}</p>
@@ -84,8 +86,6 @@ const AbogadoResumeCard = ({ inviteProyect, abogado }: InviteProyectProps) => {
             )
           }
             {/* <CarruselDeIndustrias abogado={abogado} /> */}
-          
-        
           {/* <Button
             variant="outline"
             className="border border-black rounded-full h-[40px]"
@@ -96,16 +96,23 @@ const AbogadoResumeCard = ({ inviteProyect, abogado }: InviteProyectProps) => {
         </div>
       </div>
       <div>
-        <h3 className="mb-2">Especialidades:</h3>
-        <div className="flex flex-wrap gap-4  lg:overflow-y-auto">
+        <h3 className="mb-2 font-sans font-bold">Especialidades:</h3>
+        <div className="flex flex-wrap gap-2 mt-4">
           {
-            abogado.especialidadesAbogado.map((especialidad)=> 
+            abogado.especialidadesAbogado.map((especialidad)=>
               <Button
                 variant="outline"
-                className="border border-black rounded-full h-[40px]"
+                className="border border-black rounded-full h-[40px] cursor-default"
                 key={especialidad.id}
+                title={especialidad.especialidad.nombre}
               >
-                <Briefcase size={28} />
+                <Image
+                  src={"/assets/images/especialidades/" + especialidad.especialidad.imagen}
+                  alt=""
+                  width={24}
+                  height={24}
+                  className="mr-2"
+                />
                 <p className="ml-2 text-sm lg:text-lg">{especialidad.especialidad.nombre}</p>
               </Button>
             )

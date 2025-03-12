@@ -128,7 +128,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   alt="Regístrate"
                   width={107}
                   height={107}
-                  className="rounded-lg"
+                  className="rounded-lg border border-black"
                 />
               </div>
               <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4 font-light">
@@ -152,7 +152,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   alt="Regístrate"
                   width={107}
                   height={107}
-                  className="rounded-lg"
+                  className="rounded-lg border border-black"
                 />
               </div>
               <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4 font-light">
@@ -176,7 +176,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   alt="Regístrate"
                   width={107}
                   height={107}
-                  className="rounded-lg"
+                  className="rounded-lg border border-black"
                 />
               </div>
               <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4 font-light">
@@ -200,7 +200,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   alt="Regístrate"
                   width={107}
                   height={107}
-                  className="rounded-lg"
+                  className="rounded-lg border border-black"
                 />
               </div>
               <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4 font-light">
@@ -224,7 +224,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   alt="Regístrate"
                   width={107}
                   height={107}
-                  className="rounded-lg"
+                  className="rounded-lg border border-black"
                 />
               </div>
               <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4 font-light">
@@ -248,7 +248,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   alt="Regístrate"
                   width={107}
                   height={107}
-                  className="rounded-lg"
+                  className="rounded-lg border border-black"
                 />
               </div>
               <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4 font-light">
@@ -263,7 +263,8 @@ const HomeMain: React.FC<HomeMainProps> = ({
         </div>
       </div>
       <div className="border border-y-black border-x-0" id="calculo-ahorros">
-        <div className="max-w-[1920px] mx-auto  grid grid-cols-1 lg:grid-cols-[4fr_6fr]">
+        <div className="mx-auto  grid grid-cols-1 lg:grid-cols-[4fr_6fr]">
+        {/* <div className="max-w-[1920px] mx-auto  grid grid-cols-1 lg:grid-cols-[4fr_6fr]"> */}
           <div className="bg-black flex flex-col justify-center gap-4 py-8 items-center">
             <div className="flex  flex-col justify-center gap-8 3xl:gap-16 p-4 max-w-[380px]">
               <div className="grid grid-cols-[40px_auto]  gap-6 ">
@@ -279,16 +280,15 @@ const HomeMain: React.FC<HomeMainProps> = ({
                     Oportunidades <span className="italic font-light">Exclusivas</span>
                   </h3>
                   <p className="text-base">
-                    Accede a encargos legales publicados, alineados con tu
-                    experiencia y áreas de especialización.
+                    Accede a encargos legales publicados, alineados con tu experiencia y áreas de especialización.
                   </p>
                 </div>
               </div>
               <div className="grid grid-cols-[40px_auto] gap-6 ">
                 <Image
-                  src="/icos/ico-lock-w.png"
+                  src="/icos/lock.svg"
                   alt="ico"
-                  width={30}
+                  width={40}
                   height={40}
                   className="mx-auto"
                 />
@@ -297,14 +297,13 @@ const HomeMain: React.FC<HomeMainProps> = ({
                     Pagos seguros y <span className="italic font-light">protegidos</span>
                   </h3>
                   <p className="text-base">
-                    Tu pago está garantizado y se libera de forma puntual una
-                    vez que completes el encargo.
+                    Tu pago está garantizado y se libera de forma puntual una vez que completes el encargo.
                   </p>
                 </div>
               </div>
               <div className="grid grid-cols-[40px_auto]  gap-6 ">
                 <Image
-                  src="/icos/ico-like-w.png"
+                  src="/icos/like.svg"
                   alt="ico"
                   width={40}
                   height={40}
@@ -322,7 +321,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
               </div>
               <div className="grid grid-cols-[40px_auto]  gap-6 ">
                 <Image
-                  src="/icos/ico-star-w.png"
+                  src="/icos/star.svg"
                   alt="ico"
                   width={40}
                   height={40}
@@ -333,8 +332,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                     Crecimiento <span className="italic font-light">profesional</span>
                   </h3>
                   <p className="text-base">
-                    Amplía tu red de contactos y accede a encargos que impulsan
-                    tu experiencia y habilidades legales.
+                    Amplía tu red de contactos y accede a encargos que impulsan tu experiencia y habilidades legales.
                   </p>
                 </div>
               </div>
