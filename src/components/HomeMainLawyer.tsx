@@ -131,7 +131,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg border border-black"
                 />
               </div>
-              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4 font-light">
+              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4 font-light font-normal">
                 Regístrate gratis
               </CardTitle>
               <CardDescription className="line-clamp-4 text-base text-black text-center">
@@ -155,7 +155,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg border border-black"
                 />
               </div>
-              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4 font-light">
+              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4 font-light font-normal">
                 Explora oportunidades
               </CardTitle>
               <CardDescription className="line-clamp-4 text-base text-black text-center">
@@ -179,7 +179,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg border border-black"
                 />
               </div>
-              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4 font-light">
+              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4 font-light font-normal">
                 Postula a proyectos
               </CardTitle>
               <CardDescription className="line-clamp-4 text-base text-black text-center">
@@ -203,7 +203,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg border border-black"
                 />
               </div>
-              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4 font-light">
+              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4 font-light font-normal">
                 Confirma tu contrato
               </CardTitle>
               <CardDescription className="line-clamp-4 text-base text-black text-center">
@@ -227,7 +227,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg border border-black"
                 />
               </div>
-              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4 font-light">
+              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4 font-light font-normal">
                 Completa el encargo
               </CardTitle>
               <CardDescription className="line-clamp-4 text-base text-black text-center">
@@ -251,7 +251,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg border border-black"
                 />
               </div>
-              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4 font-light">
+              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4 font-light font-normal">
                 Recibe tu pago
               </CardTitle>
               <CardDescription className="line-clamp-4 text-base text-black text-center">
@@ -277,7 +277,8 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 />
                 <div className="text-white">
                   <h3 className="text-lg lg:text-[28px] font-nimbus mb-2 font-light">
-                    Oportunidades <span className="italic font-light">Exclusivas</span>
+                    {/* Oportunidades <span className="italic font-light">Exclusivas</span> */}
+                    Oportunidades Exclusivas
                   </h3>
                   <p className="text-base">
                     Accede a encargos legales publicados, alineados con tu experiencia y áreas de especialización.
@@ -291,10 +292,12 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   width={40}
                   height={40}
                   className="mx-auto"
+                  style={{ height: '40px'}}
                 />
                 <div className="text-white">
                   <h3 className="text-lg lg:text-[28px] font-nimbus mb-2">
-                    Pagos seguros y <span className="italic font-light">protegidos</span>
+                    {/* Pagos seguros y <span className="italic font-light">protegidos</span> */}
+                    Pagos seguros y protegidos
                   </h3>
                   <p className="text-base">
                     Tu pago está garantizado y se libera de forma puntual una vez que completes el encargo.
@@ -311,7 +314,8 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 />
                 <div className="text-white">
                   <h3 className="text-lg lg:text-[28px] font-nimbus mb-2">
-                    Flexibilidad <span className="italic font-light">profesional</span>
+                    {/* Flexibilidad <span className="italic font-light">profesional</span> */}
+                    Flexibilidad Profesional
                   </h3>
                   <p className="text-base">
                     Selecciona los casos que más te interesen y trabaja bajo tus
@@ -329,7 +333,8 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 />
                 <div className="text-white">
                   <h3 className="text-lg lg:text-[28px] font-nimbus mb-2">
-                    Crecimiento <span className="italic font-light">profesional</span>
+                    {/* Crecimiento <span className="italic font-light">profesional</span> */}
+                    Crecimiento Profesional
                   </h3>
                   <p className="text-base">
                     Amplía tu red de contactos y accede a encargos que impulsan tu experiencia y habilidades legales.

@@ -93,25 +93,29 @@ const ModalInviteProyect: React.FC<ModalInviteProyectProps> = ({
         </div>
 
         {currentStep === 1 ? (
-          <div className="w-full overflow-hidden overflow-y-scroll relative">
-            <h2 className="text-center text-2xl lg:text-[44px] my-6">
-              Selecciona una oferta para invitar al abogado
-            </h2>
+          <div className="w-full overflow-hidden relative">
+          <h2 className="text-center text-2xl lg:text-[44px] my-6">
+            Selecciona una oferta para invitar al abogado
+          </h2>
+          {ofertasDisponibles.length > 0 ? (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              {ofertasDisponibles.map((oferta) => (
-                <div
-                  key={oferta.id}
-                  className={`border p-4 rounded-lg cursor-pointer ${
-                    selectedOferta === oferta.id ? "border-blue-500" : "border-gray-300"
-                  }`}
-                  onClick={() => setSelectedOferta(oferta.id)}
-                >
-                  <h3 className="font-bold">{oferta.titulo}</h3>
-                  <p>{oferta.descripcion}</p>
-                </div>
-              ))}
-            </div>
-            <div className="flex justify-end mt-6">
+                {ofertasDisponibles.map((oferta) => (
+                  <div
+                    key={oferta.id}
+                    className={`border p-4 rounded-lg cursor-pointer ${
+                      selectedOferta === oferta.id ? "border-blue-500" : "border-gray-300"
+                    }`}
+                    onClick={() => setSelectedOferta(oferta.id)}
+                  >
+                    <h3 className="font-bold">{oferta.titulo}</h3>
+                    <p>{oferta.descripcion}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-center text-gray-500">No hay ofertas disponibles</p>
+            )}
+            <div className="flex justify-center mt-6">
               <Button
                 onClick={handleNextStep}
                 disabled={!selectedOferta}

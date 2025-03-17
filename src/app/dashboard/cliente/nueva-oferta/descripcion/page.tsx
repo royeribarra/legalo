@@ -88,7 +88,7 @@ const PublicarPageFour = () => {
 
   return (
     <div className="container mx-auto p-4 lg:p-8 lg:px-20 m-8">
-      <div className="w-full max-w-[480px] mx-auto mb-8">
+      <div className="w-full mx-auto mb-8">
         <Progress value={(100 / 8) * 4} className="mx-auto mb-4 h-2" />
         <p className="text-left">Paso 4/8</p>
       </div>
@@ -107,6 +107,30 @@ const PublicarPageFour = () => {
             <li>✅ Objetivos: Qué esperas lograr (resolución amistosa, litigio, negociación, etc.)</li>
             <li>✅ Urgencia: Si hay aspectos que requieran atención inmediata.</li>
           </ul>
+          <div className="bg-[#E7F0F7] mt-6 rounded-2xl p-4 flex items-start gap-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="#00527C"
+              className="w-6 h-6 mt-1 flex-shrink-0"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 9v2m0 4h.01M12 4a8 8 0 100 16 8 8 0 000-16z"
+              />
+            </svg>
+            <div>
+              <h3 className="text-[#00527C] font-bold">Acerca de la presencialidad</h3>
+              <p className="text-[#1E74A0]">
+                La modalidad en un caso dependerá de sus particularidades y no de una
+                preferencia personal. En algunos casos, será imprescindible, mientras
+                que en otros, el trabajo podrá realizarse de manera remota.
+              </p>
+            </div>
+          </div>
         </div>
         <div>
           <p className="lg:text-lg mb-2">Descripción del caso:</p>

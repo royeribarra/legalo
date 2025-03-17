@@ -192,7 +192,7 @@ const PublicarPageThree = () => {
 
   return (
     <div className="container mx-auto p-4 lg:p-8 m-8 lg:w-[900px]">
-      <div className="w-full max-w-[480px] mx-auto mb-8">
+      <div className="w-full mx-auto mb-8">
         <Progress value={100/8*3} className="mx-auto mb-4 h-2" />
         <p className="text-left">Paso 3/8</p>
       </div>
@@ -220,20 +220,17 @@ const PublicarPageThree = () => {
                 onClick={() => selectEspecialidad(item)}
               >
                 <div
-                  className={`w-12 h-12 flex justify-center items-center rounded-full ${
-                    selectServices.includes(item.id)
-                      ? "bg-[#D5F1F0]"
-                      : "bg-[#D9D9D9]"
-                  }`}
+                  className={`w-20 h-20 flex justify-center items-center rounded-full`}
+                  // ${selectServices.includes(item.id) ? "bg-[#D5F1F0]" : "bg-[#D9D9D9]"}
                 >
                   <Image
                     src={`/assets/images/especialidades/${item.imagen}`}
                     alt={item.nombre}
-                    width={25}
-                    height={25}
+                    width={65}
+                    height={65}
                   />
                 </div>
-                <p className="mt-2 text-center">{item.nombre}</p>
+                <p className="mt-2 text-left">{item.nombre}</p>
                 <div
                   className={`absolute top-5 right-5 w-5 h-5 flex justify-center items-center rounded-sm ${
                     selectServices.includes(item.id)

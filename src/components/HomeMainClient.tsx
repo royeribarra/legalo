@@ -130,7 +130,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg border border-black"
                 />
               </div>
-              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4">
+              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4 font-normal">
                 Regístrate gratis
               </CardTitle>
               <CardDescription className="line-clamp-4 text-base text-black text-center">
@@ -153,7 +153,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg border border-black"
                 />
               </div>
-              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4">
+              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4 font-normal">
                 Publica tu caso
               </CardTitle>
               <CardDescription className="line-clamp-4 text-base text-black text-center">
@@ -176,7 +176,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg border border-black"
                 />
               </div>
-              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4">
+              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4 font-normal">
                 Explora ofertas
               </CardTitle>
               <CardDescription className="line-clamp-4 text-base text-black text-center">
@@ -199,7 +199,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg border border-black"
                 />
               </div>
-              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4">
+              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4 font-normal">
                 Contrata a tu abogado
               </CardTitle>
               <CardDescription className="line-clamp-4 text-base text-black text-center">
@@ -222,7 +222,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg border border-black"
                 />
               </div>
-              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4">
+              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4 font-normal">
                 Resuelve tu caso legal
               </CardTitle>
               <CardDescription className="line-clamp-4 text-base text-black text-center">
@@ -245,7 +245,7 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   className="rounded-lg border border-black"
                 />
               </div>
-              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4">
+              <CardTitle className="font-nimbus lg:text-[32px] lg:pt-4 text-center py-4 font-normal">
                 Recibe el servicio con tranquilidad
               </CardTitle>
               <CardDescription className="line-clamp-4 text-base text-black text-center">
@@ -270,7 +270,8 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 />
                 <div className="text-white">
                   <h3 className="text-lg lg:text-[28px] font-nimbus mb-2 ">
-                    Profesionalismo y {" "}<span className="italic font-light">Experiencia</span>
+                    {/* Profesionalismo y {" "}<span className="italic font-light">Experiencia</span> */}
+                    Profesionalismo y Experiencia
                   </h3>
                   <p className="text-base">
                     Todos nuestros abogados han sido verificados y cuentan con años de experiencia en su especialidad.
@@ -288,8 +289,8 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 />
                 <div className="text-white">
                   <h3 className="text-lg lg:text-[28px] font-nimbus mb-2">
-                    Atención{" "}
-                    <span className="italic font-light">Personalizada</span>
+                    {/* Atención{" "}<span className="italic font-light">Personalizada</span> */}
+                    Atención Personalizada
                   </h3>
                   <p className="text-base">
                     Recibe asesoría legal ajustada a tus necesidades específicas.
@@ -303,11 +304,12 @@ const HomeMain: React.FC<HomeMainProps> = ({
                   width={40}
                   height={40}
                   className="mx-auto"
+                  style={{ height: '40px'}}
                 />
                 <div className="text-white">
                   <h3 className="text-lg lg:text-[28px] font-nimbus mb-2">
-                    Seguridad y{" "}
-                    <span className="italic font-light">Confidencialidad</span>
+                    {/* Seguridad y{" "}<span className="italic font-light">Confidencialidad</span> */}
+                    Seguridad y Confidencialidad
                   </h3>
                   <p className="text-base">
                     Aseguramos la confidencialidad de tu caso y protegemos tu
@@ -325,8 +327,8 @@ const HomeMain: React.FC<HomeMainProps> = ({
                 />
                 <div className="text-white">
                   <h3 className="text-lg lg:text-[28px] font-nimbus mb-2">
-                    Opiniones y{" "}
-                    <span className="italic font-light">Valoraciones</span>{" "}
+                    {/* Opiniones y{" "}<span className="italic font-light">Valoraciones</span>{" "} */}
+                    Opiniones y Valoraciones
                   </h3>
                   <p className="text-base">
                     Lee las reseñas de otros clientes para tomar una decisión
