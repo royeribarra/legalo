@@ -8,6 +8,7 @@ export interface IExperiencia {
     hasta_fecha: string;
     titulo: string;
     ubicacion: string;
+    trabajo_actualmente: boolean;
 }
 
 export interface IExperienciaBack{

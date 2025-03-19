@@ -41,6 +41,7 @@ const formSchema = z.object({
   ubicacion: z.string().min(2, {
     message: "Complete una ubicación",
   }),
+  trabajo_actualmente: z.boolean().default(false),
 });
 
 type ModalAgregarEducacionProps = {
@@ -70,12 +71,13 @@ function ModalAgregarExperiencia({
       empresa: "",
       descripcion: "",
       ubicacion: "",
+      trabajo_actualmente: false,
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const { desde_fecha, hasta_fecha } = values;
-  
+
     if (desde_fecha > new Date().toISOString().slice(0, 7)) {
       form.setError("desde_fecha", {
         type: "manual",
@@ -91,7 +93,7 @@ function ModalAgregarExperiencia({
       });
       return;
     }
-  
+
     if (hasta_fecha > new Date().toISOString().slice(0, 7)) {
       form.setError("hasta_fecha", {
         type: "manual",
@@ -99,12 +101,12 @@ function ModalAgregarExperiencia({
       });
       return;
     }
-  
+
     const tmpExperiencia = [...(stateAbogado.experiencias || [])];
-  
+
     // 🔹 Generar un ID numérico aleatorio
     const nuevoId = experienciaSelected?.id || Date.now() + Math.floor(Math.random() * 1000);
-  
+
     const nuevoEstudio: IExperiencia = {
       id: nuevoId,
       desde_fecha,
@@ -113,8 +115,9 @@ function ModalAgregarExperiencia({
       empresa: values.empresa,
       descripcion: values.descripcion,
       ubicacion: values.ubicacion,
+      trabajo_actualmente: values.trabajo_actualmente
     };
-  
+
     if (experienciaSelected) {
       const indexSelected = tmpExperiencia.findIndex(
         (estudio) => estudio.id === experienciaSelected.id
@@ -123,12 +126,12 @@ function ModalAgregarExperiencia({
     } else {
       tmpExperiencia.push(nuevoEstudio);
     }
-  
+
     // 🔹 Ordenar la lista por "hasta_fecha" de más reciente a más antigua
     tmpExperiencia.sort((a, b) => (a.hasta_fecha > b.hasta_fecha ? -1 : 1));
-  
+
     updateStateAbogado({ experiencias: tmpExperiencia });
-  
+
     setShowModal(false);
     setExperienciaSelected(null);
     form.reset();
@@ -152,6 +155,7 @@ function ModalAgregarExperiencia({
         form.setValue("empresa", experienciaSelected.empresa);
         form.setValue("descripcion", experienciaSelected.descripcion);
         form.setValue("ubicacion", experienciaSelected.ubicacion);
+        form.setValue("trabajo_actualmente", experienciaSelected.trabajo_actualmente);
       }
   }, [experienciaSelected]);
 
@@ -212,7 +216,7 @@ function ModalAgregarExperiencia({
                     />
                   </div>
                 </div>
-                <div>
+                {/* <div>
                   <FormLabel>Hasta*</FormLabel>
                   <div className="grid lg:grid-cols-2 gap-2">
                     <FormField
@@ -239,7 +243,64 @@ function ModalAgregarExperiencia({
                       )}
                     />
                   </div>
+                </div> */}
+                <div>
+                  <FormLabel>Hasta*</FormLabel>
+                  <div className="grid lg:grid-cols-2 gap-2">
+                    <FormField
+                      control={form.control}
+                      name="hasta_fecha"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel></FormLabel>
+                          <FormControl>
+                            <DatePicker.MonthPicker
+                              className="border border-black rounded-[10px] h-12 w-full"
+                              {...form.register("hasta_fecha")}
+                              onChange={handleChangeEndDate}
+                              value={
+                                form.getValues("hasta_fecha") ? [dayjs(form.getValues("hasta_fecha"), "YYYY-MM")] : null
+                              }
+                              disabledDate={(current) => {
+                                const desdeFecha = form.watch("desde_fecha");
+                                const hoy = dayjs().startOf("month"); // Obtiene el mes actual
+
+                                return (
+                                  (desdeFecha ? current && current.isBefore(dayjs(desdeFecha, "YYYY-MM"), "month") : false) || 
+                                  current && current.isAfter(hoy, "month") // Restringe meses futuros
+                                );
+                              }}
+                              placeholder="Selecciona un mes"
+                              disabled={form.watch("trabajo_actualmente")}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  {/* Checkbox para "Actualmente trabajo aquí" */}
+                  <div className="mt-2 flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      id="trabajo_actualmente"
+                      {...form.register("trabajo_actualmente")}
+                      onChange={(e) => {
+                        const isChecked = e.target.checked;
+                        form.setValue("trabajo_actualmente", isChecked);
+                    
+                        if (isChecked) {
+                          form.setValue("hasta_fecha", dayjs().format("YYYY-MM")); // Setea el mes actual
+                        } else {
+                          form.setValue("hasta_fecha", ""); // Borra la fecha si se desmarca
+                        }
+                      }}
+                    />
+                    <label htmlFor="trabajo_actualmente">Actualmente trabajo aquí</label>
+                  </div>
                 </div>
+
               </div>
               <FormField
                 control={form.control}
