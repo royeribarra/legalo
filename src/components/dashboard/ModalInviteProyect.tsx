@@ -132,8 +132,7 @@ const ModalInviteProyect: React.FC<ModalInviteProyectProps> = ({
                 ¡Invitaste a {abogadoPrevioInvitado?.nombres} a tu proyecto!
               </h2>
               <p className="text-sm lg:text-base text-center">
-                Te notificaremos cuando tu proyecto sea aceptado. Mientras tanto,
-                te invitamos a revisar tus invitaciones enviadas.
+                Te notificaremos cuando tu proyecto sea aceptado. Mientras tanto, te invitamos a revisar tus invitaciones enviadas.
               </p>
             </div>
             <Carousel>

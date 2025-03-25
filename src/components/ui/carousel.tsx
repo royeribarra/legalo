@@ -264,7 +264,7 @@ const CarouselPreviousBanner = React.forwardRef<
   return (
     <button ref={ref} onClick={scrollPrev} {...props}>
       <Image
-        src="/icos/ico-carrusel-btn-left.png"
+        src="/icos/btn-left.svg"
         alt="arrow"
         width={46}
         height={46}
@@ -283,7 +283,7 @@ const CarouselNextBanner = React.forwardRef<
   return (
     <button ref={ref} onClick={scrollNext} {...props}>
       <Image
-        src="/icos/ico-carrusel-btn-right.png"
+        src="/icos/btn-right.svg"
         alt="arrow"
         width={46}
         height={46}

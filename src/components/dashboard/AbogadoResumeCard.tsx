@@ -31,37 +31,35 @@ const CarruselDeIndustrias = ({ abogado } : {abogado: IAbogadoBack}) => {
 
 interface InviteProyectProps {
   inviteProyect: (abogado: IAbogadoBack) => void;
-  abogado: IAbogadoBack
+  abogado: IAbogadoBack;
+  variant?: "default" | "destructive" | "outline" | "secondary";
 }
 
-const AbogadoResumeCard = ({ inviteProyect, abogado }: InviteProyectProps) => {
+const AbogadoResumeCard = ({ inviteProyect, abogado, variant }: InviteProyectProps) => {
   const invitarALaOferta = () => {
     inviteProyect(abogado);
   };
 
   return (
-    <div
-      className={` p-4 lg:px-8 border border-black  flex flex-col gap-4 flex-wrap`}
-    >
+    <div className={`p-4 lg:px-8 border border-black rounded-xl flex flex-col gap-4 flex-wrap h-full flex flex-col`}>
       <div className="flex flex-col-reverse lg:flex-row lg:justify-between">
-      <div className="flex gap-4 items-center">
-  <Image
-    src={`${process.env.S3_FILE_ROUTE}/${abogado?.files.find((file) => file.nombreArchivo === 'archivo_imagen')?.filePath}`}
-    alt="img-abogado"
-    width={100}
-    height={100}
-    className="w-[100px] h-[100px] object-cover rounded-full border"
-  />
-  <div>
-    <h3 className="font-sans font-bold">{abogado.nombres + '-' + abogado.apellidos}</h3>
-    <p>{abogado.serviciosAbogado[0]?.servicio.nombre}</p>
-    <p>{abogado.direccion}</p>
-  </div>
-</div>
-
+        <div className="flex gap-4 items-center">
+          <Image
+            src={`${process.env.S3_FILE_ROUTE}/${abogado?.files.find((file) => file.nombreArchivo === 'archivo_imagen')?.filePath}`}
+            alt="img-abogado"
+            width={100}
+            height={100}
+            className="w-[100px] h-[100px] object-cover rounded-full border"
+          />
+          <div>
+            <h3 className="font-sans font-bold">{abogado.nombres + '-' + abogado.apellidos}</h3>
+            <p>{abogado.serviciosAbogado[0]?.servicio.nombre}</p>
+            <p>{abogado.direccion}</p>
+          </div>
+        </div>
         <div className="flex justify-end">
           <Button
-            variant={"secondary"}
+            variant={variant ? variant : "secondary"}
             className="border border-black rounded-full h-11 text-sm lg:text-lg"
             onClick={invitarALaOferta}
           >
@@ -85,14 +83,6 @@ const AbogadoResumeCard = ({ inviteProyect, abogado }: InviteProyectProps) => {
               </Button>
             )
           }
-            {/* <CarruselDeIndustrias abogado={abogado} /> */}
-          {/* <Button
-            variant="outline"
-            className="border border-black rounded-full h-[40px]"
-          >
-            <Clock size={28} />
-            <p className="ml-2 text-sm lg:text-lg">30-40 horas por semana</p>
-          </Button> */}
         </div>
       </div>
       <div>
@@ -117,29 +107,6 @@ const AbogadoResumeCard = ({ inviteProyect, abogado }: InviteProyectProps) => {
               </Button>
             )
           }
-          {/* <Button
-            variant="outline"
-            className="border border-black rounded-full h-[40px]"
-          >
-            <Briefcase size={28} />
-            <p className="ml-2 text-sm lg:text-lg">Migracion laboral</p>
-          </Button>
-          <Button
-            variant="outline"
-            className="border border-black rounded-full h-[40px]"
-          >
-            <Briefcase size={28} />
-            <p className="ml-2 text-sm lg:text-lg">Terminaciones de Empleo</p>
-          </Button>
-          <Button
-            variant="outline"
-            className="border border-black rounded-full h-[40px]"
-          >
-            <Briefcase size={28} />
-            <p className="ml-2 text-sm lg:text-lg">
-              Arbitraje y Mediación Laboral
-            </p>
-          </Button> */}
         </div>
       </div>
 

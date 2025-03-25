@@ -92,7 +92,7 @@ const PublicarPageFour = () => {
         <Progress value={(100 / 8) * 4} className="mx-auto mb-4 h-2" />
         <p className="text-left">Paso 4/8</p>
       </div>
-      <div className="flex flex-wrap lg:flex-nowrap gap-16">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
         <div>
           <h1 className="text-2xl lg:text-5xl my-4 font-nimbus">
             Cuéntanos lo qué necesitas

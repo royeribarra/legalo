@@ -481,7 +481,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
                   <Button
                     variant="secondary"
                     size="sm"
-                    className="rounded-full"
+                    // className="rounded-full"
                     onClick={() => setShowModalAddExperiencia(true)}
                   >
                     <Plus size={20} color="black" className="mr-4" />Sumar experiencia
@@ -553,7 +553,7 @@ const CompleteProfileLawyerPage: React.FC = () => {
                 <Button
                   variant="secondary"
                   size="sm"
-                  className="rounded-full"
+                  // className="rounded-full"
                   onClick={() => setShowModalAddEducacion(true)}
                 >
                   <Plus size={20} color="black" className="mr-4" />Agregar estudio

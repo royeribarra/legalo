@@ -264,7 +264,12 @@ function BusquedaAbogado({searchButton}: {searchButton: string}){
               ) :
               (
                 abogadosFiltrados.map((abogado, index) => (
-                  <AbogadoResumeCard inviteProyect={inviteProyect} abogado={abogado} key={index} />
+                  <AbogadoResumeCard
+                    inviteProyect={inviteProyect}
+                    abogado={abogado}
+                    key={index}
+                    variant="default"
+                   />
                 ))
               )
             }

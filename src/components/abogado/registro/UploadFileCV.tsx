@@ -69,9 +69,9 @@ function UploadFileCV({ uploadFileCV, campo, archivoCv, removeFileCv }: CvUpload
 
   return (
     <div>
-      <p className="font-bold text-lg">Archivo ({campo})</p>
+      <p className="font-bold text-lg pb-2">Archivo CV</p>
       <div
-        className="border border-blue-500 bg-blue-100 p-4 rounded-lg shadow-md text-center cursor-pointer hover:bg-blue-200"
+        className="bg-[#f1f5f9] p-4 rounded-lg shadow-md text-center cursor-pointer hover:bg-gray-200"
         onClick={handleClick} // Activar input al hacer clic
       >
         <input
@@ -81,11 +81,11 @@ function UploadFileCV({ uploadFileCV, campo, archivoCv, removeFileCv }: CvUpload
           className="hidden"
           accept={".pdf, .doc, .docx"}
         />
-        <span className="text-blue-700 font-semibold">Subir archivo</span>
+        <span className="text-black">Subir archivo</span>
       </div>
 
       {file ? (
-        <div className="flex space-x-4 mt-2">
+        <div className="flex items-center space-x-4 mt-4">
           <p className="text-gray-500">Archivo subido: {file.nombre}</p>
           <button
             onClick={handleRemoveFile}
@@ -96,7 +96,7 @@ function UploadFileCV({ uploadFileCV, campo, archivoCv, removeFileCv }: CvUpload
           </button>
         </div>
       ) : (
-        <p>Sube tu archivo en PDF, DOC, DOCX. (máx. 5mb)</p>
+        <p className="mt-4">Sube tu archivo en PDF, DOC, DOCX. (máx. 5mb)</p>
       )}
     </div>
   );
