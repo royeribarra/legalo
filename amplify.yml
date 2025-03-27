@@ -1,0 +1,23 @@
+version: 1
+applications:
+  - frontend:
+      phases:
+        preBuild:
+          commands:
+            - corepack enable # Habilita pnpm si lo usas
+            - npm install # Instala dependencias
+        build:
+          commands:
+            - npm run build # Construye el sitio (ajusta según tu config)
+      artifacts:
+        baseDirectory: .next # Carpeta con los archivos generados
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - node_modules/**/*
+      customHeaders: # Opcional: Para manejar redirecciones y CORS
+        - pattern: '**/*'
+          headers:
+            - key: 'Cache-Control'
+              value: 'max-age=31536000, public'
