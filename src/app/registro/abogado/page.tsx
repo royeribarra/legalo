@@ -68,10 +68,13 @@ const formSchema = z.object({
     .string()
     .min(8, { message: "El campo dni debe tener 8 dígitos" })
     .max(8),
-  ruc: z
+    ruc: z
     .string()
-    .min(11, { message: "El campo ruc debe tener 11 dígitos" })
-    .max(30),
+    .max(30, { message: "El campo ruc no debe superar los 30 caracteres" })
+    .optional()
+    .refine((val) => !val || val.length >= 11, {
+      message: "El campo ruc debe tener al menos 11 dígitos si es proporcionado",
+    }),
   telefono: z
     .string()
     .min(2, { message: "El campo teléfono debe tener al menos 6 caracteres" })
