@@ -21,8 +21,8 @@ const PoliticaPrivacidad = () => {
           <h1 className="text-4xl lg:text-6xl font-nimbus my-8">
           Política de Privacidad de LEGALO
           </h1>
-          <p>LEGALO, operado por LEGALO S.A.C., con RUC 20611584220 y domicilio en: Jirón Bartolomé de las Casas 422, Surco, valora la privacidad de sus usuarios y se compromete a proteger sus datos personales. Esta Política de Privacidad describe cómo recopilamos, usamos, almacenamos y protegemos la información en cumplimiento con la Ley N.º 29733, Ley de Protección de Datos Personales del Perú, y su Reglamento, aprobado por el Decreto Supremo N° 003-2013-JUS y modificaciones.</p>
-          
+          <p>LEGALO, operado por LEGALO S.A.C., con RUC 20611584220 y domicilio en: Jirón Bartolomé de las Casas 422, Surco, valora la privacidad de sus usuarios y se compromete a proteger sus datos personales. Esta Política de Privacidad describe cómo recopilamos, usamos, almacenamos y protegemos la información en cumplimiento con la Ley N.º 29733, Ley de Protección de Datos Personales del Perú, y su Reglamento, aprobado por el Decreto Supremo N° 016-2024-JUS y modificaciones.</p>
+
           <h2 className="font-bold mb-5 mt-5">I. Definiciones</h2>
           <p>Para fines de esta política:</p>
           <ol className="list-decimal ml-5">
@@ -31,7 +31,7 @@ const PoliticaPrivacidad = () => {
               <li><strong className="font-bold">Tratamiento de datos:</strong> Cualquier operación sobre datos personales, como recolección, almacenamiento, uso, transferencia o eliminación.</li>
               <li><strong className="font-bold">Responsable del Tratamiento:</strong> LEGALO, como titular de la base de datos personales.</li>
           </ol>
-          
+
           <h2 className="font-bold mb-5 mt-5">II. Información que recopilamos</h2>
           <p>Se recopilan los siguientes tipos de datos personales:</p>
           <ol className="list-decimal ml-5">

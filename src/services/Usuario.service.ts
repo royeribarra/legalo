@@ -24,4 +24,12 @@ export default class UsuarioService extends MainService {
   public async rechazarUsuarioPorAdmin(data: {abogadoId: number}): Promise<any> {
     return this.post("/rechazar-usuario-por-admin", data);
   }
+
+  public async solicitudCambioContrasena(data: any): Promise<any> {
+    return this.post("/solicitud-cambio-contrasena", data);
+  }
+
+  public async confirmarCambioContrasena(data: any): Promise<any> {
+    return this.post("/confirmar-cambio-contrasena", data);
+  }
 }

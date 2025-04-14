@@ -82,6 +82,13 @@ export default function LoginPage() {
                 Iniciar Sesión
               </Button>
             </Form.Item>
+            <Form.Item>
+              <div className="text-center mt-2">
+                <Link href="/recuperar-contrasena" className="text-sm text-blue-600 hover:underline">
+                  ¿Olvidaste tu contraseña?
+                </Link>
+              </div>
+            </Form.Item>
           </Form>
         </div>
       </main>
