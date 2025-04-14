@@ -1,13 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Form, Input, Button, message as antdMessage } from 'antd';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usuarioService } from '@/services';
 
-export default function CambiarContrasenaPage() {
+function CambiarContrasenaPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -150,3 +150,11 @@ export default function CambiarContrasenaPage() {
     </div>
   );
 }
+
+export default function Page() {
+    return (
+      <Suspense fallback={<div>Cargando...</div>}>
+        <CambiarContrasenaPage />
+      </Suspense>
+    );
+  }
