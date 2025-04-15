@@ -71,8 +71,8 @@ function AboutSection({
     updateStateAbogado({ cip: e.target.value });
   };
 
-  const onChangeColegio = (e: React.ChangeEvent<HTMLInputElement>) => {
-    updateStateAbogado({ colegio: e.target.value });
+  const onChangeColegio = (value: string) => {
+    updateStateAbogado({ colegio: value });
   };
 
   return (
@@ -115,7 +115,7 @@ function AboutSection({
             value={stateAbogado.colegio}
             onChange={onChangeColegio}
           /> */}
-          <Select>
+          <Select onValueChange={onChangeColegio}>
             <p className="text-sm my-2">Colegio de Abogados*</p>
             <SelectTrigger>
               <SelectValue placeholder="Seleccionar" />

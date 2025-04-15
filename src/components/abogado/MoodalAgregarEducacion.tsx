@@ -259,8 +259,13 @@ function ModalAgregarEducacion({
                               onChange={handleChangeEndDate}
                               value={form.getValues("hasta_fecha") ? [dayjs(form.getValues("hasta_fecha"), "YYYY-MM")] : null}
                               disabledDate={(current) => {
-                                const desdeFecha = form.watch("desde_fecha"); // Obtenemos el valor de 'desde_fecha'
-                                return desdeFecha ? current && current.isBefore(dayjs(desdeFecha, "YYYY-MM"), "month") : false;
+                                const desdeFecha = form.watch("desde_fecha");
+                                const hoy = dayjs().startOf("month");
+
+                                return (
+                                  (desdeFecha ? current && current.isBefore(dayjs(desdeFecha, "YYYY-MM"), "month") : false) ||
+                                  (current && current.isAfter(hoy, "month"))
+                                );
                               }}
                               placeholder="Selecciona un mes"
                               // format="MMMM [de] YYYY"x

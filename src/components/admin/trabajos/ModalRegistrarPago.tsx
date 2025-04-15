@@ -45,6 +45,7 @@ const ModalRegistrarPago = ({ visible, onClose, aplicacion, trabajoId }: propsMo
       {aplicacion && (
         <Form layout="vertical">
           <p><strong>Número de Cuenta:</strong> {aplicacion.numeroCuenta}</p>
+          <p><strong>CCI:</strong> {aplicacion.numeroCuentaCci}</p>
           <p><strong>Banco:</strong> {aplicacion.selectedBanco}</p>
 
           <Form.Item label="Monto a Registrar" required>

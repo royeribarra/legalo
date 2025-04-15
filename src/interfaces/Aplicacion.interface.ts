@@ -22,5 +22,6 @@ export interface IAplicacionBack {
     selectedBanco: string;
     abogado: IAbogadoBack;
     trabajo: ITrabajoBack;
+    numeroCuentaCci: string;
     files: IFileBack[];
 }

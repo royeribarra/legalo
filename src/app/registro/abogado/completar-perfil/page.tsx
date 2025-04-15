@@ -218,6 +218,8 @@ const CompleteProfileLawyerPage: React.FC = () => {
             `/registro/abogado/email-verify?correo=${encodeURIComponent(stateAbogado.email)}`
           );
           showToast("success", response.message, "");
+        } else{
+          showToast("error", response.message, "");
         }
       } catch (error) {
         showToast("error", "Ocurrió un error", "");

@@ -121,29 +121,39 @@ const PublicarPageSeven = () => {
             <div className="flex gap-2">
               <div className="w-1/2">
                 <p className="mb-2 font-bold">Desde</p>
-                <Input
-                  type="number"
-                  className="border-black rounded-none h-10 focus-visible:border-none"
-                  value={rangoDesde ?? ""}
-                  min="0" // Evita valores negativos en la interfaz
-                  onChange={(e) => {
-                    const value = Number(e.target.value);
-                    setRangoDesde(value >= 0 ? value : null); // Asegura que solo se guarden números positivos
-                  }}
-                />
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-500 font-medium">
+                    S/
+                  </span>
+                  <Input
+                    type="number"
+                    className="pl-8 border-black rounded-none h-10 focus-visible:border-none"
+                    value={rangoDesde ?? ""}
+                    min="0"
+                    onChange={(e) => {
+                      const value = Number(e.target.value);
+                      setRangoDesde(value >= 0 ? value : null);
+                    }}
+                  />
+                </div>
               </div>
               <div className="w-1/2">
                 <p className="mb-2 font-bold">Hasta</p>
-                <Input
-                  type="number"
-                  className="border-black rounded-none h-10 focus-visible:border-none"
-                  value={rangoHasta ?? ""}
-                  min="0"
-                  onChange={(e) => {
-                    const value = Number(e.target.value);
-                    setRangoHasta(value >= 0 ? value : null);
-                  }}
-                />
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-500 font-medium">
+                    S/
+                  </span>
+                  <Input
+                    type="number"
+                    className="pl-8 border-black rounded-none h-10 focus-visible:border-none"
+                    value={rangoHasta ?? ""}
+                    min="0"
+                    onChange={(e) => {
+                      const value = Number(e.target.value);
+                      setRangoHasta(value >= 0 ? value : null);
+                    }}
+                  />
+                </div>
               </div>
             </div>
           </>
@@ -152,17 +162,23 @@ const PublicarPageSeven = () => {
           <>
             <div className="w-full">
               <p className="mb-2 font-bold">Ingrese el monto fijo</p>
-              <Input
-                type="number"
-                className="border-black rounded-none h-10 focus-visible:border-none"
-                value={montoFijo ?? ""}
-                min="0"
-                onChange={(e) => {
-                  const value = Number(e.target.value);
-                  setMontoFijo(value >= 0 ? value : null);
-                }}
-              />
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-500 font-medium">
+                  S/
+                </span>
+                <Input
+                  type="number"
+                  className="pl-8 border-black rounded-none h-10 focus-visible:border-none"
+                  value={montoFijo ?? ""}
+                  min="0"
+                  onChange={(e) => {
+                    const value = Number(e.target.value);
+                    setMontoFijo(value >= 0 ? value : null);
+                  }}
+                />
+              </div>
             </div>
+
             <div className="flex items-center gap-2 my-4">
               <IcoInfo size={16} color="#666666" />
               <p className="text-[#666666]">
