@@ -48,7 +48,7 @@ function BusquedaAbogado({searchButton}: {searchButton: string}){
   async function fetchAbogados() {
     setLoading(true);
     try {
-      const params = { validado_admin: true };
+      const params = { validadoAdmin: true };
       const data = await abogadoService.obtenerTodos(params);
       setAbogados(data);
       setAbogadosFiltrados(data)
