@@ -29,7 +29,7 @@ const Footer = () => {
 
           <div className="flex space-x-4 my-4 ">
             <a
-              href="https://facebook.com"
+              href="https://www.facebook.com/profile.php?id=61573024978831"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -40,7 +40,7 @@ const Footer = () => {
               />
             </a>
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/legalo.pe/?next=%2F"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -54,7 +54,7 @@ const Footer = () => {
               <img src="/icos/icon_x.webp" alt="X" className="w-6 h-6" />
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/company/106214801"
               target="_blank"
               rel="noopener noreferrer"
             >
