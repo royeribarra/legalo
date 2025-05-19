@@ -27,7 +27,7 @@ const DashboardAbogadoLayout = ({ children }: LayoutProps) => {
 const LayoutContent = ({ children }: LayoutProps) => {
   const { logout, user, totalInvitacionesAbogado, totalPostulacionesAbogado, totalTrabajosAbogado } = useAuth();
   const pathname = usePathname();
-  const whatsappNumber = "51939784580";
+  const whatsappNumber = "51945072517";
 
   const menuItems = [
     { id: "oportunidades", texto: "Oportunidades para ti", url: "/dashboard/abogado" },

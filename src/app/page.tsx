@@ -38,7 +38,18 @@ const HomePage = () => {
           />
         </>
       )}
-
+      <a
+        href="https://wa.me/51945072517"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-4 right-4 z-50"
+      >
+        <img
+          src={"/assets/whatsapp.png"}
+          alt="WhatsApp"
+          className="w-14 h-14"
+        />
+      </a>
       <Footer />
     </div>
   );

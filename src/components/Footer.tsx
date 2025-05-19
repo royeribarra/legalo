@@ -3,7 +3,7 @@ import Link from "next/link";
 // import { Button } from "@/components/ui/button";
 
 const Footer = () => {
-  const whatsappNumber = "51939784580";
+  const whatsappNumber = "51945072517";
   return (
     <footer className="bg-black">
       <div className="max-w-[1920px] mx-auto flex flex-col justify-center overflow-hidden lg:pb-10 p-4 lg:px-16">
@@ -75,8 +75,11 @@ const Footer = () => {
           <Link href="/terminos-y-condiciones" className="underline">
             Términos y Condiciones
           </Link>
-          <Link href="/libro-reclamaciones" className="underline">
+          {/* <Link href="/libro-reclamaciones" className="underline">
             Libro de Reclamaciones
+          </Link> */}
+          <Link href="/libro-reclamaciones">
+            <Image src={"/assets/libro_reclamaciones.jpg"} alt="Libro de reclamaciones" width={100} height={100}></Image>
           </Link>
         </div>
       </div>

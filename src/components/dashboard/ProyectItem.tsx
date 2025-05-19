@@ -11,7 +11,7 @@ interface ProyectItemProps {
 }
 
 const ProyectItem: React.FC<ProyectItemProps> = ({ tipe, oferta }) => {
-  const whatsappNumber = "51939784580";
+  const whatsappNumber = "51945072517";
   return (
     <div
       className={`p-4 lg:p-8 border border-black rounded-[20px] flex flex-col gap-4 ${tipe === "cotizacionAceptada" && "bg-[#EEF79C]"} ${tipe === "cotizacionPorExpirar" && "bg-[#EDEDED]"}`}
