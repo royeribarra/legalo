@@ -34,7 +34,7 @@ function CambiarContrasenaPage() {
     try {
       const response = await usuarioService.confirmarCambioContrasena({
         codigo: code,
-        correo: values.email,
+        correo: values.email.toLowerCase(),
         nuevaContrasena: values.nuevaContrasena,
       });
 

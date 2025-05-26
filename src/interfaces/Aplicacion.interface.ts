@@ -16,6 +16,7 @@ export interface IAplicacionBack {
     fecha_aplicacion: string;
     fecha_fin: string;
     status: number;
+    estado: string;
     oferta: IOfertaBack;
     salarioEsperado: number;
     numeroCuenta: string;

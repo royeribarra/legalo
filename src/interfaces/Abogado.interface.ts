@@ -36,6 +36,7 @@ export interface IAbogadoBack {
   usuario: IUsuarioBack;
   nombres: string;
   apellidos: string;
+  cip: string;
   dni: string;
   fecha_nacimiento: string;
   universidad: string;
@@ -51,6 +52,7 @@ export interface IAbogadoBack {
   cv_url: string;
   foto_url: string;
   video_url: string;
+  objetivo: string;
   validado_admin: boolean;
   experiencias: IExperienciaBack[];
   educaciones: IEducacionBack[];

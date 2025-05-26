@@ -14,7 +14,7 @@ export default function RecuperarContrasenaPage() {
   const onFinish = async (values: { correo: string }) => {
     setLoading(true);
     try {
-      const body = { correo: values.correo };
+      const body = { correo: values.correo.toLowerCase() };
       const response = await usuarioService.solicitudCambioContrasena(body);
       if (response.status == 200) {
         setInfoMessage('Te enviamos un correo electrónico para recuperar tu contraseña.');
