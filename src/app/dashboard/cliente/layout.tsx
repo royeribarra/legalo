@@ -23,7 +23,7 @@ const DashboardClientLayout = ({ children }: LayoutProps) => {
 };
 
 const LayoutContent = ({ children }: { children: ReactNode }) => {
-  const whatsappNumber = "51945072517";
+  const whatsappNumber = "51939125533";
   const pathname = usePathname();
   const { logout, user, totalOfertasCliente, totalTrabajosCliente } = useAuth();
 

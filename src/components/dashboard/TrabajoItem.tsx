@@ -23,7 +23,7 @@ const TrabajoItem: React.FC<TrabajoItemProps> = ({ tipe, trabajo, persona, clien
   const [showModalFinalizarTrabajo, setShowModalFinalizarTrabajo] = useState(false);
   const [descripcion, setDescripcion] = useState("");
   const [trabajoState, setTrabajoState] = useState<ITrabajoBack>(trabajo); // Estado para trabajo actualizado
-  const whatsappNumber = "51945072517";
+  const whatsappNumber = "51939125533";
 
   const fetchExample = () => {
     console.log("paando ejemplo")

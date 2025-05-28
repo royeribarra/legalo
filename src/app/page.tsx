@@ -39,7 +39,7 @@ const HomePage = () => {
         </>
       )}
       <a
-        href="https://wa.me/51945072517"
+        href="https://wa.me/51939125533"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-4 right-4 z-50"
@@ -49,6 +49,9 @@ const HomePage = () => {
           alt="WhatsApp"
           className="w-14 h-14"
         />
+        <span className="text-sm font-medium text-green-700 hidden sm:inline">
+          Escríbenos aquí
+        </span>
       </a>
       <Footer />
     </div>

@@ -3,7 +3,7 @@ import Link from "next/link";
 // import { Button } from "@/components/ui/button";
 
 const Footer = () => {
-  const whatsappNumber = "51945072517";
+  const whatsappNumber = "51939125533";
   return (
     <footer className="bg-black">
       <div className="max-w-[1920px] mx-auto flex flex-col justify-center overflow-hidden lg:pb-10 p-4 lg:px-16">
