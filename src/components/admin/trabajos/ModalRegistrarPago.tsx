@@ -44,10 +44,13 @@ const ModalRegistrarPago = ({ visible, onClose, aplicacion, trabajoId }: propsMo
     <Modal title="Registrar Pago" open={visible} onCancel={onClose} footer={null}>
       {aplicacion && (
         <Form layout="vertical">
+          <p><strong>Monto:</strong> {aplicacion.salarioEsperado}</p>
           <p><strong>Número de Cuenta:</strong> {aplicacion.numeroCuenta}</p>
           <p><strong>CCI:</strong> {aplicacion.numeroCuentaCci}</p>
           <p><strong>Banco:</strong> {aplicacion.selectedBanco}</p>
-
+          <p><strong>Salario:</strong> {aplicacion.salarioReal}</p>
+          <p><strong>Impuesto:</strong> {aplicacion.impuesto}</p>
+          <p><strong>Comisión:</strong> {aplicacion.comision}</p>
           <Form.Item label="Monto a Registrar" required>
             <Input
               type="text"

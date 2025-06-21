@@ -191,6 +191,34 @@ const FormAbogado = ({abogado}:{abogado: IAbogadoBack}) => {
             ))}
           </Select>
         </Form.Item>
+        <div className="mb-4">
+          <h3 className="font-semibold mb-2">Habilidades Blandas</h3>
+          <div className="flex flex-wrap gap-2">
+            {abogado.habilidadesBlandas.map((h) => (
+              <span
+                key={h.id}
+                className="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full"
+              >
+                {h.nombre}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="mb-4">
+          <h3 className="font-semibold mb-2">Habilidades Duras</h3>
+          <div className="flex flex-wrap gap-2">
+            {abogado.habilidadesDuras.map((h) => (
+              <span
+                key={h.id}
+                className="bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full"
+              >
+                {h.nombre}
+              </span>
+            ))}
+          </div>
+        </div>
+
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={loading}>
             Guardar Cambios

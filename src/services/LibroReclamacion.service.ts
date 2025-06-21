@@ -12,4 +12,12 @@ export default class LibroReclamacionService extends MainService {
   public async obtenerTodos(params?: any): Promise<any> {
     return this.get("/all", params);
   }
+
+  public async obtenerPorId(id: number) {
+    return this.get(`/${id}`);
+  }
+  
+  public async responderReclamo(id: number, respuesta: string) {
+    return this.post(`/${id}/responder`, {respuesta: respuesta})
+  }  
 }

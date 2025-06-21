@@ -56,17 +56,29 @@ function LibroReclamaciones() {
       render: (email: string) => <p>{email || "-"}</p>
     },
     {
+      title: 'Teléfono',
+      dataIndex: 'telefono',
+      key: 'telefono',
+      render: (telefono: string) => <p>{telefono || "-"}</p>
+    },
+    {
       title: 'Tipo',
       dataIndex: 'tipo',
       key: 'tipo',
       render: (tipo: string) => <p>{tipo || "-"}</p>
     },
     {
-      title: 'Teléfono',
-      dataIndex: 'telefono',
-      key: 'telefono',
-      render: (telefono: string) => <p>{telefono || "-"}</p>
-    },
+      title: 'Acciones',
+      key: 'acciones',
+      render: (_: any, record: any) => (
+        <Button
+          type="link"
+          onClick={() => window.location.href = `/admin/libro-reclamaciones/${record.id}`}
+        >
+          Ver Detalle
+        </Button>
+      ),
+    }
   ];
 
   return (

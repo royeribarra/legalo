@@ -2,8 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Input, Button, Select, Space, Tag, DatePicker } from 'antd';
 import { FilterOutlined } from '@ant-design/icons';
-import dayjs from 'dayjs';
-import { Key } from 'antd/lib/table/interface';
 import { ofertaservice } from '@/services';
 import { IClienteBack } from '@/interfaces/Cliente.interface';
 import { IAplicacionBack } from '@/interfaces/Aplicacion.interface';

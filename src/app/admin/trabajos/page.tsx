@@ -2,16 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Input, Button, Select, Space, Tag, DatePicker } from 'antd';
 import { FilterOutlined } from '@ant-design/icons';
-import dayjs from 'dayjs';
-import { Key } from 'antd/lib/table/interface';
-import { abogadoService, clienteService, ofertaservice, trabajoService } from '@/services';
+import { trabajoService } from '@/services';
 import { IClienteBack } from '@/interfaces/Cliente.interface';
 import { IAplicacionBack } from '@/interfaces/Aplicacion.interface';
-import { IOfertaBack } from '@/interfaces/Oferta.interface';
-import { IIndustriaAbogado, IIndustriaOferta } from '@/interfaces/Industria.interface';
 import { IAbogadoBack } from '@/interfaces/Abogado.interface';
-import { IEspecialidadAbogado } from '@/interfaces/Especialidad.interface';
-import { IServicioAbogado } from '@/interfaces/Servicio.interface';
 import Link from 'next/link';
 import { useToast } from '@/contexts/toastContext';
 import { IPagoAbogadoBack, IPagoBack, IProgresoBack, ITrabajoBack } from '@/interfaces/Trabajo.interface';

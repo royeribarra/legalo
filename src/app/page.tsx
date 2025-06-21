@@ -38,7 +38,7 @@ const HomePage = () => {
           />
         </>
       )}
-      <a
+      {/* <a
         href="https://wa.me/51939125533"
         target="_blank"
         rel="noopener noreferrer"
@@ -51,6 +51,21 @@ const HomePage = () => {
         />
         <span className="text-sm font-medium text-green-700 hidden sm:inline">
           Escríbenos aquí
+        </span>
+      </a> */}
+      <a
+        href="https://wa.me/51939125533"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-4 right-4 z-50 flex items-center bg-[#25D366] px-4 py-2 rounded-full shadow-md hover:shadow-lg transition-shadow"
+      >
+        <img
+          src="/assets/whatsapp.png"
+          alt="WhatsApp"
+          className="w-10 h-10"
+        />
+        <span className="ml-2 text-sm font-medium text-white hidden sm:inline">
+          Contáctanos
         </span>
       </a>
       <Footer />

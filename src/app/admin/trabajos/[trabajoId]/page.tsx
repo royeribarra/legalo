@@ -74,6 +74,9 @@ const TrabajoDetalle = () => {
             <Descriptions.Item label="Banco">{trabajo.aplicacion.selectedBanco}</Descriptions.Item>
             <Descriptions.Item label="Estado">{trabajo.aplicacion.status}</Descriptions.Item>
             <Descriptions.Item label="Salario Esperado">${trabajo.aplicacion.salarioEsperado}</Descriptions.Item>
+            <Descriptions.Item label="Salario Real">${trabajo.aplicacion.salarioReal}</Descriptions.Item>
+            <Descriptions.Item label="Impuesto">${trabajo.aplicacion.impuesto}</Descriptions.Item>
+            <Descriptions.Item label="Comisión">${trabajo.aplicacion.comision}</Descriptions.Item>
           </Descriptions>
         </Card>
       )}

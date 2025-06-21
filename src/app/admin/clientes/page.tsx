@@ -1,14 +1,9 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import { Table, Input, Button, Select, Space, Tag, DatePicker } from 'antd';
+import { Table, Input, Button, Select, DatePicker } from 'antd';
 import { FilterOutlined } from '@ant-design/icons';
-import dayjs from 'dayjs';
-import { Key } from 'antd/lib/table/interface';
 import { clienteService, ofertaservice } from '@/services';
 import { IClienteBack } from '@/interfaces/Cliente.interface';
-import { IAplicacionBack } from '@/interfaces/Aplicacion.interface';
-import { IOfertaBack } from '@/interfaces/Oferta.interface';
-import { IIndustriaOferta } from '@/interfaces/Industria.interface';
 import { useToast } from '@/contexts/toastContext';
 
 const { Option } = Select;

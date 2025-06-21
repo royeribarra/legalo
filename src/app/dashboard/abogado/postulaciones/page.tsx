@@ -10,7 +10,6 @@ import {
   import ProyectItem from "@/components/dashboard/ProyectItem";
   import { useEffect, useState } from "react";
   import { abogadoService, aplicacionService } from "@/services";
-  import { IAbogadoBack } from "@/interfaces/Abogado.interface";
   import { useAuth } from "@/contexts/authContext";
   import { IAplicacionBack } from "@/interfaces/Aplicacion.interface";
 import { useLoader } from "@/contexts/loaderContext";

@@ -109,6 +109,9 @@ const OfertaDetalle = () => {
                     <p><strong>Estado:</strong> {aplicacion.estado}</p>
                     <p><strong>Fecha de Aplicación:</strong> {new Date(aplicacion.fecha_aplicacion).toLocaleDateString()}</p>
                     <p><strong>Salario Esperado:</strong> S/. {aplicacion.salarioEsperado}</p>
+                    <p><strong>Salario Real:</strong> S/. {aplicacion.salarioReal}</p>
+                    <p><strong>Impuesto:</strong> S/. {aplicacion.impuesto}</p>
+                    <p><strong>Comisión:</strong> S/. {aplicacion.comision}</p>
                     <p><strong>N° Cuenta:</strong> {aplicacion.numeroCuenta}</p>
                     <p><strong>CCI:</strong> {aplicacion.numeroCuentaCci}</p>
                     <p><strong>Banco:</strong> {aplicacion.selectedBanco}</p>

@@ -19,6 +19,9 @@ export interface IAplicacionBack {
     estado: string;
     oferta: IOfertaBack;
     salarioEsperado: number;
+    salarioReal: number;
+    comision: number;
+    impuesto: number;
     numeroCuenta: string;
     selectedBanco: string;
     abogado: IAbogadoBack;

@@ -200,7 +200,7 @@ const ModalPostularProyecto: React.FC<ModalPostularProyectoProps> = ({
       setPrecio(newPrecio);
       setComision(newPrecio * 0.2);
       setImpuesto(newPrecio * 0.18); // Calcular el 20%
-      setTotalRecibido(newPrecio - (newPrecio * 0.2)); // Calcular el total después de la comisión
+      setTotalRecibido(newPrecio - (newPrecio * 0.2) - (newPrecio * 0.18)); // Calcular el total después de la comisión
     } else {
       setPrecio(0);
       setComision(0);
