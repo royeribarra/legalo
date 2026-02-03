@@ -21,6 +21,19 @@ const DashboardClientPage = () => {
     { id: "oportunidades", texto: "Oportunidades" },
   ];
 
+  // Schema JSON-LD para búsqueda de abogados
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Buscar abogado - Legalo",
+    "description": "Encuentra y compara abogados por especialidad legal para resolver tu caso de forma eficiente.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://www.legalo.pe/?s={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  };
+
   useEffect(() => {
     const mediaQuery = window.matchMedia("(min-width: 1024px)");
     setOpenFilter(mediaQuery.matches);
@@ -39,6 +52,12 @@ const DashboardClientPage = () => {
 
   return (
     <div>
+      {/* Schema estructurado para SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+      />
+
       <Header serviceTipe={serviceTipe} updateServiceTipe={updateServiceTipe} />
       <div className="px-4 py-4 lg:px-16 lg:py-8 max-w-[1920px] mx-auto">
         <div className="flex justify-between flex-col-reverse lg:flex-row gap-4 ">
@@ -58,20 +77,8 @@ const DashboardClientPage = () => {
                   }
                 }}
               />
-              {/* <Input
-                placeholder="Ejemplo Abogado, Minería, etc."
-                value={searchQuery}
-                onChange={handleInputChange}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    searchAbogado();
-                  }
-                }}
-                className="rounded-[30px] border border-black px-[30px] py-[12px] focus-visible:border-none h-12"
-              /> */}
             </div>
           </div>
-          {/* <InfoNominations /> */}
         </div>
 
         <div className="mt-8">
@@ -95,13 +102,6 @@ const DashboardClientPage = () => {
             </Suspense>
           </div>
         </div>
-        {/* <ModalInviteProyect 
-          inviteProyect={inviteProyect} 
-          abogados={abogados} 
-          abogadoPrevioInvitado={abogadoPrevioInvitado}
-          onModalClosed={() => setInviteProyectModal(false)}
-          isOpen={inviteProyectModal}
-        /> */}
       </div>
       <Footer />
     </div>
