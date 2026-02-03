@@ -29,7 +29,7 @@ const DashboardClientPage = () => {
     "description": "Encuentra y compara abogados por especialidad legal para resolver tu caso de forma eficiente.",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://www.legalo.pe/?s={search_term_string}",
+      "target": "https://www.legalo.pe/busqueda",
       "query-input": "required name=search_term_string"
     }
   };
