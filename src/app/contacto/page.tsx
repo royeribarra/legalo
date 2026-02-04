@@ -72,8 +72,28 @@ const ContactoPage = () => {
     }
   };
 
+  // Schema JSON-LD para la página de contacto
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "url": "https://www.legalo.pe/contacto",
+    "name": "Contáctanos - Legalo",
+    "description": "¿Tienes dudas? ¡Escríbenos! Completa el formulario o envía un correo y te responderemos lo antes posible.",
+    "contactOption": [
+      "TollFree",
+      "Email"
+    ],
+    "email": "contacto@legalo.com"
+  };
+
   return (
     <div>
+      {/* Schema estructurado para SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+      />
+
       <Header serviceTipe={serviceTipe} updateServiceTipe={updateServiceTipe} />
       <div className="lg:flex p-4 max-w-[1250px] mx-auto gap-8">
         <div className="flex-1 p-4 max-w-[1250px] font-tiempos mt-8">
