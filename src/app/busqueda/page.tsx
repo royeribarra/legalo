@@ -1,5 +1,6 @@
 "use client";
 import React, { Suspense, useEffect, useState } from "react";
+import Script from "next/script";
 import { Search as IcoSearch } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Footer from "@/components/Footer";
@@ -29,7 +30,7 @@ const DashboardClientPage = () => {
     "description": "Encuentra y compara abogados por especialidad legal para resolver tu caso de forma eficiente.",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://www.legalo.pe/busqueda",
+      "target": "https://www.legalo.pe/?s={search_term_string}",
       "query-input": "required name=search_term_string"
     }
   };
@@ -53,8 +54,10 @@ const DashboardClientPage = () => {
   return (
     <div>
       {/* Schema estructurado para SEO */}
-      <script
+      <Script
+        id="schema-busqueda"
         type="application/ld+json"
+        strategy="afterInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
       />
 

@@ -15,48 +15,8 @@ const NosotrosPage = () => {
     setServiceTipe(newType);
   };
 
-  // Schema JSON-LD para la organización y sitio web
-  const schemaData = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://www.legalo.pe/#organization",
-        "name": "LEGALO",
-        "url": "https://www.legalo.pe/",
-        "logo": "https://www.legalo.pe/logo.png",
-        "sameAs": [
-          "https://www.facebook.com/legalo.pe",
-          "https://www.instagram.com/legalo.pe"
-        ],
-        "contactPoint": [
-          {
-            "@type": "ContactPoint",
-            "email": "contacto@legalo.com",
-            "contactType": "Customer Service",
-            "url": "https://www.legalo.pe/contacto"
-          }
-        ]
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://www.legalo.pe/#website",
-        "url": "https://www.legalo.pe/",
-        "name": "Legalo - Conecta abogados y clientes",
-        "publisher": {
-          "@id": "https://www.legalo.pe/#organization"
-        }
-      }
-    ]
-  };
-
   return (
     <div>
-      {/* Schema estructurado para SEO */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
-      />
 
       <Header serviceTipe={serviceTipe} updateServiceTipe={updateServiceTipe} />
       <div className=" bg-gradient-to-b from-[#FCFEEF] to-[#EEF79C] p-8 lg:py-20 border-b border-black">

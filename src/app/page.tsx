@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Script from "next/script";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import HomeBannerClient from "@/components/HomeBannerClient";
@@ -16,8 +17,53 @@ const HomePage = () => {
     setServiceTipe(newType);
   };
 
+   // Schema JSON-LD para la página principal
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.legalo.pe/#organization",
+        "name": "LEGALO",
+        "url": "https://www.legalo.pe/",
+        "logo": "https://www.legalo.pe/logo.png",
+        "sameAs": [
+          "https://www.facebook.com/legalo.pe",
+          "https://www.instagram.com/legalo.pe"
+        ],
+        "contactPoint": [
+          {
+            "@type": "ContactPoint",
+            "telephone": "+51-939-125-533",
+            "contactType": "Customer Service",
+            "availableLanguage": "Spanish"
+          }
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.legalo.pe/#website",
+        "url": "https://www.legalo.pe/",
+        "name": "Legalo - Conecta abogados y clientes",
+        "description": "Plataforma digital que conecta abogados con clientes de forma rápida, segura y eficiente.",
+        "publisher": {
+          "@id": "https://www.legalo.pe/#organization"
+        }
+      }
+    ]
+  };
+
   return (
     <div>
+      
+      {/* Schema estructurado para SEO */}
+      <Script
+        id="schema-home"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+      />
+
       <Header serviceTipe={serviceTipe} updateServiceTipe={updateServiceTipe} />
       {serviceTipe === "client" && (
         <>
